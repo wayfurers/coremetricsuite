@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CoreMetric Suite | Precision Statutory & Financial Decision Engines</title>
+  <meta name="description" content="CoreMetric Suite delivers zero-logging, client-side dynamic calculation engines for US tax depreciation, UK tenancy notices, Australian CGT, and commercial real estate analytics.">
+  <link rel="canonical" href="https://coremetricsuite.com/index.html">
+  <link rel="stylesheet" href="/css/global.css">
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "CoreMetric Suite",
+    "url": "https://coremetricsuite.com",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "All",
+    "description": "Deterministic, privacy-first web utilities for financial modeling, tax calculations, and statutory compliance.",
+    "creator": {
+      "@type": "Person",
+      "name": "Towhidur Rahman"
+    }
+  }
+  </script>
+  
+  <style>
+    .cms-hero {
+      text-align: center;
+      padding: 3.5rem 1rem 2.5rem;
+      background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .cms-hero h1 {
+      font-size: 2.25rem;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -0.025em;
+      margin-bottom: 0.75rem;
+    }
+    .cms-hero p {
+      font-size: 1.05rem;
+      color: #475569;
+      max-width: 680px;
+      margin: 0 auto 1.75rem;
+      line-height: 1.6;
+    }
+    .cms-search-container {
+      max-width: 520px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .cms-search-input {
+      width: 100%;
+      padding: 0.85rem 1.25rem;
+      font-size: 0.95rem;
+      border: 2px solid #cbd5e1;
+      border-radius: 8px;
+      outline: none;
+      transition: border-color 0.2s ease;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    }
+    .cms-search-input:focus {
+      border-color: #2563eb;
+    }
+    .cms-tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+      margin: 2.5rem 0;
+    }
+    .cms-tool-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 1.5rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-decoration: none;
+      color: inherit;
+    }
+    .cms-tool-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px -5px rgba(15, 23, 42, 0.08);
+      border-color: #cbd5e1;
+    }
+    .cms-badge {
+      display: inline-block;
+      font-size: 0.725rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+      margin-bottom: 0.75rem;
+      width: fit-content;
+    }
+    .cms-badge-us { background: #dbeafe; color: #1e40af; }
+    .cms-badge-uk { background: #fef3c7; color: #92400e; }
+    .cms-badge-au { background: #dcfce7; color: #166534; }
+    .cms-badge-global { background: #f1f5f9; color: #334155; }
+    
+    .cms-tool-card h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 0.5rem;
+    }
+    .cms-tool-card p {
+      font-size: 0.875rem;
+      color: #64748b;
+      line-height: 1.5;
+      margin-bottom: 1.25rem;
+    }
+    .cms-card-link {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #2563eb;
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+    .cms-about-section {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 2.25rem;
+      margin: 2.5rem 0;
+      line-height: 1.75;
+    }
+    .cms-about-section h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 0.75rem;
+    }
+    .cms-about-section p {
+      font-size: 0.925rem;
+      color: #334155;
+      margin-bottom: 1rem;
+    }
+    .cms-ad-slot {
+      display: block;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="global-header"></div>
+
+  <section class="cms-hero">
+    <div class="cms-main-wrapper">
+      <h1>Deterministic Decision Utilities for Business & Tax</h1>
+      <p>Execute financial modeling, tax depreciation schedules, and statutory notices entirely client-side with zero data retention.</p>
+      <div class="cms-search-container">
+        <input type="text" id="toolSearch" class="cms-search-input" placeholder="Search calculators (e.g., Section 179, SDLT, CGT, DSCR)..." onkeyup="filterTools()">
+      </div>
+    </div>
+  </section>
+
+  <main class="cms-main-wrapper">
+    
+    <div class="cms-tools-grid" id="toolsGrid">
+      
+      <!-- Tool 1 -->
+      <a href="/us-section-179-truck-calculator/index.html" class="cms-tool-card" data-keywords="us tax section 179 vehicle depreciation suv limits truck macrs">
+        <div>
+          <span class="cms-badge cms-badge-us">US Tax</span>
+          <h2>US Section 179 Vehicle Deduction Engine</h2>
+          <p>Model SUV caps ($32,000 limit), 6,000+ lbs GVWR rules, and MACRS bonus depreciation schedules.</p>
+        </div>
+        <span class="cms-card-link">Launch Utility &rarr;</span>
+      </a>
+
+      <!-- Tool 2 -->
+      <a href="/uk-section-8-eviction-notice/index.html" class="cms-tool-card" data-keywords="uk property section 8 notice period eviction landlord ground 8 arrears">
+        <div>
+          <span class="cms-badge cms-badge-uk">UK Property</span>
+          <h2>UK Section 8 Eviction Notice Period Calculator</h2>
+          <p>Calculate statutory notice periods and Ground 8 rent arrears thresholds under current UK housing acts.</p>
+        </div>
+        <span class="cms-card-link">Launch Utility &rarr;</span>
+      </a>
+
+      <!-- Tool 3 -->
+      <a href="/us-commercial-rent-escalation/index.html" class="cms-tool-card" data-keywords="us commercial lease rent escalation cpi index base year lease">
+        <div>
+          <span class="cms-badge cms-badge-us">US Commercial</span>
+          <h2>Commercial Rent Escalation Engine</h2>
+          <p>Compute fixed percentage increases, CPI adjustments, and base-year expense stop allocations.</p>
+        </div>
+        <span class="cms-card-link">Launch Utility &rarr;</span>
+      </a>
+
+      <!-- Tool 4 -->
+      <a href="/australian-capital-gains-tax/index.html" class="cms-tool-card" data-keywords="australia ato cgt capital gains tax discount property shares">
+        <div>
+          <span class="cms-badge cms-badge-au">AU Tax</span>
+          <h2>Australian Capital Gains Tax (CGT) Modeler</h2>
+          <p>Model ATO 50% CGT discounts, holding period thresholds, and marginal tax bracket impacts.</p>
+        </div>
+        <span class="cms-card-link">Launch Utility &rarr;</span>
+      </a>
+
+      <!-- Tool 5 -->
+      <a href="/social-media-aspect-ratio/index.html" class="cms-tool-card" data-keywords="global media aspect ratio safe zones instagram reels tiktok shorts UI">
+        <div>
+          <span class="cms-badge cms-badge-global">Global Media</span>
+          <h2>Social Media Aspect Ratio & Safe Zone Previewer</h2>
+          <p>Verify UI safe zones for Instagram Reels, TikTok, and YouTube Shorts on real-time canvas overlays.</p>
+        </div>
+        <span class="cms-card-link">Launch Utility &rarr;</span>
+      </a>
+
+      <!-- Tool 6 -->
+      <a href="/uk-stamp-duty-land-tax/index.html" class="cms-tool-card" data-keywords="uk property sdlt stamp duty land tax second home buyer relief">
+        <div>
+          <span class="cms-badge cms-badge-uk">UK Tax</span>
+          <h2>UK Stamp Duty Land Tax (SDLT) Engine</h2>
+          <p>Calculate progressive SDLT threshold brackets, second property surcharges, and first-time buyer relief.</p>
+        </div>
+        <span class="cms-card-link">Launch Utility &rarr;</span>
+      </a>
+
+      <!-- Tool 7 -->
+      <a href="/freelance-rate-calculator/index.html" class="cms-tool-card" data-keywords="global business freelance hourly rate billable hours overhead profit">
+        <div>
+          <span class="cms-badge cms-badge-global">Global Business</span>
+          <h2>Freelance Rate & Overhead Markup Calculator</h2>
+          <p>Determine target billable hourly rates based on non-billable hours, tax buffers, and overhead expenses.</p>
+        </div>
+        <span class="cms-card-link">Launch Utility &rarr;</span>
+      </a>
+
+      <!-- Tool 8 -->
+      <a href="/us-payroll-deduction-modeler/index.html" class="cms-tool-card" data-keywords="us payroll FICA tax withholding gross net paycheck calculator">
+        <div>
+          <span class="cms-badge cms-badge-us">US Payroll</span>
+          <h2>US Payroll Statutory Deduction Modeler</h2>
+          <p>Calculate FICA caps, federal tax withholdings, and net take-home pay structures.</p>
+        </div>
+        <span class="cms-card-link">Launch Utility &rarr;</span>
+      </a>
+
+      <!-- Tool 9 -->
+      <a href="/vehicle-fleet-depreciation/index.html" class="cms-tool-card" data-keywords="global business macrs fleet vehicle depreciation straight line disposal">
+        <div>
+          <span class="cms-badge cms-badge-global">Global Business</span>
+          <h2>Vehicle Fleet Depreciation Schedule Generator</h2>
+          <p>Generate 5-year MACRS recovery schedules and straight-line asset depreciation models.</p>
+        </div>
+        <span class="cms-card-link">Launch Utility &rarr;</span>
+      </a>
+
+      <!-- Tool 10 -->
+      <a href="/saas-churn-ltv-engine/index.html" class="cms-tool-card" data-keywords="global saas churn rate ltv gross mrr net mrr cac payback">
+        <div>
+          <span class="cms-badge cms-badge-global">Global SaaS</span>
+          <h2>SaaS Churn & Lifetime Value (LTV) Engine</h2>
+          <p>Compute Gross vs. Net MRR churn, Expansion ARR, CAC payback periods, and long-term LTV ratios.</p>
+        </div>
+        <span class="cms-card-link">Launch Utility &rarr;</span>
+      </a>
+
+      <!-- Tool 11 -->
+      <a href="/us-estate-tax-gifting/index.html" class="cms-tool-card" data-keywords="us tax estate gift tax annual exclusion threshold unified credit">
+        <div>
+          <span class="cms-badge cms-badge-us">US Tax</span>
+          <h2>US Estate Tax & Gifting Threshold Modeler</h2>
+          <p>Track annual gift tax exclusions, lifetime exemptions, and taxable estate estimates.</p>
+        </div>
+        <span class="cms-card-link">Launch Utility &rarr;</span>
+      </a>
+
+      <!-- Tool 12 -->
+      <a href="/commercial-loan-dscr/index.html" class="cms-tool-card" data-keywords="global real estate dscr debt service coverage ratio commercial loan amortization">
+        <div>
+          <span class="cms-badge cms-badge-global">Global Real Estate</span>
+          <h2>Commercial Loan Amortization & DSCR Evaluator</h2>
+          <p>Evaluate Debt Service Coverage Ratios (DSCR), principal-interest breakdowns, and lender risk margins.</p>
+        </div>
+        <span class="cms-card-link">Launch Utility &rarr;</span>
+      </a>
+
+    </div>
+
+    <!-- Hidden Ad Slot 1 -->
+    <div class="cms-ad-slot" style="min-height:0px; margin:0; padding:0;"></div>
+
+    <!-- Editorial Architecture & E-E-A-T Block -->
+    <article class="cms-about-section">
+      <h2>Engineering Deterministic Financial Utilities</h2>
+      <p>CoreMetric Suite was founded to eliminate black-box financial estimation. Web-based business calculators frequently rely on simplified approximations or harvest submitted user metrics on remote database servers. Our platform engineered a client-side architecture where all mathematical logic executes directly within your local browser session.</p>
+      <p>Every tool hosted across our suite incorporates verified statutory frameworks—including IRS MACRS tables, UK Renters' Rights Act notice standards, and ATO tax brackets. Inputs are never logged, stored, or transmitted to any remote API. When you close or refresh your browser tab, all session values are erased.</p>
+    </article>
+
+    <!-- Hidden Ad Slot 2 -->
+    <div class="cms-ad-slot" style="min-height:0px; margin:0; padding:0;"></div>
+
+  </main>
+
+  <div id="global-footer"></div>
+
+  <script src="/js/components.js"></script>
+  <script>
+    function filterTools() {
+      const input = document.getElementById('toolSearch').value.toLowerCase();
+      const cards = document.querySelectorAll('#toolsGrid .cms-tool-card');
+      
+      cards.forEach(card => {
+        const keywords = card.getAttribute('data-keywords') || '';
+        const title = card.querySelector('h2').textContent.toLowerCase();
+        const description = card.querySelector('p').textContent.toLowerCase();
+        
+        if (keywords.includes(input) || title.includes(input) || description.includes(input)) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+  </script>
+</body>
+</html>
