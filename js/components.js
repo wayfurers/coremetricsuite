@@ -8,9 +8,9 @@
   'use strict';
 
   // Complete 12 Tier-1 Static Tool Registry with Hyper-Targeted SEO & Regulatory Disclaimers
-  const TOOL_REGISTRY = [
+    const TOOL_REGISTRY = [
     {
-      path: '/tiktok-ad-safe-zone',
+      path: './tiktok-ad-safe-zone/',
       title: 'TikTok Safe Zone',
       category: 'media',
       metaTitle: 'TikTok Ad Safe Zone Template & Overlay Tool | CoreMetricSuite',
@@ -18,7 +18,7 @@
       h1: 'TikTok Ad Safe Zone Template Generator'
     },
     {
-      path: '/shorts-ui-safe-zone',
+      path: './shorts-ui-safe-zone/',
       title: 'Shorts Safe Zone',
       category: 'media',
       metaTitle: 'YouTube Shorts UI Safe Zone Calculator | CoreMetricSuite',
@@ -26,7 +26,7 @@
       h1: 'YouTube Shorts UI Safe Zone Estimator'
     },
     {
-      path: '/instagram-reels-preview',
+      path: './instagram-reels-preview/',
       title: 'Instagram Reels Preview',
       category: 'media',
       metaTitle: 'Instagram Reels UI Safe Zone Preview Tool | CoreMetricSuite',
@@ -34,7 +34,7 @@
       h1: 'Instagram Reels Preview & Safe Zone Checker'
     },
     {
-      path: '/shopify-metafields-parser',
+      path: './shopify-metafields-parser/',
       title: 'Shopify Metafields Parser',
       category: 'media',
       metaTitle: 'Shopify Metafields JSON Parser & Generator | CoreMetricSuite',
@@ -42,7 +42,7 @@
       h1: 'Shopify Metafields Parser & Schema Tool'
     },
     {
-      path: '/uk-section-8-calculator',
+      path: './uk-section-8-calculator/',
       title: 'UK Section 8 Calculator',
       category: 'uk',
       metaTitle: 'UK Section 8 Rent Arrears Notice Calculator | CoreMetricSuite',
@@ -51,7 +51,7 @@
       disclaimer: 'UK Compliance Notice: Calculations are provided strictly for informational estimation guidance under the Housing Act 1988 and HMRC SDLT guidelines. This utility does not constitute professional legal or financial advice. Independently verify calculations against official Gov portals.'
     },
     {
-      path: '/uk-form-4a-rent-tracker',
+      path: './uk-form-4a-rent-tracker/',
       title: 'UK Form 4A Rent Tracker',
       category: 'uk',
       metaTitle: 'UK Form 4A Rent Increase Tracker | CoreMetricSuite',
@@ -60,7 +60,7 @@
       disclaimer: 'UK Compliance Notice: Calculations are provided strictly for informational estimation guidance under the Housing Act 1988 and HMRC SDLT guidelines. This utility does not constitute professional legal or financial advice. Independently verify calculations against official Gov portals.'
     },
     {
-      path: '/uk-sdlt-bracket-estimator',
+      path: './uk-sdlt-bracket-estimator/',
       title: 'UK Stamp Duty (SDLT)',
       category: 'uk',
       metaTitle: 'UK SDLT Stamp Duty Bracket Estimator | CoreMetricSuite',
@@ -69,7 +69,7 @@
       disclaimer: 'UK Compliance Notice: SDLT rates reflect HMRC guidelines for England & Northern Ireland. Verify final liability with a qualified legal conveyancer or property professional.'
     },
     {
-      path: '/us-llc-late-penalty-estimator',
+      path: './us-llc-late-penalty-estimator/',
       title: 'US LLC Late Penalty',
       category: 'us',
       metaTitle: 'US IRS LLC Late Filing Penalty Estimator | CoreMetricSuite',
@@ -78,7 +78,7 @@
       disclaimer: 'US IRS Statutory Disclaimer (IRC Compliance): Calculations are intended purely for illustrative financial projections under active IRC §179 and §6038A parameters. This utility is entirely private and does not constitute certified CPA advisory services or official tax filings.'
     },
     {
-      path: '/us-section-179-truck-calculator',
+      path: './us-section-179-truck-calculator/',
       title: 'US Sec 179 Truck Calc',
       category: 'us',
       metaTitle: 'US Section 179 Vehicle Depreciation Calculator | CoreMetricSuite',
@@ -87,7 +87,7 @@
       disclaimer: 'US IRS Statutory Disclaimer (IRC Compliance): Calculations are intended purely for illustrative financial projections under active IRC §179 and §6038A parameters. This utility is entirely private and does not constitute certified CPA advisory services or official tax filings.'
     },
     {
-      path: '/au-cents-per-km-estimator',
+      path: './au-cents-per-km-estimator/',
       title: 'AU Cents per KM',
       category: 'au',
       metaTitle: 'AU Cents Per KM Vehicle Deduction Estimator | CoreMetricSuite',
@@ -96,7 +96,7 @@
       disclaimer: 'Australian Taxation & Regulatory Disclaimer: Compliance parameters are mapped against statutory ATO rates and Fair Work Commission awards (MA000100). These metrics serve strictly as educational calculation tools. Reconcile all final payouts via certified bookkeeping services.'
     },
     {
-      path: '/au-schads-vehicle-allowance',
+      path: './au-schads-vehicle-allowance/',
       title: 'AU SCHADS Allowance',
       category: 'au',
       metaTitle: 'AU SCHADS Award Vehicle Allowance Calculator | CoreMetricSuite',
@@ -105,7 +105,7 @@
       disclaimer: 'Australian Taxation & Regulatory Disclaimer: Compliance parameters are mapped against statutory ATO rates and Fair Work Commission awards (MA000100). These metrics serve strictly as educational calculation tools. Reconcile all final payouts via certified bookkeeping services.'
     },
     {
-      path: '/au-superannuation-charge-tracker',
+      path: './au-superannuation-charge-tracker/',
       title: 'AU Super Charge',
       category: 'au',
       metaTitle: 'AU Superannuation Guarantee Charge (SGC) Tracker | CoreMetricSuite',
