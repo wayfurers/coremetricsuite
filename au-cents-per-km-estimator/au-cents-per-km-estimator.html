@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AU ATO Cents per KM Tax Deduction Estimator</title>
+    <meta name="description" content="Calculate your Australian Taxation Office (ATO) work-related car expense tax deductions using the official Cents per Kilometre method for Australian financial years.">
+    <meta name="keywords" content="ATO cents per km calculator, Australian tax car deduction, motor vehicle claim rate, 5000 km tax limit Australia, logbook vs cents per km">
+    <link rel="canonical" href="https://coremetricsuite.com" />
+
+    <!-- Architecture Links -->
+    <link rel="stylesheet" href="/css/global.css">
+    <script src="/global.js" defer></script>
+
+    <!-- Open Graph / Social Metadata -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="AU Cents per KM Tax Deduction Estimator">
+    <meta property="og:description" content="Calculate official ATO cents-per-kilometre vehicle expense deductions, 5,000 km cap warnings, and estimated income tax refund savings.">
+    <meta property="og:url" content="https://coremetricsuite.com">
+
+    <!-- JSON-LD Schema: FAQPage Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the ATO Cents per Kilometre rate for current tax years?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For the 2026–27 income year, the official ATO rate is 91 cents per km. For 2025–26 and 2024–25, the rate is 88 cents per km. For 2023–24, it was 85 cents per km."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How many business kilometres can I claim under this method?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The ATO cents per kilometre method allows you to claim up to a maximum cap of 5,000 business kilometres per vehicle, per income year without requiring written receipts."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What happens if I drive more than 5,000 work kilometres in a financial year?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Cents per KM calculation caps your deduction at 5,000 km. Any excess distance will not increase your tax deduction under this method. If you travel over 5,000 km, keeping a 12-week logbook may yield a significantly higher tax claim."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need receipts for fuel, servicing, or vehicle depreciation?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. The ATO single per-kilometre rate incorporates all vehicle running costs, including fuel, registration, insurance, maintenance, and depreciation. However, you must be able to demonstrate how you calculated your work distance (e.g., diary logs or odometer records)."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-main: #0f1117;
+            --bg-card: #181b24;
+            --bg-input: #222634;
+            --border-color: #2e3446;
+            --accent-purple: #8b5cf6;
+            --accent-cyan: #00f2fe;
+            --accent-amber: #f59e0b;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-mono: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: var(--bg-main); color: var(--text-primary); font-family: var(--font-sans); line-height: 1.6; }
+        
+        .cms-tool-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 440px 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 960px) { .cms-tool-container { grid-template-columns: 1fr; } }
+
+        .panel {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .panel-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            background: var(--accent-purple);
+            color: #fff;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        .btn-demo {
+            width: 100%;
+            padding: 0.6rem;
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            color: var(--accent-purple);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 1.25rem;
+            transition: background 0.2s;
+        }
+        .btn-demo:hover { background-color: #2a3042; }
+
+        .form-group { margin-bottom: 1.25rem; }
+        label { display: block; font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 0.4rem; }
+        input[type="number"], select {
+            width: 100%; padding: 0.65rem 0.85rem; background-color: var(--bg-input);
+            border: 1px solid var(--border-color); border-radius: 6px; color: #fff;
+            font-size: 0.9rem; outline: none; font-family: inherit;
+        }
+
+        .btn-action {
+            width: 100%; padding: 0.85rem; background: linear-gradient(135deg, var(--accent-purple), #7c3aed);
+            color: #fff; font-weight: 700; border: none; border-radius: 6px; cursor: pointer; font-size: 0.95rem;
+            transition: opacity 0.2s;
+        }
+        .btn-action:hover { opacity: 0.9; }
+
+        .preview-stage { display: flex; flex-direction: column; }
+        .result-box {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            font-size: 0.95rem;
+            color: #e5e7eb;
+            min-height: 380px;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .result-metric {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+        .result-metric h4 {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.3rem;
+        }
+        .result-metric .value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #fff;
+            font-family: var(--font-mono);
+        }
+
+        .alert-badge {
+            background: rgba(245, 158, 11, 0.15);
+            border: 1px solid var(--accent-amber);
+            color: var(--accent-amber);
+            border-radius: 6px;
+            padding: 0.75rem 1rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .timeline-breakdown {
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border-color);
+            padding-top: 0.75rem;
+        }
+
+        .timeline-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.35rem 0;
+            color: var(--text-secondary);
+            border-bottom: 1px dashed rgba(255,255,255,0.05);
+        }
+        .timeline-row:last-child { border-bottom: none; }
+        .timeline-row.active {
+            color: var(--accent-cyan);
+            font-weight: 600;
+        }
+
+        .canvas-caption { margin-top: 1rem; font-size: 0.85rem; color: var(--text-secondary); text-align: right; }
+
+        .content-area { max-width: 1200px; margin: 3rem auto; padding: 0 1.5rem; }
+        .content-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 2.5rem; }
+        .content-card h1 { font-size: 2rem; margin-bottom: 1rem; color: #fff; }
+        .content-card h2 { font-size: 1.4rem; margin: 1.8rem 0 1rem; color: #fff; }
+        .content-card p { color: var(--text-secondary); margin-bottom: 1.2rem; }
+        .content-card ul, .content-card ol { color: var(--text-secondary); margin: 0 0 1.2rem 1.5rem; }
+        .content-card li { margin-bottom: 0.5rem; }
+
+        .spec-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; text-align: left; }
+        .spec-table th, .spec-table td { padding: 0.85rem 1rem; border: 1px solid var(--border-color); }
+        .spec-table th { background-color: var(--bg-input); color: #fff; }
+        .spec-table td { color: var(--text-secondary); }
+
+        /* Accordion FAQ Styling */
+        .faq-block { margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem; }
+        .faq-accordion {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 0.85rem;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .faq-accordion[open] { border-color: var(--accent-purple); }
+        .faq-summary {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            padding: 1rem 1.2rem;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+        .faq-summary::-webkit-details-marker { display: none; }
+        .faq-summary::after {
+            content: "+";
+            font-size: 1.2rem;
+            color: var(--accent-purple);
+            transition: transform 0.2s;
+        }
+        .faq-accordion[open] .faq-summary::after {
+            content: "−";
+            color: var(--accent-purple);
+        }
+        .faq-answer {
+            padding: 0 1.2rem 1.2rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 0.4rem;
+            padding-top: 0.8rem;
+        }
+
+        .cms-ad-slot-1, .cms-ad-slot-2 {
+            width: 100%; max-width: 970px; min-height: 90px; margin: 1.5rem auto;
+            background: rgba(255,255,255,0.02); border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Site Header Integration Hook -->
+    <div id="global-header"></div>
+
+    <!-- Ad Slot 1 Container (Directly Above Main Title Banner) -->
+    <div class="cms-ad-slot-1"></div>
+
+    <!-- Main Interactive Tool Container -->
+    <section class="cms-tool-container">
+        <form class="panel" id="atoKmForm" onsubmit="return false;">
+            <div class="panel-title">
+                <span>ATO Cents per KM Controls</span>
+                <span class="badge">ATO TAX ENGINE</span>
+            </div>
+
+            <button class="btn-demo" id="loadDemoBtn" type="button">⚡ Load Max Claim Example (5,000 km)</button>
+
+            <div class="form-group">
+                <label for="taxYearSelect">Australian Financial Year</label>
+                <select id="taxYearSelect">
+                    <option value="2026-27" selected>2026–27 Financial Year (91 cents / km)</option>
+                    <option value="2025-26">2025–26 Financial Year (88 cents / km)</option>
+                    <option value="2024-25">2024–25 Financial Year (88 cents / km)</option>
+                    <option value="2023-24">2023–24 Financial Year (85 cents / km)</option>
+                    <option value="2022-23">2022–23 Financial Year (78 cents / km)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="workKmInput">Total Work-Related Kilometres Driven</label>
+                <input type="number" id="workKmInput" value="4200" min="0" max="100000" step="50">
+            </div>
+
+            <div class="form-group">
+                <label for="taxBracketSelect">Marginal Income Tax Bracket (Incl. Medicare Levy)</label>
+                <select id="taxBracketSelect">
+                    <option value="0.00">0% (Income $0 – $18,200)</option>
+                    <option value="0.18">16% + 2% Medicare Levy ($18,201 – $45,000)</option>
+                    <option value="0.32" selected>30% + 2% Medicare Levy ($45,001 – $135,000)</option>
+                    <option value="0.39">37% + 2% Medicare Levy ($135,001 – $190,000)</option>
+                    <option value="0.47">45% + 2% Medicare Levy (Over $190,000)</option>
+                </select>
+            </div>
+
+            <button class="btn-action" id="calculateBtn" type="button">Calculate ATO Car Tax Claim</button>
+        </form>
+
+        <!-- Result Summary Dashboard -->
+        <section class="preview-stage">
+            <div class="panel" style="flex: 1; display: flex; flex-direction: column;">
+                <div class="panel-title">
+                    <span>Tax Deduction & Cash Refund Breakdown</span>
+                </div>
+                <div class="result-box" id="resultBoard">
+                    <div class="result-metric">
+                        <h4>Total Allowable Tax Deduction</h4>
+                        <div class="value" id="Total Allowable Tax Deduction">$0.00</div>
+                    </div>
+                    <div class="result-metric">
+                        <h4>Estimated Tax Refund Savings</h4>
+                        <div class="value" id="Estimated Tax Refund Savings">$0.00</div>
+                    </div>
+                    
+                    <div id="capWarningBox" style="display: none;">
+                        <div class="alert-badge">
+                            <strong>⚠️ 5,000 KM Statutory Limit Exceeded:</strong> Your claim is capped at 5,000 business km under this method. Consider evaluating the Logbook Method for higher work travel.
+                        </div>
+                    </div>
+
+                    <div class="result-metric">
+                        <h4>Calculation Parameters</h4>
+                        <div class="timeline-breakdown" id="Calculation Parameters">
+                            <!-- Detailed breakdown populated via JS -->
+                        </div>
+                    </div>
+                </div>
+                <p class="canvas-caption">
+                    Calculated under Australian Taxation Office (ATO) Cents per Kilometre statutory rates.
+                </p>
+            </div>
+        </section>
+    </section>
+
+    <!-- SEO & Educational Content Section -->
+    <article class="content-area">
+        <section class="content-card">
+            <h1>AU Cents per KM Tax Deduction Estimator</h1>
+            <p>
+                The <strong>Cents per Kilometre method</strong> is the simplest and most widely used approach for Australian taxpayers to claim work-related car expenses on their annual income tax return.
+            </p>
+            <p>
+                This browser-based tool allows Australian employees, sole traders, and independent contractors to calculate their allowable tax write-offs, apply official statutory rates determined by the Australian Taxation Office (ATO), check strict 5,000 km statutory limits, and project net tax savings based on their marginal income tax bracket.
+            </p>
+
+            <h2>Official ATO Statutory Cents per KM Rates Table</h2>
+            <p>
+                The ATO sets an all-inclusive single rate per kilometre for each income year. This flat rate covers all vehicle operational expenses, including fuel, oil, registration, insurance, routine servicing, repairs, and depreciation:
+            </p>
+
+            <table class="spec-table">
+                <thead>
+                    <tr>
+                        <th>Financial Year</th>
+                        <th>Approved Rate per KM</th>
+                        <th>Max Statutory Deduction (5,000 km Cap)</th>
+                        <th>Record-Keeping Requirements</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>2026–27</strong></td>
+                        <td>91 cents / km</td>
+                        <td>$4,550.00</td>
+                        <td>Diary records or diary entries showing calculations</td>
+                    </tr>
+                    <tr>
+                        <td><strong>2025–26</strong></td>
+                        <td>88 cents / km</td>
+                        <td>$4,400.00</td>
+                        <td>Diary records or diary entries showing calculations</td>
+                    </tr>
+                    <tr>
+                        <td><strong>2024–25</strong></td>
+                        <td>88 cents / km</td>
+                        <td>$4,400.00</td>
+                        <td>Diary records or diary entries showing calculations</td>
+                    </tr>
+                    <tr>
+                        <td><strong>2023–24</strong></td>
+                        <td>85 cents / km</td>
+                        <td>$4,250.00</td>
+                        <td>Diary records or diary entries showing calculations</td>
+                    </tr>
+                    <tr>
+                        <td><strong>2022–23</strong></td>
+                        <td>78 cents / km</td>
+                        <td>$3,900.00</td>
+                        <td>Diary records or diary entries showing calculations</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Ad Slot 2 Container (Directly Below Specification Table) -->
+            <div class="cms-ad-slot-2"></div>
+
+            <h2>Key Rules for Claiming Motor Vehicle Expenses in Australia</h2>
+            <ul>
+                <li><strong>Strict 5,000 KM Limit:</strong> You can claim up to a maximum limit of 5,000 business kilometres per vehicle, per income year under the cents-per-km method. If you travel more than 5,000 km for work, the claim stops at 5,000 km.</li>
+                <li><strong>No Written Receipts Needed:</strong> You do not need formal receipts for petrol, registration, or repairs. However, you must be able to demonstrate to the ATO how you estimated your work distance (e.g., job logs, calendar appointments, or diary entries).</li>
+                <li><strong>Eligible Travel Types:</strong> You can claim travel between separate workplaces, visits to clients or suppliers, driving to offsite training, or carrying bulky tools that cannot be stored at work. Normal commuting from home to your primary workplace is generally non-deductible.</li>
+                <li><strong>Cents per KM vs Logbook Method:</strong> If your work travel significantly exceeds 5,000 km per year, maintaining a 12-week continuous logbook may produce a substantially larger tax refund by allowing you to claim actual vehicle running expenses.</li>
+            </ul>
+
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-block">
+                <details class="faq-accordion" open>
+                    <summary class="faq-summary">What is the ATO Cents per Kilometre rate for current tax years?</summary>
+                    <div class="faq-answer">
+                        For the 2026–27 income year, the official ATO rate is 91 cents per km. For 2025–26 and 2024–25, the rate is 88 cents per km. For 2023–24, it was 85 cents per km.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">How many business kilometres can I claim under this method?</summary>
+                    <div class="faq-answer">
+                        The ATO cents per kilometre method allows you to claim up to a maximum cap of 5,000 business kilometres per vehicle, per income year without requiring written receipts.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">What happens if I drive more than 5,000 work kilometres in a financial year?</summary>
+                    <div class="faq-answer">
+                        The Cents per KM calculation caps your deduction at 5,000 km. Any excess distance will not increase your tax deduction under this method. If you travel over 5,000 km, keeping a 12-week logbook may yield a significantly higher tax claim.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">Do I need receipts for fuel, servicing, or vehicle depreciation?</summary>
+                    <div class="faq-answer">
+                        No. The ATO single per-kilometre rate incorporates all vehicle running costs, including fuel, registration, insurance, maintenance, and depreciation. However, you must be able to demonstrate how you calculated your work distance (e.g., diary logs or odometer records).
+                    </div>
+                </details>
+            </div>
+        </section>
+    </article>
+
+    <!-- Site Footer Integration Hook -->
+    <div id="global-footer"></div>
+
+    <!-- Math Calculation Engine JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var taxYearSelect = document.getElementById('taxYearSelect');
+            var workKmInput = document.getElementById('workKmInput');
+            var taxBracketSelect = document.getElementById('taxBracketSelect');
+
+            var calculateBtn = document.getElementById('calculateBtn');
+            var loadDemoBtn = document.getElementById('loadDemoBtn');
+
+            var resTotalDeduction = document.getElementById('Total Allowable Tax Deduction');
+            var resCashSavings = document.getElementById('Estimated Tax Refund Savings');
+            var resTimelineList = document.getElementById('Calculation Parameters');
+            var capWarningBox = document.getElementById('capWarningBox');
+
+            // Statutory ATO Cents per KM Rates Lookup Table
+            var atoRates = {
+                '2026-27': 0.91,
+                '2025-26': 0.88,
+                '2024-25': 0.88,
+                '2023-24': 0.85,
+                '2022-23': 0.78
+            };
+
+            loadDemoBtn.addEventListener('click', function() {
+                taxYearSelect.value = '2026-27';
+                workKmInput.value = '5000';
+                taxBracketSelect.value = '0.32';
+
+                calculateKmDeduction();
+            });
+
+            calculateBtn.addEventListener('click', function() {
+                calculateKmDeduction();
+            });
+
+            function calculateKmDeduction() {
+                var selectedYear = taxYearSelect.value;
+                var totalDrivenKm = parseFloat(workKmInput.value) || 0;
+                var taxRate = parseFloat(taxBracketSelect.value) || 0;
+
+                var ratePerKm = atoRates[selectedYear] || 0.91;
+                var MAX_ATO_KM = 5000;
+
+                var claimableKm = Math.min(totalDrivenKm, MAX_ATO_KM);
+                var isCapped = totalDrivenKm > MAX_ATO_KM;
+
+                var totalDeduction = claimableKm * ratePerKm;
+                var estimatedRefund = totalDeduction * taxRate;
+
+                // Toggle 5,000 KM Exceeded Warning
+                if (isCapped) {
+                    capWarningBox.style.display = 'block';
+                } else {
+                    capWarningBox.style.display = 'none';
+                }
+
+                // Render Results
+                resTotalDeduction.textContent = '$' + totalDeduction.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                resCashSavings.textContent = '$' + estimatedRefund.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+                var timelineHtml = '';
+                timelineHtml += createTimelineRow('Financial Year Selected', selectedYear, true);
+                timelineHtml += createTimelineRow('ATO Official Rate / KM', '$' + ratePerKm.toFixed(2), true);
+                timelineHtml += createTimelineRow('Total Work Kilometres Driven', totalDrivenKm.toLocaleString() + ' km', true);
+                timelineHtml += createTimelineRow('Claimable Kilometres (Capped at 5,000)', claimableKm.toLocaleString() + ' km', true);
+                timelineHtml += createTimelineRow('Marginal Tax Rate Applied', (taxRate * 100).toFixed(0) + '%', true);
+
+                resTimelineList.innerHTML = timelineHtml;
+            }
+
+            function createTimelineRow(label, valStr, isActive) {
+                var activeClass = isActive ? ' active' : '';
+                return '<div class="timeline-row' + activeClass + '">' +
+                    '<span>' + label + '</span>' +
+                    '<span>' + valStr + '</span>' +
+                    '</div>';
+            }
+
+            // Execute initial calculation
+            calculateKmDeduction();
+        });
+    </script>
+</body>
+</html>
