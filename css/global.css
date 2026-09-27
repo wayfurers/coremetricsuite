@@ -281,3 +281,30 @@ body > *:not(#site-header):not(#site-footer):not(#cms-ad-slot-1):not(#cms-ad-slo
 #site-header, #site-footer, #suggested-tools {
   flex-shrink: 0 !important;
 }
+/* ==========================================================================
+   YMYL DISCLAIMER CONTAINER LAYOUT
+   ========================================================================== */
+.cms-compliance-disclaimer {
+  max-width: 800px;
+  margin: 2.5rem auto 1rem auto;
+  padding: 1.25rem 1.5rem;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  border-radius: var(--cms-radius, 8px);
+  box-sizing: border-box;
+  text-align: left;
+}
+
+/* Light Mode Homepage Context Theme styling */
+body[data-theme="light"] .cms-compliance-disclaimer {
+  background-color: #fef2f2 !important; /* Soft light red notice block */
+  border-left: 4px solid #ef4444 !important; /* Clean alert crimson line */
+  color: #991b1b !important;
+}
+
+/* Dark Mode Calculator Context Theme styling */
+body[data-theme="dark"] .cms-compliance-disclaimer {
+  background-color: rgba(239, 68, 68, 0.06) !important; /* Muted deep crimson translucent wash */
+  border-left: 4px solid #f87171 !important; /* Soft glowing red warning rule */
+  color: #fca5a5 !important;
+}
