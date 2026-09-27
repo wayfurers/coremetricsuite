@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram Reels & Stories Safe Zone Checker (9:16 Mockup Studio)</title>
+    <meta name="description" content="Verify your vertical 1080x1920 Instagram layouts instantly. Preview Reels and Stories overlays alongside a 4:5 feed crop tool using client-side HTML5 Canvas.">
+    <meta name="keywords" content="instagram reels safe zone checker, instagram stories safe area template, reels overlay specs 1080x1920, 4:5 feed preview ratio checker, instagram reels safe zone capcut, instagram story overlay generator, reels text safe margins">
+    <link rel="canonical" href="https://coremetricsuite.com">
+
+    <!-- Open Graph / Social Metadata -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Instagram Reels & Stories Safe Zone Checker (9:16 Mockup Studio)">
+    <meta property="og:description" content="Verify your vertical 1080x1920 Instagram layouts instantly. Preview Reels and Stories overlays alongside a 4:5 feed crop tool using client-side HTML5 Canvas.">
+    <meta property="og:url" content="https://coremetricsuite.com">
+    
+    <!-- Global Framework Dependencies -->
+    <link rel="stylesheet" href="/css/global.css">
+    <script src="/global.js" defer></script>
+
+    <!-- FAQ JSON-LD Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What are the exact Instagram Reels safe zone dimensions for 1080x1920 videos?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For a standard 1080x1920 pixel (9:16) Instagram Reel, reserve the top 220px for header controls, the bottom 420px for caption overlays and audio metadata, and the right 130px for engagement icons. For guaranteed 4:5 main feed preview visibility, keep core elements within the central 1080x1350px box."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why does text get cropped when Instagram Reels appear in the main profile grid?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Instagram automatically crops 9:16 vertical video assets into a 4:5 aspect ratio card (1080x1350px) when displayed inside the home feed, and a 1:1 square thumbnail (1080x1080px) on profile grids. Placing text outside these central focus bounds causes important information to get cut off in feed previews."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-main: #0f1117;
+            --bg-card: #181b24;
+            --bg-input: #222634;
+            --border-color: #2e3446;
+            --accent-red: #ff0050;
+            --accent-cyan: #00f2fe;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: var(--bg-main); color: var(--text-primary); font-family: var(--font-sans); line-height: 1.6; }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 900px) { .container { grid-template-columns: 1fr; } }
+
+        .panel {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .panel-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            background: var(--accent-cyan);
+            color: #000;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        .drop-zone {
+            border: 2px dashed var(--border-color);
+            padding: 1.25rem;
+            text-align: center;
+            border-radius: 8px;
+            background-color: var(--bg-input);
+            cursor: pointer;
+            transition: border-color 0.2s;
+            margin-bottom: 0.75rem;
+        }
+
+        .drop-zone:hover { border-color: var(--accent-cyan); }
+        .drop-title { font-weight: 600; color: #fff; }
+        .drop-sub { font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px; }
+
+        .btn-demo {
+            width: 100%;
+            padding: 0.6rem;
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            color: var(--accent-cyan);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .toggle-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: var(--bg-input);
+            padding: 0.75rem 0.85rem;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 1rem;
+        }
+
+        .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #374151; transition: .3s; border-radius: 24px;
+        }
+        .slider:before {
+            position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px;
+            background-color: white; transition: .3s; border-radius: 50%;
+        }
+        input:checked + .slider { background-color: var(--accent-red); }
+        input:checked + .slider:before { transform: translateX(20px); }
+
+        .form-group { margin-bottom: 1.25rem; }
+        label { display: block; font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 0.4rem; }
+        input[type="text"], textarea, select {
+            width: 100%; padding: 0.65rem 0.85rem; background-color: var(--bg-input);
+            border: 1px solid var(--border-color); border-radius: 6px; color: #fff;
+            font-size: 0.9rem; outline: none; font-family: inherit;
+        }
+
+        .btn-action {
+            width: 100%; padding: 0.85rem; background: linear-gradient(135deg, var(--accent-red), #e00046);
+            color: #fff; font-weight: 600; border: none; border-radius: 6px; cursor: pointer; font-size: 0.95rem;
+        }
+
+        .preview-stage { display: flex; flex-direction: column; align-items: center; }
+        .canvas-wrapper {
+            position: relative; width: 320px; height: 568px; border-radius: 16px;
+            overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.6); background-color: #000;
+            border: 2px solid var(--border-color);
+        }
+        canvas { width: 100%; height: 100%; display: block; }
+        .canvas-caption { margin-top: 1rem; font-size: 0.85rem; color: var(--text-secondary); text-align: center; }
+
+        .content-area { max-width: 1200px; margin: 3rem auto; padding: 0 1.5rem; }
+        .content-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 2.5rem; }
+        .content-card h1 { font-size: 2rem; margin-bottom: 1rem; color: #fff; }
+        .content-card h2 { font-size: 1.4rem; margin: 1.8rem 0 1rem; color: #fff; }
+        .content-card p { color: var(--text-secondary); margin-bottom: 1.2rem; }
+        .content-card ul, .content-card ol { color: var(--text-secondary); margin: 0 0 1.2rem 1.5rem; }
+        .content-card li { margin-bottom: 0.5rem; }
+
+        .spec-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; text-align: left; }
+        .spec-table th, .spec-table td { padding: 0.85rem 1rem; border: 1px solid var(--border-color); }
+        .spec-table th { background-color: var(--bg-input); color: #fff; }
+        .spec-table td { color: var(--text-secondary); }
+
+        /* Accordion FAQ Styling */
+        .faq-block { margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem; }
+        .faq-accordion {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 0.85rem;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .faq-accordion[open] { border-color: var(--accent-cyan); }
+        .faq-summary {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            padding: 1rem 1.2rem;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+        .faq-summary::-webkit-details-marker { display: none; }
+        .faq-summary::after {
+            content: "+";
+            font-size: 1.2rem;
+            color: var(--accent-cyan);
+            transition: transform 0.2s;
+        }
+        .faq-accordion[open] .faq-summary::after {
+            content: "−";
+            color: var(--accent-red);
+        }
+        .faq-answer {
+            padding: 0 1.2rem 1.2rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 0.4rem;
+            padding-top: 0.8rem;
+        }
+
+        .cms-ad-slot-1, .cms-ad-slot-2 {
+            width: 100%; max-width: 970px; min-height: 90px; margin: 1.5rem auto;
+            background: rgba(255,255,255,0.02); border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Container -->
+    <div id="global-header"></div>
+
+    <!-- Ad Slot 1 Container (Above Main Workspace Title) -->
+    <div class="cms-ad-slot-1"></div>
+
+    <!-- Main Tool Container -->
+    <main class="container">
+        <section class="panel">
+            <div class="panel-title">
+                <span>Instagram Safe Zone Controls</span>
+                <span class="badge">9:16 SPECS</span>
+            </div>
+
+            <!-- Upload Box & Demo File CTA -->
+            <div class="drop-zone" id="dropZone">
+                <p class="drop-title">Click or Drag Video / Image File</p>
+                <p class="drop-sub">MP4, MOV, PNG, JPG (1080x1920 recommended)</p>
+                <input type="file" id="fileInput" accept="image/*,video/*" style="display:none;">
+            </div>
+            
+            <button class="btn-demo" id="loadDemoBtn" type="button">⚡ Load Demo Sample File</button>
+
+            <div class="form-group">
+                <label for="formatSelect">Placement Mode</label>
+                <select id="formatSelect">
+                    <option value="reels">Instagram Reels Overlay</option>
+                    <option value="stories">Instagram Stories Overlay</option>
+                </select>
+            </div>
+
+            <div class="toggle-group">
+                <label for="feedPreviewToggle">Show 4:5 Feed Preview Box</label>
+                <label class="switch">
+                    <input type="checkbox" id="feedPreviewToggle" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="toggle-group">
+                <label for="overlayToggle">Show Safe Zone Grid</label>
+                <label class="switch">
+                    <input type="checkbox" id="overlayToggle" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="accountName">Account Username</label>
+                <input type="text" id="accountName" value="@yourbrand">
+            </div>
+
+            <div class="form-group">
+                <label for="adCaption">Caption / Audio Title</label>
+                <textarea id="adCaption" rows="3">Elevate your visual creative workflow! 🚀 Original Audio - brand.official</textarea>
+            </div>
+
+            <button class="btn-action" id="downloadBtn" type="button">Export 1080x1920 PNG Preview</button>
+        </section>
+
+        <!-- Canvas Stage Wrapper -->
+        <section class="preview-stage">
+            <div class="canvas-wrapper">
+                <canvas id="previewCanvas" width="1080" height="1920"></canvas>
+            </div>
+            <p class="canvas-caption">
+                Client-side HTML5 canvas. 4:5 Feed guide ensures primary text remains uncropped.
+            </p>
+        </section>
+    </main>
+
+    <!-- SEO & Educational Guide Section -->
+    <article class="content-area">
+
+        <!-- Main H1 Banner Title -->
+        <div class="content-card">
+            <h1>Instagram Reels &amp; Stories Safe Zone Guide</h1>
+            <p>
+                With the continuous evolution of Instagram's UI—including transparent navigation overlays, action buttons, bottom caption blocks, and variable screen ratio scaling—maintaining accurate safety margins for 1080x1920 (9:16) video assets is vital. Crucial callouts or logos placed outside the safe area often get obstructed by UI controls or clipped when Instagram automatically reformats vertical videos into a 4:5 aspect ratio for user feeds.
+            </p>
+            <p>
+                This browser-based <strong>Instagram Reels Preview &amp; Safe Zone Studio</strong> gives creators, social media managers, and performance agencies an instant real-time canvas to verify video layouts, caption positions, and text boundaries prior to publishing.
+            </p>
+
+            <h2>Instagram Reels vs. Stories Safe Area Specifications</h2>
+            <p>
+                Although both Reels and Stories share a full-screen vertical resolution of 1080x1920 pixels (9:16 aspect ratio), their UI element overlays differ significantly:
+            </p>
+
+            <table class="spec-table">
+                <thead>
+                    <tr>
+                        <th>Boundary Margin</th>
+                        <th>Instagram Reels Specs</th>
+                        <th>Instagram Stories Specs</th>
+                        <th>UI Clearance Purpose</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Top Margin</strong></td>
+                        <td>220 px</td>
+                        <td>250 px</td>
+                        <td>Clears top navigation tabs, camera switchers, story progress bars, and header icons.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Bottom Margin</strong></td>
+                        <td>420 px</td>
+                        <td>280 px</td>
+                        <td>Reserves room for username, caption lines, audio track title, and interactive reply/sticker bars.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Right Margin</strong></td>
+                        <td>130 px</td>
+                        <td>44 px</td>
+                        <td>Clears vertical engagement icons (Like, Comment, Share, Audio Reel disc).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Left Margin</strong></td>
+                        <td>44 px</td>
+                        <td>44 px</td>
+                        <td>Safety buffer against edge bezel clipping on modern rounded displays.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>4:5 Feed Safe Box</strong></td>
+                        <td>1080 × 1350 px</td>
+                        <td>N/A</td>
+                        <td>Guarantees zero content cropping when vertical Reels are previewed in the main home feed.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Ad Slot 2 Container (Immediately Below Data Table) -->
+            <div class="cms-ad-slot-2"></div>
+
+            <h2>Instagram Reels Preview &amp; 4:5 Feed Crop Strategy</h2>
+            <p>
+                When Instagram serves a Reel to a user browsing their main home feed, the app crops the top and bottom 285 pixels from the 1080x1920 canvas, converting the frame into a 4:5 aspect ratio (1080x1350 pixels). To maximize engagement across both full-screen Reels viewer and main feed impressions:
+            </p>
+            <ul>
+                <li><strong>Center Core Message:</strong> Position main hooks, subtitles, animated titles, and brand logos within the central 1080x1350 pixel zone.</li>
+                <li><strong>Avoid Peripheral Edges:</strong> Keep essential text at least 130 pixels away from the right vertical edge to prevent overlap with the interaction stack.</li>
+                <li><strong>Test Profile Grid Centering:</strong> Keep key graphic elements centered horizontally and vertically to maintain visual appeal when cropped to a 1:1 square on your account profile grid.</li>
+            </ul>
+
+            <h2>CapCut, Premiere Pro &amp; Canva Workflow Integration</h2>
+            <p>
+                Avoid visual clipping and lengthy rendering revisions with a transparent overlay guide:
+            </p>
+            <ol>
+                <li><strong>Export Safety Template:</strong> Click the "Export 1080x1920 PNG Preview" button to download a transparent grid layer.</li>
+                <li><strong>Place on Top Track:</strong> Import the PNG file into CapCut, Adobe Premiere Pro, Final Cut Pro, or Canva and lock it on the highest video track layer.</li>
+                <li><strong>Align Text &amp; Callouts:</strong> Drag and resize your text boxes, subtitles, stickers, and logos so they sit comfortably inside the designated safety boundaries.</li>
+                <li><strong>Toggle Layer Off:</strong> Mute or delete the transparent guide layer before finalizing your video export.</li>
+            </ol>
+
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-block">
+                <details class="faq-accordion" open>
+                    <summary class="faq-summary">What are the exact Instagram Reels safe zone dimensions for 1080x1920 videos?</summary>
+                    <div class="faq-answer">
+                        For a standard 1080x1920 pixel (9:16) Instagram Reel, reserve the top 220px for header controls, the bottom 420px for caption overlays and audio metadata, and the right 130px for engagement icons. For guaranteed 4:5 main feed preview visibility, keep core elements within the central 1080x1350px box.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">Why does text get cropped when Instagram Reels appear in the main profile grid?</summary>
+                    <div class="faq-answer">
+                        Instagram automatically crops 9:16 vertical video assets into a 4:5 aspect ratio card (1080x1350px) when displayed inside the home feed, and a 1:1 square thumbnail (1080x1080px) on profile grids. Placing text outside these central focus bounds causes important information to get cut off in feed previews.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">How do I use an Instagram Reels safe zone overlay PNG in CapCut or Premiere Pro?</summary>
+                    <div class="faq-answer">
+                        Export a 1080x1920 PNG preview guide from our studio, place it on the top layer of your video timeline in CapCut, Adobe Premiere Pro, or Canva, position all text and graphics inside the unshaded safety box, then delete the guide track before final video rendering.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">Are my images or videos sent to a backend server?</summary>
+                    <div class="faq-answer">
+                        No. All video frame extraction, canvas rendering, grid adjustments, and image exports happen entirely inside your web browser via HTML5 Canvas API technology. Your creative files never leave your device.
+                    </div>
+                </details>
+            </div>
+        </div>
+    </article>
+
+    <!-- Footer Container -->
+    <div id="global-footer"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var canvas = document.getElementById('previewCanvas');
+            if (!canvas) return;
+            var ctx = canvas.getContext('2d');
+            
+            var fileInput = document.getElementById('fileInput');
+            var dropZone = document.getElementById('dropZone');
+            var loadDemoBtn = document.getElementById('loadDemoBtn');
+            var formatSelect = document.getElementById('formatSelect');
+            var feedPreviewToggle = document.getElementById('feedPreviewToggle');
+            var overlayToggle = document.getElementById('overlayToggle');
+            var accountNameInput = document.getElementById('accountName');
+            var adCaptionInput = document.getElementById('adCaption');
+            var downloadBtn = document.getElementById('downloadBtn');
+
+            var currentMedia = null;
+            var isVideo = false;
+
+            dropZone.addEventListener('click', function() { fileInput.click(); });
+
+            dropZone.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            });
+
+            dropZone.addEventListener('drop', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+                    processFile(e.dataTransfer.files[0]);
+                }
+            });
+
+            fileInput.addEventListener('change', function(e) {
+                if (e.target.files && e.target.files[0]) {
+                    processFile(e.target.files[0]);
+                }
+            });
+
+            loadDemoBtn.addEventListener('click', function() {
+                var demoCanvas = document.createElement('canvas');
+                demoCanvas.width = 1080;
+                demoCanvas.height = 1920;
+                var dCtx = demoCanvas.getContext('2d');
+
+                var grad = dCtx.createLinearGradient(0, 0, 1080, 1920);
+                grad.addColorStop(0, '#833ab4');
+                grad.addColorStop(0.5, '#fd1d1d');
+                grad.addColorStop(1, '#fcb045');
+                dCtx.fillStyle = grad;
+                dCtx.fillRect(0, 0, 1080, 1920);
+
+                dCtx.fillStyle = '#ffffff';
+                dCtx.font = 'bold 54px sans-serif';
+                dCtx.textAlign = 'center';
+                dCtx.fillText('INSTAGRAM REELS DEMO', 540, 850);
+                
+                dCtx.fillStyle = '#f3f4f6';
+                dCtx.font = '36px sans-serif';
+                dCtx.fillText('1080 x 1920 Vertical Safe Zone Test', 540, 920);
+
+                var img = new Image();
+                img.src = demoCanvas.toDataURL();
+                img.onload = function() {
+                    currentMedia = img;
+                    isVideo = false;
+                    draw();
+                };
+            });
+
+            function processFile(file) {
+                var fileURL = URL.createObjectURL(file);
+                if (file.type.indexOf('video/') === 0) {
+                    var video = document.createElement('video');
+                    video.src = fileURL;
+                    video.autoplay = true;
+                    video.loop = true;
+                    video.muted = true;
+                    video.playsInline = true;
+                    video.onloadeddata = function() {
+                        currentMedia = video;
+                        isVideo = true;
+                        video.play();
+                    };
+                } else {
+                    var img = new Image();
+                    img.src = fileURL;
+                    img.onload = function() {
+                        currentMedia = img;
+                        isVideo = false;
+                        draw();
+                    };
+                }
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                if (currentMedia) {
+                    ctx.drawImage(currentMedia, 0, 0, canvas.width, canvas.height);
+                } else {
+                    ctx.fillStyle = '#12131a';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    ctx.fillStyle = '#4b5563';
+                    ctx.font = 'bold 36px sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('Upload 1080x1920 Media', canvas.width / 2, canvas.height / 2);
+                }
+
+                var mode = formatSelect.value;
+                var showOverlay = overlayToggle.checked;
+                var showFeedBox = feedPreviewToggle.checked && mode === 'reels';
+
+                var topM = mode === 'reels' ? 220 : 250;
+                var bottomM = mode === 'reels' ? 420 : 280;
+                var rightM = mode === 'reels' ? 130 : 44;
+                var leftM = 44;
+
+                if (showOverlay) {
+                    ctx.fillStyle = 'rgba(255, 0, 80, 0.18)';
+                    ctx.fillRect(0, 0, canvas.width, topM);
+                    ctx.fillRect(0, canvas.height - bottomM, canvas.width, bottomM);
+                    ctx.fillRect(canvas.width - rightM, topM, rightM, canvas.height - topM - bottomM);
+                    ctx.fillRect(0, topM, leftM, canvas.height - topM - bottomM);
+
+                    ctx.strokeStyle = '#00f2fe';
+                    ctx.lineWidth = 4;
+                    ctx.setLineDash([12, 8]);
+                    ctx.strokeRect(leftM, topM, canvas.width - leftM - rightM, canvas.height - topM - bottomM);
+                    ctx.setLineDash([]);
+                }
+
+                if (showFeedBox) {
+                    var feedHeight = 1350;
+                    var feedY = (canvas.height - feedHeight) / 2;
+                    ctx.strokeStyle = '#ff0050';
+                    ctx.lineWidth = 4;
+                    ctx.setLineDash([8, 6]);
+                    ctx.strokeRect(0, feedY, canvas.width, feedHeight);
+                    ctx.setLineDash([]);
+
+                    ctx.fillStyle = '#ff0050';
+                    ctx.font = 'bold 24px sans-serif';
+                    ctx.textAlign = 'left';
+                    ctx.fillText('4:5 Feed Preview Zone (1080x1350)', 20, feedY + 35);
+                }
+
+                var railX = canvas.width - 70;
+                var railY = canvas.height - bottomM - 260;
+
+                if (mode === 'reels') {
+                    var icons = ['♥ 84.2K', '💬 1.1K', '✈ Share', '🎵 Audio'];
+                    ctx.font = 'bold 22px sans-serif';
+                    ctx.textAlign = 'center';
+                    for (var i = 0; i < icons.length; i++) {
+                        ctx.fillStyle = '#ffffff';
+                        ctx.fillText(icons[i], railX, railY);
+                        railY += 85;
+                    }
+                }
+
+                var bottomX = leftM + 20;
+                var bottomY = canvas.height - bottomM + 50;
+
+                ctx.textAlign = 'left';
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 34px sans-serif';
+                ctx.fillText(accountNameInput.value, bottomX, bottomY);
+
+                ctx.font = '26px sans-serif';
+                ctx.fillStyle = '#e5e7eb';
+                var captionText = adCaptionInput.value.length > 50 ? adCaptionInput.value.substring(0, 50) + '...' : adCaptionInput.value;
+                ctx.fillText(captionText, bottomX, bottomY + 45);
+            }
+
+            function renderLoop() {
+                if (isVideo && currentMedia) {
+                    draw();
+                }
+                requestAnimationFrame(renderLoop);
+            }
+            requestAnimationFrame(renderLoop);
+
+            var controls = [formatSelect, feedPreviewToggle, overlayToggle, accountNameInput, adCaptionInput];
+            for (var j = 0; j < controls.length; j++) {
+                controls[j].addEventListener('input', function() {
+                    if (!isVideo) draw();
+                });
+            }
+
+            draw();
+
+            downloadBtn.addEventListener('click', function() {
+                var link = document.createElement('a');
+                link.download = 'instagram-safezone-preview.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        });
+    </script>
+</body>
+</html>
