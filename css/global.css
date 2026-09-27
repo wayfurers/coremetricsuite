@@ -134,3 +134,93 @@ body[data-theme="dark"] .cms-compliance-disclaimer { background: rgba(239, 68, 6
   .cms-nav-links { margin-top: 0.25rem; }
   .cms-nav-item { margin-left: 0; margin-right: 1rem; }
 }
+/* ==========================================================================
+   PRODUCTION FOOTER LAYOUT & SPACING ENGINE
+   ========================================================================== */
+.cms-footer {
+  background: #0b0f19 !important;
+  color: #f8fafc !important;
+  padding: 3rem 1.5rem 1.5rem 1.5rem !important;
+  width: 100%;
+  border-top: 1px solid #1e293b;
+  margin-top: auto;
+}
+
+.cms-footer-content {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+  text-align: left !important; /* Forces left alignment for professional look */
+}
+
+.cms-footer-info {
+  flex: 1;
+  min-width: 280px;
+  max-width: 500px;
+}
+
+.cms-footer-info h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #ffffff !important;
+  margin-bottom: 0.75rem;
+}
+
+.cms-footer-info p {
+  color: #94a3b8 !important;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* Fixes the compressed purple link look */
+.cms-footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem; /* Gives clean vertical breathing room to each link */
+  min-width: 160px;
+}
+
+.cms-footer-links h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff !important;
+  margin-bottom: 0.5rem;
+}
+
+/* Strips out the default purple/blue link styling */
+.cms-footer-links a {
+  color: #94a3b8 !important; /* Premium muted text gray */
+  text-decoration: none !important;
+  font-size: 0.9rem;
+  transition: color 0.2s ease;
+  display: inline-block;
+}
+
+.cms-footer-links a:hover {
+  color: #3b82f6 !important; /* Clean interactive blue on touch/hover */
+  text-decoration: underline !important;
+}
+
+.cms-footer-bottom {
+  max-width: 1100px;
+  margin: 2.5rem auto 0 auto;
+  padding-top: 1.25rem;
+  border-top: 1px solid #1e293b;
+  text-align: center;
+}
+
+.cms-footer-bottom p {
+  color: #64748b !important;
+  font-size: 0.8rem;
+}
+
+/* Mobile Breakpoint Guard */
+@media (max-width: 768px) {
+  .cms-footer-content {
+    flex-direction: column !important;
+    gap: 1.75rem;
+  }
+}
