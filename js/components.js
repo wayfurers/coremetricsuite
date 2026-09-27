@@ -83,6 +83,31 @@ function setupAutoLayout() {
   // Render Footer HTML
   footerSlot.innerHTML = getFooterHTML();
 }
+  // Place this at the bottom of the setupAutoLayout() function
+  injectYmylDisclaimer();
+}
+
+function injectYmylDisclaimer() {
+  // 1. Locate the main calculation wrapper element on your tool pages
+  const mainContent = document.querySelector("main, .dark-theme-page");
+  if (!mainContent) return;
+
+  // 2. Prevent duplication if the disclaimer box already exists
+  if (document.getElementById("cms-compliance-notice")) return;
+
+  // 3. Create the disclaimer container out of thin air
+  const disclaimerBox = document.createElement("div");
+  disclaimerBox.id = "cms-compliance-notice";
+  disclaimerBox.className = "cms-compliance-disclaimer";
+  
+  // 4. Inject clean, structured legal boundary text
+  disclaimerBox.innerHTML = `
+     disclaimerBox.innerHTML = `
+    <p><strong>⚠️ Financial Estimation Disclaimer:</strong> This tool is a client-side mathematical simulation provided solely for general educational and informational purposes. It does not constitute certified legal, investment, or professional tax advice. Statutory parameters are subject to regular legislative changes [index_Y5S2Fh.png]. Always cross-reference your calculation outcomes with a licensed public accountant or official tax authority guidelines before taking action [index_1.1.2].</p>
+  `;
+  // 5. Place it cleanly inside the main page content structure
+  mainContent.appendChild(disclaimerBox);
+}
 
 function getHeaderHTML() {
   return `
