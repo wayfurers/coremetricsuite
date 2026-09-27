@@ -116,7 +116,7 @@ body {
   max-width: var(--max-width);
   margin: 0 auto;
   padding: 0.6rem 1.5rem;
-  display: flex;
+  display: inline-flex !important; /* Fixed link spacing */
   gap: 0.5rem;
 }
 
@@ -146,15 +146,13 @@ body {
   width: 100%;
 }
 
-/* --- Center Content Wrappers (Fixes Single Sided Off-Centering) --- */
+/* --- Center Content Wrappers (Fixed autoProxy typo) --- */
 .cms-main-wrapper, 
 .main-container,
 .content-area {
   max-width: var(--max-width) !important;
   width: 100% !important;
-  margin: 0 autoProxy !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
+  margin: 0 auto !important; /* Centering Fixed */
   padding: 2.5rem 1.5rem !important;
   flex: 1;
 }
@@ -163,7 +161,7 @@ body {
 .directory-grid, 
 .cms-directory-grid {
   display: grid !important;
-  grid-template-columns: repeat(3, minmax(0, 1fr)) !important; /* Forces 3 equal columns */
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important; 
   gap: 1.5rem !important;
   width: 100% !important;
   margin: 2rem auto !important;
@@ -172,12 +170,12 @@ body {
 /* Responsive Grid Fallbacks for Mobile / Tablets */
 @media (max-width: 1024px) {
   .directory-grid, .cms-directory-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr)) !important; /* 2 columns on tablets */
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important; 
   }
 }
 @media (max-width: 640px) {
   .directory-grid, .cms-directory-grid {
-    grid-template-columns: 1fr !important; /* 1 column on phones */
+    grid-template-columns: 1fr !important; 
   }
   .cms-top-bar {
     flex-direction: column;
@@ -199,6 +197,7 @@ body {
   box-shadow: var(--shadow-sm) !important;
   transition: transform 0.2s ease, box-shadow 0.2s ease !important;
   text-align: left !important;
+  overflow: hidden; /* Fixes title text truncation cutting off */
 }
 
 .tool-card:hover, 
@@ -206,6 +205,15 @@ body {
   transform: translateY(-4px) !important;
   box-shadow: var(--shadow-md) !important;
   border-color: var(--border-dark) !important;
+}
+
+.card-title,
+.cms-toast-title {
+  font-size: 1.15rem !important;
+  font-weight: 700 !important;
+  line-height: 1.4 !important;
+  margin-bottom: 0.5rem !important;
+  white-space: normal !important; /* Allows title to wrap lines instead of pushing columns open */
 }
 
 /* --- Invisible System Ad Boxes (Hidden until script populates them) --- */
