@@ -610,3 +610,66 @@ body {
   outline-offset: 2px;
   border-radius: var(--cms-radius-sm);
 }
+/* Horizontal Scrollable Slider Bar (No Hamburger Menu) */
+.tool-slider-nav {
+    display: flex;
+    white-space: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    gap: 15px;
+    padding: 12px 10px;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch; /* Smooth inertia scrolling for mobile devices */
+}
+/* Hide native scrollbars while keeping functionality */
+.tool-slider-nav::-webkit-scrollbar {
+    display: none;
+}
+.tool-slider-nav {
+    -ms-overflow-style: none;  
+    scrollbar-width: none;  
+}
+.tool-nav-item {
+    display: inline-block;
+    padding: 6px 14px;
+    background: #1e293b;
+    color: #f8fafc;
+    text-decoration: none;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    transition: background 0.2s;
+}
+.tool-nav-item:hover {
+    background: #3b82f6;
+}
+
+/* Dedicated Advertisement Slots Structure */
+.ad-container-slot {
+    width: 100%;
+    max-width: 728px;
+    min-height: 90px;
+    margin: 20px auto;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px dashed rgba(255, 255, 255, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #64748b;
+    font-size: 0.8rem;
+    overflow: hidden;
+}
+
+/* Related Suggestions Section styling */
+.related-suggestions-box {
+    margin-top: 40px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.02);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+}
+.suggestions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 10px;
+}
