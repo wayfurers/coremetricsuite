@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TikTok Safe Zone Checker & Ad Mockup Studio (9:16 Guide)</title>
+    <meta name="description" content="Verify your vertical 1080x1920 video layouts instantly. Test organic and paid In-Feed ad safe area dimensions using our secure, client-side mockup tool.">
+    <meta name="keywords" content="tiktok safe zone checker, tiktok ad mockup generator, tiktok overlay specs 1080x1920, organic vs paid tiktok safe area, tiktok safe zone template png, tiktok safe zone capcut, tiktok video ad margins, tiktok aspect ratio checker">
+    <link rel="canonical" href="https://coremetricsuite.com">
+
+    <!-- Open Graph / Social Metadata -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="TikTok Safe Zone Checker & Ad Mockup Studio (9:16 Guide)">
+    <meta property="og:description" content="Verify your vertical 1080x1920 video layouts instantly. Test organic and paid In-Feed ad safe area dimensions.">
+    <meta property="og:url" content="https://coremetricsuite.com">
+    
+    <!-- Global Framework Dependencies -->
+    <link rel="stylesheet" href="/css/global.css">
+    <script src="/global.js" defer></script>
+
+    <!-- FAQ JSON-LD Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What are the exact TikTok safe zone dimensions for 1080x1920 videos?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For a standard 1080x1920 pixel (9:16) vertical video, keep essential text clear of the top 130px and right 140px. For organic posts, reserve 320px at the bottom. For paid In-Feed or Spark Ads, reserve 480px at the bottom to prevent clipping by the Sponsored CTA button."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is my TikTok text getting covered by the CTA or caption box?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Paid ad placements overlay a Sponsored tag and interactive Call-To-Action (CTA) button directly above the lower caption band. Designing creatives using standard organic video dimensions results in text covered by the CTA card."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-main: #0f1117;
+            --bg-card: #181b24;
+            --bg-input: #222634;
+            --border-color: #2e3446;
+            --accent-red: #ff0050;
+            --accent-cyan: #00f2fe;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: var(--bg-main); color: var(--text-primary); font-family: var(--font-sans); line-height: 1.6; }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 900px) { .container { grid-template-columns: 1fr; } }
+
+        .panel {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .panel-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            background: var(--accent-cyan);
+            color: #000;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        .drop-zone {
+            border: 2px dashed var(--border-color);
+            padding: 1.25rem;
+            text-align: center;
+            border-radius: 8px;
+            background-color: var(--bg-input);
+            cursor: pointer;
+            transition: border-color 0.2s;
+            margin-bottom: 0.75rem;
+        }
+
+        .drop-zone:hover { border-color: var(--accent-cyan); }
+        .drop-title { font-weight: 600; color: #fff; }
+        .drop-sub { font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px; }
+
+        .btn-demo {
+            width: 100%;
+            padding: 0.6rem;
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            color: var(--accent-cyan);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .toggle-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: var(--bg-input);
+            padding: 0.75rem 0.85rem;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 1rem;
+        }
+
+        .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #374151; transition: .3s; border-radius: 24px;
+        }
+        .slider:before {
+            position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px;
+            background-color: white; transition: .3s; border-radius: 50%;
+        }
+        input:checked + .slider { background-color: var(--accent-red); }
+        input:checked + .slider:before { transform: translateX(20px); }
+
+        .form-group { margin-bottom: 1.25rem; }
+        label { display: block; font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 0.4rem; }
+        input[type="text"], textarea, select {
+            width: 100%; padding: 0.65rem 0.85rem; background-color: var(--bg-input);
+            border: 1px solid var(--border-color); border-radius: 6px; color: #fff;
+            font-size: 0.9rem; outline: none; font-family: inherit;
+        }
+
+        .btn-action {
+            width: 100%; padding: 0.85rem; background: linear-gradient(135deg, var(--accent-red), #e00046);
+            color: #fff; font-weight: 600; border: none; border-radius: 6px; cursor: pointer; font-size: 0.95rem;
+        }
+
+        .preview-stage { display: flex; flex-direction: column; align-items: center; }
+        .canvas-wrapper {
+            position: relative; width: 320px; height: 568px; border-radius: 16px;
+            overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.6); background-color: #000;
+            border: 2px solid var(--border-color);
+        }
+        canvas { width: 100%; height: 100%; display: block; }
+        .canvas-caption { margin-top: 1rem; font-size: 0.85rem; color: var(--text-secondary); text-align: center; }
+
+        .content-area { max-width: 1200px; margin: 3rem auto; padding: 0 1.5rem; }
+        .content-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 2.5rem; }
+        .content-card h1 { font-size: 2rem; margin-bottom: 1rem; color: #fff; }
+        .content-card h2 { font-size: 1.4rem; margin: 1.8rem 0 1rem; color: #fff; }
+        .content-card p { color: var(--text-secondary); margin-bottom: 1.2rem; }
+        .content-card ul, .content-card ol { color: var(--text-secondary); margin: 0 0 1.2rem 1.5rem; }
+        .content-card li { margin-bottom: 0.5rem; }
+
+        .spec-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; text-align: left; }
+        .spec-table th, .spec-table td { padding: 0.85rem 1rem; border: 1px solid var(--border-color); }
+        .spec-table th { background-color: var(--bg-input); color: #fff; }
+        .spec-table td { color: var(--text-secondary); }
+
+        /* Accordion FAQ Styling */
+        .faq-block { margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem; }
+        .faq-accordion {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 0.85rem;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .faq-accordion[open] { border-color: var(--accent-cyan); }
+        .faq-summary {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            padding: 1rem 1.2rem;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+        .faq-summary::-webkit-details-marker { display: none; }
+        .faq-summary::after {
+            content: "+";
+            font-size: 1.2rem;
+            color: var(--accent-cyan);
+            transition: transform 0.2s;
+        }
+        .faq-accordion[open] .faq-summary::after {
+            content: "−";
+            color: var(--accent-red);
+        }
+        .faq-answer {
+            padding: 0 1.2rem 1.2rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 0.4rem;
+            padding-top: 0.8rem;
+        }
+
+        .cms-ad-slot-1, .cms-ad-slot-2 {
+            width: 100%; max-width: 970px; min-height: 90px; margin: 1.5rem auto;
+            background: rgba(255,255,255,0.02); border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Container -->
+    <div id="global-header"></div>
+
+    <!-- Ad Slot 1 Container (Above Main Workspace Title) -->
+    <div class="cms-ad-slot-1"></div>
+
+    <!-- Main Tool Container -->
+    <main class="container">
+        <section class="panel">
+            <div class="panel-title">
+                <span>Safe Zone Controls</span>
+                <span class="badge">9:16 SPECS</span>
+            </div>
+
+            <!-- Upload Box & Demo File CTA -->
+            <div class="drop-zone" id="dropZone">
+                <p class="drop-title">Click or Drag Video / Image File</p>
+                <p class="drop-sub">MP4, MOV, PNG, JPG (1080x1920 recommended)</p>
+                <input type="file" id="fileInput" accept="image/*,video/*" style="display:none;">
+            </div>
+            
+            <button class="btn-demo" id="loadDemoBtn" type="button">⚡ Load Demo Sample File</button>
+
+            <div class="toggle-group">
+                <label for="adModeToggle">Paid Ad Placement Mode</label>
+                <label class="switch">
+                    <input type="checkbox" id="adModeToggle" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="toggle-group">
+                <label for="overlayToggle">Show Safe Zone Grid</label>
+                <label class="switch">
+                    <input type="checkbox" id="overlayToggle" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="accountName">Account Username</label>
+                <input type="text" id="accountName" value="@yourbrand">
+            </div>
+
+            <div class="form-group">
+                <label for="adCaption">Caption / Ad Copy</label>
+                <textarea id="adCaption" rows="3">Discover our high-converting vertical creative lineup! 🔥 #tiktokads #ugc</textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="ctaButton">Call To Action (CTA)</label>
+                <select id="ctaButton">
+                    <option value="Shop Now">Shop Now</option>
+                    <option value="Learn More">Learn More</option>
+                    <option value="Download">Download</option>
+                    <option value="Sign Up">Sign Up</option>
+                </select>
+            </div>
+
+            <button class="btn-action" id="downloadBtn" type="button">Export 1080x1920 PNG Preview</button>
+        </section>
+
+        <!-- Canvas Stage Wrapper -->
+        <section class="preview-stage">
+            <div class="canvas-wrapper">
+                <canvas id="previewCanvas" width="1080" height="1920"></canvas>
+            </div>
+            <p class="canvas-caption">
+                Interactive client-side canvas. Clear central zone (896x1310px) guarantees zero text clipping.
+            </p>
+        </section>
+    </main>
+
+    <!-- SEO & Educational Guide Section -->
+    <article class="content-area">
+        <section class="content-card">
+            <h1>TikTok Safe Zone Guide & Ad Mockup Studio</h1>
+            <p>
+                When publishing organic vertical videos or deploying paid TikTok In-Feed campaign creatives, ensuring essential headlines, product calls-to-action (CTA), logos, and auto-captions remain fully visible is critical for engagement. Over 30% of creative performance degradation occurs when key visual elements or subtitles are blocked by standard app user interface components—such as the right-side engagement rail (like, comment, share buttons), top navigation tabs, or lower video descriptions and interactive shop cards.
+            </p>
+            <p>
+                This browser-based <strong>TikTok Safe Zone Checker &amp; Ad Mockup Studio</strong> helps performance marketers, content creators, and motion graphics editors preview 1080x1920 pixel (9:16) video assets instantly. Verify your layouts against organic interface overlays as well as expanded paid ad boundaries in real time without sending media files to remote web servers.
+            </p>
+
+            <h2>TikTok Safe Area Dimensions Breakdown</h2>
+            <p>
+                Mobile viewports vary across devices—from traditional 16:9 displays to taller 19.5:9 aspect ratios found on modern smartphones. To ensure graphics and captions remain visible across all screen sizes, structure video templates around standard offset margins:
+            </p>
+
+            <table class="spec-table">
+                <thead>
+                    <tr>
+                        <th>Boundary Region</th>
+                        <th>Organic Clearance</th>
+                        <th>Paid In-Feed Clearance</th>
+                        <th>Interface Component Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Top Margin</strong></td>
+                        <td>130 px</td>
+                        <td>130 px</td>
+                        <td>Clears top navigation tabs ('Following / For You'), search bar, and camera notches.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Bottom Margin</strong></td>
+                        <td>320 px</td>
+                        <td>480 px</td>
+                        <td>Prevents occlusion by creator handle, caption stack, audio ticker, and Sponsored CTA cards.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Right Margin</strong></td>
+                        <td>140 px</td>
+                        <td>140 px</td>
+                        <td>Reserves clearance for creator profile avatar, like button, comment drawer, and share tray.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Left Margin</strong></td>
+                        <td>44 px</td>
+                        <td>44 px</td>
+                        <td>Provides safety buffer for edge bezel variations and display cropping.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Guaranteed Safe Area</strong></td>
+                        <td>896 × 1470 px</td>
+                        <td>896 × 1310 px</td>
+                        <td>Optimal focal zone for main video hooks, primary text placement, and key product graphics.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Ad Slot 2 Container (Immediately Below Data Table) -->
+            <div class="cms-ad-slot-2"></div>
+
+            <h2>Organic vs. Paid Ad Safe Area Differences</h2>
+            <p>
+                Understanding the structural differences between organic video posts and paid ad units is essential when building templates in video editors like CapCut, Adobe Premiere Pro, After Effects, or Canva:
+            </p>
+            <ul>
+                <li><strong>Organic Video Clearance:</strong> Requires a 320px bottom clearance zone to prevent account usernames, multi-line captions, hashtags, and background audio titles from covering text.</li>
+                <li><strong>Paid In-Feed &amp; Spark Ad Clearance:</strong> Extends the bottom exclusion zone to 480px. Paid ads insert a high-contrast Call-To-Action button ("Shop Now", "Learn More", "Download") directly above the caption box along with a permanent "Sponsored" tag.</li>
+                <li><strong>Interaction Rail Alignment:</strong> Paid Spark Ads preserve organic engagement counts along the right vertical rail, whereas standard In-Feed video ads feature modified share icons. The 140px right exclusion margin covers both layout styles.</li>
+            </ul>
+
+            <h2>CapCut & Premiere Pro Workflow Guide</h2>
+            <p>
+                Using a transparent overlay guide during video post-production prevents costly revision cycles and re-renders:
+            </p>
+            <ol>
+                <li><strong>Generate Overlay PNG:</strong> Click the "Export 1080x1920 PNG Preview" button in our mockup generator to save a transparent guide grid.</li>
+                <li><strong>Import to Timeline:</strong> Drag the saved PNG into your video editing software (CapCut, Adobe Premiere Pro, Final Cut Pro, or Canva) and position it on the topmost video track.</li>
+                <li><strong>Align Text and Callouts:</strong> Adjust all headlines, animated text, subtitles, and logo overlays so they remain inside the unshaded central 896x1310px box.</li>
+                <li><strong>Hide Prior to Export:</strong> Mute or delete the transparent guide layer from your editing timeline before rendering your final MP4 or MOV file.</li>
+            </ol>
+
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-block">
+                <details class="faq-accordion" open>
+                    <summary class="faq-summary">What are the exact TikTok safe zone dimensions for 1080x1920 videos?</summary>
+                    <div class="faq-answer">
+                        For a standard 1080x1920 pixel (9:16) vertical video, keep essential text clear of the top 130px and right 140px. For organic posts, reserve 320px at the bottom. For paid In-Feed or Spark Ads, reserve 480px at the bottom to prevent clipping by the Sponsored CTA button.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">Why is my TikTok text getting covered by the CTA or caption box?</summary>
+                    <div class="faq-answer">
+                        Paid ad placements overlay a Sponsored tag and interactive Call-To-Action (CTA) button directly above the lower caption band. Designing creatives using standard organic video dimensions results in text covered by the CTA card.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">How do I use a TikTok safe zone template PNG in CapCut, Canva, or Premiere Pro?</summary>
+                    <div class="faq-answer">
+                        Click the 'Export 1080x1920 PNG Preview' button to download a transparent overlay frame. Place this PNG on the top track of your editing timeline in CapCut, Adobe Premiere Pro, After Effects, or Canva while aligning text, subtitles, and logos, then hide or delete the guide layer before final export.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">Is my uploaded video or image uploaded to external servers?</summary>
+                    <div class="faq-answer">
+                        No. All media rendering, frame extraction, safe area calculations, and PNG file downloads take place strictly inside your browser using client-side HTML5 Canvas. Your files remain completely private and never leave your computer or device.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">How does mobile screen aspect ratio scaling affect video safe areas?</summary>
+                    <div class="faq-answer">
+                        TikTok dynamically resizes and crops 9:16 vertical videos depending on the mobile screen aspect ratio (e.g., 19.5:9 on modern iPhones versus 16:9 on older devices). Keeping your core message inside an 896x1310px central focus zone with 44px side margins ensures zero graphic cropping across all device models.
+                    </div>
+                </details>
+            </div>
+        </section>
+    </article>
+
+    <!-- Footer Container -->
+    <div id="global-footer"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var canvas = document.getElementById('previewCanvas');
+            if (!canvas) return;
+            var ctx = canvas.getContext('2d');
+            
+            var fileInput = document.getElementById('fileInput');
+            var dropZone = document.getElementById('dropZone');
+            var loadDemoBtn = document.getElementById('loadDemoBtn');
+            var adModeToggle = document.getElementById('adModeToggle');
+            var overlayToggle = document.getElementById('overlayToggle');
+            var accountNameInput = document.getElementById('accountName');
+            var adCaptionInput = document.getElementById('adCaption');
+            var ctaButtonSelect = document.getElementById('ctaButton');
+            var downloadBtn = document.getElementById('downloadBtn');
+
+            var currentMedia = null;
+            var isVideo = false;
+
+            dropZone.addEventListener('click', function() { fileInput.click(); });
+
+            dropZone.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            });
+
+            dropZone.addEventListener('drop', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+                    processFile(e.dataTransfer.files[0]);
+                }
+            });
+
+            fileInput.addEventListener('change', function(e) {
+                if (e.target.files && e.target.files[0]) {
+                    processFile(e.target.files[0]);
+                }
+            });
+
+            loadDemoBtn.addEventListener('click', function() {
+                var demoCanvas = document.createElement('canvas');
+                demoCanvas.width = 1080;
+                demoCanvas.height = 1920;
+                var dCtx = demoCanvas.getContext('2d');
+
+                var grad = dCtx.createLinearGradient(0, 0, 1080, 1920);
+                grad.addColorStop(0, '#111827');
+                grad.addColorStop(0.5, '#1f2937');
+                grad.addColorStop(1, '#000000');
+                dCtx.fillStyle = grad;
+                dCtx.fillRect(0, 0, 1080, 1920);
+
+                dCtx.fillStyle = '#ffffff';
+                dCtx.font = 'bold 54px sans-serif';
+                dCtx.textAlign = 'center';
+                dCtx.fillText('SAMPLE DEMO CREATIVE', 540, 850);
+                
+                dCtx.fillStyle = '#9ca3af';
+                dCtx.font = '36px sans-serif';
+                dCtx.fillText('1080 x 1920 Vertical Safe Zone Test', 540, 920);
+
+                var img = new Image();
+                img.src = demoCanvas.toDataURL();
+                img.onload = function() {
+                    currentMedia = img;
+                    isVideo = false;
+                    draw();
+                };
+            });
+
+            function processFile(file) {
+                var fileURL = URL.createObjectURL(file);
+                if (file.type.indexOf('video/') === 0) {
+                    var video = document.createElement('video');
+                    video.src = fileURL;
+                    video.autoplay = true;
+                    video.loop = true;
+                    video.muted = true;
+                    video.playsInline = true;
+                    video.onloadeddata = function() {
+                        currentMedia = video;
+                        isVideo = true;
+                        video.play();
+                    };
+                } else {
+                    var img = new Image();
+                    img.src = fileURL;
+                    img.onload = function() {
+                        currentMedia = img;
+                        isVideo = false;
+                        draw();
+                    };
+                }
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                if (currentMedia) {
+                    ctx.drawImage(currentMedia, 0, 0, canvas.width, canvas.height);
+                } else {
+                    ctx.fillStyle = '#12131a';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    ctx.fillStyle = '#4b5563';
+                    ctx.font = 'bold 36px sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('Upload 1080x1920 Media', canvas.width / 2, canvas.height / 2);
+                }
+
+                var isPaid = adModeToggle.checked;
+                var showOverlay = overlayToggle.checked;
+
+                var topM = 130;
+                var bottomM = isPaid ? 480 : 320;
+                var rightM = 140;
+                var leftM = 44;
+
+                if (showOverlay) {
+                    ctx.fillStyle = 'rgba(255, 0, 80, 0.18)';
+                    ctx.fillRect(0, 0, canvas.width, topM);
+                    ctx.fillRect(0, canvas.height - bottomM, canvas.width, bottomM);
+                    ctx.fillRect(canvas.width - rightM, topM, rightM, canvas.height - topM - bottomM);
+                    ctx.fillRect(0, topM, leftM, canvas.height - topM - bottomM);
+
+                    ctx.strokeStyle = '#00f2fe';
+                    ctx.lineWidth = 4;
+                    ctx.setLineDash([12, 8]);
+                    ctx.strokeRect(leftM, topM, canvas.width - leftM - rightM, canvas.height - topM - bottomM);
+                    ctx.setLineDash([]);
+                }
+
+                var railX = canvas.width - 90;
+                var railY = canvas.height - bottomM - 320;
+
+                ctx.fillStyle = '#ffffff';
+                ctx.beginPath();
+                ctx.arc(railX, railY, 36, 0, Math.PI * 2);
+                ctx.fill();
+
+                var icons = ['♥ 142.8K', '💬 2.4K', '🔖 18.1K', '↪ Share'];
+                ctx.font = 'bold 24px sans-serif';
+                ctx.textAlign = 'center';
+                for (var i = 0; i < icons.length; i++) {
+                    railY += 95;
+                    ctx.fillStyle = '#ffffff';
+                    ctx.fillText(icons[i], railX, railY);
+                }
+
+                var bottomX = leftM + 20;
+                var bottomY = canvas.height - bottomM + 45;
+
+                ctx.textAlign = 'left';
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 36px sans-serif';
+                ctx.fillText(accountNameInput.value, bottomX, bottomY);
+
+                ctx.font = '28px sans-serif';
+                ctx.fillStyle = '#e5e7eb';
+                var captionText = adCaptionInput.value.length > 45 ? adCaptionInput.value.substring(0, 45) + '...' : adCaptionInput.value;
+                ctx.fillText(captionText, bottomX, bottomY + 45);
+
+                if (isPaid) {
+                    var ctaY = canvas.height - 140;
+                    ctx.fillStyle = '#ff0050';
+                    if (ctx.roundRect) {
+                        ctx.beginPath();
+                        ctx.roundRect(bottomX, ctaY, canvas.width - leftM - rightM, 80, 12);
+                        ctx.fill();
+                    } else {
+                        ctx.fillRect(bottomX, ctaY, canvas.width - leftM - rightM, 80);
+                    }
+
+                    ctx.fillStyle = '#ffffff';
+                    ctx.font = 'bold 32px sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(ctaButtonSelect.value + '  ➔', canvas.width / 2, ctaY + 50);
+                }
+            }
+
+            function renderLoop() {
+                if (isVideo && currentMedia) {
+                    draw();
+                }
+                requestAnimationFrame(renderLoop);
+            }
+            requestAnimationFrame(renderLoop);
+
+            var controls = [adModeToggle, overlayToggle, accountNameInput, adCaptionInput, ctaButtonSelect];
+            for (var j = 0; j < controls.length; j++) {
+                controls[j].addEventListener('input', function() {
+                    if (!isVideo) draw();
+                });
+            }
+
+            draw();
+
+            downloadBtn.addEventListener('click', function() {
+                var link = document.createElement('a');
+                link.download = 'tiktok-safezone-preview.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        });
+    </script>
+</body>
+</html>
