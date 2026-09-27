@@ -1,12 +1,12 @@
 /**
  * CoreMetricSuite.com - Global Core Engine & Dynamic Components
- * Robust Vercel-Compatible Subdirectory Routing, Programmatic SEO, and Monetization Engine
+ * Auto-Injecting Navigation, Homepage-Aware Header, Repaired Toasts, Mobile-Safe Layouts
  */
 
 (function () {
   'use strict';
 
-  // 12 Tier-1 Static Tool Registry utilizing subfolder tracking hooks
+  // 12 Tier-1 Static Tool Registry
   const TOOL_REGISTRY = [
     {
       folder: 'tiktok-ad-safe-zone',
@@ -115,37 +115,39 @@
   ];
 
   /**
-   * Helper: Determines if current execution is happening at the root index context or deep inside a subdirectory.
+   * Detects if we are at the root homepage context.
    */
   function isAtRootContext() {
     try {
       const path = window.location.pathname.toLowerCase().trim();
-      return (
-        path === '/' || 
-        path === '' || 
-        path === '/index.html' || 
-        path.endsWith('/index.html') && path.split('/').filter(Boolean).length === 1
-      );
+      if (path === '/' || path === '' || path === '/index.html') {
+        return true;
+      }
+      const segs = path.split('/').filter(Boolean);
+      if (segs.length === 1 && segs[0] === 'index.html') {
+        return true;
+      }
+      return false;
     } catch (e) {
       return true;
     }
   }
 
   /**
-   * Returns relative base path prefix (e.g. "./" for home, "../" for subfolder tools).
+   * Returns the relative base prefix for navigation.
    */
   function getBasePrefix() {
     return isAtRootContext() ? './' : '../';
   }
 
   /**
-   * Extracts current active folder name based on URL segments.
+   * Extracts the current folder name based on the pathname.
    */
   function getCurrentFolder() {
     try {
       const pathSegments = window.location.pathname.split('/').filter(Boolean);
       if (pathSegments.length === 0) return '';
-      
+
       const lastSegment = pathSegments[pathSegments.length - 1].toLowerCase();
       if (lastSegment === 'index.html') {
         return pathSegments.length > 1 ? pathSegments[pathSegments.length - 2] : '';
@@ -157,7 +159,57 @@
   }
 
   /**
-   * Injects SEO tags, Header H1, and Regulatory Compliance Disclaimer blocks dynamically.
+   * Safely creates or updates a meta tag.
+   */
+  function safeSetMeta(selector, attrName, attrVal, content) {
+    try {
+      let el = document.querySelector(selector);
+      if (!el) {
+        el = document.createElement('meta');
+        el.setAttribute(attrName, attrVal);
+        if (document.head) {
+          document.head.appendChild(el);
+        }
+      }
+      if (el) {
+        el.setAttribute('content', content);
+      }
+    } catch (e) {}
+  }
+
+  /**
+   * FIX 1 HELPER: Ensures a placeholder container exists in the DOM.
+   * If not found, creates one and inserts it at the correct position.
+   */
+  function ensureContainer(id, position) {
+    try {
+      let container = document.getElementById(id);
+      if (container) return container;
+
+      container = document.createElement('div');
+      container.id = id;
+
+      const body = document.body;
+      if (!body) return null;
+
+      if (position === 'prepend') {
+        if (body.firstChild) {
+          body.insertBefore(container, body.firstChild);
+        } else {
+          body.appendChild(container);
+        }
+      } else {
+        body.appendChild(container);
+      }
+
+      return container;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  /**
+   * Applies programmatic SEO metadata and injects disclaimers.
    */
   function applyDynamicSEOAndCompliance() {
     try {
@@ -167,8 +219,20 @@
       const match = TOOL_REGISTRY.find(t => t.folder === currentFolder);
       if (!match) return;
 
-      if (match.metaTitle) { document.title = match.metaTitle; }
-      if (match.metaDesc) { safeSetMeta('meta[name="description"]', 'name', 'description', match.metaDesc); }
+      if (match.metaTitle) {
+        try { document.title = match.metaTitle; } catch (e) {}
+      }
+      if (match.metaDesc) {
+        safeSetMeta('meta[name="description"]', 'name', 'description', match.metaDesc);
+      }
+      if (match.metaTitle) {
+        safeSetMeta('meta[property="og:title"]', 'property', 'og:title', match.metaTitle);
+        safeSetMeta('meta[name="twitter:title"]', 'name', 'twitter:title', match.metaTitle);
+      }
+      if (match.metaDesc) {
+        safeSetMeta('meta[property="og:description"]', 'property', 'og:description', match.metaDesc);
+        safeSetMeta('meta[name="twitter:description"]', 'name', 'twitter:description', match.metaDesc);
+      }
 
       if (match.h1) {
         const h1Element = document.querySelector('h1');
@@ -189,21 +253,28 @@
   }
 
   /**
-   * Dynamically builds and injects header navigation strip with active state tracking.
+   * FIX 1 + FIX 2: Auto-creates header container if missing.
+   *                Hides Suite Directory button on homepage only.
    */
   function injectGlobalHeader() {
     try {
-      const headerContainer = document.getElementById('global-header');
+      const headerContainer = ensureContainer('global-header', 'prepend');
       if (!headerContainer) return;
 
       const prefix = getBasePrefix();
       const currentFolder = getCurrentFolder();
+      const atRoot = isAtRootContext();
 
       const navStripHTML = TOOL_REGISTRY.map(tool => {
         const isActive = (currentFolder === tool.folder) ? ' class="active-tool"' : '';
         const href = `${prefix}${tool.folder}/index.html`;
         return `<a href="${href}"${isActive}>${tool.title}</a>`;
       }).join('');
+
+      // FIX 2: Only render Suite Directory button when NOT on homepage
+      const suiteDirectoryBtn = atRoot
+        ? ''
+        : `<a href="${prefix}index.html" class="btn-profile" aria-label="Suite Directory">Suite Directory</a>`;
 
       headerContainer.innerHTML = `
         <header class="cms-site-header">
@@ -212,8 +283,9 @@
             <nav class="cms-meta-nav">
               <a href="${prefix}about.html">About</a>
               <a href="${prefix}contact.html">Contact</a>
-              <a href="${prefix}privacy-policy.html">Privacy Policy</a>
+              <a href="${prefix}privacy-policy.html">Privacy</a>
               <a href="${prefix}terms.html">Terms</a>
+              ${suiteDirectoryBtn}
             </nav>
           </div>
           <div class="cms-tool-scroll-strip">
@@ -228,11 +300,11 @@
   }
 
   /**
-   * Injects standardized footer with dynamic context-aware meta links.
+   * FIX 1: Auto-creates footer container if missing.
    */
   function injectGlobalFooter() {
     try {
-      const footerContainer = document.getElementById('global-footer');
+      const footerContainer = ensureContainer('global-footer', 'append');
       if (!footerContainer) return;
 
       const prefix = getBasePrefix();
@@ -255,7 +327,7 @@
   }
 
   /**
-   * Recommendation Engine Popup System triggering exactly 4000ms after load.
+   * FIX 3: Replaces broken &rarr; character with clean "->" text arrow.
    */
   function initRecommendationEngine() {
     try {
@@ -278,7 +350,7 @@
             <div class="cms-toast-content">
               <span class="cms-toast-label">Suggested Tool</span>
               <p class="cms-toast-title">${suggestion.title}</p>
-              <a href="${targetUrl}" class="cms-toast-btn">Open Tool &rarr;</a>
+              <a href="${targetUrl}" class="cms-toast-btn">Open Tool -&gt;</a>
               <button class="cms-toast-close" id="cms-close-toast" aria-label="Close">&times;</button>
             </div>
           `;
@@ -286,35 +358,33 @@
           const targetBody = document.body;
           if (targetBody) {
             targetBody.appendChild(popBox);
-            window.requestAnimationFrame(() => { popBox.classList.add('cms-toast-visible'); });
+            if (typeof window.requestAnimationFrame === 'function') {
+              window.requestAnimationFrame(() => {
+                try { popBox.classList.add('cms-toast-visible'); } catch (e) {}
+              });
+            } else {
+              popBox.classList.add('cms-toast-visible');
+            }
           }
 
-          document.getElementById('cms-close-toast')?.addEventListener('click', () => {
-            popBox.classList.remove('cms-toast-visible');
-            setTimeout(() => { popBox.remove(); }, 300);
-          });
+          const closeBtn = document.getElementById('cms-close-toast');
+          if (closeBtn) {
+            closeBtn.addEventListener('click', () => {
+              try {
+                popBox.classList.remove('cms-toast-visible');
+                setTimeout(() => {
+                  try { popBox.remove(); } catch (e) {}
+                }, 300);
+              } catch (e) {}
+            });
+          }
         } catch (e) {}
       }, 4000);
     } catch (e) {}
   }
 
   /**
-   * Meta tag creation and setter helper.
-   */
-  function safeSetMeta(selector, attrName, attrVal, content) {
-    try {
-      let el = document.querySelector(selector);
-      if (!el) {
-        el = document.createElement('meta');
-        el.setAttribute(attrName, attrVal);
-        document.head?.appendChild(el);
-      }
-      if (el) { el.setAttribute('content', content); }
-    } catch (e) {}
-  }
-
-  /**
-   * DOM Lifecycle Handler
+   * DOM Lifecycle Suite Initialization
    */
   function initSuite() {
     try { applyDynamicSEOAndCompliance(); } catch (e) {}
@@ -330,7 +400,7 @@
   }
 
   /* ==========================================================================
-   * DUAL-NETWORK MONETIZATION ENGINE HOOKS (Complete and Protected)
+   * DUAL-NETWORK MONETIZATION HOOKS (Preserved Structure)
    * ========================================================================== */
 
   window.initAdSense = function (publisherId) {
@@ -340,20 +410,26 @@
       script.async = true;
       script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${publisherId}`;
       script.crossOrigin = 'anonymous';
-      document.head?.appendChild(script);
+      if (document.head) {
+        document.head.appendChild(script);
+      }
     } catch (e) {}
   };
 
   window.renderAdSenseSlot = function (publisherId, slotId) {
     try {
       const slots = document.querySelectorAll('.cms-ad-slot-1, .cms-ad-slot');
+      if (!slots || slots.length === 0) return;
+
       slots.forEach(slot => {
-        if (slot && slot.children.length === 0) {
-          slot.style.minHeight = '90px';
-          slot.style.margin = '1.5rem 0';
-          slot.innerHTML = `<ins class="adsbygoogle" style="display:block" data-ad-client="${publisherId}" data-ad-slot="${slotId}" data-ad-format="auto" data-full-width-responsive="true"></ins>`;
-          (window.adsbygoogle = window.adsbygoogle || []).push({});
-        }
+        try {
+          if (slot && slot.children.length === 0) {
+            slot.style.minHeight = '90px';
+            slot.style.margin = '1.5rem 0';
+            slot.innerHTML = `<ins class="adsbygoogle" style="display:block" data-ad-client="${publisherId}" data-ad-slot="${slotId}" data-ad-format="auto" data-full-width-responsive="true"></ins>`;
+            (window.adsbygoogle = window.adsbygoogle || []).push({});
+          }
+        } catch (innerErr) {}
       });
     } catch (e) {}
   };
@@ -364,19 +440,25 @@
       const script = document.createElement('script');
       script.async = true;
       script.src = scriptUrl;
-      document.head?.appendChild(script);
+      if (document.head) {
+        document.head.appendChild(script);
+      }
     } catch (e) {}
   };
 
   window.renderSecondarySlot = function (networkTagId) {
     try {
       const slots = document.querySelectorAll('.cms-ad-slot-2');
+      if (!slots || slots.length === 0) return;
+
       slots.forEach(slot => {
-        if (slot && slot.children.length === 0) {
-          slot.style.minHeight = '90px';
-          slot.style.margin = '1.5rem 0';
-          slot.innerHTML = `<div id="cms-net2-${networkTagId}"></div>`;
-        }
+        try {
+          if (slot && slot.children.length === 0) {
+            slot.style.minHeight = '90px';
+            slot.style.margin = '1.5rem 0';
+            slot.innerHTML = `<div id="cms-net2-${networkTagId}"></div>`;
+          }
+        } catch (innerErr) {}
       });
     } catch (e) {}
   };
