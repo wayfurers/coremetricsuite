@@ -1,16 +1,17 @@
+// 1. Data mapping for all directory tools & categorization metrics (Explicit Path Fixes)
 const TOOLS_REGISTRY = [
-    { name: "AU Cents-Per-Km Estimator", path: "/au-cents-per-km-estimator/", tag: "AU TAX" },
-    { name: "AU SCHADS Vehicle Allowance", path: "/au-schads-vehicle-allowance/", tag: "AU LABOUR" },
-    { name: "AU Superannuation Guarantee Charge", path: "/au-superannuation-charge-tracker/", tag: "AU TAX" },
-    { name: "US Section 179 Vehicle Deduction", path: "/us-section-179-truck-calculator/", tag: "US TAX" },
-    { name: "US LLC Late Tax Penalty Estimator", path: "/us-llc-late-penalty-estimator/", tag: "US TAX" },
-    { name: "UK Form 4A Rent Increase Tracker", path: "/uk-form-4a-rent-tracker/", tag: "UK LEGAL" },
-    { name: "UK Stamp Duty Bracket Estimator", path: "/uk-sdlt-bracket-estimator/", tag: "UK TAX" },
-    { name: "UK Section 8 Notice Calculator", path: "/uk-section-8-calculator/", tag: "UK LEGAL" },
-    { name: "Instagram Reels Aspect Ratio", path: "/instagram-reels-preview/", tag: "MEDIA" },
-    { name: "YouTube Shorts UI Safe Zone", path: "/shorts-ui-safe-zone/", tag: "MEDIA" },
-    { name: "TikTok Ad Safe Zone Analyzer", path: "/tiktok-ad-safe-zone/", tag: "MEDIA" },
-    { name: "Shopify Metafields Parser", path: "/shopify-metafields-parser/", tag: "ECOM" }
+    { name: "AU Cents-Per-Km Estimator", path: "/au-cents-per-km-estimator/index.html", tag: "AU TAX" },
+    { name: "AU SCHADS Vehicle Allowance", path: "/au-schads-vehicle-allowance/index.html", tag: "AU LABOUR" },
+    { name: "AU Superannuation Guarantee Charge", path: "/au-superannuation-charge-tracker/index.html", tag: "AU TAX" },
+    { name: "US Section 179 Vehicle Deduction", path: "/us-section-179-truck-calculator/index.html", tag: "US TAX" },
+    { name: "US LLC Late Tax Penalty Estimator", path: "/us-llc-late-penalty-estimator/index.html", tag: "US TAX" },
+    { name: "UK Form 4A Rent Increase Tracker", path: "/uk-form-4a-rent-tracker/index.html", tag: "UK LEGAL" },
+    { name: "UK Stamp Duty Bracket Estimator", path: "/uk-sdlt-bracket-estimator/index.html", tag: "UK TAX" },
+    { name: "UK Section 8 Notice Calculator", path: "/uk-section-8-calculator/index.html", tag: "UK LEGAL" },
+    { name: "Instagram Reels Aspect Ratio", path: "/instagram-reels-preview/index.html", tag: "MEDIA" },
+    { name: "YouTube Shorts UI Safe Zone", path: "/shorts-ui-safe-zone/index.html", tag: "MEDIA" },
+    { name: "TikTok Ad Safe Zone Analyzer", path: "/tiktok-ad-safe-zone/index.html", tag: "MEDIA" },
+    { name: "Shopify Metafields Parser", path: "/shopify-metafields-parser/index.html", tag: "ECOM" }
 ];
 
 function injectAdvertisementCode(containerId) {
