@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>US LLC Late Penalty Estimator (Form 1065 / 1120 / 5472 Tracker)</title>
+    <meta name="description" content="Calculate statutory IRS late filing penalties, Form 5472 non-compliance fines, and interest liabilities instantly and securely inside your browser.">
+    <meta name="keywords" content="us llc late penalty estimator, form 1065 late penalty, form 5472 penalty 25000, irs late filing fee, 255 per partner penalty">
+    <link rel="canonical" href="https://coremetricsuite.com" />
+
+    <!-- Architecture Links -->
+    <link rel="stylesheet" href="/css/global.css">
+    <script src="/global.js" defer></script>
+
+    <!-- Open Graph / Social Metadata -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="US LLC Late Penalty Estimator (Form 1065 / 1120 / 5472 Tracker)">
+    <meta property="og:description" content="Calculate statutory IRS late filing penalties, Form 5472 non-compliance fines, and interest liabilities instantly and securely inside your browser.">
+    <meta property="og:url" content="https://coremetricsuite.com">
+
+    <!-- JSON-LD Schema: FAQPage Mapping Updated $255 Rate Rule -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How is the late filing penalty calculated for a multi-member US LLC (Form 1065)?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Under updated tax rules (IRC §6698), the IRS assesses a late filing penalty for Form 1065 at $255 per partner, per month (or fraction of a month) that the return is late, for a maximum duration of up to 12 months."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the penalty for late filing Form 5472 on a foreign-owned single-member LLC?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Under IRC §6038A, failing to timely file Form 5472 triggers a flat initial statutory penalty of $25,000 per year. If non-compliance continues beyond 90 days after IRS notification, additional continuation penalties of $25,000 for every 30-day period apply with no statutory upper limit."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the late penalty rate for S-Corporations filing Form 1120-S late?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Under IRC §6699, the IRS assesses a late filing penalty for Form 1120-S at the rate of $255 per shareholder, per month (or part of a month), capped at a maximum of 12 months."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does an inactive or zero-revenue US LLC face late tax filing penalties?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Foreign-owned single-member LLCs must file Form 5472 even with zero gross revenue if there were any reportable transactions (such as initial capital contributions, owner-paid filing fees, or distributions). Failure to file results in the full $25,000 penalty regardless of income."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are financial amounts or tax details saved or transmitted to external servers?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. All penalty, interest, and timeline calculations run 100% locally inside your web browser using client-side JavaScript code. Your financial details remain completely confidential and are never logged or transmitted."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-main: #0f1117;
+            --bg-card: #181b24;
+            --bg-input: #222634;
+            --border-color: #2e3446;
+            --accent-purple: #8b5cf6;
+            --accent-cyan: #00f2fe;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-mono: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: var(--bg-main); color: var(--text-primary); font-family: var(--font-sans); line-height: 1.6; }
+        
+        .cms-tool-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 440px 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 960px) { .cms-tool-container { grid-template-columns: 1fr; } }
+
+        .panel {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .panel-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            background: var(--accent-purple);
+            color: #fff;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        .btn-demo {
+            width: 100%;
+            padding: 0.6rem;
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            color: var(--accent-purple);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 1.25rem;
+            transition: background 0.2s;
+        }
+        .btn-demo:hover { background-color: #2a3042; }
+
+        .form-group { margin-bottom: 1.25rem; }
+        label { display: block; font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 0.4rem; }
+        input[type="date"], input[type="number"], select {
+            width: 100%; padding: 0.65rem 0.85rem; background-color: var(--bg-input);
+            border: 1px solid var(--border-color); border-radius: 6px; color: #fff;
+            font-size: 0.9rem; outline: none; font-family: inherit;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            background-color: var(--bg-input);
+            padding: 0.85rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            margin-bottom: 1.25rem;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.85rem;
+            color: var(--text-primary);
+            cursor: pointer;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            accent-color: var(--accent-purple);
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .btn-action {
+            width: 100%; padding: 0.85rem; background: linear-gradient(135deg, var(--accent-purple), #7c3aed);
+            color: #fff; font-weight: 700; border: none; border-radius: 6px; cursor: pointer; font-size: 0.95rem;
+            transition: opacity 0.2s;
+        }
+        .btn-action:hover { opacity: 0.9; }
+
+        .preview-stage { display: flex; flex-direction: column; }
+        .result-box {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            font-size: 0.95rem;
+            color: #e5e7eb;
+            min-height: 380px;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .result-metric {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+        .result-metric h4 {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.3rem;
+        }
+        .result-metric .value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #fff;
+            font-family: var(--font-mono);
+        }
+
+        .timeline-breakdown {
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border-color);
+            padding-top: 0.75rem;
+        }
+
+        .timeline-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.35rem 0;
+            color: var(--text-secondary);
+            border-bottom: 1px dashed rgba(255,255,255,0.05);
+        }
+        .timeline-row:last-child { border-bottom: none; }
+        .timeline-row.active {
+            color: var(--accent-cyan);
+            font-weight: 600;
+        }
+
+        .canvas-caption { margin-top: 1rem; font-size: 0.85rem; color: var(--text-secondary); text-align: right; }
+
+        .content-area { max-width: 1200px; margin: 3rem auto; padding: 0 1.5rem; }
+        .content-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 2.5rem; }
+        .content-card h1 { font-size: 2rem; margin-bottom: 1rem; color: #fff; }
+        .content-card h2 { font-size: 1.4rem; margin: 1.8rem 0 1rem; color: #fff; }
+        .content-card p { color: var(--text-secondary); margin-bottom: 1.2rem; }
+        .content-card ul, .content-card ol { color: var(--text-secondary); margin: 0 0 1.2rem 1.5rem; }
+        .content-card li { margin-bottom: 0.5rem; }
+
+        .spec-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; text-align: left; }
+        .spec-table th, .spec-table td { padding: 0.85rem 1rem; border: 1px solid var(--border-color); }
+        .spec-table th { background-color: var(--bg-input); color: #fff; }
+        .spec-table td { color: var(--text-secondary); }
+
+        /* Accordion FAQ Styling */
+        .faq-block { margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem; }
+        .faq-accordion {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 0.85rem;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .faq-accordion[open] { border-color: var(--accent-purple); }
+        .faq-summary {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            padding: 1rem 1.2rem;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+        .faq-summary::-webkit-details-marker { display: none; }
+        .faq-summary::after {
+            content: "+";
+            font-size: 1.2rem;
+            color: var(--accent-purple);
+            transition: transform 0.2s;
+        }
+        .faq-accordion[open] .faq-summary::after {
+            content: "−";
+            color: var(--accent-purple);
+        }
+        .faq-answer {
+            padding: 0 1.2rem 1.2rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 0.4rem;
+            padding-top: 0.8rem;
+        }
+
+        .cms-ad-slot-1, .cms-ad-slot-2 {
+            width: 100%; max-width: 970px; min-height: 90px; margin: 1.5rem auto;
+            background: rgba(255,255,255,0.02); border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Site Header Integration Hook -->
+    <div id="global-header"></div>
+
+    <!-- Ad Slot 1 Container (Directly Above Main Title Banner) -->
+    <div class="cms-ad-slot-1"></div>
+
+    <!-- Main Interactive Tool Container -->
+    <section class="cms-tool-container">
+        <form class="panel" id="llcPenaltyForm" onsubmit="return false;">
+            <div class="panel-title">
+                <span>LLC Penalty Calculation Controls</span>
+                <span class="badge">IRS STATUTORY ENGINE</span>
+            </div>
+
+            <button class="btn-demo" id="loadDemoBtn" type="button">⚡ Load Demo Sample Data</button>
+
+            <div class="form-group">
+                <label for="entityType">LLC Tax Classification</label>
+                <select id="entityType">
+                    <option value="partnership">Multi-Member LLC / Partnership (Form 1065)</option>
+                    <option value="foreign_smllc">Foreign-Owned Single-Member LLC (Form 5472 + Pro Forma 1120)</option>
+                    <option value="c_corp">LLC Taxed as C-Corporation (Form 1120)</option>
+                    <option value="s_corp">LLC Taxed as S-Corporation (Form 1120-S)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="dueDate">Original Filing Due Date</label>
+                <input type="date" id="dueDate" value="2026-03-15">
+            </div>
+
+            <div class="form-group">
+                <label for="actualFilingDate">Actual / Anticipated Filing Date</label>
+                <input type="date" id="actualFilingDate" value="2026-05-15">
+            </div>
+
+            <div class="form-group" id="groupPartners" style="display: block;">
+                <label for="memberCount">Number of Members / Partners / Shareholders</label>
+                <input type="number" id="memberCount" value="2" min="1" step="1">
+            </div>
+
+            <div class="form-group">
+                <label for="unpaidTax">Unpaid Federal Tax Owed ($)</label>
+                <input type="number" id="unpaidTax" value="0" min="0" step="100">
+            </div>
+
+            <div class="form-group" id="groupNotice90" style="display: none;">
+                <label class="checkbox-item" style="background: none; padding: 0; border: none;">
+                    <input type="checkbox" id="irsNoticeReceived">
+                    <span>IRS Non-Compliance Notice Received (>90 Days Ago)</span>
+                </label>
+            </div>
+
+            <button class="btn-action" id="calculateBtn" type="button">Estimate Total IRS Penalties</button>
+        </form>
+
+        <!-- Result Summary Dashboard -->
+        <section class="preview-stage">
+            <div class="panel" style="flex: 1; display: flex; flex-direction: column;">
+                <div class="panel-title">
+                    <span>IRS Late Penalty & Fine Breakdown</span>
+                </div>
+                <div class="result-box" id="resultBoard">
+                    <div class="result-metric">
+                        <h4>Total Estimated IRS Penalty Liability</h4>
+                        <div class="value" id="Total Estimated IRS Penalty Liability">$0.00</div>
+                    </div>
+                    <div class="result-metric">
+                        <h4>Statutory Violation & Status Assessment</h4>
+                        <div class="value" id="Statutory Violation & Status Assessment">--</div>
+                    </div>
+                    <div class="result-metric">
+                        <h4>Penalty Itemization Milestones</h4>
+                        <div class="timeline-breakdown" id="Penalty Itemization Milestones">
+                            <!-- Detailed breakdown populated via JS -->
+                        </div>
+                    </div>
+                </div>
+                <p class="canvas-caption">
+                    Calculated in compliance with IRS IRC §6038A, §6698, §6699, §6651, and current statutory parameters.
+                </p>
+            </div>
+        </section>
+    </section>
+
+    <!-- SEO & Educational Content Section -->
+    <article class="content-area">
+        <section class="content-card">
+            <h1>US LLC Late Penalty Estimator (Form 1065 / 1120 / 5472 Tracker)</h1>
+            <p>
+                Maintaining compliance with Internal Revenue Service (IRS) filing mandates is essential for domestic and foreign-owned US Limited Liability Companies (LLCs). Failing to file annual tax returns or required informational reports by statutory deadlines triggers automated failure-to-file penalties, continuation fines, and interest charges under current Internal Revenue Code (IRC) provisions.
+            </p>
+            <p>
+                This browser-based <strong>us-llc-late-penalty-estimator</strong> allows corporate managers, registered agents, and international owners to evaluate potential IRS liability instantly and confidentially using client-side JavaScript execution without exposing financial records.
+            </p>
+
+            <h2>Current IRS Late Filing Penalty Framework</h2>
+            <p>
+                Penalties vary depending on entity tax classification and the specific forms required by federal tax regulations:
+            </p>
+
+            <table class="spec-table">
+                <thead>
+                    <tr>
+                        <th>Tax Classification</th>
+                        <th>Required IRS Form</th>
+                        <th>Statutory Late Filing Penalty Rate</th>
+                        <th>IRC Code Authority</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Multi-Member LLC (Partnership)</strong></td>
+                        <td>Form 1065</td>
+                        <td>$255 per partner, per month (up to 12 months)</td>
+                        <td>IRC §6698</td>
+                    </tr>
+                    <tr>
+                        <td><strong>LLC Taxed as S-Corporation</strong></td>
+                        <td>Form 1120-S</td>
+                        <td>$255 per shareholder, per month (up to 12 months)</td>
+                        <td>IRC §6699</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Foreign-Owned Single-Member LLC</strong></td>
+                        <td>Form 5472 + Pro Forma 1120</td>
+                        <td>Flat $25,000 per year + $25,000 / 30-day continuation</td>
+                        <td>IRC §6038A / §6038C</td>
+                    </tr>
+                    <tr>
+                        <td><strong>LLC Taxed as C-Corporation</strong></td>
+                        <td>Form 1120</td>
+                        <td>5% of unpaid tax per month (up to 25% max)</td>
+                        <td>IRC §6651(a)(1)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Ad Slot 2 Container (Directly Below Specification Table) -->
+            <div class="cms-ad-slot-2"></div>
+
+            <h2>Key Rules for Pass-Through & Foreign-Owned Entities</h2>
+            <p>
+                Understanding how IRS penalties accrue is critical to mitigating financial risk:
+            </p>
+            <ul>
+                <li><strong>Per-Partner / Shareholder Rule ($255/mo):</strong> Under IRC §6698 and §6699, pass-through entities (Form 1065 and Form 1120-S) face penalties multiplied by every owner involved, compounding monthly up to 12 full calendar months.</li>
+                <li><strong>Form 5472 Initial & Continuation Fines:</strong> Foreign single-member LLCs face an automatic initial $25,000 failure-to-file fine. If the return remains unfiled 90 days after IRS notice issuance, additional continuation fines of $25,000 accrue for every 30-day period with no ceiling.</li>
+                <li><strong>Zero Income Filings:</strong> Inactive entities or LLCs with $0 net revenue are not exempt from Form 5472 or Form 1065 penalties if informational filing obligations exist.</li>
+            </ul>
+
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-block">
+                <details class="faq-accordion" open>
+                    <summary class="faq-summary">How is the late filing penalty calculated for a multi-member US LLC (Form 1065)?</summary>
+                    <div class="faq-answer">
+                        Under updated tax rules (IRC §6698), the IRS assesses a late filing penalty for Form 1065 at $255 per partner, per month (or fraction of a month) that the return is late, for a maximum duration of up to 12 months.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">What is the penalty for late filing Form 5472 on a foreign-owned single-member LLC?</summary>
+                    <div class="faq-answer">
+                        Under IRC §6038A, failing to timely file Form 5472 triggers a flat initial statutory penalty of $25,000 per year. If non-compliance continues beyond 90 days after IRS notification, additional continuation penalties of $25,000 for every 30-day period apply with no statutory upper limit.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">What is the late penalty rate for S-Corporations filing Form 1120-S late?</summary>
+                    <div class="faq-answer">
+                        Under IRC §6699, the IRS assesses a late filing penalty for Form 1120-S at the rate of $255 per shareholder, per month (or part of a month), capped at a maximum of 12 months.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">Does an inactive or zero-revenue US LLC face late tax filing penalties?</summary>
+                    <div class="faq-answer">
+                        Yes. Foreign-owned single-member LLCs must file Form 5472 even with zero gross revenue if there were any reportable transactions (such as initial capital contributions, owner-paid filing fees, or distributions). Failure to file results in the full $25,000 penalty regardless of income.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">Are financial amounts or tax details saved or transmitted to external servers?</summary>
+                    <div class="faq-answer">
+                        No. All penalty, interest, and timeline calculations run 100% locally inside your web browser using client-side JavaScript code. Your financial details remain completely confidential and are never logged or transmitted.
+                    </div>
+                </details>
+            </div>
+        </section>
+    </article>
+
+    <!-- Site Footer Integration Hook -->
+    <div id="global-footer"></div>
+
+    <!-- Math Calculation Engine JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var entityTypeSelect = document.getElementById('entityType');
+            var dueDateInput = document.getElementById('dueDate');
+            var actualFilingDateInput = document.getElementById('actualFilingDate');
+            var memberCountInput = document.getElementById('memberCount');
+            var unpaidTaxInput = document.getElementById('unpaidTax');
+            var irsNoticeReceivedCheckbox = document.getElementById('irsNoticeReceived');
+            var groupPartners = document.getElementById('groupPartners');
+            var groupNotice90 = document.getElementById('groupNotice90');
+
+            var calculateBtn = document.getElementById('calculateBtn');
+            var loadDemoBtn = document.getElementById('loadDemoBtn');
+
+            var resTotalPenalty = document.getElementById('Total Estimated IRS Penalty Liability');
+            var resStatusAssessment = document.getElementById('Statutory Violation & Status Assessment');
+            var resTimelineList = document.getElementById('Penalty Itemization Milestones');
+
+            entityTypeSelect.addEventListener('change', function() {
+                var type = entityTypeSelect.value;
+                if (type === 'partnership' || type === 's_corp') {
+                    groupPartners.style.display = 'block';
+                } else {
+                    groupPartners.style.display = 'none';
+                }
+
+                if (type === 'foreign_smllc') {
+                    groupNotice90.style.display = 'block';
+                } else {
+                    groupNotice90.style.display = 'none';
+                }
+            });
+
+            loadDemoBtn.addEventListener('click', function() {
+                entityTypeSelect.value = 'partnership';
+                groupPartners.style.display = 'block';
+                groupNotice90.style.display = 'none';
+
+                dueDateInput.value = '2026-03-15';
+                actualFilingDateInput.value = '2026-05-15';
+                memberCountInput.value = '2';
+                unpaidTaxInput.value = '0';
+                irsNoticeReceivedCheckbox.checked = false;
+
+                calculateLLCPenalty();
+            });
+
+            calculateBtn.addEventListener('click', function() {
+                calculateLLCPenalty();
+            });
+
+            function calculateLLCPenalty() {
+                var rawDueDate = dueDateInput.value;
+                var rawActualDate = actualFilingDateInput.value;
+
+                if (!rawDueDate || !rawActualDate) {
+                    alert('Please select valid due and filing dates.');
+                    return;
+                }
+
+                var dueDate = new Date(rawDueDate);
+                var actualDate = new Date(rawActualDate);
+
+                if (actualDate <= dueDate) {
+                    resTotalPenalty.textContent = '$0.00';
+                    resStatusAssessment.textContent = 'Compliant (Filed On or Before Due Date)';
+                    resTimelineList.innerHTML = '<div class="timeline-row"><span>No late penalties or interest incurred.</span></div>';
+                    return;
+                }
+
+                var monthsLate = getMonthsLate(dueDate, actualDate);
+                var daysLate = Math.max(0, Math.ceil((actualDate - dueDate) / (1000 * 60 * 60 * 24)));
+                var entityType = entityTypeSelect.value;
+                var members = parseInt(memberCountInput.value) || 1;
+                var unpaidTax = parseFloat(unpaidTaxInput.value) || 0;
+                var noticeReceived = irsNoticeReceivedCheckbox.checked;
+
+                var lateFilingPenalty = 0;
+                var failureToPayPenalty = 0;
+                var continuationPenalty = 0;
+                var estimatedInterest = 0;
+                var assessmentStatus = "";
+
+                if (entityType === 'partnership' || entityType === 's_corp') {
+                    // Form 1065 & Form 1120-S: $255 per partner/shareholder per month (up to 12 months)
+                    var cappedMonths = Math.min(monthsLate, 12);
+                    lateFilingPenalty = 255 * members * cappedMonths;
+                    assessmentStatus = entityType === 'partnership' ? "IRC §6698 Partnership Default ($255/owner/mo)" : "IRC §6699 S-Corp Default ($255/owner/mo)";
+                } else if (entityType === 'foreign_smllc') {
+                    // Form 5472: Flat $25,000 initial penalty
+                    lateFilingPenalty = 25000;
+                    if (noticeReceived) {
+                        // $25,000 for every 30 days past the initial 90-day grace window
+                        var daysOver90 = Math.max(0, daysLate - 90);
+                        var continuationPeriods = Math.max(1, Math.ceil(daysOver90 / 30));
+                        continuationPenalty = 25000 * continuationPeriods;
+                    }
+                    assessmentStatus = "IRC §6038A Non-Compliance Violations";
+                } else if (entityType === 'c_corp') {
+                    // Form 1120: 5% of unpaid tax per month (max 25%)
+                    var perc = Math.min(monthsLate * 0.05, 0.25);
+                    lateFilingPenalty = unpaidTax * perc;
+                    if (monthsLate >= 2 && lateFilingPenalty < 485 && unpaidTax > 0) {
+                        lateFilingPenalty = Math.min(485, unpaidTax);
+                    }
+                    assessmentStatus = "IRC §6651 C-Corporation Failure-to-File";
+                }
+
+                // Failure-to-Pay Tax Penalty (0.5% per month, capped at 25%)
+                if (unpaidTax > 0) {
+                    var ftpPerc = Math.min(monthsLate * 0.005, 0.25);
+                    failureToPayPenalty = unpaidTax * ftpPerc;
+
+                    // Statutory Interest (~8% APR compounded daily)
+                    var annualRate = 0.08;
+                    estimatedInterest = unpaidTax * (Math.pow(1 + (annualRate / 365), daysLate) - 1);
+                }
+
+                var totalPenalty = lateFilingPenalty + continuationPenalty + failureToPayPenalty + estimatedInterest;
+
+                // Render Outputs
+                resTotalPenalty.textContent = '$' + totalPenalty.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                resStatusAssessment.textContent = assessmentStatus + " (" + monthsLate + " Month" + (monthsLate > 1 ? "s" : "") + " Late)";
+
+                var timelineHtml = '';
+                timelineHtml += createTimelineRow('Statutory Base Late Filing Fine', '$' + lateFilingPenalty.toLocaleString('en-US', { minimumFractionDigits: 2 }), lateFilingPenalty > 0);
+                
+                if (entityType === 'foreign_smllc') {
+                    timelineHtml += createTimelineRow('IRS Notice Continuation Fine ($25k / 30d)', '$' + continuationPenalty.toLocaleString('en-US', { minimumFractionDigits: 2 }), continuationPenalty > 0);
+                }
+                
+                timelineHtml += createTimelineRow('Failure-to-Pay Tax Penalty (0.5%/mo)', '$' + failureToPayPenalty.toLocaleString('en-US', { minimumFractionDigits: 2 }), failureToPayPenalty > 0);
+                timelineHtml += createTimelineRow('Accrued Statutory Interest (Est. 8% APR)', '$' + estimatedInterest.toLocaleString('en-US', { minimumFractionDigits: 2 }), estimatedInterest > 0);
+                timelineHtml += createTimelineRow('Total Estimated Liability', '$' + totalPenalty.toLocaleString('en-US', { minimumFractionDigits: 2 }), true);
+
+                resTimelineList.innerHTML = timelineHtml;
+            }
+
+            function getMonthsLate(startDate, endDate) {
+                var months = (endDate.getFullYear() - startDate.getFullYear()) * 12;
+                months -= startDate.getMonth();
+                months += endDate.getMonth();
+                if (endDate.getDate() > startDate.getDate()) {
+                    months += 1;
+                }
+                return months <= 0 ? 1 : months;
+            }
+
+            function createTimelineRow(label, valStr, isActive) {
+                var activeClass = isActive ? ' active' : '';
+                return '<div class="timeline-row' + activeClass + '">' +
+                    '<span>' + label + '</span>' +
+                    '<span>' + valStr + '</span>' +
+                    '</div>';
+            }
+
+            // Execute initial calculation
+            calculateLLCPenalty();
+        });
+    </script>
+</body>
+</html>
