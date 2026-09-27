@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AU SCHADS Award Vehicle Allowance & Paid Travel Calculator</title>
+    <meta name="description" content="Calculate statutory Care Worker travel reimbursements, motor vehicle per-km allowances, and paid travel time under SCHADS Award Clauses 20.5 and 25.5.">
+    <meta name="keywords" content="SCHADS vehicle allowance calculator, SCHADS mileage reimbursement, disability support worker travel allowance, award kilometer rate 2026, client transport reimbursement SCHADS">
+    <link rel="canonical" href="https://coremetricsuite.com" />
+
+    <!-- Architecture Links -->
+    <link rel="stylesheet" href="/css/global.css">
+    <script src="/global.js" defer></script>
+
+    <!-- Open Graph / Social Metadata -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="AU SCHADS Award Vehicle Allowance & Paid Travel Calculator">
+    <meta property="og:description" content="Calculate statutory Care Worker travel reimbursements, motor vehicle per-km allowances, and paid travel time under SCHADS Award Clauses 20.5 and 25.5.">
+    <meta property="og:url" content="https://coremetricsuite.com">
+
+    <!-- JSON-LD Schema: FAQPage Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the SCHADS Award motor vehicle allowance rate per kilometre?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Under Clause 20.5 of the SCHADS Award (MA000100), an employee who is required and authorized to use their own motor vehicle in the performance of their duties must be paid an allowance per kilometre ($1.05/km for motor vehicles and $0.35/km for motorcycles)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is travel between client appointments considered paid working time under SCHADS?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Clause 25.5 of the SCHADS Award specifies that time spent traveling between consecutive clients or locations during a shift is counted as working time and must be paid at the appropriate ordinary or overtime rate, in addition to the per-kilometre vehicle allowance."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does commuting from home to the first client count for vehicle allowance?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Generally, ordinary travel from your home to your first client or workplace, and from your last client back home, is non-payable commuting travel unless specific employer direction or remote locality arrangements apply under the award."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between client transport travel and travel between appointments?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Travel between appointments refers to driving your vehicle from Client A to Client B. Client transport refers to driving while a client is inside your vehicle (e.g., community outings, medical visits). Both qualify for the per-km vehicle allowance ($1.05/km for cars), but client transport often involves additional insurance and safety requirements."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-main: #0f1117;
+            --bg-card: #181b24;
+            --bg-input: #222634;
+            --border-color: #2e3446;
+            --accent-purple: #8b5cf6;
+            --accent-cyan: #00f2fe;
+            --accent-emerald: #10b981;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-mono: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: var(--bg-main); color: var(--text-primary); font-family: var(--font-sans); line-height: 1.6; }
+        
+        .cms-tool-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 440px 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 960px) { .cms-tool-container { grid-template-columns: 1fr; } }
+
+        .panel {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .panel-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            background: var(--accent-purple);
+            color: #fff;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        .btn-demo {
+            width: 100%;
+            padding: 0.6rem;
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            color: var(--accent-purple);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 1.25rem;
+            transition: background 0.2s;
+        }
+        .btn-demo:hover { background-color: #2a3042; }
+
+        .form-group { margin-bottom: 1.25rem; }
+        label { display: block; font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 0.4rem; }
+        input[type="number"], select {
+            width: 100%; padding: 0.65rem 0.85rem; background-color: var(--bg-input);
+            border: 1px solid var(--border-color); border-radius: 6px; color: #fff;
+            font-size: 0.9rem; outline: none; font-family: inherit;
+        }
+
+        .btn-action {
+            width: 100%; padding: 0.85rem; background: linear-gradient(135deg, var(--accent-purple), #7c3aed);
+            color: #fff; font-weight: 700; border: none; border-radius: 6px; cursor: pointer; font-size: 0.95rem;
+            transition: opacity 0.2s;
+        }
+        .btn-action:hover { opacity: 0.9; }
+
+        .preview-stage { display: flex; flex-direction: column; }
+        .result-box {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            font-size: 0.95rem;
+            color: #e5e7eb;
+            min-height: 380px;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .result-metric {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+        .result-metric h4 {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.3rem;
+        }
+        .result-metric .value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #fff;
+            font-family: var(--font-mono);
+        }
+
+        .timeline-breakdown {
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border-color);
+            padding-top: 0.75rem;
+        }
+
+        .timeline-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.35rem 0;
+            color: var(--text-secondary);
+            border-bottom: 1px dashed rgba(255,255,255,0.05);
+        }
+        .timeline-row:last-child { border-bottom: none; }
+        .timeline-row.active {
+            color: var(--accent-cyan);
+            font-weight: 600;
+        }
+
+        .canvas-caption { margin-top: 1rem; font-size: 0.85rem; color: var(--text-secondary); text-align: right; }
+
+        .content-area { max-width: 1200px; margin: 3rem auto; padding: 0 1.5rem; }
+        .content-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 2.5rem; }
+        .content-card h1 { font-size: 2rem; margin-bottom: 1rem; color: #fff; }
+        .content-card h2 { font-size: 1.4rem; margin: 1.8rem 0 1rem; color: #fff; }
+        .content-card p { color: var(--text-secondary); margin-bottom: 1.2rem; }
+        .content-card ul, .content-card ol { color: var(--text-secondary); margin: 0 0 1.2rem 1.5rem; }
+        .content-card li { margin-bottom: 0.5rem; }
+
+        .spec-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; text-align: left; }
+        .spec-table th, .spec-table td { padding: 0.85rem 1rem; border: 1px solid var(--border-color); }
+        .spec-table th { background-color: var(--bg-input); color: #fff; }
+        .spec-table td { color: var(--text-secondary); }
+
+        /* Accordion FAQ Styling */
+        .faq-block { margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem; }
+        .faq-accordion {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 0.85rem;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .faq-accordion[open] { border-color: var(--accent-purple); }
+        .faq-summary {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            padding: 1rem 1.2rem;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+        .faq-summary::-webkit-details-marker { display: none; }
+        .faq-summary::after {
+            content: "+";
+            font-size: 1.2rem;
+            color: var(--accent-purple);
+            transition: transform 0.2s;
+        }
+        .faq-accordion[open] .faq-summary::after {
+            content: "−";
+            color: var(--accent-purple);
+        }
+        .faq-answer {
+            padding: 0 1.2rem 1.2rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 0.4rem;
+            padding-top: 0.8rem;
+        }
+
+        .cms-ad-slot-1, .cms-ad-slot-2 {
+            width: 100%; max-width: 970px; min-height: 90px; margin: 1.5rem auto;
+            background: rgba(255,255,255,0.02); border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Site Header Integration Hook -->
+    <div id="global-header"></div>
+
+    <!-- Ad Slot 1 Container (Directly Above Main Title Banner) -->
+    <div class="cms-ad-slot-1"></div>
+
+    <!-- Main Interactive Tool Container -->
+    <section class="cms-tool-container">
+        <form class="panel" id="schadsForm" onsubmit="return false;">
+            <div class="panel-title">
+                <span>SCHADS Allowance Controls</span>
+                <span class="badge">MA000100 ENGINE</span>
+            </div>
+
+            <button class="btn-demo" id="loadDemoBtn" type="button">⚡ Load Typical Care Worker Shift</button>
+
+            <div class="form-group">
+                <label for="vehicleType">Vehicle Category</label>
+                <select id="vehicleType">
+                    <option value="car" selected>Motor Vehicle / Car ($1.05 / km)</option>
+                    <option value="motorcycle">Motorcycle ($0.35 / km)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="betweenKmInput">Inter-Appointment Distance (Client A to B) (km)</label>
+                <input type="number" id="betweenKmInput" value="45" min="0" max="1000" step="1">
+            </div>
+
+            <div class="form-group">
+                <label for="clientTransportKmInput">Client Transport Distance (Client Onboard) (km)</label>
+                <input type="number" id="clientTransportKmInput" value="30" min="0" max="1000" step="1">
+            </div>
+
+            <div class="form-group">
+                <label for="hourlyRateInput">Worker Base Hourly Pay Rate ($/hr)</label>
+                <input type="number" id="hourlyRateInput" value="32.50" min="0" max="200" step="0.50">
+            </div>
+
+            <div class="form-group">
+                <label for="travelMinutesInput">Total Travel Time Between Clients (Minutes)</label>
+                <input type="number" id="travelMinutesInput" value="75" min="0" max="600" step="5">
+            </div>
+
+            <button class="btn-action" id="calculateBtn" type="button">Calculate SCHADS Reimbursement</button>
+        </form>
+
+        <!-- Result Summary Dashboard -->
+        <section class="preview-stage">
+            <div class="panel" style="flex: 1; display: flex; flex-direction: column;">
+                <div class="panel-title">
+                    <span>SCHADS Allowance & Travel Pay Summary</span>
+                </div>
+                <div class="result-box" id="resultBoard">
+                    <div class="result-metric">
+                        <h4>Total Vehicle Allowance Payable</h4>
+                        <div class="value" id="Total Vehicle Allowance Payable">$0.00</div>
+                    </div>
+                    <div class="result-metric">
+                        <h4>Travel Time Pay (Paid Working Time)</h4>
+                        <div class="value" id="Travel Time Pay (Paid Working Time)">$0.00</div>
+                    </div>
+                    <div class="result-metric">
+                        <h4>Combined Travel Reimbursement & Pay</h4>
+                        <div class="value" id="Combined Travel Reimbursement & Pay" style="color: var(--accent-emerald);">$0.00</div>
+                    </div>
+
+                    <div class="result-metric">
+                        <h4>SCHADS Award Breakdown</h4>
+                        <div class="timeline-breakdown" id="SCHADS Award Breakdown">
+                            <!-- Detailed breakdown populated via JS -->
+                        </div>
+                    </div>
+                </div>
+                <p class="canvas-caption">
+                    Calculated under Fair Work Commission SCHADS Industry Award (MA000100) Clauses 20.5 & 25.5.
+                </p>
+            </div>
+        </section>
+    </section>
+
+    <!-- SEO & Educational Content Section -->
+    <article class="content-area">
+        <section class="content-card">
+            <h1>AU SCHADS Award Vehicle Allowance & Paid Travel Calculator</h1>
+            <p>
+                Under the <strong>Social, Community, Home Care and Disability Services Industry Award 2020 (SCHADS Award - MA000100)</strong>, disability support workers, home care aides, and community service employees are entitled to financial compensation when using their personal vehicles for work obligations.
+            </p>
+            <p>
+                This browser-based <strong>au-schads-vehicle-allowance</strong> calculator assists employees, employers, and NDIS service providers in determining accurate motor vehicle allowances (Clause 20.5) and paid travel time allowances (Clause 25.5) for multi-client rosters and transport shifts.
+            </p>
+
+            <h2>SCHADS Industry Award Allowance Entitlements Matrix</h2>
+            <p>
+                The Fair Work Commission sets statutory vehicle allowance rates and travel time conditions to protect care workers traveling between clients:
+            </p>
+
+            <table class="spec-table">
+                <thead>
+                    <tr>
+                        <th>Allowance / Entitlement Category</th>
+                        <th>Award Clause</th>
+                        <th>Statutory SCHADS Rate</th>
+                        <th>Operational Application</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Motor Vehicle Allowance</strong></td>
+                        <td>Clause 20.5(a)</td>
+                        <td>$1.05 per km</td>
+                        <td>Applies when an employee is authorized to drive their personal motor vehicle for work.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Motorcycle Allowance</strong></td>
+                        <td>Clause 20.5(b)</td>
+                        <td>$0.35 per km</td>
+                        <td>Applies when an employee uses their personal motorcycle/scooter for work travel.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Travel Time Between Clients</strong></td>
+                        <td>Clause 25.5</td>
+                        <td>Ordinary Hourly Rate</td>
+                        <td>Time spent driving between consecutive clients during a shift is paid working time.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Client Transport Travel</strong></td>
+                        <td>Clause 20.5 & 25.5</td>
+                        <td>$1.05/km + Hourly Rate</td>
+                        <td>Driving with a client onboard (e.g., outings) triggers both per-km and shift hourly pay.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Ad Slot 2 Container (Directly Below Specification Table) -->
+            <div class="cms-ad-slot-2"></div>
+
+            <h2>Key Rules for SCHADS Vehicle & Travel Reimbursements</h2>
+            <ul>
+                <li><strong>Vehicle Kilometre Allowance:</strong> If you use your personal car to drive between clients or transport a client during a shift, your employer must pay $1.05 per km driven.</li>
+                <li><strong>Travel Time is Paid Work Time:</strong> Clause 25.5 explicitly establishes that the time spent traveling between consecutive appointments during a shift must be treated as paid working time at your applicable hourly rate.</li>
+                <li><strong>Commuting Boundaries:</strong> Your standard morning commute from home to your first client, and your evening commute from your final client back home, is generally unpaid and non-reimbursable unless special remote locality provisions apply.</li>
+                <li><strong>NDIS Provider Billing vs Award Payment:</strong> While NDIS billing rules determine what an agency can charge a participant, employer obligations under the SCHADS Award are legally binding regarding what must be paid to the employee.</li>
+            </ul>
+
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-block">
+                <details class="faq-accordion" open>
+                    <summary class="faq-summary">What is the SCHADS Award motor vehicle allowance rate per kilometre?</summary>
+                    <div class="faq-answer">
+                        Under Clause 20.5 of the SCHADS Award (MA000100), an employee who is required and authorized to use their own motor vehicle in the performance of their duties must be paid an allowance per kilometre ($1.05/km for motor vehicles and $0.35/km for motorcycles).
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">Is travel between client appointments considered paid working time under SCHADS?</summary>
+                    <div class="faq-answer">
+                        Yes. Clause 25.5 of the SCHADS Award specifies that time spent traveling between consecutive clients or locations during a shift is counted as working time and must be paid at the appropriate ordinary or overtime rate, in addition to the per-kilometre vehicle allowance.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">Does commuting from home to the first client count for vehicle allowance?</summary>
+                    <div class="faq-answer">
+                        Generally, ordinary travel from your home to your first client or workplace, and from your last client back home, is non-payable commuting travel unless specific employer direction or remote locality arrangements apply under the award.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">What is the difference between client transport travel and travel between appointments?</summary>
+                    <div class="faq-answer">
+                        Travel between appointments refers to driving your vehicle from Client A to Client B. Client transport refers to driving while a client is inside your vehicle (e.g., community outings, medical visits). Both qualify for the per-km vehicle allowance ($1.05/km for cars), but client transport often involves additional insurance and safety requirements.
+                    </div>
+                </details>
+            </div>
+        </section>
+    </article>
+
+    <!-- Site Footer Integration Hook -->
+    <div id="global-footer"></div>
+
+    <!-- Math Calculation Engine JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var vehicleTypeSelect = document.getElementById('vehicleType');
+            var betweenKmInput = document.getElementById('betweenKmInput');
+            var clientTransportKmInput = document.getElementById('clientTransportKmInput');
+            var hourlyRateInput = document.getElementById('hourlyRateInput');
+            var travelMinutesInput = document.getElementById('travelMinutesInput');
+
+            var calculateBtn = document.getElementById('calculateBtn');
+            var loadDemoBtn = document.getElementById('loadDemoBtn');
+
+            var resAllowance = document.getElementById('Total Vehicle Allowance Payable');
+            var resTravelPay = document.getElementById('Travel Time Pay (Paid Working Time)');
+            var resCombined = document.getElementById('Combined Travel Reimbursement & Pay');
+            var resBreakdown = document.getElementById('SCHADS Award Breakdown');
+
+            // Statutory SCHADS Vehicle Allowance Rates (Fair Work Commission MA000100 Clause 20.5)
+            var SCHADS_RATES = {
+                car: 1.05,
+                motorcycle: 0.35
+            };
+
+            loadDemoBtn.addEventListener('click', function() {
+                vehicleTypeSelect.value = 'car';
+                betweenKmInput.value = '45';
+                clientTransportKmInput.value = '30';
+                hourlyRateInput.value = '32.50';
+                travelMinutesInput.value = '75';
+
+                calculateSCHADS();
+            });
+
+            calculateBtn.addEventListener('click', function() {
+                calculateSCHADS();
+            });
+
+            function calculateSCHADS() {
+                var vType = vehicleTypeSelect.value;
+                var betweenKm = parseFloat(betweenKmInput.value) || 0;
+                var transportKm = parseFloat(clientTransportKmInput.value) || 0;
+                var hourlyRate = parseFloat(hourlyRateInput.value) || 0;
+                var travelMins = parseFloat(travelMinutesInput.value) || 0;
+
+                var kmRate = SCHADS_RATES[vType] || 1.05;
+                var totalKm = betweenKm + transportKm;
+
+                // Clause 20.5 Vehicle Allowance
+                var totalVehicleAllowance = totalKm * kmRate;
+
+                // Clause 25.5 Travel Time Pay
+                var travelHours = travelMins / 60;
+                var travelTimePay = travelHours * hourlyRate;
+
+                var combinedTotal = totalVehicleAllowance + travelTimePay;
+
+                // Render Results
+                resAllowance.textContent = '$' + totalVehicleAllowance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                resTravelPay.textContent = '$' + travelTimePay.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                resCombined.textContent = '$' + combinedTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+                var breakdownHtml = '';
+                breakdownHtml += createTimelineRow('Vehicle Category', vType === 'car' ? 'Motor Vehicle ($1.05/km)' : 'Motorcycle ($0.35/km)', true);
+                breakdownHtml += createTimelineRow('Total Distance Travelled', totalKm.toFixed(1) + ' km', true);
+                breakdownHtml += createTimelineRow(' - Inter-Appointment Distance', betweenKm.toFixed(1) + ' km', false);
+                breakdownHtml += createTimelineRow(' - Client Transport Distance', transportKm.toFixed(1) + ' km', false);
+                breakdownHtml += createTimelineRow('Paid Travel Time Duration', travelMins + ' mins (' + travelHours.toFixed(2) + ' hrs)', true);
+                breakdownHtml += createTimelineRow('Base Hourly Pay Rate', '$' + hourlyRate.toFixed(2) + ' / hr', true);
+
+                resBreakdown.innerHTML = breakdownHtml;
+            }
+
+            function createTimelineRow(label, valStr, isActive) {
+                var activeClass = isActive ? ' active' : '';
+                return '<div class="timeline-row' + activeClass + '">' +
+                    '<span>' + label + '</span>' +
+                    '<span>' + valStr + '</span>' +
+                    '</div>';
+            }
+
+            // Execute initial calculation
+            calculateSCHADS();
+        });
+    </script>
+</body>
+</html>
