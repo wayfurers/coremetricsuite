@@ -1,631 +1,283 @@
 /* ==========================================================================
-   COREMETRICSUITE COMPLETE ROOT GLOBAL STYLESHEET
-   File  : css/global.css
-   Pairs : js/components.js
-   --------------------------------------------------------------------------
-   LAYER MAP
-     01. Design tokens (:root)
-     02. Global reset / base
-     03. Layout wrapper + body scaffolding
-     04. GLOBAL HEADER / NAVBAR SHELL ....... FIX 1 (opaque + border-box paint)
-     05. Tool slider nav + nav items
-     06. Dark theme calculator pages
-     07. Smart utility suggestions (legacy in-flow grid -> force hidden)
-     08. ATTENTION-GRABBER TOAST ........... FIX 3 (fixed 5s popup)
-     09. Programmatic hidden ad placement spaces
-     10. Compliance disclaimer container
-     11. Global footer shell
-     12. Responsive + motion preference guards
-
-   IMPORTANT PAIRING NOTE (FIX 3)
-     The toast geometry (position / bottom / right / z-index) is written INLINE
-     by js/components.js. Those declarations are deliberately NOT marked
-     !important anywhere in this file, because a stylesheet !important rule
-     would outrank the inline `toast.style.bottom = "20px"` that the 5-second
-     timer sets â€” the toast would then never slide into view.
-   ========================================================================== */
-
-
-/* ==========================================================================
-   01. DESIGN TOKENS
+   Core Metric Suite - Dynamic Universal Components & Stylesheet
    ========================================================================== */
 
 :root {
-    --bg-dark: #0f172a;
-    --bg-card-dark: #1e293b;
-    --bg-light: #ffffff;
-    --text-primary: #f8fafc;
-    --text-muted: #94a3b8;
-    --color-accent: #3b82f6;
-    --color-danger: #ef4444;
-
-    /* Injection-layer tokens (header shell / toast) */
-    --header-solid: #0f172a;
-    --header-border: #1e293b;
-    --header-stack-z: 1000;
-    --toast-stack-z: 99999;
-    --toast-park-bottom: -400px;
-    --toast-lift-bottom: 20px;
-    --toast-edge-right: 20px;
-    --toast-transition: bottom 0.55s cubic-bezier(0.22, 1, 0.36, 1),
-                        opacity 0.35s ease;
+  --cms-primary: #2563eb;
+  --cms-primary-hover: #1d4ed8;
+  --cms-bg-dark: #0f172a;
+  --cms-bg-light: #f8fafc;
+  --cms-card-bg: #ffffff;
+  --cms-border: #e2e8f0;
+  --cms-text-main: #0f172a;
+  --cms-text-muted: #64748b;
+  --cms-font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  --cms-radius: 8px;
+  --cms-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
-
-
-/* ==========================================================================
-   02. GLOBAL RESET / BASE
-   ========================================================================== */
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html {
-    -webkit-text-size-adjust: 100%;
-    scroll-behavior: smooth;
-}
-
-
-/* ==========================================================================
-   03. LAYOUT WRAPPER + BODY SCAFFOLDING
-   ========================================================================== */
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-    line-height: 1.5;
-    background-color: var(--bg-light);
-    color: #1e293b;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+  font-family: var(--cms-font-sans);
+  background-color: var(--cms-bg-light);
+  color: var(--cms-text-main);
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
 }
 
-/* Shared class on the header, the disclaimer box and the footer. Kept purely
-   structural so it cannot fight the shell-specific rules in layer 04 / 10. */
-.global-layout-wrapper {
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
-    position: relative;
+/* Hidden Ad Containers (Completely Invisible) */
+.cms-ad-hidden,
+#cms-ad-slot-1,
+#cms-ad-slot-2 {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
-
-/* ==========================================================================
-   04. GLOBAL HEADER / NAVBAR SHELL  â€”  FIX 1
-   --------------------------------------------------------------------------
-   js/components.js writes these two declarations INLINE on the <header>:
-       background-color: #0f172a !important;
-       box-sizing: border-box;
-   (plus a geometry block re-asserted by lockHeaderPaint()). The identical
-   declarations live here as the stylesheet-side twin, so the shell stays
-   fully opaque even if the inline style attribute is stripped by a sanitizer,
-   a CSS-in-JS layer or a platform injection pass. Nothing from the main body
-   canvas can show through and create the duplicate logo / version overlap.
-   ========================================================================== */
-
-header,
-header.global-navbar-shell,
-.global-navbar-shell {
-    background-color: var(--header-solid) !important; /* #0f172a */
-    background-image: none !important;
-    box-sizing: border-box !important;
-
-    /* Own stacking context: covers any body text shifting up under the shell */
-    position: relative;
-    z-index: var(--header-stack-z);
-    isolation: isolate;
-
-    display: block;
-    width: 100%;
-    max-width: 100%;
-    border-bottom: 1px solid var(--header-border);
-    padding: 15px 5% 5px 5%;
-    color: var(--text-primary);
-    text-align: left;
-    overflow: visible;
+/* Universal Header */
+.cms-navbar {
+  background: #ffffff;
+  border-bottom: 1px solid var(--cms-border);
+  padding: 1rem 0;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
-/* Every child of the shell inherits border-box sizing so no inner row can
-   expand past the painted area and expose the white canvas underneath. */
-header.global-navbar-shell,
-header.global-navbar-shell *,
-.global-navbar-shell,
-.global-navbar-shell * {
-    box-sizing: border-box;
+.cms-container {
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  box-sizing: border-box;
 }
 
-/* Belt-and-braces opaque layer directly behind the header content. */
-header.global-navbar-shell::before,
-.global-navbar-shell::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-color: var(--header-solid);
-    z-index: -1;
-    pointer-events: none;
+.cms-navbar .cms-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.global-logo-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 16px;
-    flex-wrap: wrap;
-    margin-bottom: 10px;
-    position: relative;
-    z-index: 1;
+.cms-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--cms-text-main);
+  font-size: 1.25rem;
 }
 
-.global-logo-link {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: var(--text-primary) !important;
-    text-decoration: none;
-    line-height: 1.2;
-    letter-spacing: -0.01em;
-    white-space: nowrap;
+.cms-brand-logo {
+  font-size: 1.5rem;
 }
 
-.global-logo-link:hover {
-    color: #ffffff !important;
+.cms-nav-links {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
 }
 
-.global-version-tag {
-    color: var(--text-muted) !important;
-    font-size: 0.85rem;
-    white-space: nowrap;
+.cms-nav-item {
+  color: var(--cms-text-muted);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: color 0.2s ease;
 }
 
-
-/* ==========================================================================
-   05. HORIZONTAL SCROLLABLE LEFT-TO-RIGHT SLIDER MENU
-   ========================================================================== */
-
-.tool-slider-nav {
-    display: flex !important;
-    white-space: nowrap !important;
-    overflow-x: auto !important;
-    overflow-y: hidden !important;
-    gap: 12px !important;
-    padding: 10px 0 !important;
-    scroll-behavior: smooth !important;
-    -webkit-overflow-scrolling: touch !important;
-    background-color: var(--bg-dark) !important;
-    width: 100%;
-    position: relative;
-    z-index: 1;
+.cms-nav-item:hover,
+.cms-nav-item.active {
+  color: var(--cms-primary);
 }
 
-.tool-slider-nav::-webkit-scrollbar {
-    display: none !important;
+/* Suggested Tools Cards */
+.cms-suggested-section {
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--cms-border);
 }
 
-.tool-slider-nav {
-    -ms-overflow-style: none !important;
-    scrollbar-width: none !important;
+.cms-suggested-section h2 {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--cms-text-main);
+  margin-bottom: 1rem;
 }
 
-.tool-nav-item {
-    display: inline-block !important;
-    padding: 6px 14px !important;
-    background-color: var(--bg-card-dark) !important;
-    color: var(--text-primary) !important;
-    text-decoration: none !important;
-    border-radius: 20px !important;
-    font-size: 0.85rem !important;
-    font-weight: 500;
-    transition: background-color 0.2s, color 0.2s !important;
-    flex: 0 0 auto;
+.cms-tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
 }
 
-.tool-nav-item:hover {
-    background-color: var(--color-accent) !important;
-    color: #ffffff !important;
+.cms-tool-card {
+  background: #ffffff;
+  border: 1px solid var(--cms-border);
+  border-radius: var(--cms-radius);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.tool-nav-item.is-active,
-.tool-nav-item[aria-current="page"] {
-    background-color: var(--color-accent) !important;
-    color: #ffffff !important;
+.cms-tool-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--cms-shadow);
 }
 
-
-/* ==========================================================================
-   06. THEMING SUPPORT FOR INNER DARK UI CALCULATOR TOOLS
-   ========================================================================== */
-
-.dark-theme-page {
-    background-color: #0b0f19 !important;
-    color: var(--text-primary) !important;
+.cms-tool-card h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--cms-text-main);
 }
 
-.dark-theme-page main {
-    flex: 1;
-    padding: 20px 5%;
+.cms-tool-card p {
+  font-size: 0.875rem;
+  color: var(--cms-text-muted);
+  margin-bottom: 1.25rem;
+  line-height: 1.4;
 }
 
-
-/* ==========================================================================
-   07. SMART UTILITY SUGGESTIONS â€” LEGACY IN-FLOW GRID (FORCE HIDDEN)
-   --------------------------------------------------------------------------
-   js/components.js now renders the related-tool matches inside the fixed
-   toast in layer 08 and deletes any legacy .related-suggestions-box node
-   (purgeLegacyInlineSuggestions). The rules below keep the grid from ever
-   stacking up at the bottom of the long calculator form sheet again, while
-   the base classes remain available for hand-written static pages.
-   ========================================================================== */
-
-.dark-theme-page .related-suggestions-box,
-body[data-page-type="calculator"] .related-suggestions-box,
-main .related-suggestions-box,
-.related-suggestions-box[data-cms-inline-suggestions] {
-    display: none !important;
+.cms-btn-secondary {
+  display: inline-block;
+  color: var(--cms-primary);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.875rem;
 }
 
-.suggestions-title {
-    color: var(--text-primary) !important;
-    font-size: 1.1rem;
-    margin: 0 0 5px 0;
+.cms-btn-secondary:hover {
+  color: var(--cms-primary-hover);
+  text-decoration: underline;
 }
 
-.suggestions-subtitle {
-    color: var(--text-muted) !important;
-    font-size: 0.85rem;
-    margin: 0 0 15px 0;
+/* Universal Footer */
+.cms-footer {
+  background: var(--cms-bg-dark);
+  color: #f8fafc;
+  margin-top: 4rem;
+  padding-top: 3rem;
 }
 
-
-/* ==========================================================================
-   08. ATTENTION-GRABBER TOAST  â€”  FIX 3
-   --------------------------------------------------------------------------
-   Shell geometry is inline (fixed / -400px / 20px / 99999). This layer owns
-   the paint, the card list, the (x) button and the exit animation only.
-   ========================================================================== */
-
-#attention-grabber-toast,
-.attention-grabber-toast {
-    width: 340px;
-    max-width: calc(100vw - 40px);
-    box-sizing: border-box;
-    padding: 16px;
-    font-family: inherit;
-    font-size: 0.85rem;
-    line-height: 1.45;
-    text-align: left;
-    color: var(--text-primary);
-    background-color: var(--header-solid);
-    border: 1px solid rgba(59, 130, 246, 0.9);
-    border-left: 4px solid var(--color-accent);
-    border-radius: 12px;
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.04);
-    overflow: hidden;
-    pointer-events: auto;
-    opacity: 0;
-    visibility: hidden;
-    will-change: bottom, opacity;
+.cms-footer-content {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
 }
 
-#attention-grabber-toast.is-visible,
-.attention-grabber-toast.is-visible {
-    opacity: 1;
-    visibility: visible;
+.cms-footer-info {
+  max-width: 400px;
 }
 
-#attention-grabber-toast.toast-closing,
-.attention-grabber-toast.toast-closing {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
+.cms-footer-info h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: #ffffff;
 }
 
-/* Head row + close (x) button ------------------------------------------- */
-
-.toast-head-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    padding-right: 26px;
-    margin-bottom: 6px;
+.cms-footer-info p {
+  color: #94a3b8;
+  font-size: 0.9rem;
 }
 
-.toast-title {
-    color: #ffffff !important;
-    font-size: 1rem;
-    font-weight: bold;
-    margin: 0;
-    line-height: 1.25;
+.cms-footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
-.toast-eyebrow {
-    display: inline-block;
-    flex: 0 0 auto;
-    font-size: 0.6rem;
-    font-weight: bold;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--color-accent) !important;
-    background: rgba(59, 130, 246, 0.12);
-    border: 1px solid rgba(59, 130, 246, 0.35);
-    border-radius: 999px;
-    padding: 2px 8px;
-    white-space: nowrap;
+.cms-footer-links h4 {
+  font-size: 1rem;
+  color: #ffffff;
+  margin-bottom: 0.25rem;
 }
 
-.toast-close-btn {
-    position: absolute;
-    top: 8px;
-    right: 10px;
-    width: 26px;
-    height: 26px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    background: none;
-    border: 1px solid transparent;
-    border-radius: 50%;
-    color: var(--text-muted);
-    font-size: 1.4rem;
-    line-height: 1;
-    cursor: pointer;
-    transition: color 0.2s, background-color 0.2s, border-color 0.2s;
-    z-index: 2;
+.cms-footer-links a {
+  color: #94a3b8;
+  text-decoration: none;
+  font-size: 0.9rem;
 }
 
-.toast-close-btn:hover,
-.toast-close-btn:focus-visible {
-    background-color: rgba(239, 68, 68, 0.15);
-    border-color: var(--color-danger);
-    color: #ffffff;
-    outline: none;
+.cms-footer-links a:hover {
+  color: #ffffff;
 }
 
-/* Body copy + card list -------------------------------------------------- */
-
-.toast-subtitle {
-    color: var(--text-muted) !important;
-    margin: 0 0 12px 0;
-    font-size: 0.78rem;
-    line-height: 1.45;
+.cms-footer-bottom {
+  border-top: 1px solid #334155;
+  margin-top: 2.5rem;
+  padding: 1.25rem 0;
+  font-size: 0.85rem;
+  color: #94a3b8;
+  text-align: center;
 }
-
-.toast-card-list {
-    display: grid !important;
-    grid-template-columns: 1fr;
-    gap: 8px !important;
-    margin: 0 !important;
-    max-height: 46vh;
-    overflow-y: auto;
-}
-
-.toast-card-list .suggestion-card {
-    display: block;
-    padding: 10px;
-    margin: 0;
-    background: var(--bg-card-dark);
-    color: #ffffff;
-    text-decoration: none;
-    border: 1px solid #334155;
-    border-radius: 6px;
-    transition: background 0.2s, border-color 0.2s, transform 0.2s;
-}
-
-.toast-card-list .suggestion-card:hover,
-.toast-card-list .suggestion-card:focus-visible {
-    background: var(--color-accent);
-    border-color: var(--color-accent);
-    transform: translateY(-1px);
-    outline: none;
-}
-
-.suggestion-tag {
-    display: block;
-    font-size: 0.65rem;
-    font-weight: bold;
-    text-transform: uppercase;
-    color: var(--color-accent) !important;
-    margin-bottom: 2px;
-}
-
-.toast-card-list .suggestion-card:hover .suggestion-tag,
-.toast-card-list .suggestion-card:focus-visible .suggestion-tag {
-    color: #ffffff !important;
-}
-
-.suggestion-name {
-    display: block;
-    font-size: 0.85rem;
-    font-weight: 500;
-    color: #ffffff !important;
-}
-
-/* 5-second progress hairline (pure decoration, safe to remove) ----------- */
-
-.toast-progress {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    height: 3px;
-    width: 100%;
-    background: linear-gradient(90deg, var(--color-accent), rgba(59, 130, 246, 0.2));
-    transform: scaleX(1);
-    transform-origin: left center;
-    opacity: 0;
-}
-
-#attention-grabber-toast.is-visible .toast-progress,
-.attention-grabber-toast.is-visible .toast-progress {
-    opacity: 1;
-    animation: cms-toast-countdown 5s linear forwards;
-}
-
-@keyframes cms-toast-countdown {
-    from { transform: scaleX(1); }
-    to   { transform: scaleX(0); }
-}
-
-
-/* ==========================================================================
-   09. PROGRAMMATIC HIDDEN AD PLACEMENT SPACES
-   ========================================================================== */
-
-.ad-container-slot {
-    display: none;
-    width: 100%;
-    max-width: 728px;
-    margin: 0 auto;
-    overflow: hidden;
-}
-
-.ad-container-slot.has-ads {
-    display: flex !important;
-    min-height: 90px;
-    margin: 20px auto;
-}
-
-#top-global-ad.has-ads {
-    margin-top: 0;
-}
-
-
-/* ==========================================================================
-   10. TRUST VALIDATION AUTOMATED LEGAL DISCLAIMER CONTAINER
-   ========================================================================== */
-
-.compliance-disclaimer-box {
-    max-width: 800px;
-    margin: 40px auto 0 auto;
-    padding: 15px 20px;
-    background: rgba(239, 68, 68, 0.08) !important;
-    border-left: 4px solid var(--color-danger);
-    border-radius: 4px;
-    font-size: 0.8rem;
-    line-height: 1.4;
-    color: var(--text-muted) !important;
-    text-align: left;
-    box-sizing: border-box;
-}
-
-.disclaimer-header {
-    margin: 0 0 5px 0;
-    font-weight: bold;
-    color: var(--text-primary) !important;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-}
-
-/* The disclaimer sits inside the footer shell in the injected markup. */
-.global-footer-shell .compliance-disclaimer-box {
-    margin-top: 0;
-    margin-bottom: 30px;
-}
-
-
-/* ==========================================================================
-   11. GLOBAL FOOTER LAYOUT ELEMENTS
-   ========================================================================== */
-
-.global-footer-shell {
-    background-color: var(--bg-dark) !important;
-    border-top: 1px solid var(--header-border);
-    padding: 30px 5%;
-    margin-top: auto;
-    text-align: center;
-    color: var(--text-muted) !important;
-    font-size: 0.85rem;
-    display: block;
-    width: 100%;
-    box-sizing: border-box;
-    position: relative;
-    z-index: 900;
-}
-
-.footer-branding {
-    color: var(--text-primary) !important;
-    margin-bottom: 10px;
-}
-
-.footer-nav-row {
-    margin: 12px 0;
-    gap: 20px;
-    display: inline-flex;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.footer-link {
-    color: var(--color-accent) !important;
-    text-decoration: none;
-}
-
-.footer-link:hover {
-    text-decoration: underline;
-}
-
-.footer-copyright {
-    font-size: 0.75rem;
-    opacity: 0.6;
-    margin-top: 10px;
-}
-
-
-/* ==========================================================================
-   12. RESPONSIVE + MOTION PREFERENCE GUARDS
-   ========================================================================== */
 
 @media (max-width: 640px) {
-    header.global-navbar-shell,
-    .global-navbar-shell {
-        padding: 12px 4% 5px 4%;
-    }
+  .cms-navbar .cms-container {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .cms-footer-content {
+    flex-direction: column;
+  }
+}
+/* ==========================================================================
+   DYNAMIC SPLIT HYBRID THEME SWITCH ENGINE
+   Overrides core CSS tokens to match Light Mode vs Premium Dark Utility Mode
+   ========================================================================== */
 
-    .global-logo-link {
-        font-size: 1.25rem;
-    }
-
-    .global-version-tag {
-        font-size: 0.75rem;
-    }
-
-    #attention-grabber-toast,
-    .attention-grabber-toast {
-        width: 320px;
-        max-width: calc(100vw - 32px);
-        padding: 14px;
-    }
-
-    .toast-title {
-        font-size: 0.95rem;
-    }
+/* --- 1. LIGHT THEME CONFIGURATION (The Homepage Default) --- */
+body[data-theme="light"] {
+  --cms-bg-light: #f8fafc;
+  --cms-card-bg: #ffffff;
+  --cms-text-main: #0f172a;
+  --cms-text-muted: #64748b;
+  --cms-border: #e2e8f0;
+  background-color: var(--cms-bg-light) !important;
+}
+body[data-theme="light"] .cms-navbar {
+  background: #ffffff !important;
 }
 
-@media (prefers-reduced-motion: reduce) {
-    #attention-grabber-toast,
-    .attention-grabber-toast {
-        transition: none !important;
-    }
-
-    #attention-grabber-toast.is-visible .toast-progress,
-    .attention-grabber-toast.is-visible .toast-progress {
-        animation: none;
-    }
-
-    .tool-slider-nav {
-        scroll-behavior: auto !important;
-    }
-
-    .tool-nav-item,
-    .toast-card-list .suggestion-card {
-        transition: none !important;
-    }
+/* --- 2. DARK THEME CONFIGURATION (The Tax & Analytics Calculators) --- */
+body[data-theme="dark"] {
+  --cms-bg-light: #0f172a;       /* Flips whole page background to dark slate blue */
+  --cms-card-bg: #1e293b;       /* Sets tool suggestions grid to dark cards */
+  --cms-text-main: #f8fafc;     /* Changes headings and primary text to white */
+  --cms-text-muted: #94a3b8;    /* Soft grey readability text for dark screens */
+  --cms-border: #1e293b;        /* Subdued borders matching dark mode panels */
+  background-color: var(--cms-bg-light) !important;
 }
 
-@media print {
-    #attention-grabber-toast,
-    .attention-grabber-toast {
-        display: none !important;
-    }
+/* Re-tint dark layouts components */
+body[data-theme="dark"] .cms-navbar {
+  background: #0f172a !important; /* Converts light white header to full dark theme */
+  border-bottom: 1px solid #1e293b !important;
+}
+
+body[data-theme="dark"] .cms-tool-card {
+  background: #1e293b !important; /* Forces random cards grid to match dark mode profiles */
+  border: 1px solid #334155 !important;
+}
+
+/* --- 3. LAYOUT GLUE (Locks global container stacking states) --- */
+html, body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex !important;
+  flex-direction: column !important;
+}
+
+/* Forces external content blocks to stretch dynamically and anchor footers down */
+body > *:not(#site-header):not(#site-footer):not(#cms-ad-slot-1):not(#cms-ad-slot-2):not(#suggested-tools) {
+  flex: 1 0 auto !important;
+  width: 100%;
+}
+
+#site-header, #site-footer, #suggested-tools {
+  flex-shrink: 0 !important;
 }
