@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AU Superannuation Charge Tracker & SG Compliance Calculator</title>
+    <meta name="description" content="Track Superannuation Guarantee (SG) shortfalls, calculate nominal interest, administrative components, and SGC liability under ATO statutory guidelines.">
+    <meta name="keywords" content="superannuation charge tracker, SGC liability calculator, ATO super shortfall calculator, superannuation guarantee rate 12%, unpaid super liability australia">
+    <link rel="canonical" href="https://coremetricsuite.com" />
+
+    <!-- Architecture Links -->
+    <link rel="stylesheet" href="/css/global.css">
+    <script src="/global.js" defer></script>
+
+    <!-- Open Graph / Social Metadata -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="AU Superannuation Charge Tracker & SG Compliance Calculator">
+    <meta property="og:description" content="Track Superannuation Guarantee (SG) shortfalls, calculate nominal interest, administrative components, and SGC liability under ATO statutory guidelines.">
+    <meta property="og:url" content="https://coremetricsuite.com">
+
+    <!-- JSON-LD Schema: FAQPage Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the current Superannuation Guarantee (SG) rate in Australia?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The statutory Superannuation Guarantee (SG) rate is 12.0% of an employee's Ordinary Times Earnings (OTE). Employers must pay super contributions at least quarterly by the ATO statutory due dates or risk incurring the Superannuation Guarantee Charge (SGC)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How is the Superannuation Guarantee Charge (SGC) calculated on late payments?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "When super is paid late or underpaid, the SGC is calculated on total salary and wages (not just OTE). It consists of three parts: the SG Shortfall amount, Nominal Interest (10% per annum calculated from the start of the quarter), and an Administration Fee of $20 per employee per quarter."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are late Superannuation Guarantee Charge payments tax-deductible?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. While regular, on-time superannuation contributions are tax-deductible business expenses, SGC payments made to the ATO (including the shortfall, nominal interest, and admin components) are strictly non-deductible under Australian tax law."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "When is the Superannuation Guarantee payment due each quarter?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Quarterly SG payments must clear into the employee's super fund by the 28th day following the end of each quarter: Q1 (28 Oct), Q2 (28 Jan), Q3 (28 Apr), and Q4 (28 Jul)."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-main: #0f1117;
+            --bg-card: #181b24;
+            --bg-input: #222634;
+            --border-color: #2e3446;
+            --accent-purple: #8b5cf6;
+            --accent-cyan: #00f2fe;
+            --accent-emerald: #10b981;
+            --accent-rose: #f43f5e;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-mono: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: var(--bg-main); color: var(--text-primary); font-family: var(--font-sans); line-height: 1.6; }
+        
+        .cms-tool-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 440px 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 960px) { .cms-tool-container { grid-template-columns: 1fr; } }
+
+        .panel {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .panel-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            background: var(--accent-purple);
+            color: #fff;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        .btn-demo {
+            width: 100%;
+            padding: 0.6rem;
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            color: var(--accent-purple);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 1.25rem;
+            transition: background 0.2s;
+        }
+        .btn-demo:hover { background-color: #2a3042; }
+
+        .form-group { margin-bottom: 1.25rem; }
+        label { display: block; font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 0.4rem; }
+        input[type="number"], select {
+            width: 100%; padding: 0.65rem 0.85rem; background-color: var(--bg-input);
+            border: 1px solid var(--border-color); border-radius: 6px; color: #fff;
+            font-size: 0.9rem; outline: none; font-family: inherit;
+        }
+
+        .btn-action {
+            width: 100%; padding: 0.85rem; background: linear-gradient(135deg, var(--accent-purple), #7c3aed);
+            color: #fff; font-weight: 700; border: none; border-radius: 6px; cursor: pointer; font-size: 0.95rem;
+            transition: opacity 0.2s;
+        }
+        .btn-action:hover { opacity: 0.9; }
+
+        .preview-stage { display: flex; flex-direction: column; }
+        .result-box {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            font-size: 0.95rem;
+            color: #e5e7eb;
+            min-height: 380px;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .result-metric {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+        .result-metric h4 {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.3rem;
+        }
+        .result-metric .value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #fff;
+            font-family: var(--font-mono);
+        }
+
+        .timeline-breakdown {
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border-color);
+            padding-top: 0.75rem;
+        }
+
+        .timeline-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.35rem 0;
+            color: var(--text-secondary);
+            border-bottom: 1px dashed rgba(255,255,255,0.05);
+        }
+        .timeline-row:last-child { border-bottom: none; }
+        .timeline-row.active {
+            color: var(--accent-cyan);
+            font-weight: 600;
+        }
+
+        .canvas-caption { margin-top: 1rem; font-size: 0.85rem; color: var(--text-secondary); text-align: right; }
+
+        .content-area { max-width: 1200px; margin: 3rem auto; padding: 0 1.5rem; }
+        .content-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 2.5rem; }
+        .content-card h1 { font-size: 2rem; margin-bottom: 1rem; color: #fff; }
+        .content-card h2 { font-size: 1.4rem; margin: 1.8rem 0 1rem; color: #fff; }
+        .content-card p { color: var(--text-secondary); margin-bottom: 1.2rem; }
+        .content-card ul, .content-card ol { color: var(--text-secondary); margin: 0 0 1.2rem 1.5rem; }
+        .content-card li { margin-bottom: 0.5rem; }
+
+        .spec-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; text-align: left; }
+        .spec-table th, .spec-table td { padding: 0.85rem 1rem; border: 1px solid var(--border-color); }
+        .spec-table th { background-color: var(--bg-input); color: #fff; }
+        .spec-table td { color: var(--text-secondary); }
+
+        /* Accordion FAQ Styling */
+        .faq-block { margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem; }
+        .faq-accordion {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 0.85rem;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .faq-accordion[open] { border-color: var(--accent-purple); }
+        .faq-summary {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            padding: 1rem 1.2rem;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+        .faq-summary::-webkit-details-marker { display: none; }
+        .faq-summary::after {
+            content: "+";
+            font-size: 1.2rem;
+            color: var(--accent-purple);
+            transition: transform 0.2s;
+        }
+        .faq-accordion[open] .faq-summary::after {
+            content: "−";
+            color: var(--accent-purple);
+        }
+        .faq-answer {
+            padding: 0 1.2rem 1.2rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 0.4rem;
+            padding-top: 0.8rem;
+        }
+
+        .cms-ad-slot-1, .cms-ad-slot-2 {
+            width: 100%; max-width: 970px; min-height: 90px; margin: 1.5rem auto;
+            background: rgba(255,255,255,0.02); border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Site Header Integration Hook -->
+    <div id="global-header"></div>
+
+    <!-- Ad Slot 1 Container (Directly Above Main Title Banner) -->
+    <div class="cms-ad-slot-1"></div>
+
+    <!-- Main Interactive Tool Container -->
+    <section class="cms-tool-container">
+        <form class="panel" id="sgcForm" onsubmit="return false;">
+            <div class="panel-title">
+                <span>AU SGC Tracker Controls</span>
+                <span class="badge">ATO SG 12% ENGINE</span>
+            </div>
+
+            <button class="btn-demo" id="loadDemoBtn" type="button">⚡ Load Typical Late Super Payment Audit</button>
+
+            <div class="form-group">
+                <label for="quarterSelect">Financial Quarter Period</label>
+                <select id="quarterSelect">
+                    <option value="Q1" selected>Q1 (Jul 1 - Sep 30) - Due Oct 28</option>
+                    <option value="Q2">Q2 (Oct 1 - Dec 31) - Due Jan 28</option>
+                    <option value="Q3">Q3 (Jan 1 - Mar 31) - Due Apr 28</option>
+                    <option value="Q4">Q4 (Apr 1 - Jun 30) - Due Jul 28</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="employeeCountInput">Number of Affected Employees</label>
+                <input type="number" id="employeeCountInput" value="5" min="1" max="1000" step="1">
+            </div>
+
+            <div class="form-group">
+                <label for="oteInput">Total Quarter OTE Base ($)</label>
+                <input type="number" id="oteInput" value="65000" min="0" max="10000000" step="500">
+            </div>
+
+            <div class="form-group">
+                <label for="paidSuperInput">Super Already Paid On-Time ($)</label>
+                <input type="number" id="paidSuperInput" value="1500" min="0" max="1000000" step="100">
+            </div>
+
+            <div class="form-group">
+                <label for="daysLateInput">Days Outstanding Past Quarter Start</label>
+                <input type="number" id="daysLateInput" value="180" min="1" max="1825" step="1">
+            </div>
+
+            <button class="btn-action" id="calculateBtn" type="button">Calculate SGC Liability</button>
+        </form>
+
+        <!-- Result Summary Dashboard -->
+        <section class="preview-stage">
+            <div class="panel" style="flex: 1; display: flex; flex-direction: column;">
+                <div class="panel-title">
+                    <span>SGC Compliance & Audit Breakdown</span>
+                </div>
+                <div class="result-box" id="resultBoard">
+                    <div class="result-metric">
+                        <h4>Super Shortfall Component</h4>
+                        <div class="value" id="Super Shortfall Component">$0.00</div>
+                    </div>
+                    <div class="result-metric">
+                        <h4>Statutory Nominal Interest (10% p.a.)</h4>
+                        <div class="value" id="Statutory Nominal Interest">$0.00</div>
+                    </div>
+                    <div class="result-metric">
+                        <h4>Total SGC Liability (Non-Deductible)</h4>
+                        <div class="value" id="Total SGC Liability" style="color: var(--accent-rose);">$0.00</div>
+                    </div>
+
+                    <div class="result-metric">
+                        <h4>ATO Statutory Breakdown</h4>
+                        <div class="timeline-breakdown" id="ATO Statutory Breakdown">
+                            <!-- Detailed breakdown populated via JS -->
+                        </div>
+                    </div>
+                </div>
+                <p class="canvas-caption">
+                    Calculated under Superannuation Guarantee (Administration) Act 1992 & ATO 12.0% Statutory Rate.
+                </p>
+            </div>
+        </section>
+    </section>
+
+    <!-- SEO & Educational Content Section -->
+    <article class="content-area">
+        <section class="content-card">
+            <h1>AU Superannuation Charge Tracker & SG Compliance Calculator</h1>
+            <p>
+                Under the <strong>Superannuation Guarantee (Administration) Act 1992</strong>, Australian employers are legally mandated to contribute a minimum statutory percentage of Ordinary Times Earnings (OTE) into eligible employee superannuation funds.
+            </p>
+            <p>
+                The <strong>au-superannuation-charge-tracker</strong> tool allows payroll managers, accountants, and business owners to track unpaid super contributions, assess statutory 10% per annum nominal interest charges, compute ATO administrative fees, and estimate total non-deductible Superannuation Guarantee Charge (SGC) liabilities.
+            </p>
+
+            <h2>Superannuation Guarantee Statutory Parameters & Penalties</h2>
+            <p>
+                Failing to pay employee superannuation contributions in full by the statutory quarterly due dates triggers an obligation to lodge an SGC Statement with the Australian Taxation Office (ATO).
+            </p>
+
+            <table class="spec-table">
+                <thead>
+                    <tr>
+                        <th>Compliance Parameter</th>
+                        <th>Statutory Rate / Rule</th>
+                        <th>ATO Regulation Component</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Statutory SG Rate</strong></td>
+                        <td>12.0% of OTE</td>
+                        <td>Mandatory minimum contribution rate for employee earnings.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>SGC Nominal Interest</strong></td>
+                        <td>10.0% p.a.</td>
+                        <td>Accrues daily from the first day of the relevant quarter until SGC statement lodgment.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Administrative Component</strong></td>
+                        <td>$20 per employee / quarter</td>
+                        <td>Fixed administrative charge levied on all late quarterly returns.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tax Deductibility Status</strong></td>
+                        <td>Strictly Non-Deductible</td>
+                        <td>SGC liabilities cannot be claimed as tax deductions, unlike on-time super.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Ad Slot 2 Container (Directly Below Specification Table) -->
+            <div class="cms-ad-slot-2"></div>
+
+            <h2>Key Rules for Superannuation Guarantee Charge Compliance</h2>
+            <ul>
+                <li><strong>Quarterly Due Dates:</strong> SG payments must clear into employee funds by the 28th of the month following quarter-end (Oct 28, Jan 28, Apr 28, Jul 28).</li>
+                <li><strong>Salary & Wages Base vs OTE:</strong> On-time super is calculated on Ordinary Times Earnings (OTE). However, once super becomes late, SGC is calculated on total Salary and Wages (including overtime).</li>
+                <li><strong>Nominal Interest Accrual:</strong> ATO nominal interest (10% p.a.) accrues from the beginning of the quarter in which the contribution was due, not from the late payment date.</li>
+                <li><strong>Part 7 Penalties:</strong> Late lodgment of an SGC Statement can attract additional ATO Part 7 penalties up to 200% of the underlying SGC amount.</li>
+            </ul>
+
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-block">
+                <details class="faq-accordion" open>
+                    <summary class="faq-summary">What is the current Superannuation Guarantee (SG) rate in Australia?</summary>
+                    <div class="faq-answer">
+                        The statutory Superannuation Guarantee (SG) rate is 12.0% of an employee's Ordinary Times Earnings (OTE). Employers must pay super contributions at least quarterly by the ATO statutory due dates or risk incurring the Superannuation Guarantee Charge (SGC).
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">How is the Superannuation Guarantee Charge (SGC) calculated on late payments?</summary>
+                    <div class="faq-answer">
+                        When super is paid late or underpaid, the SGC is calculated on total salary and wages (not just OTE). It consists of three parts: the SG Shortfall amount, Nominal Interest (10% per annum calculated from the start of the quarter), and an Administration Fee of $20 per employee per quarter.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">Are late Superannuation Guarantee Charge payments tax-deductible?</summary>
+                    <div class="faq-answer">
+                        No. While regular, on-time superannuation contributions are tax-deductible business expenses, SGC payments made to the ATO (including the shortfall, nominal interest, and admin components) are strictly non-deductible under Australian tax law.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">When is the Superannuation Guarantee payment due each quarter?</summary>
+                    <div class="faq-answer">
+                        Quarterly SG payments must clear into the employee's super fund by the 28th day following the end of each quarter: Q1 (28 Oct), Q2 (28 Jan), Q3 (28 Apr), and Q4 (28 Jul).
+                    </div>
+                </details>
+            </div>
+        </section>
+    </article>
+
+    <!-- Site Footer Integration Hook -->
+    <div id="global-footer"></div>
+
+    <!-- Math Calculation Engine JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var quarterSelect = document.getElementById('quarterSelect');
+            var employeeCountInput = document.getElementById('employeeCountInput');
+            var oteInput = document.getElementById('oteInput');
+            var paidSuperInput = document.getElementById('paidSuperInput');
+            var daysLateInput = document.getElementById('daysLateInput');
+
+            var calculateBtn = document.getElementById('calculateBtn');
+            var loadDemoBtn = document.getElementById('loadDemoBtn');
+
+            var resShortfall = document.getElementById('Super Shortfall Component');
+            var resInterest = document.getElementById('Statutory Nominal Interest');
+            var resTotal = document.getElementById('Total SGC Liability');
+            var resBreakdown = document.getElementById('ATO Statutory Breakdown');
+
+            var SG_RATE = 0.120; // 12.0% Statutory SG Rate
+            var NOMINAL_INTEREST_RATE = 0.10; // 10% per annum nominal interest
+            var ADMIN_FEE_PER_EMPLOYEE = 20.00; // $20 admin fee per employee per quarter
+
+            loadDemoBtn.addEventListener('click', function() {
+                quarterSelect.value = 'Q1';
+                employeeCountInput.value = '5';
+                oteInput.value = '65000';
+                paidSuperInput.value = '1500';
+                daysLateInput.value = '180';
+
+                calculateSGC();
+            });
+
+            calculateBtn.addEventListener('click', function() {
+                calculateSGC();
+            });
+
+            function calculateSGC() {
+                var quarter = quarterSelect.value;
+                var employees = parseInt(employeeCountInput.value, 10) || 1;
+                var ote = parseFloat(oteInput.value) || 0;
+                var paidSuper = parseFloat(paidSuperInput.value) || 0;
+                var daysLate = parseInt(daysLateInput.value, 10) || 1;
+
+                // Statutory Target SG
+                var requiredSG = ote * SG_RATE;
+                var grossShortfall = Math.max(0, requiredSG - paidSuper);
+
+                // Nominal Interest = Shortfall * 10% * (Days / 365)
+                var nominalInterest = grossShortfall * NOMINAL_INTEREST_RATE * (daysLate / 365);
+
+                // Admin Fee = $20 * Employees
+                var totalAdminFee = employees * ADMIN_FEE_PER_EMPLOYEE;
+
+                // Total SGC Liability
+                var totalSgc = grossShortfall + nominalInterest + totalAdminFee;
+
+                // Render Results
+                resShortfall.textContent = '$' + grossShortfall.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                resInterest.textContent = '$' + nominalInterest.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                resTotal.textContent = '$' + totalSgc.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+                var breakdownHtml = '';
+                breakdownHtml += createTimelineRow('Statutory SG Rate (12.0%)', '$' + requiredSG.toFixed(2), true);
+                breakdownHtml += createTimelineRow('Super Paid On-Time', '$' + paidSuper.toFixed(2), false);
+                breakdownHtml += createTimelineRow('Net SG Shortfall', '$' + grossShortfall.toFixed(2), true);
+                breakdownHtml += createTimelineRow('Nominal Interest (10% p.a. / ' + daysLate + ' days)', '$' + nominalInterest.toFixed(2), false);
+                breakdownHtml += createTimelineRow('ATO Admin Fee ($20 × ' + employees + ' employees)', '$' + totalAdminFee.toFixed(2), false);
+                breakdownHtml += createTimelineRow('Tax Deductible Benefit Lost', '$' + (totalSgc * 0.25).toFixed(2) + ' (approx 25% CT)', true);
+
+                resBreakdown.innerHTML = breakdownHtml;
+            }
+
+            function createTimelineRow(label, valStr, isActive) {
+                var activeClass = isActive ? ' active' : '';
+                return '<div class="timeline-row' + activeClass + '">' +
+                    '<span>' + label + '</span>' +
+                    '<span>' + valStr + '</span>' +
+                    '</div>';
+            }
+
+            // Execute initial calculation
+            calculateSGC();
+        });
+    </script>
+</body>
+</html>
