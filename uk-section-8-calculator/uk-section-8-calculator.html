@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UK Section 8 Eviction Notice & Ground Calculator (Form 3A Tracker)</title>
+    <meta name="description" content="Calculate statutory minimum notice periods, expiry timelines, and court eligibility for UK Section 8 Form 3A notices instantly and securely.">
+    <meta name="keywords" content="uk section 8 calculator, section 8 eviction notice, ground 8 rent arrears, form 3a tracker, renters rights act eviction timeline">
+    <link rel="canonical" href="https://coremetricsuite.com" />
+
+    <!-- Open Graph / Social Metadata -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="UK Section 8 Eviction Notice & Ground Calculator (Form 3A Tracker)">
+    <meta property="og:description" content="Calculate statutory minimum notice periods, expiry timelines, and court eligibility for UK Section 8 Form 3A notices instantly and securely.">
+    <meta property="og:url" content="https://coremetricsuite.com">
+    
+    <!-- Global Framework Dependencies -->
+    <link rel="stylesheet" href="/css/global.css">
+    <script src="/global.js" defer></script>
+
+    <!-- FAQ JSON-LD Schema Markup (5 FAQs Synchronized with DOM) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How is a Section 8 notice period calculated for UK residential tenancies?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The statutory Section 8 notice period depends on the specific ground cited under Form 3A. Rent arrears grounds (Grounds 8, 10, 11) require 4 weeks (28 calendar days), owner-occupier or sale grounds (Grounds 1, 1A) require 4 months, and anti-social behavior grounds (Ground 14) permit immediate court application."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the rent arrears threshold for mandatory Ground 8 possession?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Under current UK statutory tenancy rules, Ground 8 requires at least 3 full months of rent arrears owed both on the date the Section 8 notice is served and on the court hearing date. If arrears are less than 3 full months of rent, Ground 8 fails and discretionary grounds must be used."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What happens if I cite multiple grounds with different notice periods on Form 3A?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "When multiple grounds are cited on a single Section 8 Form 3A notice, the longest applicable notice period applies before court proceedings can commence. For example, citing Ground 8 (4 weeks) and Ground 1 (4 months) requires waiting the full 4 months before applying to court."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are tenant details or notice dates saved or transmitted to external servers?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. All date arithmetic, notice period checks, and court timeline estimates run 100% locally inside your web browser using client-side JavaScript code. Your tenancy data is never logged or transmitted."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why should landlords cite discretionary Grounds 10 and 11 alongside mandatory Ground 8?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "If a tenant reduces rent arrears below the mandatory Ground 8 threshold prior to the court hearing, Ground 8 fails. Citing Grounds 10 and 11 ensures the judge can still grant a possession order or conditional suspended order at their discretion."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-main: #0f1117;
+            --bg-card: #181b24;
+            --bg-input: #222634;
+            --border-color: #2e3446;
+            --accent-purple: #8b5cf6;
+            --accent-cyan: #00f2fe;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-mono: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: var(--bg-main); color: var(--text-primary); font-family: var(--font-sans); line-height: 1.6; }
+        
+        .cms-tool-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 440px 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 960px) { .cms-tool-container { grid-template-columns: 1fr; } }
+
+        .panel {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .panel-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            background: var(--accent-purple);
+            color: #fff;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        .btn-demo {
+            width: 100%;
+            padding: 0.6rem;
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            color: var(--accent-purple);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 1.25rem;
+            transition: background 0.2s;
+        }
+        .btn-demo:hover { background-color: #2a3042; }
+
+        .form-group { margin-bottom: 1.25rem; }
+        label { display: block; font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 0.4rem; }
+        input[type="date"], input[type="number"], select {
+            width: 100%; padding: 0.65rem 0.85rem; background-color: var(--bg-input);
+            border: 1px solid var(--border-color); border-radius: 6px; color: #fff;
+            font-size: 0.9rem; outline: none; font-family: inherit;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            background-color: var(--bg-input);
+            padding: 0.85rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            margin-bottom: 1.25rem;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.85rem;
+            color: var(--text-primary);
+            cursor: pointer;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            accent-color: var(--accent-purple);
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .btn-action {
+            width: 100%; padding: 0.85rem; background: linear-gradient(135deg, var(--accent-purple), #7c3aed);
+            color: #fff; font-weight: 700; border: none; border-radius: 6px; cursor: pointer; font-size: 0.95rem;
+            transition: opacity 0.2s;
+        }
+        .btn-action:hover { opacity: 0.9; }
+
+        .preview-stage { display: flex; flex-direction: column; }
+        .result-box {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            font-size: 0.95rem;
+            color: #e5e7eb;
+            min-height: 380px;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .result-metric {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+        .result-metric h4 {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.3rem;
+        }
+        .result-metric .value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #fff;
+            font-family: var(--font-mono);
+        }
+
+        .timeline-breakdown {
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border-color);
+            padding-top: 0.75rem;
+        }
+
+        .timeline-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.35rem 0;
+            color: var(--text-secondary);
+            border-bottom: 1px dashed rgba(255,255,255,0.05);
+        }
+        .timeline-row:last-child { border-bottom: none; }
+        .timeline-row.active {
+            color: var(--accent-cyan);
+            font-weight: 600;
+        }
+
+        .canvas-caption { margin-top: 1rem; font-size: 0.85rem; color: var(--text-secondary); text-align: right; }
+
+        .content-area { max-width: 1200px; margin: 3rem auto; padding: 0 1.5rem; }
+        .content-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 2.5rem; }
+        .content-card h1 { font-size: 2rem; margin-bottom: 1rem; color: #fff; }
+        .content-card h2 { font-size: 1.4rem; margin: 1.8rem 0 1rem; color: #fff; }
+        .content-card p { color: var(--text-secondary); margin-bottom: 1.2rem; }
+        .content-card ul, .content-card ol { color: var(--text-secondary); margin: 0 0 1.2rem 1.5rem; }
+        .content-card li { margin-bottom: 0.5rem; }
+
+        .spec-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; text-align: left; }
+        .spec-table th, .spec-table td { padding: 0.85rem 1rem; border: 1px solid var(--border-color); }
+        .spec-table th { background-color: var(--bg-input); color: #fff; }
+        .spec-table td { color: var(--text-secondary); }
+
+        /* Accordion FAQ Styling */
+        .faq-block { margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem; }
+        .faq-accordion {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 0.85rem;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .faq-accordion[open] { border-color: var(--accent-purple); }
+        .faq-summary {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            padding: 1rem 1.2rem;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+        .faq-summary::-webkit-details-marker { display: none; }
+        .faq-summary::after {
+            content: "+";
+            font-size: 1.2rem;
+            color: var(--accent-purple);
+            transition: transform 0.2s;
+        }
+        .faq-accordion[open] .faq-summary::after {
+            content: "−";
+            color: var(--accent-purple);
+        }
+        .faq-answer {
+            padding: 0 1.2rem 1.2rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 0.4rem;
+            padding-top: 0.8rem;
+        }
+
+        .cms-ad-slot-1, .cms-ad-slot-2 {
+            width: 100%; max-width: 970px; min-height: 90px; margin: 1.5rem auto;
+            background: rgba(255,255,255,0.02); border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Global Site Header -->
+    <div id="global-header"></div>
+
+    <!-- Ad Slot 1 Container (Directly Above Main Title) -->
+    <div class="cms-ad-slot-1"></div>
+
+    <!-- Main Tool Container -->
+    <section class="cms-tool-container">
+        <form class="panel" id="section8Form" onsubmit="return false;">
+            <div class="panel-title">
+                <span>Form 3A Section 8 Controls</span>
+                <span class="badge">UK LEGAL ENGINE</span>
+            </div>
+
+            <button class="btn-demo" id="loadDemoBtn" type="button">⚡ Load Demo Sample Data</button>
+
+            <div class="form-group">
+                <label for="serviceDate">Planned Service Date</label>
+                <input type="date" id="serviceDate">
+            </div>
+
+            <div class="form-group">
+                <label for="monthlyRent">Monthly Agreed Rent (£)</label>
+                <input type="number" id="monthlyRent" value="1200" min="1" step="50">
+            </div>
+
+            <div class="form-group">
+                <label for="currentArrears">Current Outstanding Arrears (£)</label>
+                <input type="number" id="currentArrears" value="3800" min="0" step="50">
+            </div>
+
+            <div class="form-group">
+                <label>Select Ground Cites (Form 3A)</label>
+                <div class="checkbox-group">
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="citeGround8" value="ground8" checked>
+                        <span>Ground 8: Serious Rent Arrears (4 Weeks / Mandatory)</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="citeGround1" value="ground1">
+                        <span>Ground 1: Landlord / Family Occupancy (4 Months / Mandatory)</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="citeGround1A" value="ground1a">
+                        <span>Ground 1A: Intention to Sell Property (4 Months / Mandatory)</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="citeGround10_11" value="ground10_11" checked>
+                        <span>Ground 10/11: Minor Arrears / Persistent Delay (4 Weeks)</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="citeGround12_13" value="ground12_13">
+                        <span>Ground 12/13: Tenancy Breach / Neglect (4 Weeks)</span>
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" id="citeGround14" value="ground14">
+                        <span>Ground 14: Anti-Social Behaviour (Immediate)</span>
+                    </label>
+                </div>
+            </div>
+
+            <button class="btn-action" id="calculateBtn" type="button">Calculate Notice Dates & Validity</button>
+        </form>
+
+        <!-- Result Stage Wrapper -->
+        <section class="preview-stage">
+            <div class="panel" style="flex: 1; display: flex; flex-direction: column;">
+                <div class="panel-title">
+                    <span>Section 8 Calculation Summary</span>
+                </div>
+                <div class="result-box" id="resultBoard">
+                    <div class="result-metric">
+                        <h4>Earliest Date Court Proceedings Can Begin</h4>
+                        <div class="value" id="Earliest Date Court Proceedings Can Begin">--</div>
+                    </div>
+                    <div class="result-metric">
+                        <h4>Mandatory Arrears Threshold Assessment</h4>
+                        <div class="value" id="Mandatory Arrears Threshold Assessment">--</div>
+                    </div>
+                    <div class="result-metric">
+                        <h4>Statutory Notice Timeline Milestones</h4>
+                        <div class="timeline-breakdown" id="Statutory Notice Timeline Milestones">
+                            <!-- Timeline milestones populated via JS -->
+                        </div>
+                    </div>
+                </div>
+                <p class="canvas-caption">
+                    Calculated in compliance with Section 8 Form 3A statutory rules for England under current statutory housing legislation.
+                </p>
+            </div>
+        </section>
+    </section>
+
+    <!-- SEO & Educational Guide Section -->
+    <article class="content-area">
+        <section class="content-card">
+            <h1>UK Section 8 Eviction Notice & Ground Calculator (Form 3A Tracker)</h1>
+            <p>
+                Serving a valid Section 8 notice is a mandatory legal prerequisite for landlords seeking possession of residential properties let under assured tenancies in England. Under current statutory rules, notice periods and ground criteria depend strictly on the reasons cited on prescribed Form 3A.
+            </p>
+            <p>
+                This browser-based <strong>uk-section-8-calculator</strong> utility enables landlords, letting agents, and legal advisors to calculate exact statutory expiry dates, verify mandatory rent arrears thresholds, and map county court possession claim timelines entirely client-side without transmitting private tenancy data to external servers.
+            </p>
+
+            <h2>Statutory Section 8 Notice Periods & Ground Matrix</h2>
+            <p>
+                The table below outlines notice requirements and court discretion parameters across statutory Section 8 grounds:
+            </p>
+
+            <table class="spec-table">
+                <thead>
+                    <tr>
+                        <th>Ground Number</th>
+                        <th>Ground Description</th>
+                        <th>Required Notice Period</th>
+                        <th>Court Authority Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Ground 8</strong></td>
+                        <td>Serious Rent Arrears (≥ 3 Months)</td>
+                        <td>4 Weeks (28 Days)</td>
+                        <td>Mandatory Possession</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ground 1</strong></td>
+                        <td>Landlord or Family Member Moving In</td>
+                        <td>4 Months</td>
+                        <td>Mandatory Possession</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ground 1A</strong></td>
+                        <td>Landlord Intention to Sell Property</td>
+                        <td>4 Months</td>
+                        <td>Mandatory Possession</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ground 10 / 11</strong></td>
+                        <td>Minor Arrears or Persistent Late Payment</td>
+                        <td>4 Weeks (28 Days)</td>
+                        <td>Discretionary Possession</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ground 12 / 13</strong></td>
+                        <td>Breach of Tenancy / Property Neglect</td>
+                        <td>4 Weeks (28 Days)</td>
+                        <td>Discretionary Possession</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ground 14</strong></td>
+                        <td>Nuisance, Anti-Social Behaviour, Crime</td>
+                        <td>Immediate (0 Days)</td>
+                        <td>Discretionary Possession</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Ad Slot 2 Container (Directly Below Specification Table) -->
+            <div class="cms-ad-slot-2"></div>
+
+            <h2>Section 8 Notice Serving Workflow & Integration Checklist</h2>
+            <p>
+                To prevent court dismissal due to defective notice service, follow this step-by-step verification process:
+            </p>
+            <ul>
+                <li><strong>Confirm Prescribed Form 3A:</strong> Ensure you are serving the official Form 3A specified under current statutory housing regulations.</li>
+                <li><strong>Verify Arrears Thresholds:</strong> For Ground 8 mandatory claims, confirm arrears meet or exceed 3 full months of rent both at notice service and at the court hearing date.</li>
+                <li><strong>Plead Multiple Grounds:</strong> Always combine mandatory Ground 8 with discretionary Grounds 10 and 11 to preserve court options if arrears fall below threshold before the hearing.</li>
+                <li><strong>Retain Service Proof:</strong> Maintain a signed Certificate of Service (Form N215) and record royal mail recorded delivery or hand delivery details.</li>
+            </ul>
+
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-block">
+                <details class="faq-accordion" open>
+                    <summary class="faq-summary">How is a Section 8 notice period calculated for UK residential tenancies?</summary>
+                    <div class="faq-answer">
+                        The statutory Section 8 notice period depends on the specific ground cited under Form 3A. Rent arrears grounds (Grounds 8, 10, 11) require 4 weeks (28 calendar days), owner-occupier or sale grounds (Grounds 1, 1A) require 4 months, and anti-social behavior grounds (Ground 14) permit immediate court application.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">What is the rent arrears threshold for mandatory Ground 8 possession?</summary>
+                    <div class="faq-answer">
+                        Under current UK statutory tenancy rules, Ground 8 requires at least 3 full months of rent arrears owed both on the date the Section 8 notice is served and on the court hearing date. If arrears are less than 3 full months of rent, Ground 8 fails and discretionary grounds must be used.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">What happens if I cite multiple grounds with different notice periods on Form 3A?</summary>
+                    <div class="faq-answer">
+                        When multiple grounds are cited on a single Section 8 Form 3A notice, the longest applicable notice period applies before court proceedings can commence. For example, citing Ground 8 (4 weeks) and Ground 1 (4 months) requires waiting the full 4 months before applying to court.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">Are tenant details or notice dates saved or transmitted to external servers?</summary>
+                    <div class="faq-answer">
+                        No. All date arithmetic, notice period checks, and court timeline estimates run 100% locally inside your web browser using client-side JavaScript code. Your tenancy data is never logged or transmitted.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">Why should landlords cite discretionary Grounds 10 and 11 alongside mandatory Ground 8?</summary>
+                    <div class="faq-answer">
+                        If a tenant reduces rent arrears below the mandatory Ground 8 threshold prior to the court hearing, Ground 8 fails. Citing Grounds 10 and 11 ensures the judge can still grant a possession order or conditional suspended order at their discretion.
+                    </div>
+                </details>
+            </div>
+        </section>
+    </article>
+
+    <!-- Global Site Footer -->
+    <div id="global-footer"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var serviceDateInput = document.getElementById('serviceDate');
+            var monthlyRentInput = document.getElementById('monthlyRent');
+            var currentArrearsInput = document.getElementById('currentArrears');
+
+            var citeGround8 = document.getElementById('citeGround8');
+            var citeGround1 = document.getElementById('citeGround1');
+            var citeGround1A = document.getElementById('citeGround1A');
+            var citeGround10_11 = document.getElementById('citeGround10_11');
+            var citeGround12_13 = document.getElementById('citeGround12_13');
+            var citeGround14 = document.getElementById('citeGround14');
+
+            var calculateBtn = document.getElementById('calculateBtn');
+            var loadDemoBtn = document.getElementById('loadDemoBtn');
+
+            var resEarliestCourtDate = document.getElementById('Earliest Date Court Proceedings Can Begin');
+            var resArrearsStatus = document.getElementById('Mandatory Arrears Threshold Assessment');
+            var resTimelineList = document.getElementById('Statutory Notice Timeline Milestones');
+
+            // Default service date to today
+            var today = new Date();
+            serviceDateInput.value = formatDateForInput(today);
+
+            loadDemoBtn.addEventListener('click', function() {
+                var d = new Date();
+                serviceDateInput.value = formatDateForInput(d);
+                monthlyRentInput.value = '1200';
+                currentArrearsInput.value = '3800';
+
+                citeGround8.checked = true;
+                citeGround1.checked = false;
+                citeGround1A.checked = false;
+                citeGround10_11.checked = true;
+                citeGround12_13.checked = false;
+                citeGround14.checked = false;
+
+                calculateSection8();
+            });
+
+            calculateBtn.addEventListener('click', function() {
+                calculateSection8();
+            });
+
+            function calculateSection8() {
+                var rawDate = serviceDateInput.value;
+                if (!rawDate) {
+                    alert('Please select a valid planned service date.');
+                    return;
+                }
+
+                var serviceDate = new Date(rawDate);
+                var monthlyRent = parseFloat(monthlyRentInput.value) || 0;
+                var currentArrears = parseFloat(currentArrearsInput.value) || 0;
+
+                // Determine maximum required notice period across all selected grounds
+                var noticeDays = 0;
+                var selectedGroundsCount = 0;
+
+                if (citeGround1.checked || citeGround1A.checked) {
+                    noticeDays = Math.max(noticeDays, 122); // 4 months (~122 days)
+                    selectedGroundsCount++;
+                }
+                if (citeGround8.checked || citeGround10_11.checked || citeGround12_13.checked) {
+                    noticeDays = Math.max(noticeDays, 28); // 4 weeks (28 days)
+                    selectedGroundsCount++;
+                }
+                if (citeGround14.checked) {
+                    noticeDays = Math.max(noticeDays, 0); // Immediate
+                    selectedGroundsCount++;
+                }
+
+                if (selectedGroundsCount === 0) {
+                    resEarliestCourtDate.textContent = 'Please select at least one ground.';
+                    resArrearsStatus.textContent = 'No Ground Cites Selected';
+                    resTimelineList.innerHTML = '<div class="timeline-row"><span>Select at least one ground checkbox to generate timeline.</span></div>';
+                    return;
+                }
+
+                // Mandatory Arrears Threshold Assessment Logic
+                var requiredThreshold = monthlyRent * 3;
+                var thresholdPassed = (currentArrears >= requiredThreshold) && (monthlyRent > 0);
+                var arrearsText = "";
+
+                if (citeGround8.checked) {
+                    if (thresholdPassed) {
+                        arrearsText = "Threshold Passed (£" + currentArrears.toLocaleString('en-GB') + " ≥ 3 Months Rent £" + requiredThreshold.toLocaleString('en-GB') + ")";
+                    } else {
+                        arrearsText = "Threshold Failed - Must use discretionary grounds (£" + currentArrears.toLocaleString('en-GB') + " < 3 Months Rent £" + requiredThreshold.toLocaleString('en-GB') + ")";
+                    }
+                } else {
+                    arrearsText = "Ground 8 Not Cited (Arrears threshold check bypass)";
+                }
+
+                // Date Calculations
+                var expiryDate = new Date(serviceDate);
+                expiryDate.setDate(expiryDate.getDate() + noticeDays);
+
+                var courtActionDate = new Date(expiryDate);
+                if (noticeDays > 0) {
+                    courtActionDate.setDate(courtActionDate.getDate() + 1);
+                }
+
+                var estimatedHearingDate = new Date(courtActionDate);
+                estimatedHearingDate.setDate(estimatedHearingDate.getDate() + 56); // ~8 weeks
+
+                var noticeValidityExpiry = new Date(serviceDate);
+                noticeValidityExpiry.setFullYear(noticeValidityExpiry.getFullYear() + 1);
+
+                // Update Output Board
+                resEarliestCourtDate.textContent = formatDateDisplay(courtActionDate);
+                resArrearsStatus.textContent = arrearsText;
+
+                var timelineHtml = '';
+                timelineHtml += createTimelineRow('Planned Service Date', formatDateDisplay(serviceDate), false);
+                timelineHtml += createTimelineRow('Statutory Notice Expiry (' + noticeDays + ' days)', formatDateDisplay(expiryDate), true);
+                timelineHtml += createTimelineRow('Earliest Court Application Date', formatDateDisplay(courtActionDate), true);
+                timelineHtml += createTimelineRow('Estimated Hearing Date (~8 weeks later)', formatDateDisplay(estimatedHearingDate), false);
+                timelineHtml += createTimelineRow('Form 3A Validity Expiry (12 months)', formatDateDisplay(noticeValidityExpiry), false);
+
+                resTimelineList.innerHTML = timelineHtml;
+            }
+
+            function createTimelineRow(label, dateStr, isActive) {
+                var activeClass = isActive ? ' active' : '';
+                return '<div class="timeline-row' + activeClass + '">' +
+                    '<span>' + label + '</span>' +
+                    '<span>' + dateStr + '</span>' +
+                    '</div>';
+            }
+
+            function formatDateForInput(d) {
+                var month = '' + (d.getMonth() + 1);
+                var day = '' + d.getDate();
+                var year = d.getFullYear();
+
+                if (month.length < 2) month = '0' + month;
+                if (day.length < 2) day = '0' + day;
+
+                return [year, month, day].join('-');
+            }
+
+            function formatDateDisplay(d) {
+                var options = { day: '2-digit', month: 'short', year: 'numeric' };
+                return d.toLocaleDateString('en-GB', options);
+            }
+
+            calculateSection8();
+        });
+    </script>
+</body>
+</html>
