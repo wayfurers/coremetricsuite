@@ -1,16 +1,15 @@
 /**
  * CoreMetricSuite.com - Global Core Engine & Dynamic Components
- * High-Performance Programmatic SEO Engine, Header/Footer Injection,
- * Recommendation Toast & Dual-Network Monetization System
+ * Robust Path-Normalization, Deep-Link Routing, Dynamic SEO, and Dual-Network Monetization
  */
 
 (function () {
   'use strict';
 
-  // Complete 12 Tier-1 Static Tool Registry with Hyper-Targeted SEO & Regulatory Disclaimers
-    const TOOL_REGISTRY = [
+  // 12 Tier-1 Static Tool Registry
+  const TOOL_REGISTRY = [
     {
-      path: './tiktok-ad-safe-zone/',
+      path: '/tiktok-ad-safe-zone',
       title: 'TikTok Safe Zone',
       category: 'media',
       metaTitle: 'TikTok Ad Safe Zone Template & Overlay Tool | CoreMetricSuite',
@@ -18,7 +17,7 @@
       h1: 'TikTok Ad Safe Zone Template Generator'
     },
     {
-      path: './shorts-ui-safe-zone/',
+      path: '/shorts-ui-safe-zone',
       title: 'Shorts Safe Zone',
       category: 'media',
       metaTitle: 'YouTube Shorts UI Safe Zone Calculator | CoreMetricSuite',
@@ -26,7 +25,7 @@
       h1: 'YouTube Shorts UI Safe Zone Estimator'
     },
     {
-      path: './instagram-reels-preview/',
+      path: '/instagram-reels-preview',
       title: 'Instagram Reels Preview',
       category: 'media',
       metaTitle: 'Instagram Reels UI Safe Zone Preview Tool | CoreMetricSuite',
@@ -34,7 +33,7 @@
       h1: 'Instagram Reels Preview & Safe Zone Checker'
     },
     {
-      path: './shopify-metafields-parser/',
+      path: '/shopify-metafields-parser',
       title: 'Shopify Metafields Parser',
       category: 'media',
       metaTitle: 'Shopify Metafields JSON Parser & Generator | CoreMetricSuite',
@@ -42,7 +41,7 @@
       h1: 'Shopify Metafields Parser & Schema Tool'
     },
     {
-      path: './uk-section-8-calculator/',
+      path: '/uk-section-8-calculator',
       title: 'UK Section 8 Calculator',
       category: 'uk',
       metaTitle: 'UK Section 8 Rent Arrears Notice Calculator | CoreMetricSuite',
@@ -51,7 +50,7 @@
       disclaimer: 'UK Compliance Notice: Calculations are provided strictly for informational estimation guidance under the Housing Act 1988 and HMRC SDLT guidelines. This utility does not constitute professional legal or financial advice. Independently verify calculations against official Gov portals.'
     },
     {
-      path: './uk-form-4a-rent-tracker/',
+      path: '/uk-form-4a-rent-tracker',
       title: 'UK Form 4A Rent Tracker',
       category: 'uk',
       metaTitle: 'UK Form 4A Rent Increase Tracker | CoreMetricSuite',
@@ -60,7 +59,7 @@
       disclaimer: 'UK Compliance Notice: Calculations are provided strictly for informational estimation guidance under the Housing Act 1988 and HMRC SDLT guidelines. This utility does not constitute professional legal or financial advice. Independently verify calculations against official Gov portals.'
     },
     {
-      path: './uk-sdlt-bracket-estimator/',
+      path: '/uk-sdlt-bracket-estimator',
       title: 'UK Stamp Duty (SDLT)',
       category: 'uk',
       metaTitle: 'UK SDLT Stamp Duty Bracket Estimator | CoreMetricSuite',
@@ -69,7 +68,7 @@
       disclaimer: 'UK Compliance Notice: SDLT rates reflect HMRC guidelines for England & Northern Ireland. Verify final liability with a qualified legal conveyancer or property professional.'
     },
     {
-      path: './us-llc-late-penalty-estimator/',
+      path: '/us-llc-late-penalty-estimator',
       title: 'US LLC Late Penalty',
       category: 'us',
       metaTitle: 'US IRS LLC Late Filing Penalty Estimator | CoreMetricSuite',
@@ -78,7 +77,7 @@
       disclaimer: 'US IRS Statutory Disclaimer (IRC Compliance): Calculations are intended purely for illustrative financial projections under active IRC §179 and §6038A parameters. This utility is entirely private and does not constitute certified CPA advisory services or official tax filings.'
     },
     {
-      path: './us-section-179-truck-calculator/',
+      path: '/us-section-179-truck-calculator',
       title: 'US Sec 179 Truck Calc',
       category: 'us',
       metaTitle: 'US Section 179 Vehicle Depreciation Calculator | CoreMetricSuite',
@@ -87,7 +86,7 @@
       disclaimer: 'US IRS Statutory Disclaimer (IRC Compliance): Calculations are intended purely for illustrative financial projections under active IRC §179 and §6038A parameters. This utility is entirely private and does not constitute certified CPA advisory services or official tax filings.'
     },
     {
-      path: './au-cents-per-km-estimator/',
+      path: '/au-cents-per-km-estimator',
       title: 'AU Cents per KM',
       category: 'au',
       metaTitle: 'AU Cents Per KM Vehicle Deduction Estimator | CoreMetricSuite',
@@ -96,7 +95,7 @@
       disclaimer: 'Australian Taxation & Regulatory Disclaimer: Compliance parameters are mapped against statutory ATO rates and Fair Work Commission awards (MA000100). These metrics serve strictly as educational calculation tools. Reconcile all final payouts via certified bookkeeping services.'
     },
     {
-      path: './au-schads-vehicle-allowance/',
+      path: '/au-schads-vehicle-allowance',
       title: 'AU SCHADS Allowance',
       category: 'au',
       metaTitle: 'AU SCHADS Award Vehicle Allowance Calculator | CoreMetricSuite',
@@ -105,7 +104,7 @@
       disclaimer: 'Australian Taxation & Regulatory Disclaimer: Compliance parameters are mapped against statutory ATO rates and Fair Work Commission awards (MA000100). These metrics serve strictly as educational calculation tools. Reconcile all final payouts via certified bookkeeping services.'
     },
     {
-      path: './au-superannuation-charge-tracker/',
+      path: '/au-superannuation-charge-tracker',
       title: 'AU Super Charge',
       category: 'au',
       metaTitle: 'AU Superannuation Guarantee Charge (SGC) Tracker | CoreMetricSuite',
@@ -116,17 +115,47 @@
   ];
 
   /**
-   * Helper: Normalizes paths by stripping query strings, hashes, trailing slashes,
-   * and converting to lowercase for seamless deployment cross-environment matching.
+   * Robust Path-Matching Helper
+   * Strips query params, hashes, leading dots/slashes, trailing slashes, and index.html
+   * Ensures identical path evaluation across local files, Vercel, and GitHub Pages.
    */
   function normalizePath(rawPath) {
     if (!rawPath || typeof rawPath !== 'string') return '';
     try {
       let clean = rawPath.split('?')[0].split('#')[0].toLowerCase().trim();
+      
+      // Strip trailing index.html if present
+      if (clean.endsWith('/index.html')) {
+        clean = clean.substring(0, clean.length - 11);
+      } else if (clean === 'index.html') {
+        clean = '';
+      }
+
+      // Remove leading dots and slashes
+      clean = clean.replace(/^[\.\/]+/, '');
+      
+      // Remove trailing slashes
       clean = clean.replace(/\/+$/, '');
-      return clean === '' ? '/' : clean;
+
+      return clean === '' ? '/' : '/' + clean;
     } catch (e) {
       return '';
+    }
+  }
+
+  /**
+   * Dynamic Deep-Link Prefix Calculator
+   * Determines relative directory escape routes (e.g. "./" vs "../")
+   */
+  function getRelativePrefix() {
+    try {
+      const currentPath = normalizePath(window.location.pathname);
+      if (currentPath === '/' || currentPath === '') {
+        return './';
+      }
+      return '../';
+    } catch (e) {
+      return './';
     }
   }
 
@@ -147,7 +176,7 @@
         el.setAttribute('content', content);
       }
     } catch (e) {
-      // Fail silently without breaking execution
+      // Fail silently
     }
   }
 
@@ -210,7 +239,7 @@
   }
 
   /**
-   * Header Navigation Injection Component
+   * Dynamic Deep-Linked Header Navigation Injection Component
    */
   function injectGlobalHeader() {
     try {
@@ -218,24 +247,24 @@
       if (!headerContainer) return;
 
       const currentPath = normalizePath(window.location.pathname);
+      const prefix = getRelativePrefix();
 
       const navStripHTML = TOOL_REGISTRY.map(tool => {
         const toolNormalized = normalizePath(tool.path);
-        const isActive = (currentPath === toolNormalized || (currentPath !== '/' && currentPath.startsWith(toolNormalized)))
-          ? ' class="active-tool"' 
-          : '';
-        return `<a href="${tool.path}"${isActive}>${tool.title}</a>`;
+        const isActive = (currentPath === toolNormalized) ? ' class="active-tool"' : '';
+        const href = `${prefix}${toolNormalized.replace(/^\//, '')}/`;
+        return `<a href="${href}"${isActive}>${tool.title}</a>`;
       }).join('');
 
       headerContainer.innerHTML = `
         <header class="cms-site-header">
           <div class="cms-top-bar">
-            <a href="/" class="cms-brand-logo">CoreMetric<span>Suite</span></a>
+            <a href="${prefix}" class="cms-brand-logo">CoreMetric<span>Suite</span></a>
             <nav class="cms-meta-nav">
-              <a href="/about.html">About</a>
-              <a href="/contact.html">Contact</a>
-              <a href="/privacy-policy.html">Privacy Policy</a>
-              <a href="/terms.html">Terms</a>
+              <a href="${prefix}about.html">About</a>
+              <a href="${prefix}contact.html">Contact</a>
+              <a href="${prefix}privacy-policy.html">Privacy Policy</a>
+              <a href="${prefix}terms.html">Terms</a>
             </nav>
           </div>
           <div class="cms-tool-scroll-strip">
@@ -250,7 +279,7 @@
   }
 
   /**
-   * Footer Injection Component
+   * Dynamic Deep-Linked Footer Injection Component
    */
   function injectGlobalFooter() {
     try {
@@ -258,15 +287,17 @@
       if (!footerContainer) return;
 
       const year = new Date().getFullYear();
+      const prefix = getRelativePrefix();
+
       footerContainer.innerHTML = `
         <footer class="cms-site-footer">
           <div class="cms-footer-inner">
             <p>&copy; ${year} CoreMetricSuite.com. Precision financial, legal, and media calculators.</p>
             <div class="cms-footer-links">
-              <a href="/about.html">About</a> | 
-              <a href="/contact.html">Contact</a> | 
-              <a href="/privacy-policy.html">Privacy Policy</a> | 
-              <a href="/terms.html">Terms of Service</a>
+              <a href="${prefix}about.html">About</a> | 
+              <a href="${prefix}contact.html">Contact</a> | 
+              <a href="${prefix}privacy-policy.html">Privacy Policy</a> | 
+              <a href="${prefix}terms.html">Terms of Service</a>
             </div>
           </div>
         </footer>
@@ -275,17 +306,21 @@
   }
 
   /**
-   * Non-blocking Recommendation Toast Engine
+   * Non-blocking Deep-Linked Recommendation Toast Engine
    */
   function initRecommendationEngine() {
     try {
       const currentPath = normalizePath(window.location.pathname);
-      
+      const prefix = getRelativePrefix();
+
       const availableTools = TOOL_REGISTRY.filter(t => normalizePath(t.path) !== currentPath);
       if (!availableTools || availableTools.length === 0) return;
 
       const suggestion = availableTools[Math.floor(Math.random() * availableTools.length)];
       if (!suggestion) return;
+
+      const suggestionNormalized = normalizePath(suggestion.path);
+      const targetUrl = `${prefix}${suggestionNormalized.replace(/^\//, '')}/`;
 
       setTimeout(() => {
         try {
@@ -295,7 +330,7 @@
             <div class="cms-toast-content">
               <span class="cms-toast-label">Suggested Tool</span>
               <p class="cms-toast-title">${suggestion.title}</p>
-              <a href="${suggestion.path}" class="cms-toast-btn">Open Tool &rarr;</a>
+              <a href="${targetUrl}" class="cms-toast-btn">Open Tool &rarr;</a>
               <button class="cms-toast-close" id="cms-close-toast" aria-label="Close">&times;</button>
             </div>
           `;
