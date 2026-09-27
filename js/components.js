@@ -1,4 +1,7 @@
-// 1. Data mapping for all directory tools & categorization metrics (Explicit Path Fixes)
+// Global System Management Metrics
+const CURRENT_APP_VERSION = "v1.0.4 - Direct Multi-Jurisdictional Utilities";
+
+// 1. Data mapping for all directory tools & categorization metrics
 const TOOLS_REGISTRY = [
     { name: "AU Cents-Per-Km Estimator", path: "/au-cents-per-km-estimator/index.html", tag: "AU TAX" },
     { name: "AU SCHADS Vehicle Allowance", path: "/au-schads-vehicle-allowance/index.html", tag: "AU LABOUR" },
@@ -42,7 +45,7 @@ function buildGlobalHeader() {
         <header class="global-navbar-shell global-layout-wrapper">
             <div class="global-logo-row">
                 <a href="/" class="global-logo-link">CoreMetricSuite</a>
-                <span class="global-version-tag">v1.0.4 - Direct Multi-Jurisdictional Utilities</span>
+                <span class="global-version-tag">${CURRENT_APP_VERSION}</span>
             </div>
             <nav class="tool-slider-nav">
                 ${navLinksHTML}
@@ -70,46 +73,50 @@ function buildGlobalFooter() {
                 <a href="/terms.html" class="footer-link">Terms of Service</a>
                 <a href="/contact.html" class="footer-link">Contact Support</a>
             </div>
-            <p class="footer-copyright">&copy; 2026 CoreMetricSuite. All calculation scripts execute serverless client-side.</p>
+            <p class="footer-copyright">&copy; 2026 CoreMetricSuite (${CURRENT_APP_VERSION}). All calculation scripts execute serverless client-side.</p>
         </footer>
     `;
 }
 
-// 5. Structural Category Recommendation engine layout builder
-function buildSuggestions() {
+// 5. Attention-Grabbing Popup Snippet Builder
+function buildPopupSuggestions() {
     const activePath = window.location.pathname.toLowerCase();
     
+    // Check if user is currently inside a calculator page subfolder
     const currentTool = TOOLS_REGISTRY.find(t => {
         const cleanPath = t.path.toLowerCase().replace("index.html", "");
         return activePath.includes(cleanPath) && cleanPath !== "/";
     });
     
+    // Safety exit: Do not generate a popup if we are on the homepage index
     if (!currentTool) return '';
 
+    // Filter tools list to pull the most related options
     const matches = TOOLS_REGISTRY.filter(t => t.tag === currentTool.tag && t.path !== currentTool.path);
-    const displayList = matches.length >= 2 ? matches : TOOLS_REGISTRY.filter(t => t.path !== currentTool.path).slice(0, 3);
+    const displayList = matches.length >= 2 ? matches : TOOLS_REGISTRY.filter(t => t.path !== currentTool.path).slice(0, 2);
 
-    const suggestionItemsHTML = displayList.map(t => `
-        <a href="${t.path}" class="suggestion-card">
-            <span class="suggestion-tag">${t.tag}</span>
-            <strong class="suggestion-name">${t.name}</strong>
+    const linksHTML = displayList.map(t => `
+        <a href="${t.path}" style="display: block; padding: 10px; margin-top: 8px; background: #1e293b; color: #ffffff; text-decoration: none; border-radius: 6px; border: 1px solid #334155; transition: background 0.2s;" onmouseover="this.style.background='#3b82f6'" onmouseout="this.style.background='#1e293b'">
+            <span style="font-size: 0.65rem; color: #3b82f6; font-weight: bold; display: block; text-transform: uppercase;">Try Next (${t.tag})</span>
+            <span style="font-size: 0.85rem; font-weight: 500;">${t.name} &rarr;</span>
         </a>
     `).join('');
 
     return `
-        <section class="related-suggestions-box global-layout-wrapper">
-            <h3 class="suggestions-title">Related CoreMetric Utilities</h3>
-            <p class="suggestions-subtitle">Based on your current operations, you may also need these calculators:</p>
-            <div class="suggestions-grid">
-                ${suggestionItemsHTML}
+        <div id="attention-grabber-toast" style="position: fixed; bottom: -400px; right: 20px; width: 320px; max-width: calc(100vw - 40px); background: #0f172a; border: 2px solid #3b82f6; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.5); border-radius: 12px; padding: 16px; z-index: 99999; font-family: sans-serif; transition: bottom 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px;">
+                <h4 style="color: #ffffff; margin: 0; font-size: 1rem; font-weight: bold;">💡 Smart Utility Match</h4>
+                <button onclick="document.getElementById('attention-grabber-toast').style.bottom='-400px'" style="background: none; border: none; color: #94a3b8; font-size: 1.5rem; cursor: pointer; line-height: 1; padding: 0 4px;" onmouseover="this.style.color='#ffffff'" onmouseout="this.style.color='#94a3b8'">&times;</button>
             </div>
-        </section>
+            <p style="color: #94a3b8; margin: 0 0 12px 0; font-size: 0.8rem; line-height: 1.4;">Based on your current session parameters, you might also find these calculators helpful:</p>
+            ${linksHTML}
+        </div>
     `;
 }
 
 // 6. Global initialization routine
 document.addEventListener("DOMContentLoaded", () => {
-    // 🔀 DYNAMIC CACHE-BUSTER LAYER: Checks and updates your style references automatically
+    // Dynamic Cache-Buster Layer to auto-refresh styles
     const stylesheetLink = document.querySelector('link[rel="stylesheet"]');
     if (stylesheetLink) {
         const currentHref = stylesheetLink.getAttribute('href');
@@ -126,12 +133,24 @@ document.addEventListener("DOMContentLoaded", () => {
         body.classList.add("dark-theme-page");
     }
 
+    // Inject static structural views
     body.insertAdjacentHTML("afterbegin", buildGlobalHeader());
-
-    const targetMainWrapper = document.querySelector('main') || body;
-    targetMainWrapper.insertAdjacentHTML("beforeend", buildSuggestions());
     body.insertAdjacentHTML("beforeend", buildGlobalFooter());
 
+    // Inject our new attention-grabbing toast snippet container into the body canvas
+    body.insertAdjacentHTML("beforeend", buildPopupSuggestions());
+
+    // Fire advertisement slots
     injectAdvertisementCode("top-global-ad");
     injectAdvertisementCode("bottom-global-ad");
+
+    // ⏱️ TIMER TRIGGER: Slide the popup snippet into view after 5 seconds on tool pages
+    if (isToolPage) {
+        setTimeout(() => {
+            const toast = document.getElementById("attention-grabber-toast");
+            if (toast) {
+                toast.style.bottom = "20px"; // Slides up smoothly above the mobile/desktop viewport
+            }
+        }, 5000); // 5000 milliseconds = 5 seconds
+    }
 });
