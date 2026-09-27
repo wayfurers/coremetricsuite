@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Section 179 Vehicle & Heavy Truck Deduction Calculator</title>
+    <meta name="description" content="Calculate first-year IRS Section 179 vehicle tax deductions, heavy SUV write-off caps, and 100% bonus depreciation savings instantly.">
+    <meta name="keywords" content="section 179 truck calculator, gvwr over 6000 lbs deduction, Section 179 heavy vehicle tax write off, bonus depreciation truck tax deduction, section 179 2560000 limit">
+    <link rel="canonical" href="https://coremetricsuite.com" />
+
+    <!-- Architecture Links -->
+    <link rel="stylesheet" href="/css/global.css">
+    <script src="/global.js" defer></script>
+
+    <!-- Open Graph / Social Metadata -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Section 179 Vehicle & Heavy Truck Deduction Calculator">
+    <meta property="og:description" content="Calculate first-year IRS Section 179 vehicle tax deductions, heavy SUV write-off caps, and 100% bonus depreciation savings instantly.">
+    <meta property="og:url" content="https://coremetricsuite.com">
+
+    <!-- JSON-LD Schema: FAQPage Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What vehicles qualify for the 100% Section 179 heavy truck tax deduction?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Vehicles with a Gross Vehicle Weight Rating (GVWR) exceeding 6,000 lbs that are used more than 50% for business qualify. Heavy work trucks, cargo vans, specialty commercial equipment, and vehicles with no passenger seating behind the driver qualify for full expensing up to the $2,560,000 Section 179 limit."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the Section 179 deduction cap for heavy SUVs weighing between 6,001 and 14,000 lbs?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Passenger SUVs and crossover vehicles with a GVWR between 6,001 and 14,000 lbs are subject to a specific statutory Section 179 cap of $32,000. Remaining basis above this $32,000 cap is eligible for 100% Bonus Depreciation."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What happens if business use falls to 50% or below?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Under statutory IRS rules, if business usage is 50% or less, both Section 179 and Bonus Depreciation are strictly reduced to $0.00. The asset must then be depreciated over its standard recovery period using standard straight-line/MACRS depreciation models."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does the annual Section 179 overall limit and phase-out threshold work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The maximum Section 179 expensing limit is $2,560,000, with a dollar-for-dollar phase-out threshold starting at $4,090,000 in total equipment purchases. The deduction is fully phased out when total equipment acquisitions reach $6,650,000."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are financial calculations saved or transmitted to external servers?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. All calculation logic runs 100% client-side in your web browser. Your vehicle cost, tax rates, and depreciation figures remain entirely private and are never logged or transmitted."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-main: #0f1117;
+            --bg-card: #181b24;
+            --bg-input: #222634;
+            --border-color: #2e3446;
+            --accent-purple: #8b5cf6;
+            --accent-cyan: #00f2fe;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-mono: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: var(--bg-main); color: var(--text-primary); font-family: var(--font-sans); line-height: 1.6; }
+        
+        .cms-tool-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 440px 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 960px) { .cms-tool-container { grid-template-columns: 1fr; } }
+
+        .panel {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .panel-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            background: var(--accent-purple);
+            color: #fff;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        .btn-demo {
+            width: 100%;
+            padding: 0.6rem;
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            color: var(--accent-purple);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 1.25rem;
+            transition: background 0.2s;
+        }
+        .btn-demo:hover { background-color: #2a3042; }
+
+        .form-group { margin-bottom: 1.25rem; }
+        label { display: block; font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 0.4rem; }
+        input[type="number"], select {
+            width: 100%; padding: 0.65rem 0.85rem; background-color: var(--bg-input);
+            border: 1px solid var(--border-color); border-radius: 6px; color: #fff;
+            font-size: 0.9rem; outline: none; font-family: inherit;
+        }
+
+        .btn-action {
+            width: 100%; padding: 0.85rem; background: linear-gradient(135deg, var(--accent-purple), #7c3aed);
+            color: #fff; font-weight: 700; border: none; border-radius: 6px; cursor: pointer; font-size: 0.95rem;
+            transition: opacity 0.2s;
+        }
+        .btn-action:hover { opacity: 0.9; }
+
+        .preview-stage { display: flex; flex-direction: column; }
+        .result-box {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            font-size: 0.95rem;
+            color: #e5e7eb;
+            min-height: 380px;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .result-metric {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+        .result-metric h4 {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.3rem;
+        }
+        .result-metric .value {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #fff;
+            font-family: var(--font-mono);
+        }
+
+        .timeline-breakdown {
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border-color);
+            padding-top: 0.75rem;
+        }
+
+        .timeline-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.35rem 0;
+            color: var(--text-secondary);
+            border-bottom: 1px dashed rgba(255,255,255,0.05);
+        }
+        .timeline-row:last-child { border-bottom: none; }
+        .timeline-row.active {
+            color: var(--accent-cyan);
+            font-weight: 600;
+        }
+
+        .canvas-caption { margin-top: 1rem; font-size: 0.85rem; color: var(--text-secondary); text-align: right; }
+
+        .content-area { max-width: 1200px; margin: 3rem auto; padding: 0 1.5rem; }
+        .content-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 2.5rem; }
+        .content-card h1 { font-size: 2rem; margin-bottom: 1rem; color: #fff; }
+        .content-card h2 { font-size: 1.4rem; margin: 1.8rem 0 1rem; color: #fff; }
+        .content-card p { color: var(--text-secondary); margin-bottom: 1.2rem; }
+        .content-card ul, .content-card ol { color: var(--text-secondary); margin: 0 0 1.2rem 1.5rem; }
+        .content-card li { margin-bottom: 0.5rem; }
+
+        .spec-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; text-align: left; }
+        .spec-table th, .spec-table td { padding: 0.85rem 1rem; border: 1px solid var(--border-color); }
+        .spec-table th { background-color: var(--bg-input); color: #fff; }
+        .spec-table td { color: var(--text-secondary); }
+
+        /* Accordion FAQ Styling */
+        .faq-block { margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem; }
+        .faq-accordion {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 0.85rem;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .faq-accordion[open] { border-color: var(--accent-purple); }
+        .faq-summary {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            padding: 1rem 1.2rem;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+        .faq-summary::-webkit-details-marker { display: none; }
+        .faq-summary::after {
+            content: "+";
+            font-size: 1.2rem;
+            color: var(--accent-purple);
+            transition: transform 0.2s;
+        }
+        .faq-accordion[open] .faq-summary::after {
+            content: "−";
+            color: var(--accent-purple);
+        }
+        .faq-answer {
+            padding: 0 1.2rem 1.2rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 0.4rem;
+            padding-top: 0.8rem;
+        }
+
+        .cms-ad-slot-1, .cms-ad-slot-2 {
+            width: 100%; max-width: 970px; min-height: 90px; margin: 1.5rem auto;
+            background: rgba(255,255,255,0.02); border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Site Header Integration Hook -->
+    <div id="global-header"></div>
+
+    <!-- Ad Slot 1 Container (Directly Above Main Title Banner) -->
+    <div class="cms-ad-slot-1"></div>
+
+    <!-- Main Interactive Tool Container -->
+    <section class="cms-tool-container">
+        <form class="panel" id="truckSec179Form" onsubmit="return false;">
+            <div class="panel-title">
+                <span>Section 179 Vehicle Controls</span>
+                <span class="badge">IRS SEC 179 ENGINE</span>
+            </div>
+
+            <button class="btn-demo" id="loadDemoBtn" type="button">⚡ Load Demo Heavy Truck Sample</button>
+
+            <div class="form-group">
+                <label for="vehicleType">Vehicle Classification & GVWR</label>
+                <select id="vehicleType">
+                    <option value="heavy_truck">Heavy Truck / Cargo Van / Work Vehicle (> 6,000 lbs GVWR, No SUV Cap)</option>
+                    <option value="heavy_suv">Heavy SUV / Passenger Crossover (6,001 - 14,000 lbs GVWR, Capped at $32k)</option>
+                    <option value="light_vehicle">Light Passenger Car / Truck / SUV (&le; 6,000 lbs GVWR)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="vehicleCost">Vehicle Purchase Cost ($)</label>
+                <input type="number" id="vehicleCost" value="75000" min="0" step="1000">
+            </div>
+
+            <div class="form-group">
+                <label for="businessUsePct">Business Use Percentage (%)</label>
+                <input type="number" id="businessUsePct" value="100" min="0" max="100" step="1">
+            </div>
+
+            <div class="form-group">
+                <label for="bonusDepPct">Bonus Depreciation Rate (%)</label>
+                <select id="bonusDepPct">
+                    <option value="100">100% Bonus Depreciation (Standard Permanent Full Write-off)</option>
+                    <option value="80">80% Bonus Depreciation</option>
+                    <option value="60">60% Bonus Depreciation</option>
+                    <option value="0">0% Bonus Depreciation (Opt Out)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="taxBracketPct">Estimated Marginal Tax Rate (%)</label>
+                <input type="number" id="taxBracketPct" value="32" min="0" max="50" step="1">
+            </div>
+
+            <button class="btn-action" id="calculateBtn" type="button">Calculate First-Year Tax Deductions</button>
+        </form>
+
+        <!-- Result Summary Dashboard -->
+        <section class="preview-stage">
+            <div class="panel" style="flex: 1; display: flex; flex-direction: column;">
+                <div class="panel-title">
+                    <span>Tax Deduction & Cash Savings Breakdown</span>
+                </div>
+                <div class="result-box" id="resultBoard">
+                    <div class="result-metric">
+                        <h4>Total First-Year Tax Deduction</h4>
+                        <div class="value" id="Total First-Year Tax Deduction">$0.00</div>
+                    </div>
+                    <div class="result-metric">
+                        <h4>Estimated First-Year Cash Tax Savings</h4>
+                        <div class="value" id="Estimated First-Year Cash Tax Savings">$0.00</div>
+                    </div>
+                    <div class="result-metric">
+                        <h4>Depreciation & Expensing Breakdown</h4>
+                        <div class="timeline-breakdown" id="Depreciation & Expensing Breakdown">
+                            <!-- Detailed breakdown populated via JS -->
+                        </div>
+                    </div>
+                </div>
+                <p class="canvas-caption">
+                    Calculated in compliance with IRS IRC §179 ($2,560,000 cap), $32,000 SUV limit, 100% bonus depreciation, and Section 280F luxury auto limits.
+                </p>
+            </div>
+        </section>
+    </section>
+
+    <!-- SEO & Educational Content Section -->
+    <article class="content-area">
+        <section class="content-card">
+            <h1>Section 179 Vehicle & Heavy Truck Deduction Calculator</h1>
+            <p>
+                Under Section 179 of the Internal Revenue Code (IRC), business owners can write off up to 100% of the purchase price of qualifying work vehicles, heavy trucks, and commercial equipment acquired and placed into service during the tax year, rather than depreciating them over multiple years.
+            </p>
+            <p>
+                This browser-based <strong>us-section-179-truck-calculator</strong> allows business owners, contractors, and fleet managers to evaluate statutory IRS tax deductions, heavy SUV $32,000 caps, 100% bonus depreciation rates, and net cash tax savings instantly and privately without transmitting financial records.
+            </p>
+
+            <h2>Current IRS Vehicle Tax Deduction Thresholds Matrix</h2>
+            <p>
+                The tax treatment of a business vehicle depends on its Gross Vehicle Weight Rating (GVWR), vehicle construction type, and percentage of business usage:
+            </p>
+
+            <table class="spec-table">
+                <thead>
+                    <tr>
+                        <th>Vehicle Classification</th>
+                        <th>GVWR Weight Threshold</th>
+                        <th>Section 179 Expensing Limit</th>
+                        <th>Bonus Depreciation & MACRS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Heavy Truck / Cargo Van / Work Vehicle</strong></td>
+                        <td>Over 6,000 lbs GVWR</td>
+                        <td>Up to full annual Section 179 limit ($2,560,000 cap)</td>
+                        <td>100% Bonus Depreciation eligible on remaining basis</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Heavy SUV / Passenger Crossover</strong></td>
+                        <td>6,001 - 14,000 lbs GVWR</td>
+                        <td>Statutory Heavy SUV Cap ($32,000)</td>
+                        <td>100% Bonus Depreciation applies to remaining basis</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Light Passenger Vehicle</strong></td>
+                        <td>6,000 lbs GVWR or less</td>
+                        <td>Subject to IRS Luxury Auto Limits ($20,300 max Year 1)</td>
+                        <td>Includes $8,000 bonus depreciation allowance</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Ad Slot 2 Container (Directly Below Specification Table) -->
+            <div class="cms-ad-slot-2"></div>
+
+            <h2>Important Statutory Qualification Guidelines</h2>
+            <ul>
+                <li><strong>Macro Section 179 Limit ($2,560,000):</strong> The overall Section 179 expensing cap allows businesses to write off up to $2,560,000 of qualifying purchases, with a dollar-for-dollar phase-out threshold starting at $4,090,000 in total equipment acquisitions.</li>
+                <li><strong>Heavy SUV Cap ($32,000):</strong> Vehicles categorized as passenger SUVs between 6,001 and 14,000 lbs GVWR face a specific Section 179 deduction limit of $32,000. However, any cost basis exceeding $32,000 is eligible for 100% Bonus Depreciation.</li>
+                <li><strong>More Than 50% Business Use Requirement:</strong> To qualify for Section 179 or Bonus Depreciation, the vehicle must be used more than 50% for qualified business purposes. If business use drops to 50% or lower, both Section 179 and Bonus Depreciation drop to $0.00, forcing a fallback to pro-rated straight-line MACRS depreciation.</li>
+            </ul>
+
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-block">
+                <details class="faq-accordion" open>
+                    <summary class="faq-summary">What vehicles qualify for the 100% Section 179 heavy truck tax deduction?</summary>
+                    <div class="faq-answer">
+                        Vehicles with a Gross Vehicle Weight Rating (GVWR) exceeding 6,000 lbs that are used more than 50% for business qualify. Heavy work trucks, cargo vans, specialty commercial equipment, and vehicles with no passenger seating behind the driver qualify for full expensing up to the $2,560,000 Section 179 limit.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">What is the Section 179 deduction cap for heavy SUVs weighing between 6,001 and 14,000 lbs?</summary>
+                    <div class="faq-answer">
+                        Passenger SUVs and crossover vehicles with a GVWR between 6,001 and 14,000 lbs are subject to a specific statutory Section 179 cap of $32,000. Remaining basis above this $32,000 cap is eligible for 100% Bonus Depreciation.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">What happens if business use falls to 50% or below?</summary>
+                    <div class="faq-answer">
+                        Under statutory IRS rules, if business usage is 50% or less, both Section 179 and Bonus Depreciation are strictly reduced to $0.00. The asset must then be depreciated over its standard recovery period using standard straight-line/MACRS depreciation models.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">How does the annual Section 179 overall limit and phase-out threshold work?</summary>
+                    <div class="faq-answer">
+                        The maximum Section 179 expensing limit is $2,560,000, with a dollar-for-dollar phase-out threshold starting at $4,090,000 in total equipment purchases. The deduction is fully phased out when total equipment acquisitions reach $6,650,000.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">Are financial calculations saved or transmitted to external servers?</summary>
+                    <div class="faq-answer">
+                        No. All calculation logic runs 100% client-side in your web browser. Your vehicle cost, tax rates, and depreciation figures remain entirely private and are never logged or transmitted.
+                    </div>
+                </details>
+            </div>
+        </section>
+    </article>
+
+    <!-- Site Footer Integration Hook -->
+    <div id="global-footer"></div>
+
+    <!-- Math Calculation Engine JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var vehicleTypeSelect = document.getElementById('vehicleType');
+            var vehicleCostInput = document.getElementById('vehicleCost');
+            var businessUsePctInput = document.getElementById('businessUsePct');
+            var bonusDepPctSelect = document.getElementById('bonusDepPct');
+            var taxBracketPctInput = document.getElementById('taxBracketPct');
+
+            var calculateBtn = document.getElementById('calculateBtn');
+            var loadDemoBtn = document.getElementById('loadDemoBtn');
+
+            var resTotalDeduction = document.getElementById('Total First-Year Tax Deduction');
+            var resCashSavings = document.getElementById('Estimated First-Year Cash Tax Savings');
+            var resTimelineList = document.getElementById('Depreciation & Expensing Breakdown');
+
+            loadDemoBtn.addEventListener('click', function() {
+                vehicleTypeSelect.value = 'heavy_truck';
+                vehicleCostInput.value = '75000';
+                businessUsePctInput.value = '100';
+                bonusDepPctSelect.value = '100';
+                taxBracketPctInput.value = '32';
+
+                calculateSection179();
+            });
+
+            calculateBtn.addEventListener('click', function() {
+                calculateSection179();
+            });
+
+            function calculateSection179() {
+                var cost = parseFloat(vehicleCostInput.value) || 0;
+                var bizPct = (parseFloat(businessUsePctInput.value) || 0) / 100;
+                var bonusRate = (parseFloat(bonusDepPctSelect.value) || 0) / 100;
+                var taxRate = (parseFloat(taxBracketPctInput.value) || 0) / 100;
+                var vType = vehicleTypeSelect.value;
+
+                var basis = cost * bizPct;
+
+                // Statutory Tax Rules Constants
+                var MACRO_SEC179_CAP = 2560000;
+                var SUV_179_CAP = 32000;
+                var LIGHT_VEHICLE_Y1_CAP = 20300; // Luxury auto cap (includes $8,000 bonus allowance)
+                var MACRS_Y1_RATE = 0.20; // 5-year MACRS Year 1 rate (200% DB half-year)
+
+                var sec179Deduction = 0;
+                var bonusDepDeduction = 0;
+                var macrsDeduction = 0;
+                var totalDeduction = 0;
+
+                // Mandatory 50% Business Use Check Rule
+                if (bizPct <= 0.50) {
+                    sec179Deduction = 0;
+                    bonusDepDeduction = 0;
+                    // Pro-rated straight-line / MACRS standard depreciation fallback
+                    macrsDeduction = basis * MACRS_Y1_RATE;
+                    totalDeduction = macrsDeduction;
+
+                    var taxSavings = totalDeduction * taxRate;
+
+                    resTotalDeduction.textContent = '$' + totalDeduction.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                    resCashSavings.textContent = '$' + taxSavings.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+                    var timelineHtml = '';
+                    timelineHtml += createTimelineRow('Qualified Business Basis (' + (bizPct * 100).toFixed(0) + '%)', '$' + basis.toLocaleString('en-US', { minimumFractionDigits: 2 }), true);
+                    timelineHtml += createTimelineRow('Section 179 Expensing (Business Use &le; 50%)', '$0.00', false);
+                    timelineHtml += createTimelineRow('Bonus Depreciation (Business Use &le; 50%)', '$0.00', false);
+                    timelineHtml += createTimelineRow('Standard Straight-Line / MACRS Year 1 Deduction', '$' + macrsDeduction.toLocaleString('en-US', { minimumFractionDigits: 2 }), true);
+                    timelineHtml += createTimelineRow('Total First-Year Write-Off', '$' + totalDeduction.toLocaleString('en-US', { minimumFractionDigits: 2 }), true);
+
+                    resTimelineList.innerHTML = timelineHtml;
+                    return;
+                }
+
+                if (vType === 'light_vehicle') {
+                    // Light vehicles <= 6,000 lbs are capped by Section 280F luxury auto limits ($20,300 max)
+                    totalDeduction = Math.min(basis, LIGHT_VEHICLE_Y1_CAP);
+                    sec179Deduction = totalDeduction;
+                } else if (vType === 'heavy_suv') {
+                    // Heavy SUV (6,001 - 14,000 lbs): Capped Sec 179 at $32,000 + 100% Bonus on remaining basis
+                    sec179Deduction = Math.min(basis, SUV_179_CAP);
+                    var remainingBasis = basis - sec179Deduction;
+
+                    bonusDepDeduction = remainingBasis * bonusRate;
+                    remainingBasis = remainingBasis - bonusDepDeduction;
+
+                    macrsDeduction = remainingBasis * MACRS_Y1_RATE;
+                    totalDeduction = sec179Deduction + bonusDepDeduction + macrsDeduction;
+                } else if (vType === 'heavy_truck') {
+                    // Heavy Truck / Cargo Van: Uncapped Sec 179 up to basis (max $2,560,000) + Bonus on remainder
+                    sec179Deduction = Math.min(basis, MACRO_SEC179_CAP);
+                    var remainingBasis = basis - sec179Deduction;
+
+                    bonusDepDeduction = remainingBasis * bonusRate;
+                    remainingBasis = remainingBasis - bonusDepDeduction;
+
+                    macrsDeduction = remainingBasis * MACRS_Y1_RATE;
+                    totalDeduction = sec179Deduction + bonusDepDeduction + macrsDeduction;
+                }
+
+                var taxSavings = totalDeduction * taxRate;
+
+                // Render Results
+                resTotalDeduction.textContent = '$' + totalDeduction.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+                resCashSavings.textContent = '$' + taxSavings.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+                var timelineHtml = '';
+                timelineHtml += createTimelineRow('Qualified Business Basis (' + (bizPct * 100).toFixed(0) + '%)', '$' + basis.toLocaleString('en-US', { minimumFractionDigits: 2 }), true);
+                timelineHtml += createTimelineRow('Section 179 First-Year Expensing', '$' + sec179Deduction.toLocaleString('en-US', { minimumFractionDigits: 2 }), sec179Deduction > 0);
+                timelineHtml += createTimelineRow('Bonus Depreciation Deduction', '$' + bonusDepDeduction.toLocaleString('en-US', { minimumFractionDigits: 2 }), bonusDepDeduction > 0);
+                timelineHtml += createTimelineRow('Standard MACRS Year 1 Depreciation', '$' + macrsDeduction.toLocaleString('en-US', { minimumFractionDigits: 2 }), macrsDeduction > 0);
+                timelineHtml += createTimelineRow('Total First-Year Write-Off', '$' + totalDeduction.toLocaleString('en-US', { minimumFractionDigits: 2 }), true);
+
+                resTimelineList.innerHTML = timelineHtml;
+            }
+
+            function createTimelineRow(label, valStr, isActive) {
+                var activeClass = isActive ? ' active' : '';
+                return '<div class="timeline-row' + activeClass + '">' +
+                    '<span>' + label + '</span>' +
+                    '<span>' + valStr + '</span>' +
+                    '</div>';
+            }
+
+            // Execute initial calculation
+            calculateSection179();
+        });
+    </script>
+</body>
+</html>
