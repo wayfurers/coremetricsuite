@@ -2,7 +2,6 @@
    COREMETRICSUITE COMPLETE ROOT GLOBAL STYLESHEET
    ========================================================================== */
 
-/* 1. Global Reset & Universal Variables */
 :root {
     --bg-dark: #0f172a;
     --bg-card-dark: #1e293b;
@@ -29,7 +28,6 @@ body {
     flex-direction: column;
 }
 
-/* 2. Isolated Dark Shell Framework (Header & Footer) */
 .global-layout-wrapper {
     width: 100%;
 }
@@ -39,6 +37,7 @@ body {
     border-bottom: 1px solid #1e293b;
     padding: 15px 5% 5px 5%;
     display: block;
+    box-sizing: border-box;
 }
 
 .global-logo-row {
@@ -60,7 +59,7 @@ body {
     font-size: 0.85rem;
 }
 
-/* 3. Horizontal Scrollable Left-to-Right Nav Bar (No Hamburger Menu) */
+/* Horizontal Scrollable Left-to-Right Slider Menu */
 .tool-slider-nav {
     display: flex !important;
     white-space: nowrap !important;
@@ -71,9 +70,9 @@ body {
     scroll-behavior: smooth !important;
     -webkit-overflow-scrolling: touch !important;
     background-color: var(--bg-dark) !important;
+    width: 100%;
 }
 
-/* Clear out scrollbars while keeping gesture swipes working */
 .tool-slider-nav::-webkit-scrollbar {
     display: none !important;
 }
@@ -99,7 +98,7 @@ body {
     color: #ffffff !important;
 }
 
-/* 4. Support Dark Mode Themeing on Calculator Tool Containers */
+/* Themeing Support for Inner Dark UI Calculator Tools */
 .dark-theme-page {
     background-color: #0b0f19 !important;
     color: var(--text-primary) !important;
@@ -110,7 +109,7 @@ body {
     padding: 20px 5%;
 }
 
-/* 5. Smart Recommendations Box Configuration */
+/* Smart Utility Suggestions Grid System Layout */
 .related-suggestions-box {
     margin: 40px auto 0 auto;
     padding: 20px;
@@ -119,6 +118,7 @@ body {
     border-radius: 8px;
     width: 100%;
     max-width: 1200px;
+    box-sizing: border-box;
 }
 
 .suggestions-title {
@@ -169,7 +169,7 @@ body {
     font-size: 0.9rem;
 }
 
-/* 6. Programmatic Adsense Containers */
+/* Programmatic Hidden Ad Placement Spaces */
 .ad-container-slot {
     display: none;
     width: 100%;
@@ -182,13 +182,9 @@ body {
     display: flex !important;
     min-height: 90px;
     margin: 20px auto;
-    background: rgba(255, 255, 255, 0.01);
-    border: 1px solid rgba(255, 255, 255, 0.03);
-    align-items: center;
-    justify-content: center;
 }
 
-/* 7. Automatic Compliance Disclaimer Container Layout */
+/* Trust Validation Automated Legal Disclaimer Container */
 .compliance-disclaimer-box {
     max-width: 800px;
     margin: 40px auto 0 auto;
@@ -200,6 +196,7 @@ body {
     line-height: 1.4;
     color: var(--text-muted) !important;
     text-align: left;
+    box-sizing: border-box;
 }
 
 .disclaimer-header {
@@ -210,7 +207,7 @@ body {
     letter-spacing: 0.05em;
 }
 
-/* 8. Global Base Footer Layout */
+/* Global Footer Layout Elements */
 .global-footer-shell {
     background-color: var(--bg-dark) !important;
     border-top: 1px solid #1e293b;
@@ -220,6 +217,7 @@ body {
     color: var(--text-muted) !important;
     font-size: 0.85rem;
     display: block;
+    box-sizing: border-box;
 }
 
 .footer-branding {
