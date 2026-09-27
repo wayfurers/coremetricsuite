@@ -1,327 +1,727 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CoreMetric Suite | Precision Statutory & Financial Decision Engines</title>
-  <meta name="description" content="CoreMetric Suite delivers zero-logging, client-side dynamic calculation engines for US tax depreciation, UK tenancy notices, Australian CGT, and commercial real estate analytics.">
-  <link rel="canonical" href="https://coremetricsuite.com/index.html">
-  <link rel="stylesheet" href="/css/global.css">
-  
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "CoreMetric Suite",
-    "url": "https://coremetricsuite.com",
-    "applicationCategory": "BusinessApplication",
-    "operatingSystem": "All",
-    "description": "Deterministic, privacy-first web utilities for financial modeling, tax calculations, and statutory compliance.",
-    "creator": {
-      "@type": "Person",
-      "name": "Towhidur Rahman"
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CoreMetricSuite - Multi-Jurisdictional Tax, Legal & Media Calculation Suite</title>
+    <meta name="description" content="CoreMetricSuite offers professional, browser-based financial tax calculators, legal compliance estimators, and digital media UI safe zone analyzers across AU, US, UK, and Global standards.">
+    <meta name="keywords" content="Tax Calculators, ATO Cents Per Km, SCHADS Allowance, US LLC Late Penalty, Section 179 SUV Deduction, UK SDLT Tax, YouTube Shorts Safe Zone, TikTok Ad Safe Zone">
+    <link rel="canonical" href="https://coremetricsuite.com" />
+
+    <!-- Architecture Links -->
+    <link rel="stylesheet" href="/css/global.css">
+    <script src="/global.js" defer></script>
+
+    <!-- Open Graph / Social Metadata -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="CoreMetricSuite - Multi-Jurisdictional Tax, Legal & Media Calculation Suite">
+    <meta property="og:description" content="Compliant, browser-processed tools for Australian tax rates, US IRS deductions, UK housing acts, and social media UI safe zones.">
+    <meta property="og:url" content="https://coremetricsuite.com">
+
+    <!-- JSON-LD Schema: FAQPage Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Are calculations on CoreMetricSuite processed securely?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, 100% of CoreMetricSuite processing occurs locally inside your client browser. No financial parameters, payroll figures, or media frames are ever transmitted to external servers."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How frequently are tax and statutory threshold parameters updated?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "All calculation engines strictly follow current statutory updates, including ATO cents-per-km caps, IRS Section 179 vehicle limits, UK HMRC SDLT rates, and SCHADS award rules."
+          }
+        }
+      ]
     }
-  }
-  </script>
-  
-  <style>
-    .cms-hero {
-      text-align: center;
-      padding: 3.5rem 1rem 2.5rem;
-      background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
-      border-bottom: 1px solid #e2e8f0;
-    }
-    .cms-hero h1 {
-      font-size: 2.25rem;
-      font-weight: 800;
-      color: #0f172a;
-      letter-spacing: -0.025em;
-      margin-bottom: 0.75rem;
-    }
-    .cms-hero p {
-      font-size: 1.05rem;
-      color: #475569;
-      max-width: 680px;
-      margin: 0 auto 1.75rem;
-      line-height: 1.6;
-    }
-    .cms-search-container {
-      max-width: 520px;
-      margin: 0 auto;
-      position: relative;
-    }
-    .cms-search-input {
-      width: 100%;
-      padding: 0.85rem 1.25rem;
-      font-size: 0.95rem;
-      border: 2px solid #cbd5e1;
-      border-radius: 8px;
-      outline: none;
-      transition: border-color 0.2s ease;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
-    }
-    .cms-search-input:focus {
-      border-color: #2563eb;
-    }
-    .cms-tools-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 1.5rem;
-      margin: 2.5rem 0;
-    }
-    .cms-tool-card {
-      background: #ffffff;
-      border: 1px solid #e2e8f0;
-      border-radius: 10px;
-      padding: 1.5rem;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      text-decoration: none;
-      color: inherit;
-    }
-    .cms-tool-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 20px -5px rgba(15, 23, 42, 0.08);
-      border-color: #cbd5e1;
-    }
-    .cms-badge {
-      display: inline-block;
-      font-size: 0.725rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      padding: 0.25rem 0.6rem;
-      border-radius: 4px;
-      margin-bottom: 0.75rem;
-      width: fit-content;
-    }
-    .cms-badge-us { background: #dbeafe; color: #1e40af; }
-    .cms-badge-uk { background: #fef3c7; color: #92400e; }
-    .cms-badge-au { background: #dcfce7; color: #166534; }
-    .cms-badge-global { background: #f1f5f9; color: #334155; }
-    
-    .cms-tool-card h2 {
-      font-size: 1.15rem;
-      font-weight: 700;
-      color: #0f172a;
-      margin-bottom: 0.5rem;
-    }
-    .cms-tool-card p {
-      font-size: 0.875rem;
-      color: #64748b;
-      line-height: 1.5;
-      margin-bottom: 1.25rem;
-    }
-    .cms-card-link {
-      font-size: 0.875rem;
-      font-weight: 600;
-      color: #2563eb;
-      display: flex;
-      align-items: center;
-      gap: 0.25rem;
-    }
-    .cms-about-section {
-      background: #f8fafc;
-      border: 1px solid #e2e8f0;
-      border-radius: 10px;
-      padding: 2.25rem;
-      margin: 2.5rem 0;
-      line-height: 1.75;
-    }
-    .cms-about-section h2 {
-      font-size: 1.35rem;
-      font-weight: 700;
-      color: #0f172a;
-      margin-bottom: 0.75rem;
-    }
-    .cms-about-section p {
-      font-size: 0.925rem;
-      color: #334155;
-      margin-bottom: 1rem;
-    }
-    .cms-ad-slot {
-      display: block;
-      width: 100%;
-    }
-  </style>
+    </script>
+
+    <style>
+        :root {
+            --bg-main: #F8FAFC;
+            --bg-card: #FFFFFF;
+            --bg-input: #F1F5F9;
+            --border-color: #E2E8F0;
+            --accent-purple: #4F46E5;
+            --accent-hover: #4338CA;
+            --text-primary: #0F172A;
+            --text-secondary: #475569;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: var(--bg-main); color: var(--text-primary); font-family: var(--font-sans); line-height: 1.6; }
+
+        /* Native SaaS Navigation Bar */
+        .site-header {
+            background-color: var(--bg-card);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0.85rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            letter-spacing: -0.025em;
+        }
+
+        .brand-logo svg {
+            width: 26px;
+            height: 26px;
+            color: var(--accent-purple);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn-profile {
+            background-color: var(--accent-purple);
+            color: #FFFFFF;
+            border: 1px solid var(--accent-purple);
+            padding: 0.45rem 1rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background-color 0.2s;
+        }
+
+        .btn-profile:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .cms-hero {
+            text-align: center;
+            max-width: 800px;
+            margin: 2.5rem auto 1.5rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .cms-hero h1 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            letter-spacing: -0.025em;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+        }
+
+        .cms-hero p {
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+        }
+
+        /* Controls Section */
+        .directory-controls {
+            max-width: 1200px;
+            margin: 1.5rem auto 2.5rem auto;
+            padding: 0 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .search-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.85rem 1rem 0.85rem 1rem;
+            font-size: 0.95rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-card);
+            color: var(--text-primary);
+            box-shadow: var(--shadow-sm);
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .search-input:focus {
+            border-color: var(--accent-purple);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+        }
+
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .filter-btn {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 0.5rem 1.15rem;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--accent-purple);
+            color: var(--accent-purple);
+        }
+
+        .filter-btn.active {
+            background-color: var(--accent-purple);
+            color: #FFFFFF;
+            border-color: var(--accent-purple);
+        }
+
+        /* Grid Section */
+        .directory-grid {
+            max-width: 1200px;
+            margin: 0 auto 3rem auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .tool-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+        }
+
+        .badge-region {
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .badge-au { background-color: #FEF3C7; color: #92400E; }
+        .badge-us { background-color: #E0E7FF; color: #3730A3; }
+        .badge-uk { background-color: #FCE7F3; color: #9D174D; }
+        .badge-global { background-color: #DCFCE7; color: #166534; }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+            line-height: 1.35;
+        }
+
+        .card-description {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .btn-launch {
+            display: block;
+            text-align: center;
+            width: 100%;
+            padding: 0.65rem;
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            color: var(--accent-purple);
+            font-weight: 600;
+            font-size: 0.875rem;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .btn-launch:hover {
+            background-color: var(--accent-purple);
+            color: #FFFFFF;
+        }
+
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--text-secondary);
+            display: none;
+        }
+
+        /* SEO Content Area */
+        .content-area { max-width: 1200px; margin: 3rem auto; padding: 0 1.5rem; }
+        .content-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 2.5rem; }
+        .content-card h1 { font-size: 1.8rem; margin-bottom: 1rem; color: var(--text-primary); }
+        .content-card h2 { font-size: 1.3rem; margin: 1.8rem 0 1rem; color: var(--text-primary); }
+        .content-card p { color: var(--text-secondary); margin-bottom: 1.2rem; }
+
+        /* Accordion FAQ Styling */
+        .faq-block { margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem; }
+        .faq-accordion {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 0.85rem;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .faq-accordion[open] { border-color: var(--accent-purple); }
+        .faq-summary {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            padding: 1rem 1.2rem;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+        .faq-summary::-webkit-details-marker { display: none; }
+        .faq-summary::after {
+            content: "+";
+            font-size: 1.2rem;
+            color: var(--accent-purple);
+            transition: transform 0.2s;
+        }
+        .faq-accordion[open] .faq-summary::after {
+            content: "−";
+            color: var(--accent-purple);
+        }
+        .faq-answer {
+            padding: 0 1.2rem 1.2rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: 0.4rem;
+            padding-top: 0.8rem;
+        }
+
+        /* Native Charcoal Footer */
+        .site-footer {
+            background-color: #0F172A;
+            color: #94A3B8;
+            padding: 2rem 1.5rem;
+            font-size: 0.875rem;
+            margin-top: 4rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            align-items: center;
+        }
+
+        @media (min-width: 640px) {
+            .footer-container {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #94A3B8;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: #FFFFFF;
+        }
+
+        /* Silent Structural Ad Containers */
+        .cms-ad-slot-1, .cms-ad-slot-2 {
+            width: 100%;
+            max-width: 970px;
+            min-height: 0px;
+            height: 0px;
+            margin: 0 auto;
+            padding: 0;
+            background: none;
+            border: none;
+            overflow: hidden;
+        }
+    </style>
 </head>
 <body>
 
-  <div id="global-header"></div>
-
-  <section class="cms-hero">
-    <div class="cms-main-wrapper">
-      <h1>Deterministic Decision Utilities for Business & Tax</h1>
-      <p>Execute financial modeling, tax depreciation schedules, and statutory notices entirely client-side with zero data retention.</p>
-      <div class="cms-search-container">
-        <input type="text" id="toolSearch" class="cms-search-input" placeholder="Search calculators (e.g., Section 179, SDLT, CGT, DSCR)..." onkeyup="filterTools()">
-      </div>
-    </div>
-  </section>
-
-  <main class="cms-main-wrapper">
-    
-    <div class="cms-tools-grid" id="toolsGrid">
-      
-      <!-- Tool 1 -->
-      <a href="/us-section-179-truck-calculator/index.html" class="cms-tool-card" data-keywords="us tax section 179 vehicle depreciation suv limits truck macrs">
-        <div>
-          <span class="cms-badge cms-badge-us">US Tax</span>
-          <h2>US Section 179 Vehicle Deduction Engine</h2>
-          <p>Model SUV caps ($32,000 limit), 6,000+ lbs GVWR rules, and MACRS bonus depreciation schedules.</p>
+    <!-- Native Top Navigation Bar -->
+    <header class="site-header">
+        <div class="header-container">
+            <a href="./" class="brand-logo">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="14" width="7" height="7"></rect>
+                    <rect x="3" y="14" width="7" height="7"></rect>
+                </svg>
+                CoreMetricSuite
+            </a>
+            <div class="nav-actions">
+                <a href="./" class="btn-profile">Suite Directory</a>
+            </div>
         </div>
-        <span class="cms-card-link">Launch Utility &rarr;</span>
-      </a>
+    </header>
 
-      <!-- Tool 2 -->
-      <a href="/uk-section-8-eviction-notice/index.html" class="cms-tool-card" data-keywords="uk property section 8 notice period eviction landlord ground 8 arrears">
-        <div>
-          <span class="cms-badge cms-badge-uk">UK Property</span>
-          <h2>UK Section 8 Eviction Notice Period Calculator</h2>
-          <p>Calculate statutory notice periods and Ground 8 rent arrears thresholds under current UK housing acts.</p>
+    <!-- Ad Slot 1 Structural Container -->
+    <div class="cms-ad-slot-1"></div>
+
+    <!-- Main Hero Banner -->
+    <section class="cms-hero">
+        <h1>CoreMetricSuite Utility Directory</h1>
+        <p>Browser-processed calculators for statutory tax rates, labour awards, tenancy acts, and social media overlay safe zones.</p>
+    </section>
+
+    <!-- Controls: Interactive Search & Region Filtering -->
+    <section class="directory-controls">
+        <div class="search-wrapper">
+            <input type="search" id="directorySearch" class="search-input" placeholder="Search calculators (e.g. 'Section 179', 'SCHADS', 'Shorts', 'SDLT')..." aria-label="Search tools">
         </div>
-        <span class="cms-card-link">Launch Utility &rarr;</span>
-      </a>
 
-      <!-- Tool 3 -->
-      <a href="/us-commercial-rent-escalation/index.html" class="cms-tool-card" data-keywords="us commercial lease rent escalation cpi index base year lease">
-        <div>
-          <span class="cms-badge cms-badge-us">US Commercial</span>
-          <h2>Commercial Rent Escalation Engine</h2>
-          <p>Compute fixed percentage increases, CPI adjustments, and base-year expense stop allocations.</p>
+        <div class="filter-buttons" id="filterContainer">
+            <button class="filter-btn active" data-filter="all">All Utilities</button>
+            <button class="filter-btn" data-filter="au">Australia (AU)</button>
+            <button class="filter-btn" data-filter="us">United States (US)</button>
+            <button class="filter-btn" data-filter="uk">United Kingdom (UK)</button>
+            <button class="filter-btn" data-filter="global">Digital & Media</button>
         </div>
-        <span class="cms-card-link">Launch Utility &rarr;</span>
-      </a>
+    </section>
 
-      <!-- Tool 4 -->
-      <a href="/australian-capital-gains-tax/index.html" class="cms-tool-card" data-keywords="australia ato cgt capital gains tax discount property shares">
-        <div>
-          <span class="cms-badge cms-badge-au">AU Tax</span>
-          <h2>Australian Capital Gains Tax (CGT) Modeler</h2>
-          <p>Model ATO 50% CGT discounts, holding period thresholds, and marginal tax bracket impacts.</p>
+    <!-- Directory Tool Cards Grid -->
+    <section class="directory-grid" id="directoryGrid">
+        
+        <!-- 1. AU Cents-Per-Km Tax Estimator -->
+        <article class="tool-card" data-region="au" data-keywords="au cents per km tax estimator vehicle expense ato travel deduction">
+            <div>
+                <div class="card-header">
+                    <span class="badge-region badge-au">AU TAX</span>
+                </div>
+                <h2 class="card-title">AU Cents-Per-Km Tax Estimator</h2>
+                <p class="card-description">Model official ATO cents-per-kilometre vehicle expense deduction caps, tax tier rates, and maximum claimable work travel thresholds.</p>
+            </div>
+            <div>
+                <a href="./au-cents-per-km-estimator/" class="btn-launch">Launch Utility</a>
+            </div>
+        </article>
+
+        <!-- 2. AU SCHADS Award Vehicle Allowance -->
+        <article class="tool-card" data-region="au" data-keywords="au schads award vehicle allowance travel calculator fair work ma000100 clause 20.5 25.5 care worker">
+            <div>
+                <div class="card-header">
+                    <span class="badge-region badge-au">AU LABOUR</span>
+                </div>
+                <h2 class="card-title">AU SCHADS Award Vehicle Allowance & Paid Travel Calculator</h2>
+                <p class="card-description">Compute care-worker multi-variable rosters using Fair Work Commission MA000100 rules, integrating Clause 20.5 and Clause 25.5 travel parameters.</p>
+            </div>
+            <div>
+                <a href="./au-schads-vehicle-allowance/" class="btn-launch">Launch Utility</a>
+            </div>
+        </article>
+
+        <!-- 3. AU Superannuation Guarantee Charge Tracker -->
+        <article class="tool-card" data-region="au" data-keywords="au superannuation guarantee charge tracker employer super contributions ato late payment">
+            <div>
+                <div class="card-header">
+                    <span class="badge-region badge-au">AU TAX</span>
+                </div>
+                <h2 class="card-title">AU Superannuation Guarantee Charge Tracker</h2>
+                <p class="card-description">Calculate mandatory employer super contributions, trace statutory rate progressions, maximum base limits, and ATO late payment charge models.</p>
+            </div>
+            <div>
+                <a href="./au-superannuation-charge-tracker/" class="btn-launch">Launch Utility</a>
+            </div>
+        </article>
+
+        <!-- 4. US LLC Late Tax Penalty Estimator -->
+        <article class="tool-card" data-region="us" data-keywords="us llc late tax penalty estimator irs form 1065 1120 5472 non compliance fine corporate">
+            <div>
+                <div class="card-header">
+                    <span class="badge-region badge-us">US TAX</span>
+                </div>
+                <h2 class="card-title">US LLC Late Tax Penalty Estimator</h2>
+                <p class="card-description">Assess federal and state regulatory fine matrices, monthly late fees, and statutory penalty calculations for delinquent corporate entity tax filings.</p>
+            </div>
+            <div>
+                <a href="./us-llc-late-penalty-estimator/" class="btn-launch">Launch Utility</a>
+            </div>
+        </article>
+
+        <!-- 5. US Section 179 Truck & Vehicle Deduction Engine -->
+        <article class="tool-card" data-region="us" data-keywords="us section 179 truck vehicle deduction heavy suv 6000 lbs gvwr macrs bonus depreciation irs">
+            <div>
+                <div class="card-header">
+                    <span class="badge-region badge-us">US TAX</span>
+                </div>
+                <h2 class="card-title">US Section 179 Truck & Vehicle Deduction Engine</h2>
+                <p class="card-description">Calculate heavy SUV and truck tax caps ($32,000 threshold limits), 6,000+ lbs GVWR rules, and accelerated MACRS bonus depreciation metrics under IRS codes.</p>
+            </div>
+            <div>
+                <a href="./us-section-179-truck-calculator/" class="btn-launch">Launch Utility</a>
+            </div>
+        </article>
+
+        <!-- 6. UK Form 4A Rent Increase Notice Tracker -->
+        <article class="tool-card" data-region="uk" data-keywords="uk form 4a rent increase notice tracker section 13 tenancy tribunal housing">
+            <div>
+                <div class="card-header">
+                    <span class="badge-region badge-uk">UK LEGAL</span>
+                </div>
+                <h2 class="card-title">UK Form 4A Rent Increase Notice Tracker</h2>
+                <p class="card-description">Verify statutory Section 13 rent increase terms, minimum notification guidelines for monthly tenancies, and tribunal review parameters.</p>
+            </div>
+            <div>
+                <a href="./uk-form-4a-rent-tracker/" class="btn-launch">Launch Utility</a>
+            </div>
+        </article>
+
+        <!-- 7. UK Stamp Duty Land Tax (SDLT) Bracket Estimator -->
+        <article class="tool-card" data-region="uk" data-keywords="uk stamp duty land tax sdlt bracket estimator hmrc second property surcharge non resident first time buyer">
+            <div>
+                <div class="card-header">
+                    <span class="badge-region badge-uk">UK TAX</span>
+                </div>
+                <h2 class="card-title">UK Stamp Duty Land Tax (SDLT) Bracket Estimator</h2>
+                <p class="card-description">Calculate progressive HMRC SDLT thresholds, second property surcharges, non-resident tariffs, and first-time buyer allowances.</p>
+            </div>
+            <div>
+                <a href="./uk-sdlt-bracket-estimator/" class="btn-launch">Launch Utility</a>
+            </div>
+        </article>
+
+        <!-- 8. UK Section 8 Eviction Notice Period Calculator -->
+        <article class="tool-card" data-region="uk" data-keywords="uk section 8 eviction notice period calculator ground 8 rent arrears legal tenancy">
+            <div>
+                <div class="card-header">
+                    <span class="badge-region badge-uk">UK LEGAL</span>
+                </div>
+                <h2 class="card-title">UK Section 8 Eviction Notice Period Calculator</h2>
+                <p class="card-description">Determine legal notice periods and statutory Ground 8 rent arrears thresholds under current UK housing and tenancy acts.</p>
+            </div>
+            <div>
+                <a href="./uk-section-8-calculator/" class="btn-launch">Launch Utility</a>
+            </div>
+        </article>
+
+        <!-- 9. Instagram Reels Aspect Ratio Previewer -->
+        <article class="tool-card" data-region="global" data-keywords="instagram reels aspect ratio previewer safe zone vertical video 9:16 layout title caption">
+            <div>
+                <div class="card-header">
+                    <span class="badge-region badge-global">MEDIA & UI</span>
+                </div>
+                <h2 class="card-title">Instagram Reels Aspect Ratio Previewer</h2>
+                <p class="card-description">Verify asset layout safe zones for Instagram Reels, analyzing title margins, overlay buttons, and caption positioning constraints.</p>
+            </div>
+            <div>
+                <a href="./instagram-reels-preview/" class="btn-launch">Launch Utility</a>
+            </div>
+        </article>
+
+        <!-- 10. YouTube Shorts UI Safe Zone Analyzer -->
+        <article class="tool-card" data-region="global" data-keywords="youtube shorts ui safe zone analyzer vertical 9:16 aspect ratio system overlays overlay frame">
+            <div>
+                <div class="card-header">
+                    <span class="badge-region badge-global">MEDIA & UI</span>
+                </div>
+                <h2 class="card-title">YouTube Shorts UI Safe Zone Analyzer</h2>
+                <p class="card-description">Check vertical 9:16 video aspect ratios against structural system UI overlays, device frame layouts, and edge bleed limits.</p>
+            </div>
+            <div>
+                <a href="./shorts-ui-safe-zone/" class="btn-launch">Launch Utility</a>
+            </div>
+        </article>
+
+        <!-- 11. TikTok Video Ad Safe Zone Overlay -->
+        <article class="tool-card" data-region="global" data-keywords="tiktok video ad safe zone overlay commercial mask interactive buttons engagement">
+            <div>
+                <div class="card-header">
+                    <span class="badge-region badge-global">MEDIA & UI</span>
+                </div>
+                <h2 class="card-title">TikTok Video Ad Safe Zone Overlay</h2>
+                <p class="card-description">Ensure global compliance for commercial TikTok ads by previewing native interactive overlay masks and engagement buttons.</p>
+            </div>
+            <div>
+                <a href="./tiktok-ad-safe-zone/" class="btn-launch">Launch Utility</a>
+            </div>
+        </article>
+
+        <!-- 12. Shopify Metafields Schema & Validation Parser -->
+        <article class="tool-card" data-region="global" data-keywords="shopify metafields schema validation parser technical syntax check json structural developer">
+            <div>
+                <div class="card-header">
+                    <span class="badge-region badge-global">DEVELOPER</span>
+                </div>
+                <h2 class="card-title">Shopify Metafields Schema & Validation Parser</h2>
+                <p class="card-description">Professional technical validation tool to parse, syntax-check, and structuralize custom JSON schema fields for Shopify development.</p>
+            </div>
+            <div>
+                <a href="./shopify-metafields-parser/" class="btn-launch">Launch Utility</a>
+            </div>
+        </article>
+
+        <div id="noResults" class="no-results">
+            <h3>No matching utilities found</h3>
+            <p>Try searching for keywords like "tax", "notice", "safe zone", or "LLC".</p>
         </div>
-        <span class="cms-card-link">Launch Utility &rarr;</span>
-      </a>
+    </section>
 
-      <!-- Tool 5 -->
-      <a href="/social-media-aspect-ratio/index.html" class="cms-tool-card" data-keywords="global media aspect ratio safe zones instagram reels tiktok shorts UI">
-        <div>
-          <span class="cms-badge cms-badge-global">Global Media</span>
-          <h2>Social Media Aspect Ratio & Safe Zone Previewer</h2>
-          <p>Verify UI safe zones for Instagram Reels, TikTok, and YouTube Shorts on real-time canvas overlays.</p>
-        </div>
-        <span class="cms-card-link">Launch Utility &rarr;</span>
-      </a>
+    <!-- SEO Content & Educational Section -->
+    <article class="content-area">
+        <section class="content-card">
+            <h1>Statutory & Digital Asset Calculation Directory</h1>
+            <p>
+                CoreMetricSuite provides high-precision, client-side compliance and estimation engines. Designed for accountants, legal professionals, payroll specialists, and digital media managers, every tool executes 100% locally in your web browser.
+            </p>
 
-      <!-- Tool 6 -->
-      <a href="/uk-stamp-duty-land-tax/index.html" class="cms-tool-card" data-keywords="uk property sdlt stamp duty land tax second home buyer relief">
-        <div>
-          <span class="cms-badge cms-badge-uk">UK Tax</span>
-          <h2>UK Stamp Duty Land Tax (SDLT) Engine</h2>
-          <p>Calculate progressive SDLT threshold brackets, second property surcharges, and first-time buyer relief.</p>
-        </div>
-        <span class="cms-card-link">Launch Utility &rarr;</span>
-      </a>
+            <!-- Ad Slot 2 Structural Container -->
+            <div class="cms-ad-slot-2"></div>
 
-      <!-- Tool 7 -->
-      <a href="/freelance-rate-calculator/index.html" class="cms-tool-card" data-keywords="global business freelance hourly rate billable hours overhead profit">
-        <div>
-          <span class="cms-badge cms-badge-global">Global Business</span>
-          <h2>Freelance Rate & Overhead Markup Calculator</h2>
-          <p>Determine target billable hourly rates based on non-billable hours, tax buffers, and overhead expenses.</p>
-        </div>
-        <span class="cms-card-link">Launch Utility &rarr;</span>
-      </a>
+            <h2>Multi-Jurisdictional Tax & Legal Coverage</h2>
+            <p>
+                Our directory features compliance modules built specifically for unique international regulatory frameworks, including ATO vehicle expense caps, IRS Section 179 vehicle deductions, UK HMRC Stamp Duty Land Tax tiers, and social video safe zone overlays.
+            </p>
 
-      <!-- Tool 8 -->
-      <a href="/us-payroll-deduction-modeler/index.html" class="cms-tool-card" data-keywords="us payroll FICA tax withholding gross net paycheck calculator">
-        <div>
-          <span class="cms-badge cms-badge-us">US Payroll</span>
-          <h2>US Payroll Statutory Deduction Modeler</h2>
-          <p>Calculate FICA caps, federal tax withholdings, and net take-home pay structures.</p>
-        </div>
-        <span class="cms-card-link">Launch Utility &rarr;</span>
-      </a>
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-block">
+                <details class="faq-accordion" open>
+                    <summary class="faq-summary">Are calculations on CoreMetricSuite processed securely?</summary>
+                    <div class="faq-answer">
+                        Yes, 100% of CoreMetricSuite processing occurs locally inside your client browser. No financial parameters, payroll figures, or media frames are ever transmitted to external servers.
+                    </div>
+                </details>
 
-      <!-- Tool 9 -->
-      <a href="/vehicle-fleet-depreciation/index.html" class="cms-tool-card" data-keywords="global business macrs fleet vehicle depreciation straight line disposal">
-        <div>
-          <span class="cms-badge cms-badge-global">Global Business</span>
-          <h2>Vehicle Fleet Depreciation Schedule Generator</h2>
-          <p>Generate 5-year MACRS recovery schedules and straight-line asset depreciation models.</p>
-        </div>
-        <span class="cms-card-link">Launch Utility &rarr;</span>
-      </a>
-
-      <!-- Tool 10 -->
-      <a href="/saas-churn-ltv-engine/index.html" class="cms-tool-card" data-keywords="global saas churn rate ltv gross mrr net mrr cac payback">
-        <div>
-          <span class="cms-badge cms-badge-global">Global SaaS</span>
-          <h2>SaaS Churn & Lifetime Value (LTV) Engine</h2>
-          <p>Compute Gross vs. Net MRR churn, Expansion ARR, CAC payback periods, and long-term LTV ratios.</p>
-        </div>
-        <span class="cms-card-link">Launch Utility &rarr;</span>
-      </a>
-
-      <!-- Tool 11 -->
-      <a href="/us-estate-tax-gifting/index.html" class="cms-tool-card" data-keywords="us tax estate gift tax annual exclusion threshold unified credit">
-        <div>
-          <span class="cms-badge cms-badge-us">US Tax</span>
-          <h2>US Estate Tax & Gifting Threshold Modeler</h2>
-          <p>Track annual gift tax exclusions, lifetime exemptions, and taxable estate estimates.</p>
-        </div>
-        <span class="cms-card-link">Launch Utility &rarr;</span>
-      </a>
-
-      <!-- Tool 12 -->
-      <a href="/commercial-loan-dscr/index.html" class="cms-tool-card" data-keywords="global real estate dscr debt service coverage ratio commercial loan amortization">
-        <div>
-          <span class="cms-badge cms-badge-global">Global Real Estate</span>
-          <h2>Commercial Loan Amortization & DSCR Evaluator</h2>
-          <p>Evaluate Debt Service Coverage Ratios (DSCR), principal-interest breakdowns, and lender risk margins.</p>
-        </div>
-        <span class="cms-card-link">Launch Utility &rarr;</span>
-      </a>
-
-    </div>
-
-    <!-- Hidden Ad Slot 1 -->
-    <div class="cms-ad-slot" style="min-height:0px; margin:0; padding:0;"></div>
-
-    <!-- Editorial Architecture & E-E-A-T Block -->
-    <article class="cms-about-section">
-      <h2>Engineering Deterministic Financial Utilities</h2>
-      <p>CoreMetric Suite was founded to eliminate black-box financial estimation. Web-based business calculators frequently rely on simplified approximations or harvest submitted user metrics on remote database servers. Our platform engineered a client-side architecture where all mathematical logic executes directly within your local browser session.</p>
-      <p>Every tool hosted across our suite incorporates verified statutory frameworks—including IRS MACRS tables, UK Renters' Rights Act notice standards, and ATO tax brackets. Inputs are never logged, stored, or transmitted to any remote API. When you close or refresh your browser tab, all session values are erased.</p>
+                <details class="faq-accordion">
+                    <summary class="faq-summary">How frequently are tax and statutory threshold parameters updated?</summary>
+                    <div class="faq-answer">
+                        All calculation engines strictly follow current statutory updates, including ATO cents-per-km caps, IRS Section 179 vehicle limits, UK HMRC SDLT rates, and SCHADS award rules.
+                    </div>
+                </details>
+            </div>
+        </section>
     </article>
 
-    <!-- Hidden Ad Slot 2 -->
-    <div class="cms-ad-slot" style="min-height:0px; margin:0; padding:0;"></div>
+    <!-- Native Minimalist Footer -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <p>&copy; 2026 CoreMetricSuite. All rights reserved.</p>
+            <nav class="footer-links">
+                <a href="./about.html">About</a>
+                <a href="./privacy-policy.html">Privacy Policy</a>
+                <a href="./terms.html">Terms of Service</a>
+            </nav>
+        </div>
+    </footer>
 
-  </main>
+    <!-- Real-time Filter & Search Engine JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var searchInput = document.getElementById('directorySearch');
+            var filterButtons = document.querySelectorAll('.filter-btn');
+            var cards = document.querySelectorAll('.tool-card');
+            var noResults = document.getElementById('noResults');
 
-  <div id="global-footer"></div>
+            var currentRegion = 'all';
+            var currentSearchTerm = '';
 
-  <script src="/js/components.js"></script>
-  <script>
-    function filterTools() {
-      const input = document.getElementById('toolSearch').value.toLowerCase();
-      const cards = document.querySelectorAll('#toolsGrid .cms-tool-card');
-      
-      cards.forEach(card => {
-        const keywords = card.getAttribute('data-keywords') || '';
-        const title = card.querySelector('h2').textContent.toLowerCase();
-        const description = card.querySelector('p').textContent.toLowerCase();
-        
-        if (keywords.includes(input) || title.includes(input) || description.includes(input)) {
-          card.style.display = 'flex';
-        } else {
-          card.style.display = 'none';
-        }
-      });
-    }
-  </script>
+            function filterTools() {
+                var visibleCount = 0;
+
+                cards.forEach(function(card) {
+                    var cardRegion = card.getAttribute('data-region');
+                    var cardKeywords = card.getAttribute('data-keywords').toLowerCase();
+                    var cardTitle = card.querySelector('.card-title').textContent.toLowerCase();
+                    var cardDesc = card.querySelector('.card-description').textContent.toLowerCase();
+
+                    var matchesRegion = (currentRegion === 'all' || cardRegion === currentRegion);
+                    var matchesSearch = currentSearchTerm === '' || 
+                                          cardKeywords.indexOf(currentSearchTerm) !== -1 || 
+                                          cardTitle.indexOf(currentSearchTerm) !== -1 || 
+                                          cardDesc.indexOf(currentSearchTerm) !== -1;
+
+                    if (matchesRegion && matchesSearch) {
+                        card.style.display = 'flex';
+                        visibleCount++;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                if (visibleCount === 0) {
+                    noResults.style.display = 'block';
+                } else {
+                    noResults.style.display = 'none';
+                }
+            }
+
+            searchInput.addEventListener('input', function(e) {
+                currentSearchTerm = e.target.value.toLowerCase().trim();
+                filterTools();
+            });
+
+            filterButtons.forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    filterButtons.forEach(function(b) { b.classList.remove('active'); });
+                    btn.classList.add('active');
+                    currentRegion = btn.getAttribute('data-filter');
+                    filterTools();
+                });
+            });
+        });
+    </script>
 </body>
 </html>
