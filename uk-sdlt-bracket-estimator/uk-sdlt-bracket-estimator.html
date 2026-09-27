@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>uk-sdlt-bracket-estimator (UK Stamp Duty Land Tax Bracket Calculator)</title>
+    <meta name="description" content="Calculate UK Stamp Duty Land Tax (SDLT) tier brackets instantly. Free client-side estimator for residential property buyers, first-time buyers, and landlords.">
+    <meta name="keywords" content="uk sdlt bracket estimator, stamp duty land tax calculator, uk property tax tiers, first time buyer sdlt, additional property stamp duty england">
+    <link rel="canonical" href="https://coremetricsuite.com/uk-sdlt-bracket-estimator/">
+
+    <!-- Open Graph / Social Metadata -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="uk-sdlt-bracket-estimator (UK Stamp Duty Land Tax Bracket Calculator)">
+    <meta property="og:description" content="Calculate UK Stamp Duty Land Tax (SDLT) tier brackets instantly. Free client-side estimator for residential property buyers, first-time buyers, and landlords.">
+    <meta property="og:url" content="https://coremetricsuite.com/uk-sdlt-bracket-estimator/">
+    
+    <!-- Global Framework Dependencies -->
+    <link rel="stylesheet" href="/css/global.css">
+    <script src="/global.js" defer></script>
+
+    <!-- FAQ JSON-LD Schema Markup (5 FAQs Synchronized with DOM) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How are UK Stamp Duty Land Tax (SDLT) progressive tax brackets calculated?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "SDLT is a progressive tax calculated in tiered bands. You pay specific tax percentages only on the portion of the property purchase price that falls within each tax bracket, rather than a single flat rate across the full purchase price."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are my property price inputs and tax calculations stored or transmitted to external servers?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. All SDLT bracket calculations and effective tax rate assessments run 100% locally inside your web browser using client-side JavaScript. Your financial data is never logged or transmitted to external servers."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the First-Time Buyer SDLT Relief threshold limit?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "First-time buyers pay 0% SDLT on purchase prices up to £425,000 and 5% on the portion from £425,001 to £625,000. If the purchase price exceeds £625,000, first-time buyer relief cannot be claimed and standard rates apply."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the additional property surcharge rate for second homes or buy-to-let properties?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Purchasing an additional residential property (such as a second home or buy-to-let investment) incurs an additional 5% SDLT surcharge on top of standard tier rates across all price bands."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does the Non-UK Resident SDLT surcharge work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Non-UK residents purchasing residential property in England or Northern Ireland are subject to a 2% surcharge. This 2% is added on top of whatever standard, first-time buyer, or additional property SDLT rates apply."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-main: #0f1117;
+            --bg-card: #181b24;
+            --bg-input: #222634;
+            --border-color: #2e3446;
+            --accent-purple: #8b5cf6;
+            --accent-cyan: #00f2fe;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-mono: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: var(--bg-main); color: var(--text-primary); font-family: var(--font-sans); line-height: 1.6; }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 420px 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 960px) { .container { grid-template-columns: 1fr; } }
+
+        .panel {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .panel-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            background: var(--accent-purple);
+            color: #fff;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        .btn-demo {
+            width: 100%;
+            padding: 0.6rem;
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            color: var(--accent-purple);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 1.25rem;
+            transition: background 0.2s;
+        }
+        .btn-demo:hover { background-color: #2a3042; }
+
+        .form-group { margin-bottom: 1.25rem; }
+        label { display: block; font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 0.4rem; }
+        input[type="number"], select {
+            width: 100%; padding: 0.65rem 0.85rem; background-color: var(--bg-input);
+            border: 1px solid var(--border-color); border-radius: 6px; color: #fff;
+            font-size: 0.9rem; outline: none; font-family: inherit;
+        }
+
+        .btn-action {
+            width: 100%; padding: 0.85rem; background: linear-gradient(135deg, var(--accent-purple), #7c3aed);
+            color: #fff; font-weight: 700; border: none; border-radius: 6px; cursor: pointer; font-size: 0.95rem;
+            transition: opacity 0.2s;
+        }
+        .btn-action:hover { opacity: 0.9; }
+
+        .preview-stage { display: flex; flex-direction: column; }
+        .result-box {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            font-size: 0.95rem;
+            color: #e5e7eb;
+            min-height: 380px;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .result-metric {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+        .result-metric h4 {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.3rem;
+        }
+        .result-metric .value {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #fff;
+            font-family: var(--font-mono);
+        }
+
+        .bracket-breakdown {
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border-color);
+            padding-top: 0.75rem;
+        }
+
+        .bracket-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.35rem 0;
+            color: var(--text-secondary);
+            border-bottom: 1px dashed rgba(255,255,255,0.05);
+        }
+        .bracket-row:last-child { border-bottom: none; }
+        .bracket-row.active {
+            color: var(--accent-cyan);
+            font-weight: 600;
+        }
+
+        .canvas-caption { margin-top: 1rem; font-size: 0.85rem; color: var(--text-secondary); text-align: right; }
+
+        .content-area { max-width: 1200px; margin: 3rem auto; padding: 0 1.5rem; }
+        .content-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 2.5rem; }
+        .content-card h1 { font-size: 2rem; margin-bottom: 1rem; color: #fff; }
+        .content-card h2 { font-size: 1.4rem; margin: 1.8rem 0 1rem; color: #fff; }
+        .content-card p { color: var(--text-secondary); margin-bottom: 1.2rem; }
+        .content-card ul, .content-card ol { color: var(--text-secondary); margin: 0 0 1.2rem 1.5rem; }
+        .content-card li { margin-bottom: 0.5rem; }
+
+        .spec-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; text-align: left; }
+        .spec-table th, .spec-table td { padding: 0.85rem 1rem; border: 1px solid var(--border-color); }
+        .spec-table th { background-color: var(--bg-input); color: #fff; }
+        .spec-table td { color: var(--text-secondary); }
+
+        /* Accordion FAQ Styling */
+        .faq-block { margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem; }
+        .faq-accordion {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 0.85rem;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .faq-accordion[open] { border-color: var(--accent-purple); }
+        .faq-summary {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            padding: 1rem 1.2rem;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+        .faq-summary::-webkit-details-marker { display: none; }
+        .faq-summary::after {
+            content: "+";
+            font-size: 1.2rem;
+            color: var(--accent-purple);
+            transition: transform 0.2s;
+        }
+        .faq-accordion[open] .faq-summary::after {
+            content: "−";
+            color: var(--accent-purple);
+        }
+        .faq-answer {
+            padding: 0 1.2rem 1.2rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 0.4rem;
+            padding-top: 0.8rem;
+        }
+
+        .cms-ad-slot-1, .cms-ad-slot-2 {
+            width: 100%; max-width: 970px; min-height: 90px; margin: 1.5rem auto;
+            background: rgba(255,255,255,0.02); border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Container -->
+    <div id="global-header"></div>
+
+    <!-- Ad Slot 1 Container (Above Main Workspace Title) -->
+    <div class="cms-ad-slot-1"></div>
+
+    <!-- Main Tool Container -->
+    <main class="container">
+        <section class="panel">
+            <div class="panel-title">
+                <span>SDLT Estimator Controls</span>
+                <span class="badge">UK TAX ENGINE</span>
+            </div>
+
+            <button class="btn-demo" id="loadDemoBtn" type="button">⚡ Load Demo Sample Data</button>
+
+            <div class="form-group">
+                <label for="propertyPrice">Property Purchase Price (£)</label>
+                <input type="number" id="propertyPrice" value="450000" min="0" step="1000">
+            </div>
+
+            <div class="form-group">
+                <label for="buyerStatus">Buyer Classification</label>
+                <select id="buyerStatus">
+                    <option value="nextHome">Moving Home / Standard Residential</option>
+                    <option value="firstTime">First-Time Buyer Relief</option>
+                    <option value="additionalProperty">Additional Property / Buy-to-Let (+5% Surcharge)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="residencyStatus">UK Residency Status</label>
+                <select id="residencyStatus">
+                    <option value="resident">UK Resident</option>
+                    <option value="nonResident">Non-UK Resident (+2% Surcharge)</option>
+                </select>
+            </div>
+
+            <button class="btn-action" id="calculateBtn" type="button">Calculate SDLT Tax & Brackets</button>
+        </section>
+
+        <!-- Result Stage Wrapper -->
+        <section class="preview-stage">
+            <div class="panel" style="flex: 1; display: flex; flex-direction: column;">
+                <div class="panel-title">
+                    <span>SDLT Calculation Summary</span>
+                </div>
+                <div class="result-box" id="resultBoard">
+                    <div class="result-metric">
+                        <h4>Total Stamp Duty Payable (SDLT)</h4>
+                        <div class="value" id="resTotalTax">£10,000</div>
+                    </div>
+                    <div class="result-metric">
+                        <h4>Effective Tax Rate</h4>
+                        <div class="value" id="resEffectiveRate">2.22%</div>
+                    </div>
+                    <div class="result-metric">
+                        <h4>Tiered Tax Band Breakdown</h4>
+                        <div class="bracket-breakdown" id="resBracketList">
+                            <!-- Bracket items dynamically populated -->
+                        </div>
+                    </div>
+                </div>
+                <p class="canvas-caption">
+                    Calculated using standard HM Revenue & Customs (HMRC) residential property rates in England and Northern Ireland.
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <!-- SEO & Educational Guide Section -->
+    <article class="content-area">
+        <section class="content-card">
+            <h1>UK SDLT Bracket Estimator & Stamp Duty Guide</h1>
+            <p>
+                Navigating UK residential property acquisition requires a precise understanding of Stamp Duty Land Tax (SDLT). SDLT is a progressive tax levied by HM Revenue & Customs (HMRC) on real estate purchases in England and Northern Ireland. Because SDLT relies on progressive tiered tax brackets, calculating exact tax duties requires evaluating each portion of the purchase price that falls within designated rate bands.
+            </p>
+            <p>
+                This browser-based <strong>uk-sdlt-bracket-estimator</strong> utility enables home buyers, real estate investors, letting agents, and legal advisors to instantly compute total Stamp Duty liabilities, determine effective overall tax percentages, and inspect granular tier-by-tier breakdowns entirely client-side without transmitting personal or financial data to external servers.
+            </p>
+
+            <h2>SDLT Standard Rate Bands & Statutory Tier Matrix</h2>
+            <p>
+                The table below outlines statutory standard residential SDLT tax thresholds and percentage tiers currently applied across England and Northern Ireland:
+            </p>
+
+            <table class="spec-table">
+                <thead>
+                    <tr>
+                        <th>Purchase Price Tier Band</th>
+                        <th>Standard Rate</th>
+                        <th>First-Time Buyer Rate</th>
+                        <th>Additional Property Rate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Up to £250,000</strong></td>
+                        <td>0%</td>
+                        <td>0% (Up to £425k threshold)</td>
+                        <td>5%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>£250,001 to £925,000</strong></td>
+                        <td>5%</td>
+                        <td>5% (Up to £625k limit)</td>
+                        <td>10%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>£925,001 to £1,500,000</strong></td>
+                        <td>10%</td>
+                        <td>10%</td>
+                        <td>15%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Over £1,500,000</strong></td>
+                        <td>12%</td>
+                        <td>12%</td>
+                        <td>17%</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Ad Slot 2 Container (Immediately Below Data Table) -->
+            <div class="cms-ad-slot-2"></div>
+
+            <h2>Operational Workflow & Integration Checklist</h2>
+            <p>
+                Integrating this tax bracket estimator into your home purchase planning or legal research workflow follows a simple checklist:
+            </p>
+            <ul>
+                <li><strong>Enter Total Agreed Purchase Price:</strong> Input the total consideration price agreed upon for the UK residential property transaction.</li>
+                <li><strong>Select Buyer Classification:</strong> Indicate whether you are a first-time buyer eligible for relief, a standard home mover, or buying an additional property (subject to second home surcharges).</li>
+                <li><strong>Adjust Residency Status:</strong> Toggle UK residency to automatically account for non-UK resident surcharges where applicable.</li>
+                <li><strong>Review Tier Breakdown:</strong> Examine the active rate bands on the results board to verify exact taxes owed across each threshold tier.</li>
+            </ul>
+
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-block">
+                <details class="faq-accordion" open>
+                    <summary class="faq-summary">How are UK Stamp Duty Land Tax (SDLT) progressive tax brackets calculated?</summary>
+                    <div class="faq-answer">
+                        SDLT is a progressive tax calculated in tiered bands. You pay specific tax percentages only on the portion of the property purchase price that falls within each tax bracket, rather than a single flat rate across the full purchase price.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">Are my property price inputs and tax calculations stored or transmitted to external servers?</summary>
+                    <div class="faq-answer">
+                        No. All SDLT bracket calculations and effective tax rate assessments run 100% locally inside your web browser using client-side JavaScript. Your financial data is never logged or transmitted to external servers.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">What is the First-Time Buyer SDLT Relief threshold limit?</summary>
+                    <div class="faq-answer">
+                        First-time buyers pay 0% SDLT on purchase prices up to £425,000 and 5% on the portion from £425,001 to £625,000. If the purchase price exceeds £625,000, first-time buyer relief cannot be claimed and standard rates apply.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">What is the additional property surcharge rate for second homes or buy-to-let properties?</summary>
+                    <div class="faq-answer">
+                        Purchasing an additional residential property (such as a second home or buy-to-let investment) incurs an additional 5% SDLT surcharge on top of standard tier rates across all price bands.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">How does the Non-UK Resident SDLT surcharge work?</summary>
+                    <div class="faq-answer">
+                        Non-UK residents purchasing residential property in England or Northern Ireland are subject to a 2% surcharge. This 2% is added on top of whatever standard, first-time buyer, or additional property SDLT rates apply.
+                    </div>
+                </details>
+            </div>
+        </section>
+    </article>
+
+    <!-- Footer Container -->
+    <div id="global-footer"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var propertyPriceInput = document.getElementById('propertyPrice');
+            var buyerStatusSelect = document.getElementById('buyerStatus');
+            var residencyStatusSelect = document.getElementById('residencyStatus');
+            var calculateBtn = document.getElementById('calculateBtn');
+            var loadDemoBtn = document.getElementById('loadDemoBtn');
+
+            var resTotalTax = document.getElementById('resTotalTax');
+            var resEffectiveRate = document.getElementById('resEffectiveRate');
+            var resBracketList = document.getElementById('resBracketList');
+
+            loadDemoBtn.addEventListener('click', function() {
+                propertyPriceInput.value = '550000';
+                buyerStatusSelect.value = 'nextHome';
+                residencyStatusSelect.value = 'resident';
+                calculateSdlt();
+            });
+
+            calculateBtn.addEventListener('click', function() {
+                calculateSdlt();
+            });
+
+            function calculateSdlt() {
+                var price = parseFloat(propertyPriceInput.value) || 0;
+                var status = buyerStatusSelect.value;
+                var isNonResident = residencyStatusSelect.value === 'nonResident';
+
+                if (price <= 0) {
+                    resTotalTax.textContent = '£0';
+                    resEffectiveRate.textContent = '0.00%';
+                    resBracketList.innerHTML = '<div class="bracket-row"><span>Please enter a valid purchase price.</span></div>';
+                    return;
+                }
+
+                var baseSurcharge = 0;
+                if (status === 'additionalProperty') baseSurcharge += 5;
+                if (isNonResident) baseSurcharge += 2;
+
+                var totalTax = 0;
+                var brackets = [];
+
+                if (status === 'firstTime' && price <= 625000) {
+                    // First Time Buyer Relief Rules
+                    var b1 = Math.min(price, 425000);
+                    var rate1 = 0 + baseSurcharge;
+                    var tax1 = b1 * (rate1 / 100);
+                    totalTax += tax1;
+                    brackets.push({ label: 'Up to £425,000 (FTB Relief)', rate: rate1, tax: tax1 });
+
+                    if (price > 425000) {
+                        var b2 = price - 425000;
+                        var rate2 = 5 + baseSurcharge;
+                        var tax2 = b2 * (rate2 / 100);
+                        totalTax += tax2;
+                        brackets.push({ label: '£425,001 to ' + formatCurrency(price), rate: rate2, tax: tax2 });
+                    }
+                } else {
+                    // Standard Tiers
+                    var t1 = Math.min(price, 250000);
+                    var r1 = 0 + baseSurcharge;
+                    var tax1 = t1 * (r1 / 100);
+                    totalTax += tax1;
+                    brackets.push({ label: 'Up to £250,000', rate: r1, tax: tax1 });
+
+                    if (price > 250000) {
+                        var t2 = Math.min(price, 925000) - 250000;
+                        var r2 = 5 + baseSurcharge;
+                        var tax2 = t2 * (r2 / 100);
+                        totalTax += tax2;
+                        brackets.push({ label: '£250,001 to £925,000', rate: r2, tax: tax2 });
+                    }
+
+                    if (price > 925000) {
+                        var t3 = Math.min(price, 1500000) - 925000;
+                        var r3 = 10 + baseSurcharge;
+                        var tax3 = t3 * (r3 / 100);
+                        totalTax += tax3;
+                        brackets.push({ label: '£925,001 to £1,500,000', rate: r3, tax: tax3 });
+                    }
+
+                    if (price > 1500000) {
+                        var t4 = price - 1500000;
+                        var r4 = 12 + baseSurcharge;
+                        var tax4 = t4 * (r4 / 100);
+                        totalTax += tax4;
+                        brackets.push({ label: 'Over £1,500,000', rate: r4, tax: tax4 });
+                    }
+                }
+
+                var effectiveRate = (totalTax / price) * 100;
+
+                resTotalTax.textContent = formatCurrency(totalTax);
+                resEffectiveRate.textContent = effectiveRate.toFixed(2) + '%';
+
+                var bracketHtml = '';
+                for (var i = 0; i < brackets.length; i++) {
+                    var item = brackets[i];
+                    bracketHtml += '<div class="bracket-row active">' +
+                        '<span>' + item.label + ' (' + item.rate + '%)</span>' +
+                        '<span>' + formatCurrency(item.tax) + '</span>' +
+                        '</div>';
+                }
+                resBracketList.innerHTML = bracketHtml;
+            }
+
+            function formatCurrency(val) {
+                return '£' + Math.round(val).toLocaleString('en-GB');
+            }
+
+            calculateSdlt();
+        });
+    </script>
+</body>
+</html>
