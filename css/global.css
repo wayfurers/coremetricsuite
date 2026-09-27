@@ -1,5 +1,33 @@
 /* ==========================================================================
    COREMETRICSUITE COMPLETE ROOT GLOBAL STYLESHEET
+   File  : css/global.css
+   Pairs : js/components.js
+   --------------------------------------------------------------------------
+   LAYER MAP
+     01. Design tokens (:root)
+     02. Global reset / base
+     03. Layout wrapper + body scaffolding
+     04. GLOBAL HEADER / NAVBAR SHELL ....... FIX 1 (opaque + border-box paint)
+     05. Tool slider nav + nav items
+     06. Dark theme calculator pages
+     07. Smart utility suggestions (legacy in-flow grid -> force hidden)
+     08. ATTENTION-GRABBER TOAST ........... FIX 3 (fixed 5s popup)
+     09. Programmatic hidden ad placement spaces
+     10. Compliance disclaimer container
+     11. Global footer shell
+     12. Responsive + motion preference guards
+
+   IMPORTANT PAIRING NOTE (FIX 3)
+     The toast geometry (position / bottom / right / z-index) is written INLINE
+     by js/components.js. Those declarations are deliberately NOT marked
+     !important anywhere in this file, because a stylesheet !important rule
+     would outrank the inline `toast.style.bottom = "20px"` that the 5-second
+     timer sets â€” the toast would then never slide into view.
+   ========================================================================== */
+
+
+/* ==========================================================================
+   01. DESIGN TOKENS
    ========================================================================== */
 
 :root {
@@ -10,13 +38,39 @@
     --text-muted: #94a3b8;
     --color-accent: #3b82f6;
     --color-danger: #ef4444;
+
+    /* Injection-layer tokens (header shell / toast) */
+    --header-solid: #0f172a;
+    --header-border: #1e293b;
+    --header-stack-z: 1000;
+    --toast-stack-z: 99999;
+    --toast-park-bottom: -400px;
+    --toast-lift-bottom: 20px;
+    --toast-edge-right: 20px;
+    --toast-transition: bottom 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+                        opacity 0.35s ease;
 }
+
+
+/* ==========================================================================
+   02. GLOBAL RESET / BASE
+   ========================================================================== */
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
+
+html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+}
+
+
+/* ==========================================================================
+   03. LAYOUT WRAPPER + BODY SCAFFOLDING
+   ========================================================================== */
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -28,23 +82,80 @@ body {
     flex-direction: column;
 }
 
+/* Shared class on the header, the disclaimer box and the footer. Kept purely
+   structural so it cannot fight the shell-specific rules in layer 04 / 10. */
 .global-layout-wrapper {
     width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    position: relative;
 }
 
+
+/* ==========================================================================
+   04. GLOBAL HEADER / NAVBAR SHELL  â€”  FIX 1
+   --------------------------------------------------------------------------
+   js/components.js writes these two declarations INLINE on the <header>:
+       background-color: #0f172a !important;
+       box-sizing: border-box;
+   (plus a geometry block re-asserted by lockHeaderPaint()). The identical
+   declarations live here as the stylesheet-side twin, so the shell stays
+   fully opaque even if the inline style attribute is stripped by a sanitizer,
+   a CSS-in-JS layer or a platform injection pass. Nothing from the main body
+   canvas can show through and create the duplicate logo / version overlap.
+   ========================================================================== */
+
+header,
+header.global-navbar-shell,
 .global-navbar-shell {
-    background-color: var(--bg-dark) !important;
-    border-bottom: 1px solid #1e293b;
-    padding: 15px 5% 5px 5%;
+    background-color: var(--header-solid) !important; /* #0f172a */
+    background-image: none !important;
+    box-sizing: border-box !important;
+
+    /* Own stacking context: covers any body text shifting up under the shell */
+    position: relative;
+    z-index: var(--header-stack-z);
+    isolation: isolate;
+
     display: block;
+    width: 100%;
+    max-width: 100%;
+    border-bottom: 1px solid var(--header-border);
+    padding: 15px 5% 5px 5%;
+    color: var(--text-primary);
+    text-align: left;
+    overflow: visible;
+}
+
+/* Every child of the shell inherits border-box sizing so no inner row can
+   expand past the painted area and expose the white canvas underneath. */
+header.global-navbar-shell,
+header.global-navbar-shell *,
+.global-navbar-shell,
+.global-navbar-shell * {
     box-sizing: border-box;
+}
+
+/* Belt-and-braces opaque layer directly behind the header content. */
+header.global-navbar-shell::before,
+.global-navbar-shell::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: var(--header-solid);
+    z-index: -1;
+    pointer-events: none;
 }
 
 .global-logo-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
     margin-bottom: 10px;
+    position: relative;
+    z-index: 1;
 }
 
 .global-logo-link {
@@ -52,14 +163,26 @@ body {
     font-weight: bold;
     color: var(--text-primary) !important;
     text-decoration: none;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+}
+
+.global-logo-link:hover {
+    color: #ffffff !important;
 }
 
 .global-version-tag {
     color: var(--text-muted) !important;
     font-size: 0.85rem;
+    white-space: nowrap;
 }
 
-/* Horizontal Scrollable Left-to-Right Slider Menu */
+
+/* ==========================================================================
+   05. HORIZONTAL SCROLLABLE LEFT-TO-RIGHT SLIDER MENU
+   ========================================================================== */
+
 .tool-slider-nav {
     display: flex !important;
     white-space: nowrap !important;
@@ -71,11 +194,14 @@ body {
     -webkit-overflow-scrolling: touch !important;
     background-color: var(--bg-dark) !important;
     width: 100%;
+    position: relative;
+    z-index: 1;
 }
 
 .tool-slider-nav::-webkit-scrollbar {
     display: none !important;
 }
+
 .tool-slider-nav {
     -ms-overflow-style: none !important;
     scrollbar-width: none !important;
@@ -91,6 +217,7 @@ body {
     font-size: 0.85rem !important;
     font-weight: 500;
     transition: background-color 0.2s, color 0.2s !important;
+    flex: 0 0 auto;
 }
 
 .tool-nav-item:hover {
@@ -98,7 +225,17 @@ body {
     color: #ffffff !important;
 }
 
-/* Themeing Support for Inner Dark UI Calculator Tools */
+.tool-nav-item.is-active,
+.tool-nav-item[aria-current="page"] {
+    background-color: var(--color-accent) !important;
+    color: #ffffff !important;
+}
+
+
+/* ==========================================================================
+   06. THEMING SUPPORT FOR INNER DARK UI CALCULATOR TOOLS
+   ========================================================================== */
+
 .dark-theme-page {
     background-color: #0b0f19 !important;
     color: var(--text-primary) !important;
@@ -109,16 +246,22 @@ body {
     padding: 20px 5%;
 }
 
-/* Smart Utility Suggestions Grid System Layout */
-.related-suggestions-box {
-    margin: 40px auto 0 auto;
-    padding: 20px;
-    background: rgba(255, 255, 255, 0.02) !important;
-    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
-    border-radius: 8px;
-    width: 100%;
-    max-width: 1200px;
-    box-sizing: border-box;
+
+/* ==========================================================================
+   07. SMART UTILITY SUGGESTIONS â€” LEGACY IN-FLOW GRID (FORCE HIDDEN)
+   --------------------------------------------------------------------------
+   js/components.js now renders the related-tool matches inside the fixed
+   toast in layer 08 and deletes any legacy .related-suggestions-box node
+   (purgeLegacyInlineSuggestions). The rules below keep the grid from ever
+   stacking up at the bottom of the long calculator form sheet again, while
+   the base classes remain available for hand-written static pages.
+   ========================================================================== */
+
+.dark-theme-page .related-suggestions-box,
+body[data-page-type="calculator"] .related-suggestions-box,
+main .related-suggestions-box,
+.related-suggestions-box[data-cms-inline-suggestions] {
+    display: none !important;
 }
 
 .suggestions-title {
@@ -133,43 +276,202 @@ body {
     margin: 0 0 15px 0;
 }
 
-.suggestions-grid {
+
+/* ==========================================================================
+   08. ATTENTION-GRABBER TOAST  â€”  FIX 3
+   --------------------------------------------------------------------------
+   Shell geometry is inline (fixed / -400px / 20px / 99999). This layer owns
+   the paint, the card list, the (x) button and the exit animation only.
+   ========================================================================== */
+
+#attention-grabber-toast,
+.attention-grabber-toast {
+    width: 340px;
+    max-width: calc(100vw - 40px);
+    box-sizing: border-box;
+    padding: 16px;
+    font-family: inherit;
+    font-size: 0.85rem;
+    line-height: 1.45;
+    text-align: left;
+    color: var(--text-primary);
+    background-color: var(--header-solid);
+    border: 1px solid rgba(59, 130, 246, 0.9);
+    border-left: 4px solid var(--color-accent);
+    border-radius: 12px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.04);
+    overflow: hidden;
+    pointer-events: auto;
+    opacity: 0;
+    visibility: hidden;
+    will-change: bottom, opacity;
+}
+
+#attention-grabber-toast.is-visible,
+.attention-grabber-toast.is-visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+#attention-grabber-toast.toast-closing,
+.attention-grabber-toast.toast-closing {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* Head row + close (x) button ------------------------------------------- */
+
+.toast-head-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding-right: 26px;
+    margin-bottom: 6px;
+}
+
+.toast-title {
+    color: #ffffff !important;
+    font-size: 1rem;
+    font-weight: bold;
+    margin: 0;
+    line-height: 1.25;
+}
+
+.toast-eyebrow {
+    display: inline-block;
+    flex: 0 0 auto;
+    font-size: 0.6rem;
+    font-weight: bold;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-accent) !important;
+    background: rgba(59, 130, 246, 0.12);
+    border: 1px solid rgba(59, 130, 246, 0.35);
+    border-radius: 999px;
+    padding: 2px 8px;
+    white-space: nowrap;
+}
+
+.toast-close-btn {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    width: 26px;
+    height: 26px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    background: none;
+    border: 1px solid transparent;
+    border-radius: 50%;
+    color: var(--text-muted);
+    font-size: 1.4rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: color 0.2s, background-color 0.2s, border-color 0.2s;
+    z-index: 2;
+}
+
+.toast-close-btn:hover,
+.toast-close-btn:focus-visible {
+    background-color: rgba(239, 68, 68, 0.15);
+    border-color: var(--color-danger);
+    color: #ffffff;
+    outline: none;
+}
+
+/* Body copy + card list -------------------------------------------------- */
+
+.toast-subtitle {
+    color: var(--text-muted) !important;
+    margin: 0 0 12px 0;
+    font-size: 0.78rem;
+    line-height: 1.45;
+}
+
+.toast-card-list {
     display: grid !important;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)) !important;
-    gap: 15px !important;
-    margin-top: 10px !important;
+    grid-template-columns: 1fr;
+    gap: 8px !important;
+    margin: 0 !important;
+    max-height: 46vh;
+    overflow-y: auto;
 }
 
-.suggestion-card {
+.toast-card-list .suggestion-card {
     display: block;
-    padding: 12px;
-    background: rgba(255, 255, 255, 0.04) !important;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 6px;
+    padding: 10px;
+    margin: 0;
+    background: var(--bg-card-dark);
+    color: #ffffff;
     text-decoration: none;
-    transition: background-color 0.2s, transform 0.2s !important;
+    border: 1px solid #334155;
+    border-radius: 6px;
+    transition: background 0.2s, border-color 0.2s, transform 0.2s;
 }
 
-.suggestion-card:hover {
-    background-color: rgba(59, 130, 246, 0.15) !important;
-    transform: translateY(-2px);
+.toast-card-list .suggestion-card:hover,
+.toast-card-list .suggestion-card:focus-visible {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    transform: translateY(-1px);
+    outline: none;
 }
 
 .suggestion-tag {
-    font-size: 0.7rem;
-    color: var(--color-accent) !important;
-    font-weight: bold;
     display: block;
+    font-size: 0.65rem;
+    font-weight: bold;
     text-transform: uppercase;
+    color: var(--color-accent) !important;
     margin-bottom: 2px;
 }
 
-.suggestion-name {
-    color: var(--text-primary) !important;
-    font-size: 0.9rem;
+.toast-card-list .suggestion-card:hover .suggestion-tag,
+.toast-card-list .suggestion-card:focus-visible .suggestion-tag {
+    color: #ffffff !important;
 }
 
-/* Programmatic Hidden Ad Placement Spaces */
+.suggestion-name {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #ffffff !important;
+}
+
+/* 5-second progress hairline (pure decoration, safe to remove) ----------- */
+
+.toast-progress {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 100%;
+    background: linear-gradient(90deg, var(--color-accent), rgba(59, 130, 246, 0.2));
+    transform: scaleX(1);
+    transform-origin: left center;
+    opacity: 0;
+}
+
+#attention-grabber-toast.is-visible .toast-progress,
+.attention-grabber-toast.is-visible .toast-progress {
+    opacity: 1;
+    animation: cms-toast-countdown 5s linear forwards;
+}
+
+@keyframes cms-toast-countdown {
+    from { transform: scaleX(1); }
+    to   { transform: scaleX(0); }
+}
+
+
+/* ==========================================================================
+   09. PROGRAMMATIC HIDDEN AD PLACEMENT SPACES
+   ========================================================================== */
+
 .ad-container-slot {
     display: none;
     width: 100%;
@@ -184,7 +486,15 @@ body {
     margin: 20px auto;
 }
 
-/* Trust Validation Automated Legal Disclaimer Container */
+#top-global-ad.has-ads {
+    margin-top: 0;
+}
+
+
+/* ==========================================================================
+   10. TRUST VALIDATION AUTOMATED LEGAL DISCLAIMER CONTAINER
+   ========================================================================== */
+
 .compliance-disclaimer-box {
     max-width: 800px;
     margin: 40px auto 0 auto;
@@ -207,17 +517,30 @@ body {
     letter-spacing: 0.05em;
 }
 
-/* Global Footer Layout Elements */
+/* The disclaimer sits inside the footer shell in the injected markup. */
+.global-footer-shell .compliance-disclaimer-box {
+    margin-top: 0;
+    margin-bottom: 30px;
+}
+
+
+/* ==========================================================================
+   11. GLOBAL FOOTER LAYOUT ELEMENTS
+   ========================================================================== */
+
 .global-footer-shell {
     background-color: var(--bg-dark) !important;
-    border-top: 1px solid #1e293b;
+    border-top: 1px solid var(--header-border);
     padding: 30px 5%;
     margin-top: auto;
     text-align: center;
     color: var(--text-muted) !important;
     font-size: 0.85rem;
     display: block;
+    width: 100%;
     box-sizing: border-box;
+    position: relative;
+    z-index: 900;
 }
 
 .footer-branding {
@@ -246,4 +569,63 @@ body {
     font-size: 0.75rem;
     opacity: 0.6;
     margin-top: 10px;
+}
+
+
+/* ==========================================================================
+   12. RESPONSIVE + MOTION PREFERENCE GUARDS
+   ========================================================================== */
+
+@media (max-width: 640px) {
+    header.global-navbar-shell,
+    .global-navbar-shell {
+        padding: 12px 4% 5px 4%;
+    }
+
+    .global-logo-link {
+        font-size: 1.25rem;
+    }
+
+    .global-version-tag {
+        font-size: 0.75rem;
+    }
+
+    #attention-grabber-toast,
+    .attention-grabber-toast {
+        width: 320px;
+        max-width: calc(100vw - 32px);
+        padding: 14px;
+    }
+
+    .toast-title {
+        font-size: 0.95rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #attention-grabber-toast,
+    .attention-grabber-toast {
+        transition: none !important;
+    }
+
+    #attention-grabber-toast.is-visible .toast-progress,
+    .attention-grabber-toast.is-visible .toast-progress {
+        animation: none;
+    }
+
+    .tool-slider-nav {
+        scroll-behavior: auto !important;
+    }
+
+    .tool-nav-item,
+    .toast-card-list .suggestion-card {
+        transition: none !important;
+    }
+}
+
+@media print {
+    #attention-grabber-toast,
+    .attention-grabber-toast {
+        display: none !important;
+    }
 }
