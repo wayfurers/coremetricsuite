@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>uk-form-4a-rent-tracker (UK Section 13 Rent Increase Notice Calculator)</title>
+    <meta name="description" content="Track UK Section 13 rent increase notices and notice periods instantly. Calculate statutory rent changes and deadlines safely inside your browser.">
+    <meta name="keywords" content="uk form 4a rent tracker, section 13 rent increase calculator, uk tenancy rent notice period, statutory rent increase notice uk, tenant rent review calculator">
+    <link rel="canonical" href="https://coremetricsuite.com/uk-form-4a-rent-tracker/">
+
+    <!-- Open Graph / Social Metadata -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="uk-form-4a-rent-tracker (UK Section 13 Rent Increase Notice Calculator)">
+    <meta property="og:description" content="Track UK Section 13 rent increase notices and notice periods instantly. Calculate statutory rent changes and deadlines safely inside your browser.">
+    <meta property="og:url" content="https://coremetricsuite.com/uk-form-4a-rent-tracker/">
+    
+    <!-- Global Framework Dependencies -->
+    <link rel="stylesheet" href="/css/global.css">
+    <script src="/global.js" defer></script>
+
+    <!-- FAQ JSON-LD Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How is the UK Section 13 notice period calculated for rent increases?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For periodic monthly tenancies in England, a Section 13 rent increase notice requires a minimum notice period of one full rental period (or one month, whichever is longer) before the proposed new rent takes effect."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are my tenancy details and rent calculation inputs secure?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. All notice period calculations, rent percentage adjustments, and date computations run 100% locally inside your web browser using client-side JavaScript. Your financial and property data is never transmitted to any external server."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can a landlord increase rent mid-way through a fixed-term tenancy?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. Landlords generally cannot use Section 13 to increase rent during a fixed-term tenancy unless the original tenancy agreement contains a specific rent review clause outlining how and when rent can be adjusted."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What happens if a tenant disagrees with a Section 13 rent increase?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "If a tenant believes the proposed rent is significantly above market rate, they can refer the notice to a First-tier Tribunal (Property Chamber) before the proposed new rent takes effect to determine a fair market rent."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does the notice date include the day the notice is served?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. The statutory notice period typically begins on the day after the notice is formally served and delivered to the tenant, ensuring full compliance with postal and receipt timelines."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-main: #0f1117;
+            --bg-card: #181b24;
+            --bg-input: #222634;
+            --border-color: #2e3446;
+            --accent-purple: #8b5cf6;
+            --accent-cyan: #00f2fe;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-mono: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: var(--bg-main); color: var(--text-primary); font-family: var(--font-sans); line-height: 1.6; }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 420px 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 960px) { .container { grid-template-columns: 1fr; } }
+
+        .panel {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .panel-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            background: var(--accent-purple);
+            color: #fff;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        .btn-demo {
+            width: 100%;
+            padding: 0.6rem;
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            color: var(--accent-purple);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 1.25rem;
+            transition: background 0.2s;
+        }
+        .btn-demo:hover { background-color: #2a3042; }
+
+        .form-group { margin-bottom: 1.25rem; }
+        label { display: block; font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 0.4rem; }
+        input[type="text"], input[type="number"], input[type="date"], select {
+            width: 100%; padding: 0.65rem 0.85rem; background-color: var(--bg-input);
+            border: 1px solid var(--border-color); border-radius: 6px; color: #fff;
+            font-size: 0.9rem; outline: none; font-family: inherit;
+        }
+
+        .btn-action {
+            width: 100%; padding: 0.85rem; background: linear-gradient(135deg, var(--accent-purple), #7c3aed);
+            color: #fff; font-weight: 700; border: none; border-radius: 6px; cursor: pointer; font-size: 0.95rem;
+            transition: opacity 0.2s;
+        }
+        .btn-action:hover { opacity: 0.9; }
+
+        .preview-stage { display: flex; flex-direction: column; }
+        .result-box {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            font-size: 0.95rem;
+            color: #e5e7eb;
+            min-height: 380px;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .result-metric {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+        .result-metric h4 {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.3rem;
+        }
+        .result-metric .value {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #fff;
+            font-family: var(--font-mono);
+        }
+        .canvas-caption { margin-top: 1rem; font-size: 0.85rem; color: var(--text-secondary); text-align: right; }
+
+        .content-area { max-width: 1200px; margin: 3rem auto; padding: 0 1.5rem; }
+        .content-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 2.5rem; }
+        .content-card h1 { font-size: 2rem; margin-bottom: 1rem; color: #fff; }
+        .content-card h2 { font-size: 1.4rem; margin: 1.8rem 0 1rem; color: #fff; }
+        .content-card p { color: var(--text-secondary); margin-bottom: 1.2rem; }
+        .content-card ul, .content-card ol { color: var(--text-secondary); margin: 0 0 1.2rem 1.5rem; }
+        .content-card li { margin-bottom: 0.5rem; }
+
+        .spec-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; text-align: left; }
+        .spec-table th, .spec-table td { padding: 0.85rem 1rem; border: 1px solid var(--border-color); }
+        .spec-table th { background-color: var(--bg-input); color: #fff; }
+        .spec-table td { color: var(--text-secondary); }
+
+        /* Accordion FAQ Styling */
+        .faq-block { margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem; }
+        .faq-accordion {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 0.85rem;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .faq-accordion[open] { border-color: var(--accent-purple); }
+        .faq-summary {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            padding: 1rem 1.2rem;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+        .faq-summary::-webkit-details-marker { display: none; }
+        .faq-summary::after {
+            content: "+";
+            font-size: 1.2rem;
+            color: var(--accent-purple);
+            transition: transform 0.2s;
+        }
+        .faq-accordion[open] .faq-summary::after {
+            content: "−";
+            color: var(--accent-purple);
+        }
+        .faq-answer {
+            padding: 0 1.2rem 1.2rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 0.4rem;
+            padding-top: 0.8rem;
+        }
+
+        .cms-ad-slot-1, .cms-ad-slot-2 {
+            width: 100%; max-width: 970px; min-height: 90px; margin: 1.5rem auto;
+            background: rgba(255,255,255,0.02); border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Container -->
+    <div id="global-header"></div>
+
+    <!-- Ad Slot 1 Container (Above Main Workspace Title) -->
+    <div class="cms-ad-slot-1"></div>
+
+    <!-- Main Tool Container -->
+    <main class="container">
+        <section class="panel">
+            <div class="panel-title">
+                <span>Section 13 Notice Controls</span>
+                <span class="badge">UK RENT TRACKER</span>
+            </div>
+
+            <button class="btn-demo" id="loadDemoBtn" type="button">⚡ Load Demo Sample Data</button>
+
+            <div class="form-group">
+                <label for="currentRent">Current Monthly Rent (£)</label>
+                <input type="number" id="currentRent" value="1200" min="1" step="1">
+            </div>
+
+            <div class="form-group">
+                <label for="proposedRent">Proposed New Rent (£)</label>
+                <input type="number" id="proposedRent" value="1350" min="1" step="1">
+            </div>
+
+            <div class="form-group">
+                <label for="noticeDate">Date Notice Served</label>
+                <input type="date" id="noticeDate">
+            </div>
+
+            <div class="form-group">
+                <label for="tenancyPeriod">Tenancy Frequency</label>
+                <select id="tenancyPeriod">
+                    <option value="monthly">Monthly Periodic Tenancy</option>
+                    <option value="weekly">Weekly Periodic Tenancy</option>
+                    <option value="yearly">Yearly Periodic Tenancy</option>
+                </select>
+            </div>
+
+            <button class="btn-action" id="calculateBtn" type="button">Calculate Notice & Rent Change</button>
+        </section>
+
+        <!-- Result Stage Wrapper -->
+        <section class="preview-stage">
+            <div class="panel" style="flex: 1; display: flex; flex-direction: column;">
+                <div class="panel-title">
+                    <span>Calculation Result Board</span>
+                </div>
+                <div class="result-box" id="resultBoard">
+                    <div class="result-metric">
+                        <h4>Rent Percentage Increase</h4>
+                        <div class="value" id="resPercentage">+12.5% (£150.00 /mo)</div>
+                    </div>
+                    <div class="result-metric">
+                        <h4>Minimum Notice Period Required</h4>
+                        <div class="value" id="resNoticePeriod">1 Month (Statutory Minimum)</div>
+                    </div>
+                    <div class="result-metric">
+                        <h4>Earliest Effective Rent Increase Date</h4>
+                        <div class="value" id="resEffectiveDate">Calculated Date Here</div>
+                    </div>
+                </div>
+                <p class="canvas-caption">
+                    Client-side calculations based on UK Housing Act 1988 guidelines.
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <!-- SEO & Educational Guide Section -->
+    <article class="content-area">
+        <section class="content-card">
+            <h1>UK Section 13 Rent Increase & Form Tracker Guide</h1>
+            <p>
+                Navigating rent reviews in England requires strict adherence to statutory rules governed by Section 13 of the Housing Act 1988. When landlords intend to increase rent on a periodic (rolling) tenancy without a rent review clause, they must serve a formal Section 13 notice using the correct format. Failing to provide sufficient notice time or miscalculating the effective date can render the rent increase invalid.
+            </p>
+            <p>
+                This browser-based <strong>uk-form-4a-rent-tracker</strong> utility empowers landlords, letting agents, and tenants to instantly compute statutory notice periods, calculate percentage and monetary rent adjustments, and determine exact effective implementation dates entirely client-side without transmitting personal or financial data to external servers.
+            </p>
+
+            <h2>Section 13 Notice Period Specifications Matrix</h2>
+            <p>
+                The required minimum notice length depends entirely on the rental period frequency of the tenancy agreement. The specification matrix below outlines standard statutory timelines:
+            </p>
+
+            <table class="spec-table">
+                <thead>
+                    <tr>
+                        <th>Tenancy Frequency</th>
+                        <th>Minimum Notice Length</th>
+                        <th>Statutory Basis</th>
+                        <th>Effective Date Rule</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Monthly Periodic</strong></td>
+                        <td>1 Month / Rental Period</td>
+                        <td>Housing Act 1988 s.13</td>
+                        <td>Must take effect on or after the first day of a new rental period.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Weekly Periodic</strong></td>
+                        <td>1 Month (or 4 Weeks)</td>
+                        <td>Housing Act 1988 s.13</td>
+                        <td>Must align with the start of a new weekly rental period cycle.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Yearly Periodic</strong></td>
+                        <td>6 Months</td>
+                        <td>Housing Act 1988 s.13</td>
+                        <td>Must allow a full 6-month notice lead time before taking effect.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Fixed-Term Tenancies</strong></td>
+                        <td>Not Applicable</td>
+                        <td>Housing Act 1988 s.13</td>
+                        <td>Section 13 cannot be used during a fixed term unless a valid break/review clause applies.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Ad Slot 2 Container (Immediately Below Data Table) -->
+            <div class="cms-ad-slot-2"></div>
+
+            <h2>Operational Breakdown & Workflow Integration</h2>
+            <p>
+                Integrating this tracker into your property management or tenant communication workflow ensures compliance and transparency:
+            </p>
+            <ul>
+                <li><strong>Input Tenancy Data:</strong> Enter your current monthly rent, proposed new rent, and the exact date the notice is served to the tenant.</li>
+                <li><strong>Select Tenancy Frequency:</strong> Choose between monthly, weekly, or yearly periodic tenancy cycles to automatically calibrate statutory notice durations.</li>
+                <li><strong>Analyze Results Board:</strong> Instantly inspect the percentage variance, monetary increase, and earliest valid effective date for the rent revision.</li>
+                <li><strong>Local Browser Security:</strong> Rest assured that all computations execute instantly inside local browser script memory with zero data logging.</li>
+            </ul>
+
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-block">
+                <details class="faq-accordion" open>
+                    <summary class="faq-summary">How is the UK Section 13 notice period calculated for rent increases?</summary>
+                    <div class="faq-answer">
+                        For periodic monthly tenancies in England, a Section 13 rent increase notice requires a minimum notice period of one full rental period (or one month, whichever is longer) before the proposed new rent takes effect.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">Are my tenancy details and rent calculation inputs secure?</summary>
+                    <div class="faq-answer">
+                        Yes. All notice period calculations, rent percentage adjustments, and date computations run 100% locally inside your web browser using client-side JavaScript. Your financial and property data is never transmitted to any external server.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">Can a landlord increase rent mid-way through a fixed-term tenancy?</summary>
+                    <div class="faq-answer">
+                        No. Landlords generally cannot use Section 13 to increase rent during a fixed-term tenancy unless the original tenancy agreement contains a specific rent review clause outlining how and when rent can be adjusted.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">What happens if a tenant disagrees with a Section 13 rent increase?</summary>
+                    <div class="faq-answer">
+                        If a tenant believes the proposed rent is significantly above market rate, they can refer the notice to a First-tier Tribunal (Property Chamber) before the proposed new rent takes effect to determine a fair market rent.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">Does the notice date include the day the notice is served?</summary>
+                    <div class="faq-answer">
+                        No. The statutory notice period typically begins on the day after the notice is formally served and delivered to the tenant, ensuring full compliance with postal and receipt timelines.
+                    </div>
+                </details>
+            </div>
+        </section>
+    </article>
+
+    <!-- Footer Container -->
+    <div id="global-footer"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var currentRentInput = document.getElementById('currentRent');
+            var proposedRentInput = document.getElementById('proposedRent');
+            var noticeDateInput = document.getElementById('noticeDate');
+            var tenancyPeriodSelect = document.getElementById('tenancyPeriod');
+            var calculateBtn = document.getElementById('calculateBtn');
+            var loadDemoBtn = document.getElementById('loadDemoBtn');
+
+            var resPercentage = document.getElementById('resPercentage');
+            var resNoticePeriod = document.getElementById('resNoticePeriod');
+            var resEffectiveDate = document.getElementById('resEffectiveDate');
+
+            // Set default date to today if empty
+            var today = new Date();
+            var todayFormatted = today.toISOString().split('T')[0];
+            noticeDateInput.value = todayFormatted;
+
+            loadDemoBtn.addEventListener('click', function() {
+                currentRentInput.value = '1250';
+                proposedRentInput.value = '1400';
+                noticeDateInput.value = todayFormatted;
+                tenancyPeriodSelect.value = 'monthly';
+                calculateNotice();
+            });
+
+            calculateBtn.addEventListener('click', function() {
+                calculateNotice();
+            });
+
+            function calculateNotice() {
+                var cur = parseFloat(currentRentInput.value) || 0;
+                var prop = parseFloat(proposedRentInput.value) || 0;
+                var noticeDateStr = noticeDateInput.value;
+                var period = tenancyPeriodSelect.value;
+
+                if (cur <= 0 || prop <= 0 || !noticeDateStr) {
+                    resPercentage.textContent = 'Invalid Input Values';
+                    resNoticePeriod.textContent = 'Please check numbers & dates';
+                    resEffectiveDate.textContent = 'N/A';
+                    return;
+                }
+
+                var diff = prop - cur;
+                var pct = (diff / cur) * 100;
+                var sign = diff >= 0 ? '+' : '';
+                resPercentage.textContent = sign + pct.toFixed(1) + '% (' + (diff >= 0 ? '£' : '-£') + Math.abs(diff).toFixed(2) + ' /mo)';
+
+                var noticeDate = new Date(noticeDateStr);
+                var effectiveDate = new Date(noticeDate);
+                var periodText = '';
+
+                if (period === 'monthly') {
+                    periodText = '1 Month (Statutory Minimum)';
+                    effectiveDate.setMonth(effectiveDate.getMonth() + 1);
+                } else if (period === 'weekly') {
+                    periodText = '1 Month / 4 Weeks';
+                    effectiveDate.setDate(effectiveDate.getDate() + 28);
+                } else {
+                    periodText = '6 Months (Yearly Periodic)';
+                    effectiveDate.setMonth(effectiveDate.getMonth() + 6);
+                }
+
+                resNoticePeriod.textContent = periodText;
+                resEffectiveDate.textContent = effectiveDate.toLocaleDateString('en-GB', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric'
+                });
+            }
+
+            calculateNotice();
+        });
+    </script>
+</body>
+</html>
