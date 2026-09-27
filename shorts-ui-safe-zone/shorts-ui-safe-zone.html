@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>shorts-ui-safe-zone (YouTube Shorts UI Overlay & Safe Zone Checker)</title>
+    <meta name="description" content="Test your YouTube Shorts framing instantly. Ensure captions, titles, and CTAs never get blocked by interface buttons or mobile player overlays.">
+    <meta name="keywords" content="shorts ui safe zone, youtube shorts safe area template, youtube shorts overlay checker, vertical video safe zones, 9:16 safe area generator, shorts caption margin tester">
+    <link rel="canonical" href="https://coremetricsuite.com/shorts-ui-safe-zone/">
+
+    <!-- Open Graph / Social Metadata -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="shorts-ui-safe-zone (YouTube Shorts UI Overlay & Safe Zone Checker)">
+    <meta property="og:description" content="Test your YouTube Shorts framing instantly. Ensure captions, titles, and CTAs never get blocked by interface buttons or mobile player overlays.">
+    <meta property="og:url" content="https://coremetricsuite.com/shorts-ui-safe-zone/">
+    
+    <!-- Global Framework Dependencies -->
+    <link rel="stylesheet" href="/css/global.css">
+    <script src="/global.js" defer></script>
+
+    <!-- FAQ JSON-LD Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What are the exact YouTube Shorts safe zone dimensions for 1080x1920 videos?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For standard 1080x1920 vertical YouTube Shorts, keep essential text and titles clear of the top 280px and bottom 520px. Additionally, maintain a 200px right-side margin to prevent interface buttons (like, comments, remix) from obscuring your visuals."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does client-side frame checking protect user data privacy?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "All uploaded video frames, images, canvas rendering, and safe area calculations are processed 100% locally inside your web browser using HTML5 Canvas. No media files or creative assets are ever uploaded to any remote server."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-main: #0f1117;
+            --bg-card: #181b24;
+            --bg-input: #222634;
+            --border-color: #2e3446;
+            --accent-red: #ff0000;
+            --accent-cyan: #00f2fe;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: var(--bg-main); color: var(--text-primary); font-family: var(--font-sans); line-height: 1.6; }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 900px) { .container { grid-template-columns: 1fr; } }
+
+        .panel {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .panel-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            background: var(--accent-cyan);
+            color: #000;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        .drop-zone {
+            border: 2px dashed var(--border-color);
+            padding: 1.25rem;
+            text-align: center;
+            border-radius: 8px;
+            background-color: var(--bg-input);
+            cursor: pointer;
+            transition: border-color 0.2s;
+            margin-bottom: 0.75rem;
+        }
+
+        .drop-zone:hover { border-color: var(--accent-cyan); }
+        .drop-title { font-weight: 600; color: #fff; }
+        .drop-sub { font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px; }
+
+        .btn-demo {
+            width: 100%;
+            padding: 0.6rem;
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            color: var(--accent-cyan);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .toggle-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: var(--bg-input);
+            padding: 0.75rem 0.85rem;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 1rem;
+        }
+
+        .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #374151; transition: .3s; border-radius: 24px;
+        }
+        .slider:before {
+            position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px;
+            background-color: white; transition: .3s; border-radius: 50%;
+        }
+        input:checked + .slider { background-color: var(--accent-red); }
+        input:checked + .slider:before { transform: translateX(20px); }
+
+        .form-group { margin-bottom: 1.25rem; }
+        label { display: block; font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 0.4rem; }
+        input[type="text"], textarea, select {
+            width: 100%; padding: 0.65rem 0.85rem; background-color: var(--bg-input);
+            border: 1px solid var(--border-color); border-radius: 6px; color: #fff;
+            font-size: 0.9rem; outline: none; font-family: inherit;
+        }
+
+        .btn-action {
+            width: 100%; padding: 0.85rem; background: linear-gradient(135deg, var(--accent-red), #b30000);
+            color: #fff; font-weight: 600; border: none; border-radius: 6px; cursor: pointer; font-size: 0.95rem;
+        }
+
+        .preview-stage { display: flex; flex-direction: column; align-items: center; }
+        .canvas-wrapper {
+            position: relative; width: 320px; height: 568px; border-radius: 16px;
+            overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.6); background-color: #000;
+            border: 2px solid var(--border-color);
+        }
+        canvas { width: 100%; height: 100%; display: block; }
+        .canvas-caption { margin-top: 1rem; font-size: 0.85rem; color: var(--text-secondary); text-align: center; }
+
+        .content-area { max-width: 1200px; margin: 3rem auto; padding: 0 1.5rem; }
+        .content-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 2.5rem; }
+        .content-card h1 { font-size: 2rem; margin-bottom: 1rem; color: #fff; }
+        .content-card h2 { font-size: 1.4rem; margin: 1.8rem 0 1rem; color: #fff; }
+        .content-card p { color: var(--text-secondary); margin-bottom: 1.2rem; }
+        .content-card ul, .content-card ol { color: var(--text-secondary); margin: 0 0 1.2rem 1.5rem; }
+        .content-card li { margin-bottom: 0.5rem; }
+
+        .spec-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; text-align: left; }
+        .spec-table th, .spec-table td { padding: 0.85rem 1rem; border: 1px solid var(--border-color); }
+        .spec-table th { background-color: var(--bg-input); color: #fff; }
+        .spec-table td { color: var(--text-secondary); }
+
+        /* Accordion FAQ Styling */
+        .faq-block { margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem; }
+        .faq-accordion {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 0.85rem;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .faq-accordion[open] { border-color: var(--accent-cyan); }
+        .faq-summary {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            padding: 1rem 1.2rem;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+        .faq-summary::-webkit-details-marker { display: none; }
+        .faq-summary::after {
+            content: "+";
+            font-size: 1.2rem;
+            color: var(--accent-cyan);
+            transition: transform 0.2s;
+        }
+        .faq-accordion[open] .faq-summary::after {
+            content: "−";
+            color: var(--accent-red);
+        }
+        .faq-answer {
+            padding: 0 1.2rem 1.2rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 0.4rem;
+            padding-top: 0.8rem;
+        }
+
+        .cms-ad-slot-1, .cms-ad-slot-2 {
+            width: 100%; max-width: 970px; min-height: 90px; margin: 1.5rem auto;
+            background: rgba(255,255,255,0.02); border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Container -->
+    <div id="global-header"></div>
+
+    <!-- Ad Slot 1 Container (Above Main Workspace Title) -->
+    <div class="cms-ad-slot-1"></div>
+
+    <!-- Main Tool Container -->
+    <main class="container">
+        <section class="panel">
+            <div class="panel-title">
+                <span>Safe Zone Controls</span>
+                <span class="badge">9:16 SPECS</span>
+            </div>
+
+            <!-- Upload Box & Demo File CTA -->
+            <div class="drop-zone" id="dropZone">
+                <p class="drop-title">Click or Drag Video / Image File</p>
+                <p class="drop-sub">MP4, MOV, PNG, JPG (1080x1920 recommended)</p>
+                <input type="file" id="fileInput" accept="image/*,video/*" style="display:none;">
+            </div>
+            
+            <button class="btn-demo" id="loadDemoBtn" type="button">⚡ Load Demo Sample Data</button>
+
+            <div class="toggle-group">
+                <label for="adModeToggle">Shorts Audio Track Banner</label>
+                <label class="switch">
+                    <input type="checkbox" id="adModeToggle" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="toggle-group">
+                <label for="overlayToggle">Show Safe Zone Grid</label>
+                <label class="switch">
+                    <input type="checkbox" id="overlayToggle" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="accountName">Channel Title & Handle</label>
+                <input type="text" id="accountName" value="@YourChannelName">
+            </div>
+
+            <div class="form-group">
+                <label for="adCaption">Shorts Description / Caption</label>
+                <textarea id="adCaption" rows="3">Mastering vertical framing for YouTube Shorts! 🚀 #shorts #contentcreator</textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="ctaButton">Audio Track Label</label>
+                <select id="ctaButton">
+                    <option value="Original Audio - YourChannel">Original Audio - YourChannel</option>
+                    <option value="Trending Sound - Viral Beat">Trending Sound - Viral Beat</option>
+                    <option value="Voiceover Track #4">Voiceover Track #4</option>
+                </select>
+            </div>
+
+            <button class="btn-action" id="downloadBtn" type="button">Export 1080x1920 PNG Preview</button>
+        </section>
+
+        <!-- Canvas Stage Wrapper -->
+        <section class="preview-stage">
+            <div class="canvas-wrapper">
+                <canvas id="previewCanvas" width="1080" height="1920"></canvas>
+            </div>
+            <p class="canvas-caption">
+                Interactive client-side canvas. Clear central zone (880x1120px) guarantees zero text clipping.
+            </p>
+        </section>
+    </main>
+
+    <!-- SEO & Educational Guide Section -->
+    <article class="content-area">
+        <section class="content-card">
+            <h1>YouTube Shorts UI Safe Zone Guide & Mockup Studio</h1>
+            <p>
+                When publishing vertical video content to YouTube Shorts, ensuring critical titles, captions, hooks, and call-to-actions remain entirely visible is vital for audience retention. Unlike standard horizontal YouTube uploads, Shorts feature heavy native UI elements overlaid directly across the player interface—including the channel subscribe badge, title snippet, sound track info ticker, and the right-hand vertical interaction column (Like, Dislike, Comments, Remix, and Share buttons).
+            </p>
+            <p>
+                This browser-based <strong>shorts-ui-safe-zone</strong> utility provides video creators, editors, and digital marketers with an instant sandbox to test 1080x1920 pixel (9:16) compositions. Preview your layouts against YouTube mobile UI boundaries instantly, ensuring your creative elements remain protected before uploading.
+            </p>
+
+            <h2>YouTube Shorts Safe Area Dimensions Breakdown</h2>
+            <p>
+                Mobile aspect ratio variations across smartphones mean interface overlays can shift slightly. Structuring your video graphics around precise boundary clearances prevents clipping across all devices:
+            </p>
+
+            <table class="spec-table">
+                <thead>
+                    <tr>
+                        <th>UI Boundary Region</th>
+                        <th>Pixel Offset (1080p)</th>
+                        <th>Risk Level</th>
+                        <th>Interface Component Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Top Margin</strong></td>
+                        <td>0 px – 280 px</td>
+                        <td><strong style="color: #ff4d4d;">High Risk</strong></td>
+                        <td>Reserved for search icon, cast button, and fullscreen metadata headers.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Bottom Margin</strong></td>
+                        <td>1400 px – 1920 px</td>
+                        <td><strong style="color: #ff4d4d;">High Risk</strong></td>
+                        <td>Contains channel handle, multi-line caption, subscribe button, and sound track ticker.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Right Margin</strong></td>
+                        <td>880 px – 1080 px</td>
+                        <td><strong style="color: #ff4d4d;">High Risk</strong></td>
+                        <td>Houses the vertical engagement column (Like, Dislike, Comments, Remix, Share).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Left Margin</strong></td>
+                        <td>0 px – 40 px</td>
+                        <td><strong style="color: #ff944d;">Medium Risk</strong></td>
+                        <td>Buffer zone to protect against edge bezels and curved screen cropping.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Central Safe Zone</strong></td>
+                        <td>880 × 1120 px</td>
+                        <td><strong style="color: #00ff80;">Optimal</strong></td>
+                        <td>The ideal focal area for primary hook text, facial alignment, and critical graphics.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Ad Slot 2 Container (Immediately Below Data Table) -->
+            <div class="cms-ad-slot-2"></div>
+
+            <h2>Why UI Safe Zones Matter for Shorts Retention</h2>
+            <p>
+                Viewers decide within the first two seconds whether to watch or swipe away from a YouTube Short. If your primary hook or auto-caption text is obscured by the sound track marquee or like button counter, viewer confusion spikes, leading to immediate drop-off.
+            </p>
+            <ul>
+                <li><strong>Text Overlay Legibility:</strong> Captions generated in editing apps must sit well above the lower 520px threshold to avoid overlapping with channel descriptions and audio titles.</li>
+                <li><strong>Graphic Alignment:</strong> Product callouts, arrows, and brand watermarks placed on the right-hand side will be hidden behind engagement icons unless kept within the left 880px boundary.</li>
+                <li><strong>Cross-Device Consistency:</strong> Taller mobile aspect ratios (like 19.5:9 or 20:9) crop horizontal bounds differently, making adherence to the central safe zone a necessity.</li>
+            </ul>
+
+            <h2>Workflow Integration in Premiere Pro, CapCut, or DaVinci Resolve</h2>
+            <p>
+                Integrating this safety check into your video editing pipeline takes only a few steps:
+            </p>
+            <ol>
+                <li><strong>Generate Overlay Guide:</strong> Click the "Export 1080x1920 PNG Preview" button in our tool to save a transparent reference grid.</li>
+                <li><strong>Import to Timeline:</strong> Drop the PNG onto the uppermost track of your video editor (Adobe Premiere Pro, CapCut, DaVinci Resolve, or Final Cut Pro).</li>
+                <li><strong>Reposition Elements:</strong> Adjust your text templates, subtitles, and graphical highlights so they fit cleanly inside the unshaded central box.</li>
+                <li><strong>Export Video:</strong> Delete or hide the guideline layer before rendering your final MP4 video file for upload.</li>
+            </ol>
+
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-block">
+                <details class="faq-accordion" open>
+                    <summary class="faq-summary">What are the exact YouTube Shorts safe zone dimensions for 1080x1920 videos?</summary>
+                    <div class="faq-answer">
+                        For standard 1080x1920 vertical YouTube Shorts, keep essential text and titles clear of the top 280px and bottom 520px. Additionally, maintain a 200px right-side margin to prevent interface buttons (like, comments, remix) from obscuring your visuals.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">How does client-side frame checking protect user data privacy?</summary>
+                    <div class="faq-answer">
+                        All uploaded video frames, images, canvas rendering, and safe area calculations are processed 100% locally inside your web browser using HTML5 Canvas. No media files or creative assets are ever uploaded to any remote server.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">How do I use a safe zone template PNG in CapCut or Premiere Pro?</summary>
+                    <div class="faq-answer">
+                        Click the 'Export 1080x1920 PNG Preview' button to download a transparent reference template. Place this image on the topmost track of your video timeline while positioning text and subtitles, then remove or disable the track before final export.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">Why are my automatic captions getting covered by the YouTube Shorts interface?</summary>
+                    <div class="faq-answer">
+                        Automatic captions and video descriptions occupy the bottom 400px to 500px of the mobile screen. Hardcoded subtitles placed too low will clash with native text, making them difficult for viewers to read.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">What video formats and aspect ratios are supported by this tool?</summary>
+                    <div class="faq-answer">
+                        The utility supports standard image files (PNG, JPG) and vertical video containers (MP4, MOV). While any aspect ratio can be tested, a 9:16 vertical resolution (1080x1920 pixels) yields the most accurate preview results.
+                    </div>
+                </details>
+            </div>
+        </section>
+    </article>
+
+    <!-- Footer Container -->
+    <div id="global-footer"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var canvas = document.getElementById('previewCanvas');
+            if (!canvas) return;
+            var ctx = canvas.getContext('2d');
+            
+            var fileInput = document.getElementById('fileInput');
+            var dropZone = document.getElementById('dropZone');
+            var loadDemoBtn = document.getElementById('loadDemoBtn');
+            var adModeToggle = document.getElementById('adModeToggle');
+            var overlayToggle = document.getElementById('overlayToggle');
+            var accountNameInput = document.getElementById('accountName');
+            var adCaptionInput = document.getElementById('adCaption');
+            var ctaButtonSelect = document.getElementById('ctaButton');
+            var downloadBtn = document.getElementById('downloadBtn');
+
+            var currentMedia = null;
+            var isVideo = false;
+
+            dropZone.addEventListener('click', function() { fileInput.click(); });
+
+            dropZone.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            });
+
+            dropZone.addEventListener('drop', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+                    processFile(e.dataTransfer.files[0]);
+                }
+            });
+
+            fileInput.addEventListener('change', function(e) {
+                if (e.target.files && e.target.files[0]) {
+                    processFile(e.target.files[0]);
+                }
+            });
+
+            loadDemoBtn.addEventListener('click', function() {
+                var demoCanvas = document.createElement('canvas');
+                demoCanvas.width = 1080;
+                demoCanvas.height = 1920;
+                var dCtx = demoCanvas.getContext('2d');
+
+                var grad = dCtx.createLinearGradient(0, 0, 1080, 1920);
+                grad.addColorStop(0, '#1a1a2e');
+                grad.addColorStop(0.5, '#16213e');
+                grad.addColorStop(1, '#0f3460');
+                dCtx.fillStyle = grad;
+                dCtx.fillRect(0, 0, 1080, 1920);
+
+                dCtx.fillStyle = '#ffffff';
+                dCtx.font = 'bold 54px sans-serif';
+                dCtx.textAlign = 'center';
+                dCtx.fillText('YOUTUBE SHORTS PREVIEW', 540, 850);
+                
+                dCtx.fillStyle = '#00ff80';
+                dCtx.font = '36px sans-serif';
+                dCtx.fillText('1080 x 1920 Safe Zone Test Frame', 540, 920);
+
+                var img = new Image();
+                img.src = demoCanvas.toDataURL();
+                img.onload = function() {
+                    currentMedia = img;
+                    isVideo = false;
+                    draw();
+                };
+            });
+
+            function processFile(file) {
+                var fileURL = URL.createObjectURL(file);
+                if (file.type.indexOf('video/') === 0) {
+                    var video = document.createElement('video');
+                    video.src = fileURL;
+                    video.autoplay = true;
+                    video.loop = true;
+                    video.muted = true;
+                    video.playsInline = true;
+                    video.onloadeddata = function() {
+                        currentMedia = video;
+                        isVideo = true;
+                        video.play();
+                    };
+                } else {
+                    var img = new Image();
+                    img.src = fileURL;
+                    img.onload = function() {
+                        currentMedia = img;
+                        isVideo = false;
+                        draw();
+                    };
+                }
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                if (currentMedia) {
+                    ctx.drawImage(currentMedia, 0, 0, canvas.width, canvas.height);
+                } else {
+                    ctx.fillStyle = '#12131a';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    ctx.fillStyle = '#4b5563';
+                    ctx.font = 'bold 36px sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('Upload 1080x1920 Media', canvas.width / 2, canvas.height / 2);
+                }
+
+                var showAudioBar = adModeToggle.checked;
+                var showOverlay = overlayToggle.checked;
+
+                var topM = 280;
+                var bottomM = 520;
+                var rightM = 200;
+                var leftM = 40;
+
+                if (showOverlay) {
+                    ctx.fillStyle = 'rgba(255, 0, 0, 0.22)';
+                    ctx.fillRect(0, 0, canvas.width, topM);
+                    ctx.fillRect(0, canvas.height - bottomM, canvas.width, bottomM);
+                    ctx.fillRect(canvas.width - rightM, topM, rightM, canvas.height - topM - bottomM);
+                    ctx.fillRect(0, topM, leftM, canvas.height - topM - bottomM);
+
+                    ctx.strokeStyle = '#00f2fe';
+                    ctx.lineWidth = 4;
+                    ctx.setLineDash([12, 8]);
+                    ctx.strokeRect(leftM, topM, canvas.width - leftM - rightM, canvas.height - topM - bottomM);
+                    ctx.setLineDash([]);
+                }
+
+                // YouTube Shorts Right Engagement Column
+                var railX = canvas.width - 100;
+                var railY = canvas.height - bottomM - 360;
+
+                var icons = ['👍 84.5K', '👎 Dislike', '💬 1.2K', '🔄 Remix', '↗ Share'];
+                ctx.font = 'bold 22px sans-serif';
+                ctx.textAlign = 'center';
+                for (var i = 0; i < icons.length; i++) {
+                    railY += 85;
+                    ctx.fillStyle = 'rgba(0,0,0,0.4)';
+                    ctx.beginPath();
+                    ctx.arc(railX, railY - 8, 32, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.fillStyle = '#ffffff';
+                    ctx.fillText(icons[i], railX, railY);
+                }
+
+                // Bottom Channel & Caption UI
+                var bottomX = leftM + 20;
+                var bottomY = canvas.height - bottomM + 60;
+
+                ctx.textAlign = 'left';
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 34px sans-serif';
+                ctx.fillText(accountNameInput.value, bottomX, bottomY);
+
+                ctx.font = '26px sans-serif';
+                ctx.fillStyle = '#e5e7eb';
+                var captionText = adCaptionInput.value.length > 50 ? adCaptionInput.value.substring(0, 50) + '...' : adCaptionInput.value;
+                ctx.fillText(captionText, bottomX, bottomY + 45);
+
+                if (showAudioBar) {
+                    var audioY = canvas.height - 120;
+                    ctx.fillStyle = 'rgba(0, 0, 0, 0.6)';
+                    if (ctx.roundRect) {
+                        ctx.beginPath();
+                        ctx.roundRect(bottomX, audioY, 550, 56, 28);
+                        ctx.fill();
+                    } else {
+                        ctx.fillRect(bottomX, audioY, 550, 56);
+                    }
+
+                    ctx.fillStyle = '#ffffff';
+                    ctx.font = '24px sans-serif';
+                    ctx.textAlign = 'left';
+                    ctx.fillText('♫ ' + ctaButtonSelect.value, bottomX + 20, audioY + 36);
+                }
+            }
+
+            function renderLoop() {
+                if (isVideo && currentMedia) {
+                    draw();
+                }
+                requestAnimationFrame(renderLoop);
+            }
+            requestAnimationFrame(renderLoop);
+
+            var controls = [adModeToggle, overlayToggle, accountNameInput, adCaptionInput, ctaButtonSelect];
+            for (var j = 0; j < controls.length; j++) {
+                controls[j].addEventListener('input', function() {
+                    if (!isVideo) draw();
+                });
+            }
+
+            draw();
+
+            downloadBtn.addEventListener('click', function() {
+                var link = document.createElement('a');
+                link.download = 'shorts-ui-safe-zone-preview.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        });
+    </script>
+</body>
+</html>
