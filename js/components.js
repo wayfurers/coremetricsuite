@@ -26,13 +26,13 @@ function setupAutoLayout() {
   const body = document.body;
   const rawPath = (window.location && window.location.pathname) ? window.location.pathname : "/";
   
-  // Clean pathname structure securely without double array-splitting syntax crashes
+  // Safe Regex String Cleaning Pass (Bypasses array split evaluation failures)
   const currentPath = String(rawPath).toLowerCase().replace(/\?.*$/, "").replace(/#.*$/, "").replace(/\/$/, "");
   const isHomepage = currentPath === "/" || currentPath === "" || currentPath.indexOf("index.html") !== -1;
   
   body.setAttribute("data-theme", isHomepage ? "light" : "dark");
 
-  // 1. Header DOM Creation
+  // 1. Structural Header Placement Box
   let headerSlot = document.getElementById("site-header");
   if (!headerSlot) {
     headerSlot = document.createElement("div");
@@ -57,7 +57,7 @@ function setupAutoLayout() {
 
   headerSlot.innerHTML = '<header class="cms-navbar"><div class="cms-container"><a href="/" class="cms-brand"><span class="cms-brand-logo">📊</span><span class="cms-brand-title">Core Metric Suite</span></a><nav class="cms-nav-links"><a href="/" class="cms-nav-item">Home</a><a href="/about.html" class="cms-nav-item">About</a></nav></div><div class="cms-slider-nav-container"><div class="cms-slider-track">' + sliderItemsHTML + '</div></div></header>';
 
-  // 2. Structural Ad Slots Component Placement (Hidden)
+  // 2. Structuring Ad Placers (Invisible Placeholders)
   let adSlot1 = document.getElementById("cms-ad-slot-1");
   if (!adSlot1) {
     adSlot1 = document.createElement("div");
@@ -72,7 +72,9 @@ function setupAutoLayout() {
     footerSlot.id = "site-footer";
     body.appendChild(footerSlot);
   }
-  footerSlot.innerHTML = '<footer class="cms-footer"><div class="cms-container cms-footer-content"><div class="cms-footer-info"><h3>Core Metric Suite</h3><p>Calculations process locally in your browser windows.</p></div></div></footer>';
+  
+  // INJECTS DYNAMIC FOOTER WITH ALL CRITICAL COLUMN PAGES LINK COPIES
+  footerSlot.innerHTML = '<footer class="cms-footer"><div class="cms-container cms-footer-content"><div class="cms-footer-info"><h3>Core Metric Suite</h3><p>Free, 100% client-side privacy-first web utilities and tax calculators. All operations process securely right inside local browser windows.</p></div><div class="cms-footer-links"><h4>Navigation</h4><a href="/">Home</a><a href="/about.html">About Us</a><a href="/contact.html">Contact</a><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms of Service</a></div></div><div class="cms-footer-bottom"><div class="cms-container"><p>&copy; ' + new Date().getFullYear() + ' Core Metric Suite. All rights reserved.</p></div></div></footer>';
 
   let adSlot2 = document.getElementById("cms-ad-slot-2");
   if (!adSlot2) {
@@ -87,7 +89,7 @@ function setupAutoLayout() {
     const disclaimerBox = document.createElement("div");
     disclaimerBox.id = "cms-compliance-notice";
     disclaimerBox.className = "cms-compliance-disclaimer";
-    disclaimerBox.innerHTML = '<p><strong>⚠️ YMYL Compliance Estimation Disclaimer:</strong> This engine is a client-side simulation model intended solely for informational use. It does not replace advice from certified financial professionals or authorized revenue guidelines.</p>';
+    disclaimerBox.innerHTML = '<p><strong>⚠️ YMYL Compliance Estimation Disclaimer:</strong> This engine is a client-side simulation model intended solely for informational and educational use. It does not replace advice from certified legal or financial professionals, or official statutory guidelines.</p>';
     
     const mainContent = document.querySelector("main, .dark-theme-page");
     if (mainContent) {
