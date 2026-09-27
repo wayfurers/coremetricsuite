@@ -1,12 +1,15 @@
 /**
- * CoreMetricSuite.com - Global Core Engine & Dynamic Components
- * Robust Path-Normalization, Deep-Link Routing, Dynamic SEO, and Dual-Network Monetization
+ * CoreMetricSuite.com — Global Core Engine & Dynamic Components
+ * Production-Ready Path Normalization, Absolute Deep-Link Routing,
+ * Dynamic SEO, and Dual-Network Monetization Suite
  */
 
 (function () {
   'use strict';
 
-  // 12 Tier-1 Static Tool Registry
+  /* ==========================================================================
+   * 12 TIER-1 STATIC TOOL REGISTRY
+   * ========================================================================== */
   const TOOL_REGISTRY = [
     {
       path: '/tiktok-ad-safe-zone',
@@ -114,54 +117,55 @@
     }
   ];
 
-  /**
-   * Robust Path-Matching Helper
-   * Strips query params, hashes, leading dots/slashes, trailing slashes, and index.html
-   * Ensures identical path evaluation across local files, Vercel, and GitHub Pages.
-   */
+  /* ==========================================================================
+   * 1. ROBUST PATH NORMALIZATION ENGINE
+   *    Fixes fatal TypeError from broken method chaining on Array returns.
+   *    Produces identical absolute root-matching format across all environments.
+   * ========================================================================== */
   function normalizePath(rawPath) {
-    if (!rawPath || typeof rawPath !== 'string') return '';
-    try {
-      let clean = rawPath.split('?')[0].split('#')[0].toLowerCase().trim();
-      
-      // Strip trailing index.html if present
-      if (clean.endsWith('/index.html')) {
-        clean = clean.substring(0, clean.length - 11);
-      } else if (clean === 'index.html') {
-        clean = '';
-      }
+    if (!rawPath || typeof rawPath !== 'string') return '/';
 
-      // Remove leading dots and slashes
+    try {
+      /* FIX: Properly extract the pathname base by slicing arrays with [0] index
+       * before chaining subsequent .split() calls. Previous version chained
+       * .split() on Array instances directly which threw fatal TypeErrors. */
+      let clean = rawPath.split('?')[0].split('#')[0].toLowerCase().trim();
+
+      /* Strip trailing index.html document strings */
+      clean = clean.replace(/\/index\.html$/i, '/');
+      clean = clean.replace(/^index\.html$/i, '');
+
+      /* Strip leading dots and slashes (relative path escapes) */
       clean = clean.replace(/^[\.\/]+/, '');
-      
-      // Remove trailing slashes
+
+      /* Strip trailing slashes (normalization) */
       clean = clean.replace(/\/+$/, '');
 
-      return clean === '' ? '/' : '/' + clean;
+      /* Return absolute-root format for consistent matching */
+      if (clean === '') return '/';
+      return '/' + clean;
     } catch (e) {
-      return '';
+      return '/';
     }
   }
 
-  /**
-   * Dynamic Deep-Link Prefix Calculator
-   * Determines relative directory escape routes (e.g. "./" vs "../")
-   */
-  function getRelativePrefix() {
+  /* ==========================================================================
+   * ABSOLUTE URL BUILDER
+   *    Constructs consistent absolute paths regardless of subfolder depth.
+   * ========================================================================== */
+  function buildAbsoluteUrl(toolPath) {
     try {
-      const currentPath = normalizePath(window.location.pathname);
-      if (currentPath === '/' || currentPath === '') {
-        return './';
-      }
-      return '../';
+      const normalized = normalizePath(toolPath);
+      if (normalized === '/') return '/';
+      return normalized + '/';
     } catch (e) {
-      return './';
+      return '/';
     }
   }
 
-  /**
-   * Helper: Safely updates an existing <meta> tag or dynamically creates and appends one.
-   */
+  /* ==========================================================================
+   * SAFE META TAG UPDATER
+   * ========================================================================== */
   function safeSetMeta(selector, attrName, attrVal, content) {
     try {
       let el = document.querySelector(selector);
@@ -176,33 +180,43 @@
         el.setAttribute('content', content);
       }
     } catch (e) {
-      // Fail silently
+      /* Silent failure */
     }
   }
 
-  /**
-   * Programmatic SEO & Dynamic Regulatory Compliance Injector
-   */
+  /* ==========================================================================
+   * PROGRAMMATIC SEO & COMPLIANCE INJECTOR
+   * ========================================================================== */
   function applyDynamicSEOAndCompliance() {
     try {
       const currentPath = normalizePath(window.location.pathname);
-      const match = TOOL_REGISTRY.find(tool => normalizePath(tool.path) === currentPath);
+      const match = TOOL_REGISTRY.find(function (tool) {
+        return normalizePath(tool.path) === currentPath;
+      });
 
       if (!match) return;
 
-      // 1. Meta Title Injection
+      /* 1. Meta Title */
       if (match.metaTitle) {
-        try {
-          document.title = match.metaTitle;
-        } catch (e) {}
+        try { document.title = match.metaTitle; } catch (e) {}
       }
 
-      // 2. Meta Description Injection
+      /* 2. Meta Description */
       if (match.metaDesc) {
         safeSetMeta('meta[name="description"]', 'name', 'description', match.metaDesc);
       }
 
-      // 3. H1 Heading Injection
+      /* 3. Open Graph & Twitter Card */
+      if (match.metaTitle) {
+        safeSetMeta('meta[property="og:title"]', 'property', 'og:title', match.metaTitle);
+        safeSetMeta('meta[name="twitter:title"]', 'name', 'twitter:title', match.metaTitle);
+      }
+      if (match.metaDesc) {
+        safeSetMeta('meta[property="og:description"]', 'property', 'og:description', match.metaDesc);
+        safeSetMeta('meta[name="twitter:description"]', 'name', 'twitter:description', match.metaDesc);
+      }
+
+      /* 4. H1 Heading */
       if (match.h1) {
         try {
           const h1Element = document.querySelector('h1');
@@ -212,18 +226,18 @@
         } catch (e) {}
       }
 
-      // 4. Regulatory Disclaimer Container Box Injection
+      /* 5. Regulatory Disclaimer Box */
       if (match.disclaimer) {
         try {
           let disclaimerBox = document.querySelector('.cms-regulatory-disclaimer');
           if (!disclaimerBox) {
             disclaimerBox = document.createElement('div');
             disclaimerBox.className = 'cms-regulatory-disclaimer';
-            
-            const targetContainer = document.querySelector('main') || 
-                                    document.querySelector('.cms-tool-card') || 
+
+            const targetContainer = document.querySelector('main') ||
+                                    document.querySelector('.cms-tool-card') ||
                                     document.body;
-            
+
             if (targetContainer) {
               targetContainer.appendChild(disclaimerBox);
             }
@@ -234,114 +248,116 @@
         } catch (e) {}
       }
     } catch (e) {
-      // Fail silently
+      /* Silent failure to prevent script halting */
     }
   }
 
-  /**
-   * Dynamic Deep-Linked Header Navigation Injection Component
-   */
+  /* ==========================================================================
+   * 2. GLOBAL HEADER INJECTION — ABSOLUTE PATH DEEP LINKS
+   *    Iterates the 12-tool registry and outputs clean absolute-root URLs
+   *    (e.g., "/tiktok-ad-safe-zone/") that prevent 404 breaks on any host.
+   * ========================================================================== */
   function injectGlobalHeader() {
     try {
       const headerContainer = document.getElementById('global-header');
       if (!headerContainer) return;
 
       const currentPath = normalizePath(window.location.pathname);
-      const prefix = getRelativePrefix();
 
-      const navStripHTML = TOOL_REGISTRY.map(tool => {
+      const navStripHTML = TOOL_REGISTRY.map(function (tool) {
         const toolNormalized = normalizePath(tool.path);
         const isActive = (currentPath === toolNormalized) ? ' class="active-tool"' : '';
-        const href = `${prefix}${toolNormalized.replace(/^\//, '')}/`;
-        return `<a href="${href}"${isActive}>${tool.title}</a>`;
+        const href = buildAbsoluteUrl(tool.path);
+        return '<a href="' + href + '"' + isActive + '>' + tool.title + '</a>';
       }).join('');
 
-      headerContainer.innerHTML = `
-        <header class="cms-site-header">
-          <div class="cms-top-bar">
-            <a href="${prefix}" class="cms-brand-logo">CoreMetric<span>Suite</span></a>
-            <nav class="cms-meta-nav">
-              <a href="${prefix}about.html">About</a>
-              <a href="${prefix}contact.html">Contact</a>
-              <a href="${prefix}privacy-policy.html">Privacy Policy</a>
-              <a href="${prefix}terms.html">Terms</a>
-            </nav>
-          </div>
-          <div class="cms-tool-scroll-strip">
-            <div class="cms-scroll-inner">
-              ${navStripHTML}
-            </div>
-          </div>
-          <div class="cms-accent-divider"></div>
-        </header>
-      `;
-    } catch (e) {}
+      headerContainer.innerHTML =
+        '<header class="cms-site-header">' +
+          '<div class="cms-top-bar">' +
+            '<a href="/" class="cms-brand-logo">CoreMetric<span>Suite</span></a>' +
+            '<nav class="cms-meta-nav">' +
+              '<a href="/about/">About</a>' +
+              '<a href="/contact/">Contact</a>' +
+              '<a href="/privacy-policy/">Privacy Policy</a>' +
+              '<a href="/terms/">Terms</a>' +
+            '</nav>' +
+          '</div>' +
+          '<div class="cms-tool-scroll-strip">' +
+            '<div class="cms-scroll-inner">' +
+              navStripHTML +
+            '</div>' +
+          '</div>' +
+          '<div class="cms-accent-divider"></div>' +
+        '</header>';
+    } catch (e) {
+      /* Silent failure */
+    }
   }
 
-  /**
-   * Dynamic Deep-Linked Footer Injection Component
-   */
+  /* ==========================================================================
+   * GLOBAL FOOTER INJECTION — ABSOLUTE PATH DEEP LINKS
+   * ========================================================================== */
   function injectGlobalFooter() {
     try {
       const footerContainer = document.getElementById('global-footer');
       if (!footerContainer) return;
 
       const year = new Date().getFullYear();
-      const prefix = getRelativePrefix();
 
-      footerContainer.innerHTML = `
-        <footer class="cms-site-footer">
-          <div class="cms-footer-inner">
-            <p>&copy; ${year} CoreMetricSuite.com. Precision financial, legal, and media calculators.</p>
-            <div class="cms-footer-links">
-              <a href="${prefix}about.html">About</a> | 
-              <a href="${prefix}contact.html">Contact</a> | 
-              <a href="${prefix}privacy-policy.html">Privacy Policy</a> | 
-              <a href="${prefix}terms.html">Terms of Service</a>
-            </div>
-          </div>
-        </footer>
-      `;
-    } catch (e) {}
+      footerContainer.innerHTML =
+        '<footer class="cms-site-footer">' +
+          '<div class="cms-footer-inner">' +
+            '<p>&copy; ' + year + ' CoreMetricSuite.com. Precision financial, legal, and media calculators.</p>' +
+            '<div class="cms-footer-links">' +
+              '<a href="/about/">About</a> | ' +
+              '<a href="/contact/">Contact</a> | ' +
+              '<a href="/privacy-policy/">Privacy Policy</a> | ' +
+              '<a href="/terms/">Terms of Service</a>' +
+            '</div>' +
+          '</div>' +
+        '</footer>';
+    } catch (e) {
+      /* Silent failure */
+    }
   }
 
-  /**
-   * Non-blocking Deep-Linked Recommendation Toast Engine
-   */
+  /* ==========================================================================
+   * DEEP-LINKED RECOMMENDATION TOAST ENGINE (Non-blocking, 4000ms delay)
+   * ========================================================================== */
   function initRecommendationEngine() {
     try {
       const currentPath = normalizePath(window.location.pathname);
-      const prefix = getRelativePrefix();
 
-      const availableTools = TOOL_REGISTRY.filter(t => normalizePath(t.path) !== currentPath);
+      const availableTools = TOOL_REGISTRY.filter(function (t) {
+        return normalizePath(t.path) !== currentPath;
+      });
+
       if (!availableTools || availableTools.length === 0) return;
 
       const suggestion = availableTools[Math.floor(Math.random() * availableTools.length)];
       if (!suggestion) return;
 
-      const suggestionNormalized = normalizePath(suggestion.path);
-      const targetUrl = `${prefix}${suggestionNormalized.replace(/^\//, '')}/`;
+      const targetUrl = buildAbsoluteUrl(suggestion.path);
 
-      setTimeout(() => {
+      setTimeout(function () {
         try {
           const popBox = document.createElement('div');
           popBox.className = 'cms-recommendation-toast';
-          popBox.innerHTML = `
-            <div class="cms-toast-content">
-              <span class="cms-toast-label">Suggested Tool</span>
-              <p class="cms-toast-title">${suggestion.title}</p>
-              <a href="${targetUrl}" class="cms-toast-btn">Open Tool &rarr;</a>
-              <button class="cms-toast-close" id="cms-close-toast" aria-label="Close">&times;</button>
-            </div>
-          `;
-          
+          popBox.innerHTML =
+            '<div class="cms-toast-content">' +
+              '<span class="cms-toast-label">Suggested Tool</span>' +
+              '<p class="cms-toast-title">' + suggestion.title + '</p>' +
+              '<a href="' + targetUrl + '" class="cms-toast-btn">Open Tool &rarr;</a>' +
+              '<button class="cms-toast-close" id="cms-close-toast" aria-label="Close">&times;</button>' +
+            '</div>';
+
           const targetBody = document.body || document.documentElement;
           if (!targetBody) return;
 
           targetBody.appendChild(popBox);
 
           if (typeof window.requestAnimationFrame === 'function') {
-            window.requestAnimationFrame(() => {
+            window.requestAnimationFrame(function () {
               try { popBox.classList.add('cms-toast-visible'); } catch (e) {}
             });
           } else {
@@ -350,10 +366,10 @@
 
           const closeBtn = document.getElementById('cms-close-toast');
           if (closeBtn) {
-            closeBtn.addEventListener('click', () => {
+            closeBtn.addEventListener('click', function () {
               try {
                 popBox.classList.remove('cms-toast-visible');
-                setTimeout(() => {
+                setTimeout(function () {
                   try { popBox.remove(); } catch (e) {}
                 }, 300);
               } catch (e) {}
@@ -364,28 +380,32 @@
     } catch (e) {}
   }
 
-  /**
-   * Lifecycle DOM Initialization
-   */
-  document.addEventListener('DOMContentLoaded', () => {
+  /* ==========================================================================
+   * LIFECYCLE DOM INITIALIZATION
+   * ========================================================================== */
+  function runInitialization() {
     try { applyDynamicSEOAndCompliance(); } catch (e) {}
     try { injectGlobalHeader(); } catch (e) {}
     try { injectGlobalFooter(); } catch (e) {}
     try { initRecommendationEngine(); } catch (e) {}
-  });
+  }
 
-  /**
-   * ---------------------------------------------------------------------------
-   * DUAL-NETWORK MONETIZATION HOOKS (Global Scope & Completely Protected)
-   * ---------------------------------------------------------------------------
-   */
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', runInitialization);
+  } else {
+    runInitialization();
+  }
+
+  /* ==========================================================================
+   * 3. DUAL-NETWORK MONETIZATION HOOKS (Global Scope, Protection Preserved)
+   * ========================================================================== */
 
   window.initAdSense = function (publisherId) {
     try {
-      if (!publisherId || document.querySelector(`script[src*="${publisherId}"]`)) return;
+      if (!publisherId || document.querySelector('script[src*="' + publisherId + '"]')) return;
       const script = document.createElement('script');
       script.async = true;
-      script.src = `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${publisherId}`;
+      script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=' + publisherId;
       script.crossOrigin = 'anonymous';
       if (document.head) {
         document.head.appendChild(script);
@@ -398,19 +418,18 @@
       const slots = document.querySelectorAll('.cms-ad-slot-1, .cms-ad-slot');
       if (!slots || slots.length === 0) return;
 
-      slots.forEach(slot => {
+      slots.forEach(function (slot) {
         try {
           if (slot && slot.children.length === 0) {
             slot.style.minHeight = '90px';
             slot.style.margin = '1.5rem 0';
-            slot.innerHTML = `
-              <ins class="adsbygoogle"
-                   style="display:block"
-                   data-ad-client="${publisherId}"
-                   data-ad-slot="${slotId}"
-                   data-ad-format="auto"
-                   data-full-width-responsive="true"></ins>
-            `;
+            slot.innerHTML =
+              '<ins class="adsbygoogle" ' +
+                   'style="display:block" ' +
+                   'data-ad-client="' + publisherId + '" ' +
+                   'data-ad-slot="' + slotId + '" ' +
+                   'data-ad-format="auto" ' +
+                   'data-full-width-responsive="true"></ins>';
             (window.adsbygoogle = window.adsbygoogle || []).push({});
           }
         } catch (innerErr) {}
@@ -420,7 +439,7 @@
 
   window.initSecondaryNetwork = function (scriptUrl) {
     try {
-      if (!scriptUrl || document.querySelector(`script[src*="${scriptUrl}"]`)) return;
+      if (!scriptUrl || document.querySelector('script[src*="' + scriptUrl + '"]')) return;
       const script = document.createElement('script');
       script.async = true;
       script.src = scriptUrl;
@@ -435,12 +454,12 @@
       const slots = document.querySelectorAll('.cms-ad-slot-2');
       if (!slots || slots.length === 0) return;
 
-      slots.forEach(slot => {
+      slots.forEach(function (slot) {
         try {
           if (slot && slot.children.length === 0) {
             slot.style.minHeight = '90px';
             slot.style.margin = '1.5rem 0';
-            slot.innerHTML = `<div id="cms-net2-${networkTagId}"></div>`;
+            slot.innerHTML = '<div id="cms-net2-' + networkTagId + '"></div>';
           }
         } catch (innerErr) {}
       });
