@@ -14,6 +14,7 @@ const TOOLS_REGISTRY = [
     { name: "Shopify Metafields Parser", path: "/shopify-metafields-parser/index.html", tag: "ECOM" }
 ];
 
+// 2. Clear out your advertising code execution channels
 function injectAdvertisementCode(containerId) {
     const adSlot = document.getElementById(containerId);
     if (!adSlot) return;
@@ -31,6 +32,7 @@ function injectAdvertisementCode(containerId) {
     }
 }
 
+// 3. Structural Header block layout builder
 function buildGlobalHeader() {
     const navLinksHTML = TOOLS_REGISTRY.map(tool => 
         `<a href="${tool.path}" class="tool-nav-item">${tool.name}</a>`
@@ -50,6 +52,7 @@ function buildGlobalHeader() {
     `;
 }
 
+// 4. Structural Footer & Legal disclaimer block layout builder
 function buildGlobalFooter() {
     return `
         <div class="ad-container-slot" id="bottom-global-ad"></div>
@@ -72,9 +75,15 @@ function buildGlobalFooter() {
     `;
 }
 
+// 5. Structural Category Recommendation engine layout builder
 function buildSuggestions() {
-    const activePath = window.location.pathname;
-    const currentTool = TOOLS_REGISTRY.find(t => activePath.includes(t.path));
+    const activePath = window.location.pathname.toLowerCase();
+    
+    const currentTool = TOOLS_REGISTRY.find(t => {
+        const cleanPath = t.path.toLowerCase().replace("index.html", "");
+        return activePath.includes(cleanPath) && cleanPath !== "/";
+    });
+    
     if (!currentTool) return '';
 
     const matches = TOOLS_REGISTRY.filter(t => t.tag === currentTool.tag && t.path !== currentTool.path);
@@ -98,11 +107,20 @@ function buildSuggestions() {
     `;
 }
 
+// 6. Global initialization routine
 document.addEventListener("DOMContentLoaded", () => {
+    // 🔀 DYNAMIC CACHE-BUSTER LAYER: Checks and updates your style references automatically
+    const stylesheetLink = document.querySelector('link[rel="stylesheet"]');
+    if (stylesheetLink) {
+        const currentHref = stylesheetLink.getAttribute('href');
+        if (!currentHref.includes('?v=')) {
+            stylesheetLink.setAttribute('href', `${currentHref}?v=1.0.6`);
+        }
+    }
+
     const body = document.body;
     const activePath = window.location.pathname;
     
-    // Automatically apply dark styling layout if we are inside a subfolder tool [1]
     const isToolPage = TOOLS_REGISTRY.some(tool => activePath.includes(tool.path));
     if (isToolPage) {
         body.classList.add("dark-theme-page");
