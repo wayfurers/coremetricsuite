@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>shopify-metafields-parser (Shopify Metafields JSON to Liquid Parser)</title>
+    <meta name="description" content="Convert Shopify JSON metafield definitions into clean, copy-pasteable Liquid code snippets. Automatically generates for loops for arrays and object schemas.">
+    <meta name="keywords" content="shopify metafields parser, json to liquid converter, shopify liquid snippet generator, shopify json metafield rendering, product metafields code generator">
+    <link rel="canonical" href="https://coremetricsuite.com/shopify-metafields-parser/">
+
+    <!-- Open Graph / Social Metadata -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="shopify-metafields-parser (Shopify Metafields JSON to Liquid Parser)">
+    <meta property="og:description" content="Convert Shopify JSON metafield definitions into clean, copy-pasteable Liquid code snippets. Automatically generates for loops for arrays and object schemas.">
+    <meta property="og:url" content="https://coremetricsuite.com/shopify-metafields-parser/">
+    
+    <!-- Global Framework Dependencies -->
+    <link rel="stylesheet" href="/css/global.css">
+    <script src="/global.js" defer></script>
+
+    <!-- FAQ JSON-LD Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How does this tool process array data inside JSON metafields?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The parser inspects your JSON schema and automatically writesLiquid for loops (e.g., {% for item in meta_value.key %}) for array properties instead of printing raw [object Object] strings."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are my Shopify metafield data or JSON payloads stored on external servers?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. All JSON parsing and Liquid code generation perform 100% locally inside your browser memory using client-side JavaScript. No data is stored or transmitted."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which Shopify metafield types does this generator support?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It supports standard single-line and multi-line text fields, as well as complex json metafield object and array structures."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Where should I paste the generated Liquid snippet in Shopify?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "You can paste the generated snippet directly inside main-product.liquid, product blocks, or custom Liquid sections in your Shopify Theme Editor."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What happens if my JSON input contains invalid syntax?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The tool validates your JSON in real-time. If there is a syntax error, a warning alert will display in the panel without generating broken code."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-main: #0f1117;
+            --bg-card: #181b24;
+            --bg-input: #222634;
+            --border-color: #2e3446;
+            --accent-purple: #8b5cf6;
+            --accent-cyan: #00f2fe;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-mono: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: var(--bg-main); color: var(--text-primary); font-family: var(--font-sans); line-height: 1.6; }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 420px 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 960px) { .container { grid-template-columns: 1fr; } }
+
+        .panel {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .panel-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            background: var(--accent-purple);
+            color: #fff;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        .btn-demo {
+            width: 100%;
+            padding: 0.6rem;
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            color: var(--accent-purple);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 1.25rem;
+            transition: background 0.2s;
+        }
+        .btn-demo:hover { background-color: #2a3042; }
+
+        .form-group { margin-bottom: 1.25rem; }
+        label { display: block; font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 0.4rem; }
+        input[type="text"], select, textarea {
+            width: 100%; padding: 0.65rem 0.85rem; background-color: var(--bg-input);
+            border: 1px solid var(--border-color); border-radius: 6px; color: #fff;
+            font-size: 0.9rem; outline: none; font-family: inherit;
+        }
+        textarea {
+            font-family: var(--font-mono);
+            resize: vertical;
+            min-height: 160px;
+        }
+
+        .btn-action {
+            width: 100%; padding: 0.85rem; background: linear-gradient(135deg, var(--accent-purple), #7c3aed);
+            color: #fff; font-weight: 700; border: none; border-radius: 6px; cursor: pointer; font-size: 0.95rem;
+            transition: opacity 0.2s;
+        }
+        .btn-action:hover { opacity: 0.9; }
+
+        .preview-stage { display: flex; flex-direction: column; }
+        .result-box {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.25rem;
+            font-size: 0.95rem;
+            color: #e5e7eb;
+            min-height: 380px;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .code-container {
+            background-color: #090d16;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 1rem;
+            overflow-x: auto;
+            flex: 1;
+        }
+
+        pre code {
+            font-family: var(--font-mono);
+            color: #a5f3fc;
+            font-size: 0.85rem;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .btn-copy {
+            background-color: #10b981;
+            color: #fff;
+            font-weight: 600;
+            padding: 0.6rem 1rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            align-self: flex-end;
+            transition: background 0.2s;
+        }
+        .btn-copy:hover { background-color: #059669; }
+
+        .error-message {
+            color: #f87171;
+            font-size: 0.85rem;
+            margin-top: 0.4rem;
+            display: none;
+        }
+
+        .canvas-caption { margin-top: 1rem; font-size: 0.85rem; color: var(--text-secondary); text-align: right; }
+
+        .content-area { max-width: 1200px; margin: 3rem auto; padding: 0 1.5rem; }
+        .content-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 2.5rem; }
+        .content-card h1 { font-size: 2rem; margin-bottom: 1rem; color: #fff; }
+        .content-card h2 { font-size: 1.4rem; margin: 1.8rem 0 1rem; color: #fff; }
+        .content-card p { color: var(--text-secondary); margin-bottom: 1.2rem; }
+        .content-card ul, .content-card ol { color: var(--text-secondary); margin: 0 0 1.2rem 1.5rem; }
+        .content-card li { margin-bottom: 0.5rem; }
+
+        .spec-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; text-align: left; }
+        .spec-table th, .spec-table td { padding: 0.85rem 1rem; border: 1px solid var(--border-color); }
+        .spec-table th { background-color: var(--bg-input); color: #fff; }
+        .spec-table td { color: var(--text-secondary); }
+
+        /* Accordion FAQ Styling */
+        .faq-block { margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem; }
+        .faq-accordion {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 0.85rem;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .faq-accordion[open] { border-color: var(--accent-purple); }
+        .faq-summary {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            padding: 1rem 1.2rem;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+        .faq-summary::-webkit-details-marker { display: none; }
+        .faq-summary::after {
+            content: "+";
+            font-size: 1.2rem;
+            color: var(--accent-purple);
+            transition: transform 0.2s;
+        }
+        .faq-accordion[open] .faq-summary::after {
+            content: "−";
+            color: var(--accent-purple);
+        }
+        .faq-answer {
+            padding: 0 1.2rem 1.2rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 0.4rem;
+            padding-top: 0.8rem;
+        }
+
+        .cms-ad-slot-1, .cms-ad-slot-2 {
+            width: 100%; max-width: 970px; min-height: 90px; margin: 1.5rem auto;
+            background: rgba(255,255,255,0.02); border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Container -->
+    <div id="global-header"></div>
+
+    <!-- Ad Slot 1 Container (Above Main Workspace Title) -->
+    <div class="cms-ad-slot-1"></div>
+
+    <!-- Main Tool Container -->
+    <main class="container">
+        <section class="panel">
+            <div class="panel-title">
+                <span>Metafield Parser Controls</span>
+                <span class="badge">SHOPIFY LIQUID</span>
+            </div>
+
+            <button class="btn-demo" id="loadDemoBtn" type="button">⚡ Load Demo JSON Sample</button>
+
+            <div class="form-group">
+                <label for="metaNamespace">Namespace</label>
+                <input type="text" id="metaNamespace" value="custom" placeholder="e.g. custom">
+            </div>
+
+            <div class="form-group">
+                <label for="metaKey">Key</label>
+                <input type="text" id="metaKey" value="product_specifications" placeholder="e.g. product_specifications">
+            </div>
+
+            <div class="form-group">
+                <label for="metaType">Metafield Type</label>
+                <select id="metaType">
+                    <option value="json">json (JSON Object / Array)</option>
+                    <option value="string">single_line_text_field</option>
+                    <option value="multi_string">multi_line_text_field</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="jsonInput">JSON Payload / Sample Schema</label>
+                <textarea id="jsonInput" placeholder="Paste sample JSON structure here...">{
+  "material": "100% Organic Cotton",
+  "care_instructions": [
+    "Machine wash cold",
+    "Tumble dry low",
+    "Do not bleach"
+  ],
+  "dimensions": {
+    "width": "12 in",
+    "height": "18 in"
+  }
+}</textarea>
+                <div id="jsonError" class="error-message">Invalid JSON syntax provided.</div>
+            </div>
+
+            <button class="btn-action" id="generateBtn" type="button">Generate Liquid Snippet</button>
+        </section>
+
+        <!-- Result Stage Wrapper -->
+        <section class="preview-stage">
+            <div class="panel" style="flex: 1; display: flex; flex-direction: column;">
+                <div class="panel-title">
+                    <span>Generated Liquid Output</span>
+                    <button type="button" class="btn-copy" id="copyBtn">Copy Code</button>
+                </div>
+                <div class="result-box">
+                    <div class="code-container">
+                        <pre><code id="liquidOutput">Click "Generate Liquid Snippet" to convert...</code></pre>
+                    </div>
+                </div>
+                <p class="canvas-caption">
+                    Client-side Liquid code generator for Shopify Online Store 2.0 themes.
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <!-- SEO & Educational Guide Section -->
+    <article class="content-area">
+        <section class="content-card">
+            <h1>Shopify Metafields JSON to Liquid Parser Guide</h1>
+            <p>
+                Managing custom data schemas in Shopify Online Store 2.0 often involves JSON-type metafields. While JSON metafields allow store owners to structure complex nested specifications, bullet lists, and attributes, rendering them on liquid product templates can be tricky. Standard tags frequently return raw string representations or unformatted `[object Object]` values.
+            </p>
+            <p>
+                This browser-based <strong>shopify-metafields-parser</strong> utility parses your custom JSON metafield structures and converts them into production-ready Shopify Liquid code snippets. It handles object properties, nested sub-keys, and generates native `{% for %}` loops for array values automatically.
+            </p>
+
+            <h2>Metafield Type & Liquid Mapping Matrix</h2>
+            <p>
+                Understanding how Shopify interprets different metafield types in Liquid ensures optimal store performance and clean HTML rendering:
+            </p>
+
+            <table class="spec-table">
+                <thead>
+                    <tr>
+                        <th>Metafield Type</th>
+                        <th>Liquid Value Accessor</th>
+                        <th>Parser Handling Strategy</th>
+                        <th>Recommended Use Case</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>JSON Object</strong></td>
+                        <td>`metafield.value.key`</td>
+                        <td>Generates structured HTML blocks with nested key-value tags.</td>
+                        <td>Complex product specifications & specs tables.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>JSON Array</strong></td>
+                        <td>`{% for item in metafield.value %}`</td>
+                        <td>Generates HTML `<ul>` list iteration loops.</td>
+                        <td>Care instructions, features, package contents.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Single Line Text</strong></td>
+                        <td>`metafield.value`</td>
+                        <td>Renders standard single-value string output block.</td>
+                        <td>Subtitles, short badges, custom origin codes.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Multi Line Text</strong></td>
+                        <td>`metafield.value | newline_to_br`</td>
+                        <td>Formats line breaks cleanly into HTML paragraphs.</td>
+                        <td>Extended warranty disclosures, ingredient lists.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Ad Slot 2 Container (Immediately Below Data Table) -->
+            <div class="cms-ad-slot-2"></div>
+
+            <h2>Operational Breakdown & Workflow Integration</h2>
+            <p>
+                Integrating these generated Liquid snippets into your Shopify Theme Editor workspace takes just a few steps:
+            </p>
+            <ul>
+                <li><strong>Specify Namespace & Key:</strong> Enter your exact metafield namespace and key (e.g., `custom.product_specifications`).</li>
+                <li><strong>Paste Sample JSON:</strong> Paste an example JSON payload or schema matching your store's metafield setup.</li>
+                <li><strong>Generate & Copy:</strong> Click "Generate Liquid Snippet" to compile the code, then copy it directly to your clipboard.</li>
+                <li><strong>Paste into Shopify Theme:</strong> Add the code into a Custom Liquid block in your theme customizer or directly inside template liquid files.</li>
+            </ul>
+
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-block">
+                <details class="faq-accordion" open>
+                    <summary class="faq-summary">How does this tool process array data inside JSON metafields?</summary>
+                    <div class="faq-answer">
+                        The parser inspects your JSON schema and automatically writes Liquid for loops (e.g., {% for item in meta_value.key %}) for array properties instead of printing raw [object Object] strings.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">Are my Shopify metafield data or JSON payloads stored on external servers?</summary>
+                    <div class="faq-answer">
+                        No. All JSON parsing and Liquid code generation perform 100% locally inside your browser memory using client-side JavaScript. No data is stored or transmitted.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">Which Shopify metafield types does this generator support?</summary>
+                    <div class="faq-answer">
+                        It supports standard single-line and multi-line text fields, as well as complex json metafield object and array structures.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">Where should I paste the generated Liquid snippet in Shopify?</summary>
+                    <div class="faq-answer">
+                        You can paste the generated snippet directly inside main-product.liquid, product blocks, or custom Liquid sections in your Shopify Theme Editor.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">What happens if my JSON input contains invalid syntax?</summary>
+                    <div class="faq-answer">
+                        The tool validates your JSON in real-time. If there is a syntax error, a warning alert will display in the panel without generating broken code.
+                    </div>
+                </details>
+            </div>
+        </section>
+    </article>
+
+    <!-- Footer Container -->
+    <div id="global-footer"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var metaNamespaceInput = document.getElementById('metaNamespace');
+            var metaKeyInput = document.getElementById('metaKey');
+            var metaTypeSelect = document.getElementById('metaType');
+            var jsonInput = document.getElementById('jsonInput');
+            var jsonError = document.getElementById('jsonError');
+            var generateBtn = document.getElementById('generateBtn');
+            var loadDemoBtn = document.getElementById('loadDemoBtn');
+            var liquidOutput = document.getElementById('liquidOutput');
+            var copyBtn = document.getElementById('copyBtn');
+
+            loadDemoBtn.addEventListener('click', function() {
+                metaNamespaceInput.value = 'custom';
+                metaKeyInput.value = 'product_specifications';
+                metaTypeSelect.value = 'json';
+                jsonInput.value = JSON.stringify({
+                    "material": "100% Organic Cotton",
+                    "care_instructions": [
+                        "Machine wash cold",
+                        "Tumble dry low",
+                        "Do not bleach"
+                    ],
+                    "dimensions": {
+                        "width": "12 in",
+                        "height": "18 in"
+                    }
+                }, null, 2);
+                generateCode();
+            });
+
+            generateBtn.addEventListener('click', function() {
+                generateCode();
+            });
+
+            function generateCode() {
+                var ns = metaNamespaceInput.value.trim() || 'custom';
+                var key = metaKeyInput.value.trim() || 'field_key';
+                var type = metaTypeSelect.value;
+                var rawJson = jsonInput.value.trim();
+                var parsedData = null;
+
+                jsonError.style.display = 'none';
+
+                if (type === 'json' && rawJson.length > 0) {
+                    try {
+                        parsedData = JSON.parse(rawJson);
+                    } catch (e) {
+                        jsonError.style.display = 'block';
+                        return;
+                    }
+                }
+
+                var code = '{%- assign meta_value = product.metafields.' + ns + '.' + key + '.value -%}\n\n';
+                code += '{%- if meta_value != blank -%}\n';
+
+                if (type === 'json' && parsedData !== null) {
+                    code += '  <div class="product-metafield-box">\n';
+                    code += renderJsonStructure(parsedData, 'meta_value', 2);
+                    code += '  </div>\n';
+                } else if (type === 'multi_string') {
+                    code += '  <div class="product-metafield-item">\n';
+                    code += '    <p>{{ meta_value | newline_to_br }}</p>\n';
+                    code += '  </div>\n';
+                } else {
+                    code += '  <div class="product-metafield-item">\n';
+                    code += '    <span>{{ meta_value }}</span>\n';
+                    code += '  </div>\n';
+                }
+
+                code += '{%- endif -%}';
+                liquidOutput.textContent = code;
+            }
+
+            function renderJsonStructure(obj, currentAccessor, indentLevel) {
+                var indent = ' '.repeat(indentLevel * 2);
+                var innerIndent = ' '.repeat((indentLevel + 1) * 2);
+                var code = '';
+
+                if (Array.isArray(obj)) {
+                    code += indent + '<ul>\n';
+                    code += indent + '  {%- for item in ' + currentAccessor + ' -%}\n';
+                    code += indent + '    <li>{{ item }}</li>\n';
+                    code += indent + '  {%- endfor -%}\n';
+                    code += indent + '</ul>\n';
+                } else if (typeof obj === 'object' && obj !== null) {
+                    for (var k in obj) {
+                        if (Object.prototype.hasOwnProperty.call(obj, k)) {
+                            var val = obj[k];
+                            var propAccessor = currentAccessor + '.' + k;
+
+                            code += indent + '<div class="metafield-group metafield-' + k + '">\n';
+                            code += innerIndent + '<strong class="metafield-label">' + formatLabel(k) + ':</strong>\n';
+
+                            if (Array.isArray(val)) {
+                                code += innerIndent + '<ul>\n';
+                                code += innerIndent + '  {%- for item in ' + propAccessor + ' -%}\n';
+                                code += innerIndent + '    <li>{{ item }}</li>\n';
+                                code += innerIndent + '  {%- endfor -%}\n';
+                                code += innerIndent + '</ul>\n';
+                            } else if (typeof val === 'object' && val !== null) {
+                                code += renderJsonStructure(val, propAccessor, indentLevel + 1);
+                            } else {
+                                code += innerIndent + '<span class="metafield-value">{{ ' + propAccessor + ' }}</span>\n';
+                            }
+
+                            code += indent + '</div>\n';
+                        }
+                    }
+                }
+                return code;
+            }
+
+            function formatLabel(str) {
+                return str
+                    .replace(/_/g, ' ')
+                    .replace(/([a-z])([A-Z])/g, '$1 $2')
+                    .replace(/\b\w/g, function (l) { return l.toUpperCase(); });
+            }
+
+            copyBtn.addEventListener('click', function() {
+                var textToCopy = liquidOutput.textContent;
+                if (!textToCopy) return;
+
+                navigator.clipboard.writeText(textToCopy).then(function() {
+                    var originalText = copyBtn.textContent;
+                    copyBtn.textContent = 'Copied!';
+                    setTimeout(function() {
+                        copyBtn.textContent = originalText;
+                    }, 2000);
+                });
+            });
+
+            generateCode();
+        });
+    </script>
+</body>
+</html>
