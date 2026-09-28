@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://coremetricsuite.com/sitemap.xml
