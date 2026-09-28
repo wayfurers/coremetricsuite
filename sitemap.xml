@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Homepage -->
+  <url>
+    <loc>https://coremetricsuite.com/</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <!-- Info & Legal Pages -->
+  <url><loc>https://coremetricsuite.com/about.html</loc><lastmod>2026-09-28</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://coremetricsuite.com/contact.html</loc><lastmod>2026-09-28</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://coremetricsuite.com/privacy-policy.html</loc><lastmod>2026-09-28</lastmod><changefreq>monthly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://coremetricsuite.com/terms.html</loc><lastmod>2026-09-28</lastmod><changefreq>monthly</changefreq><priority>0.3</priority></url>
+
+  <!-- Tools Catalog Routing Entries -->
+  <url><loc>https://coremetricsuite.com/au-cents-per-km-estimator/</loc><lastmod>2026-09-28</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://coremetricsuite.com/au-schads-vehicle-allowance/</loc><lastmod>2026-09-28</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://coremetricsuite.com/au-superannuation-charge-tracker/</loc><lastmod>2026-09-28</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://coremetricsuite.com/us-section-179-truck-calculator/</loc><lastmod>2026-09-28</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://coremetricsuite.com/us-llc-late-penalty-estimator/</loc><lastmod>2026-09-28</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://coremetricsuite.com/uk-form-4a-rent-tracker/</loc><lastmod>2026-09-28</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://coremetricsuite.com/uk-sdlt-bracket-estimator/</loc><lastmod>2026-09-28</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://coremetricsuite.com/uk-section-8-calculator/</loc><lastmod>2026-09-28</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://coremetricsuite.com/instagram-reels-preview/</loc><lastmod>2026-09-28</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://coremetricsuite.com/shorts-ui-safe-zone/</loc><lastmod>2026-09-28</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://coremetricsuite.com/tiktok-ad-safe-zone/</loc><lastmod>2026-09-28</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://coremetricsuite.com/shopify-metafields-parser/</loc><lastmod>2026-09-28</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+</urlset>
