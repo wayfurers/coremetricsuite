@@ -22,30 +22,55 @@
     <script src="../global.js" defer></script>
 
     <!-- FAQ JSON-LD Schema Markup -->
-    <script type="application/ld+json">
+    <!-- FAQ JSON-LD Schema Markup -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
     {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "What are the exact TikTok safe zone dimensions for 1080x1920 videos?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "For a standard 1080x1920 pixel (9:16) vertical video, keep essential text clear of the top 130px and right 140px. For organic posts, reserve 320px at the bottom. For paid In-Feed or Spark Ads, reserve 480px at the bottom to prevent clipping by the Sponsored CTA button."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Why is my TikTok text getting covered by the CTA or caption box?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Paid ad placements overlay a Sponsored tag and interactive Call-To-Action (CTA) button directly above the lower caption band. Designing creatives using standard organic video dimensions results in text covered by the CTA card."
-          }
-        }
-      ]
+      "@type": "Question",
+      "name": "What are the exact TikTok safe zone dimensions for 1080x1920 videos?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "For a standard 1080x1920 pixel (9:16) vertical video, keep essential text and visual elements clear of the top 130px and the bottom 320px to prevent obstruction by UI elements."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why is my TikTok text getting covered by the CTA or caption box?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Paid ad placements overlay a Sponsored tag and interactive Call-To-Action (CTA) button directly over the lower portion of your video, which crops or hides text placed too low."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the aspect ratio requirement for TikTok video uploads?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "TikTok standard video uploads require a 9:16 vertical aspect ratio. While horizontal videos are supported, vertical layouts maximize screen real estate and user engagement."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How does the right-side sidebar UI affect TikTok video visibility?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The right side of the TikTok interface contains action icons for profile, likes, comments, shares, and audio. Keep text and key actions shifted to the left to avoid overlapping these icons."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I test my organic and paid TikTok layouts instantly before exporting?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, using an interactive TikTok safe zone checker tool allows you to upload your design and instantly preview how it looks behind both organic UI and paid ad overlay skins."
+      }
     }
-    </script>
+  ]
+}
+</script>
 
     <style>
         :root {
