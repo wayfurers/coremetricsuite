@@ -23,30 +23,55 @@
     <script src="/global.js" defer></script>
 
     <!-- FAQ JSON-LD Schema Markup -->
-    <script type="application/ld+json">
+    <!-- FAQ JSON-LD Schema Markup -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
     {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "What are the exact Instagram Reels safe zone dimensions for 1080x1920 videos?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "For a standard 1080x1920 pixel (9:16) Instagram Reel, reserve the top 220px for header controls, the bottom 420px for caption overlays and audio metadata, and the right 130px for engagement icons. For guaranteed 4:5 main feed preview visibility, keep core elements within the central 1080x1350px box."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "Why does text get cropped when Instagram Reels appear in the main profile grid?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Instagram automatically crops 9:16 vertical video assets into a 4:5 aspect ratio card (1080x1350px) when displayed inside the home feed, and a 1:1 square thumbnail (1080x1080px) on profile grids. Placing text outside these central focus bounds causes important information to get cut off in feed previews."
-          }
-        }
-      ]
+      "@type": "Question",
+      "name": "What are the exact Instagram Reels safe zone dimensions for 1080x1920 pixels?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "For a standard 1080x1920 pixel (9:16) Instagram Reel, reserve the top 220px for header controls, the bottom 420px for captions/audio details, and 35px on the right edge."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does text get cropped when Instagram Reels appear in the main profile grid?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Instagram automatically crops 9:16 vertical video assets into a 1:1 square ratio in your main profile grid. Content must be centered vertically to look correct in grid view."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does the Instagram Reels UI change when viewed from the feed vs. the Reels tab?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, when viewed from the home feed, captions can overlay up to the bottom third of the video. In the dedicated Reels tab, the interface displays more compact overlay elements."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the safe area for Instagram Stories compared to Reels?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Both format sizes use 1080x1920 pixels, but Stories feature top progress bars and a bottom reply box, leaving a safe central title area roughly between 250px and 1600px vertically."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How can I verify if my video text fits inside the Instagram Reels safe zone?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You can use a real-time Instagram Reels safe zone template checker to overlay standard app interfaces onto your video files or mockups before publishing."
+      }
     }
-    </script>
+  ]
+}
+</script>
 
     <style>
         :root {
