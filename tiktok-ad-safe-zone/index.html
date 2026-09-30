@@ -668,5 +668,84 @@
             });
         });
     </script>
+    <!-- Global CoreMetricSuite Cross-Linking Index Hub -->
+<div style="margin-top: 40px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #f8fafc; font-family: system-ui, -apple-system, sans-serif;">
+    <h3 style="margin: 0 0 15px 0; font-size: 18px; color: #0f172a; font-weight: 600;">🛠️ CoreMetricSuite Utility Directory</h3>
+    
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
+        <!-- Group 1 -->
+        <div>
+            <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇦🇺 Australia Tax & Labor</h4>
+            <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                <li style="margin-bottom: 4px;"><a id="hub-au-cents" href="../au-cents-per-km-estimator/" style="color: #2563eb; text-decoration: underline;">Cents-Per-Km Tax Estimator</a></li>
+                <li style="margin-bottom: 4px;"><a id="hub-au-schads" href="../au-schads-vehicle-allowance/" style="color: #2563eb; text-decoration: underline;">SCHADS Vehicle Allowance</a></li>
+                <li style="margin-bottom: 4px;"><a id="hub-au-super" href="../au-superannuation-charge-tracker/" style="color: #2563eb; text-decoration: underline;">Superannuation Tracker</a></li>
+            </ul>
+        </div>
+
+        <!-- Group 2 -->
+        <div>
+            <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇺🇸 US Corporate Tax</h4>
+            <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                <li style="margin-bottom: 4px;"><a id="hub-us-llc" href="../us-llc-late-penalty-estimator/" style="color: #2563eb; text-decoration: underline;">LLC Late Tax Penalty</a></li>
+                <li style="margin-bottom: 4px;"><a id="hub-us-179" href="../us-section-179-truck-calculator/" style="color: #2563eb; text-decoration: underline;">Section 179 Vehicle Deduction</a></li>
+            </ul>
+        </div>
+
+        <!-- Group 3 -->
+        <div>
+            <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇬🇧 UK Property Management</h4>
+            <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                <li style="margin-bottom: 4px;"><a id="hub-uk-rent" href="../uk-form-4a-rent-tracker/" style="color: #2563eb; text-decoration: underline;">Form 4A Rent Tracker</a></li>
+                <li style="margin-bottom: 4px;"><a id="hub-uk-sdlt" href="../uk-sdlt-bracket-estimator/" style="color: #2563eb; text-decoration: underline;">Stamp Duty Estimator</a></li>
+                <li style="margin-bottom: 4px;"><a id="hub-uk-sec8" href="../uk-section-8-calculator/" style="color: #2563eb; text-decoration: underline;">Section 8 Calculator</a></li>
+            </ul>
+        </div>
+
+        <!-- Group 4 -->
+        <div>
+            <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🎬 Digital Media Layouts</h4>
+            <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                <li style="margin-bottom: 4px;"><a id="hub-media-ig" href="../instagram-reels-preview/" style="color: #2563eb; text-decoration: underline;">Instagram Reels Grid</a></li>
+                <li style="margin-bottom: 4px;"><a id="hub-media-shorts" href="../shorts-ui-safe-zone/" style="color: #2563eb; text-decoration: underline;">YouTube Shorts Safe Zone</a></li>
+                <li style="margin-bottom: 4px;"><a id="hub-media-tiktok" href="../tiktok-ad-safe-zone/" style="color: #2563eb; text-decoration: underline;">TikTok Ad Checker</a></li>
+                <li style="margin-bottom: 4px;"><a id="hub-media-shopify" href="../shopify-metafields-parser/" style="color: #2563eb; text-decoration: underline;">Shopify Metafields Parser</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script defer>
+    (function() {
+        // Scans the active browser path to determine which self-link to intercept
+        const path = window.location.pathname.toLowerCase();
+        
+        const toolsMap = {
+            'au-cents-per-km-estimator': 'hub-au-cents',
+            'au-schads-vehicle-allowance': 'hub-au-schads',
+            'au-superannuation-charge-tracker': 'hub-au-super',
+            'us-llc-late-penalty-estimator': 'hub-us-llc',
+            'us-section-179-truck-calculator': 'hub-us-179',
+            'uk-form-4a-rent-tracker': 'hub-uk-rent',
+            'uk-sdlt-bracket-estimator': 'hub-uk-sdlt',
+            'uk-section-8-calculator': 'hub-uk-sec8',
+            'instagram-reels-preview': 'hub-media-ig',
+            'shorts-ui-safe-zone': 'hub-media-shorts',
+            'tiktok-ad-safe-zone': 'hub-media-tiktok',
+            'shopify-metafields-parser': 'hub-media-shopify'
+        };
+
+        for (const [folderName, elementId] of Object.entries(toolsMap)) {
+            if (path.includes(folderName)) {
+                const targetEl = document.getElementById(elementId);
+                if (targetEl) {
+                    // Replaces the hyperlinked state with unclickable bold text styling
+                    targetEl.outerHTML = `<span style="font-weight: 600; color: #0f172a;">${targetEl.textContent} (Current)</span>`;
+                }
+                break;
+            }
+        }
+    })();
+</script>
 </body>
 </html>
