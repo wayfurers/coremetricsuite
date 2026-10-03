@@ -699,4 +699,24 @@ button, input, select, textarea {
   width: 100%;
   display: block;
 }
+   /* Core Metric Suite - Strict Pre-Allocation for Zero Shift */
+#site-header {
+  min-height: 110px;
+  width: 100%;
+  display: block;
+}
+
+#cms-ad-slot-1 {
+  min-height: 90px;
+  width: 100%;
+  max-width: 1280px;
+  margin: 15px auto;
+  display: block;
+}
+
+#site-footer {
+  min-height: 300px;
+  width: 100%;
+  display: block;
+}
 }
