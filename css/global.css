@@ -390,13 +390,91 @@ body[data-theme="dark"] .cms-compliance-disclaimer {
  * ============================================================================ */
 .cms-footer {
   background-color: #0f172a;
-  border-top: 1px solid rgba(255, 255```css
-/* Target primary calculator canvas containers without forcing width overrides */
-main, .dark-theme-page, .calc-container {
-  box-sizing: border-box;
-  flex: 1 0 auto;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: #94a3b8;
+  padding: 48px 0 24px 0;
+  margin-top: auto;
   width: 100%;
-  max-width: 1280px;
+}
+
+.cms-footer-container {
+  max-width: var(--max-content-width);
   margin: 0 auto;
-  transition: max-width 0.2s ease, margin 0.2s ease;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.cms-footer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 32px;
+  width: 100%;
+}
+
+.cms-footer-grid a {
+  display: inline-block;
+  color: #94a3b8;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  transition: color var(--transition-fast);
+}
+
+.cms-footer-grid a:hover {
+  color: #f8fafc;
+}
+
+.cms-footer-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.cms-footer-title {
+  color: #f8fafc;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.cms-footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cms-footer-link {
+  color: #94a3b8;
+  font-size: 0.9rem;
+  transition: color var(--transition-fast);
+}
+
+.cms-footer-link:hover {
+  color: #f8fafc;
+}
+
+.cms-footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  font-size: 0.85rem;
+  color: #64748b;
+  text-align: center;
+}
+
+@media (min-width: 640px) {
+  .cms-footer-bottom {
+    flex-direction: row;
+    text-align: left;
+  }
 }
