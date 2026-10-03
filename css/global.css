@@ -679,4 +679,24 @@ button, input, select, textarea {
     right: 20px;
     width: auto;
   }
+/* Core Metric Suite - Layout Reserve CSS (Eliminates CLS) */
+#site-header {
+  min-height: 110px;
+  width: 100%;
+  display: block;
+}
+
+#cms-ad-slot-1 {
+  min-height: 90px;
+  width: 100%;
+  max-width: 1280px;
+  margin: 15px auto;
+  display: block;
+}
+
+#site-footer {
+  min-height: 300px;
+  width: 100%;
+  display: block;
+}
 }
