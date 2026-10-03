@@ -630,85 +630,116 @@ footer.cms-footer {
    SECTION 8: RESPONSIVE BREAKPOINT OVERRIDES (Mobile <= 768px)
    ============================================================================== */
 
+/* ============================================================================
+ * SECTION 8: RESPONSIVE BREAKPOINT OVERRIDES (Mobile <= 768px Optimization)
+ * ============================================================================ */
+
 @media screen and (max-width: 768px) {
-  /* --- Unbreakable Mobile Flow Enforcement --- */
-  body,
-  .cms-app-shell,
+  /* --- Structural Layout Fixes --- */
+  html, body {
+    height: auto !important;
+    min-height: 100vh;
+  }
+
+  body {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
   main.cms-main-canvas,
   .calc-container {
     display: block !important;
-    height: auto !important;
-    min-height: 0 !important;
-    overflow-x: hidden !important;
+    flex: 1 0 auto;
+    padding-top: var(--space-md);
+    padding-bottom: var(--space-xl);
+    min-height: auto !important;
   }
 
-  /* Structural Grid Collapses to Single Column Block Stack */
   .cms-layout-grid {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
   }
 
-  .cms-sidebar {
-    position: static;
-    width: 100%;
-    margin-top: var(--space-xl);
-  }
-
-  /* --- Navigation Touch Target Adjustments --- */
+  /* --- FIXED: Robust Mobile Header & Navigation --- */
   header.cms-header {
-    height: auto;
-    min-height: var(--header-height);
-    padding-top: var(--space-xs);
-    padding-bottom: var(--space-xs);
+    position: sticky !important;
+    top: 0;
+    height: auto !important; /* Dynamic height to allow header + search bar to fit cleanly */
+    min-height: 56px !important;
+    background-color: #0f172a !important; 
+    padding: var(--space-sm) var(--space-md) !important;
   }
 
   .cms-header-inner {
-    flex-wrap: wrap;
-    justify-content: space-between;
+    display: flex !important;
+    flex-direction: column !important; /* Stack branding on top, search/nav underneath on mobile */
+    align-items: stretch !important;
+    gap: var(--space-xs) !important;
+    width: 100% !important;
   }
 
-  /* Force min 44px touch targets on mobile interactive items */
-  .cms-nav-link,
-  .cms-category-pill,
-  .cms-footer-anchor {
-    min-height: 44px;
-    display: inline-flex;
+  /* Header sub-row to keep brand and nav-links tight */
+  .cms-brand-row {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    width: 100% !important;
+  }
+
+  .cms-header-nav {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: var(--space-xs) !important;
     align-items: center;
   }
 
-  nav.cms-category-track {
-    top: 0; /* Align directly to viewport top if header scrolls out */
+  .cms-nav-link {
+    min-height: auto !important;
+    padding: 4px 8px !important;
+    font-size: var(--font-size-xs) !important;
   }
 
-  /* --- Absolute Overlap Elimination: Mobile Toast Engine --- */
-  .cms-notification-toast {
-    /* Strip away fixed positioning entirely on smaller viewports */
-    position: relative !important;
-    bottom: auto !important;
-    right: auto !important;
-    top: auto !important;
-    left: auto !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    margin-top: var(--space-md);
-    margin-bottom: var(--space-md);
-    box-sizing: border-box;
-    /* Render inline as a standard layout card to prevent overlapping interactive elements */
-    display: block;
+  /* --- FIXED: Compact 2-Column Directory (No Massive Whitespace) --- */
+  footer.cms-footer {
+    margin-top: auto !important;
+    padding-top: var(--space-md) !important;
+    padding-bottom: var(--space-md) !important;
   }
 
-  /* --- Single Column Footer Stacking --- */
   .cms-footer-grid {
-    grid-template-columns: 1fr;
-    gap: var(--space-lg);
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important; /* Compact 2-column matrix split */
+    gap: var(--space-sm) var(--space-md) !important; 
+    margin-bottom: var(--space-md) !important;
   }
 
-  .cms-footer-bottom {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-sm);
+  .cms-footer-heading {
+    font-size: var(--font-size-xs) !important;
+    margin-bottom: var(--space-2xs) !important;
+    padding-bottom: 4px !important;
+  }
+
+  .cms-footer-anchor {
+    min-height: auto !important; 
+    font-size: 13px !important;
+    padding: 2px 0 !important;
+  }
+
+  /* --- FIXED: Rigid UI Toast Overlay Pinning --- */
+  .cms-notification-toast {
+    position: fixed !important; 
+    bottom: 12px !important;
+    right: 12px !important;
+    left: 12px !important;
+    width: auto !important;
+    max-width: none !important;
+    margin: 0 !important;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.4) !important;
+    z-index: 9999 !important;
+    display: flex !important; 
   }
 }
-
 
 /* ==============================================================================
    SECTION 9: ACCESSIBILITY & PRINT ADJUSTMENTS
