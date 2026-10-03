@@ -79,13 +79,18 @@ const CMS_TOOLS_CATALOG = [
  * SECTION 4: INITIALIZATION ROUTER & PATH SANITIZATION
  * ============================================================================ */
 document.addEventListener("DOMContentLoaded", function() {
-  injectAdSenseResourcesOnce();
-  injectGrowMonitoringScript();
+  // Execute critical DOM layout setups immediately on critical track
   setupAutoLayout();
-  initCMSInteractiveSearch();
-  initDynamicPopupToast();
-  setupDelayedCalculationAffiliate();
   injectSoftwareApplicationSchema();
+
+  // Defer non-essential tracking, ads, search, popups, and delegations out of critical queue
+  setTimeout(function() {
+    injectAdSenseResourcesOnce();
+    injectGrowMonitoringScript();
+    initCMSInteractiveSearch();
+    initDynamicPopupToast();
+    setupDelayedCalculationAffiliate();
+  }, 40);
 
   window.runCMSSystemDiagnostics = runCMSSystemDiagnostics;
 });
@@ -227,17 +232,18 @@ function setupAutoLayout(targetDocument = document) {
   searchInput.id = "cms-tool-search-input";
   searchInput.placeholder = "Search 120+ tools...";
   searchInput.setAttribute("autocomplete", "one-time-code");
-  searchInput.style.cssText = "padding: 6px 12px 6px 30px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.05); color: #f8fafc; font-size: 13px; width: 180px; transition: width 0.3s ease, border-color 0.3s ease, background-color 0.3s ease; outline: none;";
+  
+  // FIX: Stable width (200px) with layout-safe property transitions only (border-color, background-color)
+  searchInput.style.cssText = "padding: 6px 12px 6px 30px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.15); background: rgba(255,255,255,0.05); color: #f8fafc; font-size: 13px; width: 200px; transition: border-color 0.3s ease, background-color 0.3s ease; outline: none;";
 
+  // Zero JS width mutations to completely prevent Forced Reflows / Layout Thrashing
   searchInput.addEventListener("focus", function() {
-    this.style.width = "240px";
     this.style.borderColor = "#3b82f6";
     this.style.backgroundColor = "rgba(255,255,255,0.1)";
   });
 
   searchInput.addEventListener("blur", function() {
     if (!this.value.trim()) {
-      this.style.width = "180px";
       this.style.borderColor = "rgba(255,255,255,0.15)";
       this.style.backgroundColor = "rgba(255,255,255,0.05)";
     }
@@ -340,7 +346,6 @@ function setupAutoLayout(targetDocument = document) {
         if (!targetDocument.getElementById("cms-responsive-layout-css")) {
           const styleSheet = targetDocument.createElement("style");
           styleSheet.id = "cms-responsive-layout-css";
-          // FIX 3: Unified 70/30 spatial dimensions matching global.css
           styleSheet.textContent = `
             .cms-layout-wrapper { display: flex; flex-wrap: wrap; gap: 30px; width: 100%; max-width: 1280px; margin: 0 auto; padding: 20px 15px; box-sizing: border-box; }
             .cms-content-column { flex: 0 0 calc(70% - 15px); max-width: calc(70% - 15px); width: calc(70% - 15px); box-sizing: border-box; }
@@ -368,7 +373,6 @@ function setupAutoLayout(targetDocument = document) {
         stickyPanel.id = "cms-sidebar-sticky";
         stickyPanel.className = "cms-sticky-panel";
         
-        // FIX 4: Safety wrapped fragment creation to prevent script-blocker DOMException halts
         try {
           const rawHTML = CMS_MONETIZATION_CONFIG.ads.medianet_sidebar_html || "";
           if (rawHTML) {
@@ -388,7 +392,6 @@ function setupAutoLayout(targetDocument = document) {
         layoutWrapper.appendChild(contentCol);
         layoutWrapper.appendChild(sidebarCol);
       } else {
-        // FIX 3: Locks onto a smooth, centered canvas structure while ads are false
         mainTarget.style.maxWidth = "1280px";
         mainTarget.style.margin = "0 auto";
         mainTarget.style.width = "100%";
@@ -471,12 +474,15 @@ function setupAutoLayout(targetDocument = document) {
   const footerGrid = targetDocument.createElement("div");
   footerGrid.className = "cms-footer-grid";
 
-  CMS_TOOLS_CATALOG.forEach(function(tool) {
-    const toolLink = targetDocument.createElement("a");
-    toolLink.href = tool.url;
-    toolLink.textContent = tool.name;
-    footerGrid.appendChild(toolLink);
-  });
+  // Micro-task buffer wrapper for heavy array iteration
+  setTimeout(function() {
+    CMS_TOOLS_CATALOG.forEach(function(tool) {
+      const toolLink = targetDocument.createElement("a");
+      toolLink.href = tool.url;
+      toolLink.textContent = tool.name;
+      footerGrid.appendChild(toolLink);
+    });
+  }, 10);
 
   footerGridContainer.appendChild(footerGrid);
 
@@ -604,8 +610,6 @@ function initCMSInteractiveSearch() {
  * SECTION 7: HIGH-CONVERSION AUTOMATED AFFILIATE LOADER ENGINE (5s DELAY)
  * ============================================================================ */
 function setupDelayedCalculationAffiliate() {
-  // FIX 1: Non-destructive document-level event delegation.
-  // Preserves 100% calculator button clicks uninterrupted.
   document.addEventListener("click", function(event) {
     const targetBtn = event.target.closest("button, input[type='button'], .calc-submit-btn");
     if (!targetBtn) return;
