@@ -1,18 +1,7 @@
 /**
- * ==============================================================================
- * CORE METRIC SUITE (CMS) - GLOBAL STYLESHEET (global.css)
- * Architecture: Senior Frontend Architect Production-Grade Specification
- * Design System: Bulletproof, Unbreakable, & Content-Agnostic Layout Engine
- * ==============================================================================
- * 
- * TABLE OF CONTENTS:
- * 1. CSS Custom Properties & Design Tokens (Light/Dark Themes)
- * 2. Standardized Global Reset & Base Typography
- * 3. Core Structural Canvas & Layout Engine
-/**
- * CoreMetricSuite — Global Production CSS Framework
- * Architecture: Privacy-First, Zero-Dependency, High-Performance Utility Directory
- * Features: Rendering Containment (120+ Node Scaling), Mobile Tap Optimization, Dynamic Dark Engine
+ * CoreMetricSuite — Complete Production Global CSS
+ * Architecture: Privacy-First Utility Directory
+ * Compatibility: Fully aligned with components.js DOM nodes & 120+ card scaling
  */
 
 /* ==========================================================================
@@ -120,14 +109,130 @@ button, input, select, textarea {
   color: inherit;
 }
 
-/* Focus Ring Standards for Accessibility */
 :focus-visible {
   outline: 2px solid var(--accent-primary);
   outline-offset: 2px;
 }
 
 /* ==========================================================================
-   3. MAIN LAYOUT CONTAINERS & AD SLOTS
+   3. HEADER & NAVBAR LAYOUT (MATCHING COMPONENTS.JS)
+   ========================================================================== */
+#site-header {
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: #0f172a; /* Fixed dark header backdrop for crisp contrast */
+  border-bottom: 1px solid #1e293b;
+}
+
+.cms-navbar {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.cms-container {
+  max-width: var(--max-content-width);
+  width: 100%;
+  margin: 0 auto;
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.cms-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 1.25rem;
+  color: #f8fafc;
+  flex-shrink: 0;
+}
+
+.cms-brand-logo {
+  font-size: 1.5rem;
+}
+
+.cms-brand-title {
+  letter-spacing: -0.02em;
+}
+
+.cms-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-left: auto;
+}
+
+.cms-nav-item {
+  color: #94a3b8;
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: color var(--transition-fast);
+}
+
+.cms-nav-item:hover {
+  color: #f8fafc;
+}
+
+/* Horizontal Sub-Silo Slider Track */
+.cms-slider-nav-container {
+  width: 100%;
+  background-color: #1e293b;
+  border-top: 1px solid #334155;
+  overflow-x: auto;
+  scrollbar-width: none; /* Hide scrollbar for Firefox */
+  -ms-overflow-style: none; /* Hide scrollbar for IE/Edge */
+}
+
+.cms-slider-nav-container::-webkit-scrollbar {
+  display: none; /* Hide scrollbar for Chrome/Safari */
+}
+
+.cms-slider-track {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+  white-space: nowrap;
+}
+
+.cms-slider-item {
+  color: #cbd5e1;
+  text-decoration: none;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--border-radius-full);
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.cms-slider-item:hover {
+  color: #f8fafc;
+  border-color: #3b82f6;
+  background-color: rgba(59, 130, 246, 0.1);
+}
+
+.cms-slider-item.active {
+  background-color: #2563eb;
+  color: #ffffff;
+  border-color: #2563eb;
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   4. MAIN CONTENT & DIRECTORY CONTAINERS
    ========================================================================== */
 .cms-main-wrapper {
   max-width: var(--max-content-width);
@@ -139,7 +244,6 @@ button, input, select, textarea {
   flex-direction: column;
 }
 
-/* Silent Ad Slot Placements */
 #cms-ad-slot-1,
 #cms-ad-slot-2 {
   width: 100%;
@@ -148,10 +252,9 @@ button, input, select, textarea {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 0; /* Prevents CLS prior to programmatic deployment */
+  min-height: 0;
 }
 
-/* Hero Section Styling */
 .cms-hero-block {
   text-align: left;
   margin-bottom: 2rem;
@@ -159,7 +262,7 @@ button, input, select, textarea {
 }
 
 .cms-hero-block h1 {
-  font-size: Clamp(1.75rem, 4vw, 2.5rem);
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
   font-weight: 800;
   letter-spacing: -0.03em;
   color: var(--text-primary);
@@ -168,14 +271,14 @@ button, input, select, textarea {
 }
 
 .cms-hero-block p {
-  font-size: Clamp(0.95rem, 2vw, 1.1rem);
+  font-size: clamp(0.95rem, 2vw, 1.1rem);
   color: var(--text-secondary);
   max-width: 800px;
   line-height: 1.6;
 }
 
 /* ==========================================================================
-   4. DIRECTORY FILTER CONTROLS
+   5. REGIONAL FILTER PILLS & DIRECTORY GRID (120+ TOOLS OPTIMIZED)
    ========================================================================== */
 .cms-directory-controls {
   width: 100%;
@@ -203,7 +306,7 @@ button, input, select, textarea {
   cursor: pointer;
   transition: all var(--transition-fast);
   user-select: none;
-  touch-action: manipulation; /* Prevents zoom delay on mobile tap */
+  touch-action: manipulation;
 }
 
 .cms-filter-btn:hover {
@@ -219,9 +322,6 @@ button, input, select, textarea {
   box-shadow: var(--shadow-sm);
 }
 
-/* ==========================================================================
-   5. GRID & CARD COMPONENT (SCALED FOR 120+ UNITS)
-   ========================================================================== */
 .cms-directory-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -230,7 +330,6 @@ button, input, select, textarea {
   margin-bottom: 3rem;
 }
 
-/* High-Performance Tool Card Architecture */
 .cms-tool-card {
   background-color: var(--bg-primary);
   border: 1px solid var(--border-color);
@@ -243,10 +342,10 @@ button, input, select, textarea {
   transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
   height: 100%;
 
-  /* CRITICAL: DOM SCALING & RENDER PERFORMANCE FIXES (120+ NODES) */
-  content-visibility: auto; /* Skips off-screen rendering pipeline */
-  contain-intrinsic-size: 1px 240px; /* Placeholder box dimension for smooth scrolling */
-  contain: layout style paint; /* Isolates local reflows from the document root */
+  /* Render Containment Engine for 120+ DOM nodes */
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 240px;
+  contain: layout style paint;
 }
 
 .cms-tool-card:hover {
@@ -294,7 +393,7 @@ button, input, select, textarea {
   justify-content: center;
   text-align: center;
   width: 100%;
-  min-height: 44px; /* Mandatory mobile accessibility touch boundary */
+  min-height: 44px;
   padding: 0.65rem 1rem;
   background-color: var(--bg-secondary);
   border: 1px solid var(--border-color);
@@ -313,7 +412,6 @@ button, input, select, textarea {
   border-color: var(--accent-primary);
 }
 
-/* Fallback Empty Search State */
 .cms-no-results {
   grid-column: 1 / -1;
   text-align: center;
@@ -332,62 +430,233 @@ button, input, select, textarea {
 }
 
 /* ==========================================================================
-   6. FOOTER TEXT SEO BLOCK
+   6. FOOTER ENGINE MATRIX (MATCHING COMPONENTS.JS SECTION 5.4)
    ========================================================================== */
-.cms-footer-text-block {
+#site-footer {
+  width: 100%;
+  background-color: #0f172a; /* Dark footer backdrop */
+  border-top: 1px solid #1e293b;
+  color: #cbd5e1;
   margin-top: auto;
-  padding: 2rem;
-  background-color: var(--bg-primary);
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius-lg);
-  box-shadow: var(--shadow-sm);
 }
 
-.cms-footer-text-block h2 {
-  font-size: 1.35rem;
+.cms-footer {
+  padding: 3rem 0 1.5rem 0;
+  width: 100%;
+}
+
+.cms-footer .cms-container {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.cms-footer-content {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.cms-footer-brand {
+  max-width: 420px;
+}
+
+.cms-footer-brand h3 {
+  color: #f8fafc;
+  font-size: 1.25rem;
   font-weight: 800;
-  color: var(--text-primary);
   margin-bottom: 0.75rem;
-  letter-spacing: -0.02em;
 }
 
-.cms-footer-text-block p {
-  font-size: 0.925rem;
-  color: var(--text-secondary);
+.cms-footer-brand p {
+  font-size: 0.875rem;
+  color: #94a3b8;
   line-height: 1.6;
+}
+
+.cms-footer-column h4,
+.cms-footer-catalog-matrix h4 {
+  color: #f8fafc;
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   margin-bottom: 1rem;
 }
 
-.cms-footer-text-block p:last-child {
-  margin-bottom: 0;
+.cms-footer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.cms-footer-links a {
+  color: #94a3b8;
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: color var(--transition-fast);
+}
+
+.cms-footer-links a:hover {
+  color: #3b82f6;
+}
+
+.cms-footer-catalog-matrix {
+  border-top: 1px solid #1e293b;
+  padding-top: 2rem;
+  width: 100%;
+}
+
+.cms-footer-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.75rem 1.5rem;
+}
+
+.cms-footer-grid a {
+  color: #94a3b8;
+  text-decoration: none;
+  font-size: 0.8125rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color var(--transition-fast);
+}
+
+.cms-footer-grid a:hover {
+  color: #f8fafc;
+}
+
+.cms-footer-bottom {
+  border-top: 1px solid #1e293b;
+  padding-top: 1.5rem;
+  text-align: center;
+  font-size: 0.8125rem;
+  color: #64748b;
 }
 
 /* ==========================================================================
-   7. RESPONSIVE MEDIA QUERIES
+   7. COMPLIANCE DISCLAIMER & TOAST POPUP (SECTIONS 5.5 & 8)
    ========================================================================== */
-/* Tablet Viewport Optimization */
+.cms-compliance-disclaimer {
+  max-width: var(--max-content-width);
+  margin: 2rem auto;
+  padding: 1rem 1.25rem;
+  background-color: rgba(234, 179, 8, 0.1);
+  border: 1px solid rgba(234, 179, 8, 0.3);
+  border-radius: var(--border-radius-md);
+  color: var(--text-secondary);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
+.cms-compliance-disclaimer strong {
+  color: #eab308;
+}
+
+/* Dynamic Notification Toast */
+.cms-notification-toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 300px;
+  background-color: #1e293b;
+  border: 1px solid #334155;
+  border-radius: var(--border-radius-lg);
+  padding: 1rem;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cms-notification-toast.reveal {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cms-toast-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.cms-toast-header .cms-toast-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #3b82f6;
+  letter-spacing: 0.05em;
+}
+
+.cms-toast-close {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  font-size: 1.25rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+}
+
+.cms-toast-close:hover {
+  color: #f8fafc;
+}
+
+.cms-toast-body {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #f8fafc;
+  margin-bottom: 0.75rem;
+}
+
+.cms-toast-action {
+  display: inline-block;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #60a5fa;
+  text-decoration: none;
+}
+
+.cms-toast-action:hover {
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   8. RESPONSIVE MEDIA QUERIES
+   ========================================================================== */
 @media (max-width: 1024px) {
   .cms-directory-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1.25rem;
   }
+
+  .cms-footer-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
-/* Mobile Viewport Optimization */
 @media (max-width: 640px) {
-  .cms-main-wrapper {
-    padding: 1.25rem 0.875rem;
+  .cms-container {
+    flex-wrap: wrap;
+  }
+
+  .cms-nav-links {
+    margin-left: 0;
   }
 
   .cms-directory-grid {
-    grid-template-columns: 1fr; /* Single column stack */
+    grid-template-columns: 1fr;
     gap: 1rem;
-    margin-bottom: 2rem;
   }
 
   .cms-tool-card {
     padding: 1.25rem;
-    contain-intrinsic-size: 1px 210px; /* Reduced box estimate for mobile screens */
+    contain-intrinsic-size: 1px 210px;
   }
 
   .cms-filter-buttons {
@@ -397,11 +666,17 @@ button, input, select, textarea {
   .cms-filter-btn {
     padding: 0.5rem 0.875rem;
     font-size: 0.8125rem;
-    flex: 1 1 auto; /* Allow buttons to expand evenly on tight screens */
+    flex: 1 1 auto;
     text-align: center;
   }
 
-  .cms-footer-text-block {
-    padding: 1.25rem;
+  .cms-footer-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cms-notification-toast {
+    left: 20px;
+    right: 20px;
+    width: auto;
   }
 }
