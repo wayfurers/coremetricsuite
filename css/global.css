@@ -107,28 +107,10 @@ main, .dark-theme-page, .calc-container {
   width: 100%;
   max-width: 1280px;
   margin: 0 auto;
+  min-height: calc(100vh - 64px - 44px); /* Subtracts Navbar & Slider Heights to anchor content */
+  position: relative; /* Isolates internal positioning contexts */
+  clear: both; /* Prevents un-cleared floats from forcing components together */
   transition: max-width 0.2s ease, margin 0.2s ease;
-}
-
-a {
-  color: var(--accent-color);
-  text-decoration: none;
-  transition: color var(--transition-fast);
-}
-
-a:hover {
-  color: var(--accent-hover);
-}
-
-img, svg, video {
-  max-width: 100%;
-  height: auto;
-  display: block;
-}
-
-button, input, select, textarea {
-  font: inherit;
-  color: inherit;
 }
 
 /* ============================================================================
@@ -476,5 +458,17 @@ body[data-theme="dark"] .cms-compliance-disclaimer {
   .cms-footer-bottom {
     flex-direction: row;
     text-align: left;
+  }
+}
+/* ============================================================================
+ * RESPONSIVE ADJUSTMENTS FOR FIXED SYSTEM LAYOUTS
+ * ============================================================================ */
+@media (max-width: 768px) {
+  .cms-notification-toast {
+    position: static; /* Removes absolute pin, forcing it into natural document order */
+    width: 100%;
+    margin-top: 20px;
+    transform: none !important;
+    opacity: 1 !important;
   }
 }
