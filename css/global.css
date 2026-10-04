@@ -1070,4 +1070,157 @@ label {
     100% { left: 100%; }
 }
 
+   /* ==========================================================================
+   Core Metric Suite - Layout Engine Visual Styling
+   ========================================================================== */
+
+/* --- Base Structural Alignment --- */
+#site-header {
+    width: 100%;
+    background-color: #0f172a;
+    border-bottom: 1px solid #1e293b;
+    font-family: system-ui, -apple-system, sans-serif;
+}
+
+.cms-navbar {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.cms-container {
+    max-width: 1280px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+
+/* --- Brand Logo & Title --- */
+.cms-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: #f8fafc;
+    font-weight: 700;
+    font-size: 18px;
+}
+.cms-brand-logo { font-size: 20px; }
+
+/* --- Top Navigation Items --- */
+.cms-nav-links {
+    display: flex;
+    gap: 20px;
+    margin-left: auto;
+    margin-right: 25px;
+}
+
+.cms-nav-item {
+    text-decoration: none;
+    color: #94a3b8;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+.cms-nav-item:hover { color: #3b82f6; }
+
+/* --- Interactive Slider Track Container --- */
+.cms-slider-nav-container {
+    width: 100%;
+    background-color: #1e293b;
+    border-top: 1px solid #334155;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+}
+.cms-slider-nav-container::-webkit-scrollbar { display: none; } /* Hides bar */
+
+.cms-slider-track {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 10px 20px;
+    display: flex;
+    gap: 15px;
+    box-sizing: border-box;
+}
+
+.cms-slider-item {
+    text-decoration: none;
+    color: #94a3b8;
+    font-size: 13px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+.cms-slider-item:hover, .cms-slider-item.active {
+    color: #f8fafc;
+    background-color: #334155;
+}
+
+/* --- Privacy-First Footprint Grid --- */
+#site-footer {
+    width: 100%;
+    background-color: #0f172a;
+    border-top: 1px solid #1e293b;
+    color: #94a3b8;
+    font-family: system-ui, -apple-system, sans-serif;
+    margin-top: 60px;
+}
+
+.cms-footer { padding: 40px 20px; }
+.cms-footer-content {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    justify-content: space-between;
+}
+
+.cms-footer-brand { flex: 1 1 300px; }
+.cms-footer-brand h3 { color: #f8fafc; margin: 0 0 12px 0; font-size: 20px; }
+.cms-footer-brand p { font-size: 14px; line-height: 1.6; color: #64748b; margin: 0; }
+
+.cms-footer-column { flex: 0 1 180px; }
+.cms-footer-column h4, .cms-footer-catalog-matrix h4 { color: #f8fafc; margin: 0 0 16px 0; font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em; }
+.cms-footer-links { list-style: none; padding: 0; margin: 0; }
+.cms-footer-links li { margin-bottom: 10px; }
+.cms-footer-links a { color: #94a3b8; text-decoration: none; font-size: 14px; transition: color 0.2s ease; }
+.cms-footer-links a:hover { color: #3b82f6; }
+
+.cms-footer-catalog-matrix { width: 100%; max-width: 1280px; margin: 30px auto 0 auto; border-top: 1px solid #1e293b; padding-top: 30px; }
+.cms-footer-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+.cms-footer-grid a { color: #64748b; text-decoration: none; font-size: 13px; transition: color 0.15s ease; }
+.cms-footer-grid a:hover { color: #f8fafc; }
+
+.cms-footer-bottom { max-width: 1280px; margin: 30px auto 0 auto; border-top: 1px solid #1e293b; padding-top: 20px; text-align: center; font-size: 13px; color: #475569; }
+
+/* --- YMYL Compliance Container --- */
+.cms-compliance-disclaimer {
+    max-width: 1280px;
+    margin: 25px auto;
+    padding: 16px 20px;
+    background-color: #1e293b;
+    border-left: 4px solid #eab308;
+    border-radius: 4px;
+    color: #94a3b8;
+    font-size: 13px;
+    line-height: 1.5;
+    box-sizing: border-box;
+}
+.cms-compliance-disclaimer strong { color: #facc15; }
+
+/* --- Mobile Responsiveness Adaptations --- */
+@media (max-width: 768px) {
+    .cms-container { flex-direction: column; gap: 15px; align-items: stretch; text-align: center; }
+    .cms-nav-links { margin: 0 auto; justify-content: center; }
+    .cms-footer-content { flex-direction: column; gap: 30px; }
+}
+
 }
