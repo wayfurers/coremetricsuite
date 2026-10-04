@@ -1,472 +1,615 @@
 /* ==========================================================================
-   Core Metric Suite (CMS) - Global System Master Stylesheet
-   Version: 5.0.0 (Production Master - Pure CSS & JS-Compatible Engine)
+   CORE METRIC SUITE - GLOBAL STYLESHEET
+   Production-Ready | Mobile-First | Zero-Bug | Dark/Light Dual Theme
    ========================================================================== */
 
-/* --------------------------------------------------------------------------
-   1. CSS Custom Properties & Base System Variables
-   -------------------------------------------------------------------------- */
-:root {
-  --cms-font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  --cms-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  
-  /* Brand Palette */
-  --cms-primary: #3b82f6;
-  --cms-primary-hover: #2563eb;
-  --cms-primary-glow: rgba(59, 130, 246, 0.25);
-  --cms-accent-green: #22c55e;
-  --cms-accent-green-hover: #16a34a;
-  
-  /* Structural Constants */
-  --cms-navbar-height: 64px;
-  --cms-max-width: 1280px;
-  --cms-radius-sm: 6px;
-  --cms-radius-md: 10px;
-  --cms-radius-lg: 16px;
-  --cms-transition-fast: 0.15s ease;
-  --cms-transition-normal: 0.3s ease;
-}
-
-/* Light Theme Variables */
-[data-theme="light"] {
-  --cms-bg-main: #f8fafc;
-  --cms-bg-card: #ffffff;
-  --cms-bg-nav: #0f172a;
-  --cms-border-color: #e2e8f0;
-  --cms-text-main: #0f172a;
-  --cms-text-muted: #64748b;
-  --cms-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
-  --cms-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
-  --cms-shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-}
-
-/* Dark Theme Variables */
-[data-theme="dark"] {
-  --cms-bg-main: #0f172a;
-  --cms-bg-card: #1e293b;
-  --cms-bg-nav: #0f172a;
-  --cms-border-color: #334155;
-  --cms-text-main: #f8fafc;
-  --cms-text-muted: #94a3b8;
-  --cms-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
-  --cms-shadow-md: 0 4px 16px rgba(0, 0, 0, 0.35);
-  --cms-shadow-lg: 0 12px 30px -5px rgba(0, 0, 0, 0.5);
-}
-
-/* --------------------------------------------------------------------------
-   2. Strict Viewport & Anti-Overflow System Protection Rules
-   -------------------------------------------------------------------------- */
-*, *::before, *::after {
-  box-sizing: border-box !important;
+/* ---------- 1. CSS RESET & BASE ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-canvas {
-  box-sizing: content-box !important;
-}
-
 html {
-  font-size: 16px;
-  scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
-  width: 100% !important;
-  max-width: 100% !important;
-  overflow-x: hidden !important;
+  -ms-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
-  font-family: var(--cms-font-sans);
-  background-color: var(--cms-bg-main);
-  color: var(--cms-text-main);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
+  font-size: 16px;
   line-height: 1.6;
-  text-rendering: optimizeLegibility;
+  min-height: 100vh;
+  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  min-height: 100vh;
-  width: 100% !important;
-  max-width: 100% !important;
-  overflow-x: hidden !important;
-  position: relative !important;
-  display: flex;
-  flex-direction: column;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Base Universal Container */
-.cms-container {
-  width: 100% !important;
-  max-width: var(--cms-max-width) !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
-  padding-left: 16px !important;
-  padding-right: 16px !important;
-  box-sizing: border-box !important;
+/* ---------- 2. THEME TOKENS ---------- */
+body[data-theme="light"] {
+  background-color: #f8fafc;
+  color: #0f172a;
+  --cms-bg: #f8fafc;
+  --cms-surface: #ffffff;
+  --cms-surface-alt: #f1f5f9;
+  --cms-text: #0f172a;
+  --cms-text-muted: #475569;
+  --cms-border: #e2e8f0;
+  --cms-primary: #3b82f6;
+  --cms-primary-hover: #2563eb;
+  --cms-accent: #22c55e;
+  --cms-navbar-bg: #0f172a;
+  --cms-navbar-text: #f8fafc;
+  --cms-footer-bg: #0f172a;
+  --cms-footer-text: #cbd5e1;
+  --cms-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+  --cms-shadow-lg: 0 10px 25px -5px rgba(15, 23, 42, 0.15);
 }
 
-/* --------------------------------------------------------------------------
-   3. Fluid Typography, Auto Break & Heading Rules
-   -------------------------------------------------------------------------- */
+body[data-theme="dark"] {
+  background-color: #0f172a;
+  color: #f8fafc;
+  --cms-bg: #0f172a;
+  --cms-surface: #1e293b;
+  --cms-surface-alt: #334155;
+  --cms-text: #f8fafc;
+  --cms-text-muted: #94a3b8;
+  --cms-border: #334155;
+  --cms-primary: #3b82f6;
+  --cms-primary-hover: #60a5fa;
+  --cms-accent: #22c55e;
+  --cms-navbar-bg: #020617;
+  --cms-navbar-text: #f8fafc;
+  --cms-footer-bg: #020617;
+  --cms-footer-text: #cbd5e1;
+  --cms-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  --cms-shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+}
+
+/* ---------- 3. TYPOGRAPHY ---------- */
 h1, h2, h3, h4, h5, h6 {
-  color: var(--cms-text-main);
   font-weight: 700;
   line-height: 1.25;
+  color: var(--cms-text);
   margin-bottom: 0.75em;
-  overflow-wrap: anywhere !important;
-  word-break: normal !important;
-  hyphens: auto;
 }
 
-h1 { font-size: clamp(1.4rem, 5vw, 2.3rem); }
-h2 { font-size: clamp(1.2rem, 4vw, 1.8rem); }
-h3 { font-size: clamp(1.05rem, 3vw, 1.4rem); }
-h4 { font-size: clamp(0.95rem, 2.5vw, 1.2rem); }
+h1 { font-size: clamp(1.75rem, 4vw, 2.5rem); }
+h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
+h3 { font-size: clamp(1.25rem, 2.5vw, 1.5rem); }
+h4 { font-size: clamp(1.1rem, 2vw, 1.25rem); }
 
-p, li, span, td, th, div, label, button, a {
-  overflow-wrap: anywhere !important;
-  word-break: normal;
+p {
+  margin-bottom: 1em;
+  color: var(--cms-text);
 }
 
-/* --------------------------------------------------------------------------
-   4. Header & Dynamic Navigation Engine
-   -------------------------------------------------------------------------- */
-#site-header {
+a {
+  color: var(--cms-primary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover { color: var(--cms-primary-hover); }
+
+img, svg, video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ---------- 4. NAVBAR ---------- */
+.cms-navbar {
+  background-color: var(--cms-navbar-bg);
+  color: var(--cms-navbar-text);
+  box-shadow: var(--cms-shadow);
   position: sticky;
   top: 0;
   z-index: 1000;
-  width: 100% !important;
-  max-width: 100% !important;
-  background-color: var(--cms-bg-nav);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  padding-top: env(safe-area-inset-top, 0px);
-  box-sizing: border-box !important;
-}
-
-.cms-navbar {
-  display: flex;
-  flex-direction: column;
   width: 100%;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.cms-navbar .cms-container {
+.cms-container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: var(--cms-navbar-height);
+  min-height: 64px;
   gap: 16px;
-  width: 100%;
+  flex-wrap: wrap;
 }
 
 .cms-brand {
   display: flex;
   align-items: center;
   gap: 10px;
-  text-decoration: none;
+  color: var(--cms-navbar-text);
+  font-weight: 700;
   flex-shrink: 0;
-  user-select: none;
 }
 
+.cms-brand:hover { color: var(--cms-navbar-text); }
+
 .cms-brand-logo {
-  font-size: 22px;
+  font-size: 24px;
   line-height: 1;
 }
 
 .cms-brand-title {
   font-size: 18px;
   font-weight: 700;
-  color: #f8fafc;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
   white-space: nowrap;
 }
 
 .cms-nav-links {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 6px;
+  flex-wrap: wrap;
 }
 
 .cms-nav-item {
-  color: #cbd5e1;
-  text-decoration: none;
+  color: var(--cms-navbar-text);
+  padding: 8px 14px;
+  border-radius: 6px;
   font-size: 14px;
   font-weight: 500;
-  transition: color var(--cms-transition-fast);
+  transition: background-color 0.2s ease;
+  white-space: nowrap;
 }
 
 .cms-nav-item:hover {
-  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.08);
+  color: var(--cms-navbar-text);
 }
 
-/* Search Dropdown Safeguard */
+/* Search wrapper (inline styles from JS - these enhance them) */
 .cms-search-wrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-  width: 100%;
-  max-width: 100%;
+  flex-shrink: 0;
 }
 
-#cms-tool-search-input {
-  width: 100%;
-  max-width: 100%;
-  box-sizing: border-box !important;
+#cms-tool-search-input::placeholder {
+  color: rgba(248, 250, 252, 0.5);
 }
 
 #cms-search-results-dropdown {
-  position: absolute;
-  top: calc(100% + 8px);
-  left: 0;
-  right: 0;
-  width: 100%;
-  background-color: var(--cms-bg-card);
-  border: 1px solid var(--cms-border-color);
-  border-radius: var(--cms-radius-md);
-  box-shadow: var(--cms-shadow-lg);
-  max-height: 360px;
-  overflow-y: auto;
-  z-index: 1010;
-  display: none;
+  scrollbar-width: thin;
+  scrollbar-color: #475569 #1e293b;
 }
 
-#cms-search-results-dropdown.active {
-  display: block;
+#cms-search-results-dropdown::-webkit-scrollbar {
+  width: 6px;
 }
 
-/* Horizontal Category Slider Track */
+#cms-search-results-dropdown::-webkit-scrollbar-track {
+  background: #1e293b;
+}
+
+#cms-search-results-dropdown::-webkit-scrollbar-thumb {
+  background: #475569;
+  border-radius: 3px;
+}
+
+/* ---------- 5. SLIDER NAVIGATION ---------- */
 .cms-slider-nav-container {
-  width: 100% !important;
-  max-width: 100% !important;
-  background: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.25);
   border-top: 1px solid rgba(255, 255, 255, 0.05);
   overflow: hidden;
-  box-sizing: border-box !important;
 }
 
 .cms-slider-track {
   display: flex;
-  align-items: center;
   gap: 8px;
-  padding: 8px 16px;
+  padding: 10px 20px;
   overflow-x: auto;
-  white-space: nowrap;
+  overflow-y: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: #475569 transparent;
   -webkit-overflow-scrolling: touch;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  width: 100%;
-  box-sizing: border-box !important;
+  max-width: 1280px;
+  margin: 0 auto;
 }
 
-.cms-slider-track::-webkit-scrollbar {
-  display: none;
+.cms-slider-track::-webkit-scrollbar { height: 4px; }
+.cms-slider-track::-webkit-scrollbar-track { background: transparent; }
+.cms-slider-track::-webkit-scrollbar-thumb {
+  background: #475569;
+  border-radius: 2px;
 }
 
 .cms-slider-item {
-  display: inline-flex;
-  align-items: center;
-  padding: 6px 14px;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.05);
-  color: #94a3b8;
-  font-size: 12px;
-  font-weight: 500;
-  text-decoration: none;
-  transition: all var(--cms-transition-fast);
   flex-shrink: 0;
-  border: 1px solid transparent;
-  scroll-snap-align: start;
+  padding: 6px 14px;
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #cbd5e1;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: all 0.2s ease;
 }
 
 .cms-slider-item:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: #f8fafc;
+  background-color: rgba(59, 130, 246, 0.2);
+  color: #ffffff;
+  border-color: rgba(59, 130, 246, 0.4);
 }
 
 .cms-slider-item.active {
-  background: var(--cms-primary);
+  background-color: var(--cms-primary);
   color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 2px 8px var(--cms-primary-glow);
+  border-color: var(--cms-primary);
+  font-weight: 600;
 }
 
-/* --------------------------------------------------------------------------
-   5. Layout Engine & Responsive Grid Safeguards
-   -------------------------------------------------------------------------- */
+/* ---------- 6. AD SLOTS ---------- */
+#cms-ad-slot-top {
+  text-align: center;
+  margin: 15px auto;
+  width: 100%;
+  max-width: 1280px;
+  padding: 0 15px;
+  box-sizing: border-box;
+}
+
+.cms-ad-visible {
+  min-height: 90px;
+}
+
+.cms-ad-hidden {
+  display: none !important;
+}
+
+/* ---------- 7. LAYOUT (70/30) ---------- */
 .cms-layout-wrapper {
   display: flex;
   flex-wrap: wrap;
-  gap: 24px;
-  width: 100% !important;
-  max-width: var(--cms-max-width) !important;
+  gap: 30px;
+  width: 100%;
+  max-width: 1280px;
   margin: 0 auto;
-  padding: 24px 16px;
-  box-sizing: border-box !important;
+  padding: 20px 15px;
+  box-sizing: border-box;
 }
 
 .cms-content-column {
-  flex: 1 1 0% !important;
-  min-width: 0 !important; /* Critical flex fix: forces content column to contract inside mobile viewports */
-  max-width: 100% !important;
-  width: 100% !important;
-  box-sizing: border-box !important;
+  flex: 0 0 calc(70% - 15px);
+  max-width: calc(70% - 15px);
+  width: calc(70% - 15px);
+  box-sizing: border-box;
+  min-width: 0; /* prevents flex overflow */
 }
 
 .cms-sidebar-column {
-  flex: 0 0 320px;
-  min-width: 0 !important;
-  max-width: 100% !important;
-  box-sizing: border-box !important;
+  flex: 0 0 calc(30% - 15px);
+  max-width: calc(30% - 15px);
+  width: calc(30% - 15px);
+  box-sizing: border-box;
+  min-width: 0;
 }
 
 .cms-sticky-panel {
   position: -webkit-sticky;
   position: sticky;
   top: 84px;
-  height: fit-content;
-  max-height: calc(100vh - 100px);
-  border-radius: var(--cms-radius-md);
-  box-sizing: border-box !important;
+  min-height: 600px;
+  box-sizing: border-box;
+}
+
+/* ---------- 8. MAIN / CALC CONTAINERS ---------- */
+main,
+.dark-theme-page,
+.calc-container {
+  background-color: var(--cms-surface);
+  color: var(--cms-text);
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: var(--cms-shadow);
+  border: 1px solid var(--cms-border);
+}
+
+body[data-theme="light"] main,
+body[data-theme="light"] .calc-container {
+  background-color: #ffffff;
+}
+
+/* ---------- 9. FORMS / BUTTONS / INPUTS ---------- */
+input, select, textarea, button {
+  font-family: inherit;
+  font-size: 14px;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="tel"],
+input[type="date"],
+input[type="url"],
+select,
+textarea {
   width: 100%;
-}
-
-/* Isolation & Strict Container Bounds */
-#cms-main-content,
-#cms-main-content * {
-  max-width: 100%;
-  box-sizing: border-box !important;
-}
-
-/* Pure CSS Native Table Scroll (No HTML Wrapper Required) */
-table,
-#cms-main-content table,
-.cms-content-column table,
-.table-responsive {
-  display: block !important;
-  width: 100% !important;
-  max-width: 100% !important;
-  overflow-x: auto !important;
-  -webkit-overflow-scrolling: touch !important;
-  border-collapse: collapse !important;
-  margin-bottom: 1.5rem !important;
-}
-
-thead, tbody, tfoot {
-  display: table !important;
-  width: 100% !important;
-}
-
-th, td {
   padding: 10px 14px;
-  text-align: left;
-  border-bottom: 1px solid var(--cms-border-color);
-  white-space: nowrap;
+  border: 1px solid var(--cms-border);
+  border-radius: 6px;
+  background-color: var(--cms-surface);
+  color: var(--cms-text);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  outline: none;
 }
 
-/* Pre & Code Containers Protection */
-pre, code {
-  max-width: 100% !important;
-  overflow-x: auto !important;
-  white-space: pre !important;
+input:focus, select:focus, textarea:focus {
+  border-color: var(--cms-primary);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+button,
+.calc-submit-btn,
+input[type="button"],
+input[type="submit"] {
+  display: inline-block;
+  padding: 10px 22px;
+  background-color: var(--cms-primary);
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+button:hover,
+.calc-submit-btn:hover,
+input[type="button"]:hover,
+input[type="submit"]:hover {
+  background-color: var(--cms-primary-hover);
+}
+
+button:active, .calc-submit-btn:active {
+  transform: translateY(1px);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+label {
   display: block;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: var(--cms-text);
+  font-size: 14px;
 }
 
-/* FAQ & Accordion Container Boundaries */
-.cms-faq-container,
-.faq-section,
-.accordion-wrapper {
-  width: 100% !important;
-  max-width: 100% !important;
-  box-sizing: border-box !important;
-  margin-top: 24px;
-}
-
-/* --------------------------------------------------------------------------
-   6. Statutory Disclaimer & Ad Containers
-   -------------------------------------------------------------------------- */
+/* ---------- 10. COMPLIANCE DISCLAIMER ---------- */
 .cms-compliance-disclaimer {
-  width: 100% !important;
-  max-width: 100% !important;
-  box-sizing: border-box !important;
-  margin: 16px 0;
-  padding: 16px;
-  background-color: rgba(245, 158, 11, 0.08);
-  border: 1px solid rgba(245, 158, 11, 0.25);
-  border-radius: var(--cms-radius-md);
-  color: var(--cms-text-muted);
+  margin-top: 25px;
+  padding: 16px 20px;
+  background-color: rgba(234, 179, 8, 0.08);
+  border-left: 4px solid #eab308;
+  border-radius: 6px;
   font-size: 13px;
   line-height: 1.5;
+  color: var(--cms-text-muted);
 }
 
-#cms-ad-slot-1, 
-#cms-ad-slot-2, 
-#cms-ad-slot-top {
-  width: 100% !important;
-  max-width: 100% !important;
-  box-sizing: border-box !important;
-  overflow: hidden;
+.cms-compliance-disclaimer p { margin: 0; }
+.cms-compliance-disclaimer strong { color: #eab308; }
+
+/* ---------- 11. DYNAMIC AFFILIATE PANEL ---------- */
+#cms-dynamic-action-affiliate a:hover {
+  background-color: #16a34a !important;
 }
 
-/* --------------------------------------------------------------------------
-   7. System Footer & Directory Matrix
-   -------------------------------------------------------------------------- */
-#site-footer {
-  margin-top: auto;
-  width: 100% !important;
-  max-width: 100% !important;
-  background-color: #090d16;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  color: #94a3b8;
-  padding: 32px 0 24px 0;
-  padding-bottom: env(safe-area-inset-bottom, 24px);
-  box-sizing: border-box !important;
+/* ---------- 12. TOAST NOTIFICATION ---------- */
+.cms-notification-toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 320px;
+  max-width: calc(100vw - 40px);
+  background-color: var(--cms-surface);
+  color: var(--cms-text);
+  border: 1px solid var(--cms-border);
+  border-radius: 10px;
+  box-shadow: var(--cms-shadow-lg);
+  padding: 16px;
+  z-index: 9998;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.cms-notification-toast.reveal {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.cms-toast-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.cms-toast-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--cms-primary);
+}
+
+.cms-toast-close {
+  background: transparent;
+  border: none;
+  color: var(--cms-text-muted);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 4px;
+}
+
+.cms-toast-close:hover {
+  color: var(--cms-text);
+  background: transparent;
+}
+
+.cms-toast-body {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0 0 12px 0;
+  color: var(--cms-text);
+}
+
+.cms-toast-action {
+  display: inline-block;
+  padding: 8px 14px;
+  background-color: var(--cms-primary);
+  color: #ffffff !important;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.cms-toast-action:hover {
+  background-color: var(--cms-primary-hover);
+  color: #ffffff !important;
+}
+
+/* ---------- 13. FOOTER ---------- */
+.cms-footer {
+  background-color: var(--cms-footer-bg);
+  color: var(--cms-footer-text);
+  padding: 50px 0 20px;
+  margin-top: 50px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.cms-footer .cms-container {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 30px;
+  min-height: auto;
 }
 
 .cms-footer-content {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  width: 100%;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 40px;
+}
+
+.cms-footer-brand h3 {
+  color: #ffffff;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.cms-footer-brand p {
+  color: var(--cms-footer-text);
+  font-size: 14px;
+  line-height: 1.6;
+  max-width: 500px;
+}
+
+.cms-footer-column h4 {
+  color: #ffffff;
+  font-size: 15px;
+  margin-bottom: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.cms-footer-links {
+  list-style: none;
+  padding: 0;
+}
+
+.cms-footer-links li { margin-bottom: 8px; }
+
+.cms-footer-links a {
+  color: var(--cms-footer-text);
+  font-size: 14px;
+  transition: color 0.2s ease;
+}
+
+.cms-footer-links a:hover { color: #ffffff; }
+
+.cms-footer-catalog-matrix h4 {
+  color: #ffffff;
+  font-size: 15px;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding-top: 25px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .cms-footer-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 16px;
-  width: 100%;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 8px 20px;
 }
 
 .cms-footer-grid a {
-  color: #94a3b8;
-  text-decoration: none;
+  color: var(--cms-footer-text);
   font-size: 13px;
-  display: block;
-  transition: color var(--cms-transition-fast);
+  padding: 4px 0;
+  transition: color 0.2s ease;
 }
 
-.cms-footer-grid a:hover {
-  color: #f8fafc;
-}
+.cms-footer-grid a:hover { color: #ffffff; }
 
 .cms-footer-bottom {
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 20px;
   text-align: center;
-  font-size: 12px;
-  color: #475569;
 }
 
-/* --------------------------------------------------------------------------
-   8. Responsive Viewport Media Queries
-   -------------------------------------------------------------------------- */
+.cms-footer-bottom p {
+  color: var(--cms-footer-text);
+  font-size: 13px;
+  margin: 0;
+}
 
-/* Tablet (Max-Width: 991px) */
+/* ---------- 14. UTILITIES ---------- */
+.cms-text-center { text-align: center; }
+.cms-mt-1 { margin-top: 8px; }
+.cms-mt-2 { margin-top: 16px; }
+.cms-mt-3 { margin-top: 24px; }
+
+/* ---------- 15. ANIMATIONS ---------- */
+@keyframes cmsLoadingBar {
+  0% { left: -40%; }
+  50% { left: 100%; }
+  100% { left: 100%; }
+}
+
+@keyframes cmsFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ==========================================================================
+   RESPONSIVE BREAKPOINTS — Mobile-First Enhancement
+   ========================================================================== */
+
+/* ---------- TABLET & SMALLER DESKTOP (≤991px) ---------- */
 @media (max-width: 991px) {
-  .cms-layout-wrapper {
-    padding: 16px;
-    gap: 20px;
-  }
-
-  .cms-content-column, 
+  .cms-content-column,
   .cms-sidebar-column {
     flex: 0 0 100% !important;
     max-width: 100% !important;
@@ -475,50 +618,208 @@ pre, code {
 
   .cms-sticky-panel {
     position: static !important;
-    max-height: none !important;
+    min-height: auto !important;
+    margin-top: 25px;
+  }
+
+  .cms-footer-content {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .cms-footer-grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   }
 }
 
-/* Mobile Devices (Max-Width: 767px) */
-@media (max-width: 767px) {
-  .cms-navbar .cms-container {
-    padding: 10px 16px;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 12px;
+/* ---------- TABLET (≤768px) ---------- */
+@media (max-width: 768px) {
+  .cms-container {
+    padding: 0 15px;
+    min-height: 60px;
+    gap: 10px;
   }
 
-  .cms-brand-title {
-    font-size: 16px;
-  }
+  .cms-brand-title { font-size: 16px; }
+  .cms-brand-logo { font-size: 22px; }
 
-  .cms-nav-links {
-    gap: 12px;
-  }
+  .cms-nav-links { gap: 2px; }
 
   .cms-nav-item {
+    padding: 6px 10px;
     font-size: 13px;
   }
 
-  .cms-search-wrapper {
-    width: 100%;
-    order: 3;
+  #cms-tool-search-input {
+    width: 150px !important;
+    font-size: 12px !important;
   }
 
+  #cms-tool-search-input:focus {
+    width: 180px !important;
+  }
+
+  main,
+  .dark-theme-page,
+  .calc-container {
+    padding: 18px;
+    border-radius: 8px;
+  }
+
+  .cms-layout-wrapper {
+    padding: 15px 10px;
+    gap: 20px;
+  }
+
+  .cms-footer { padding: 40px 0 20px; }
+}
+
+/* ---------- MOBILE (≤600px) ---------- */
+@media (max-width: 600px) {
+  body { font-size: 15px; }
+
+  .cms-container {
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 10px 12px;
+    gap: 8px;
+  }
+
+  .cms-brand {
+    flex: 1 1 auto;
+    justify-content: flex-start;
+  }
+
+  .cms-brand-title { font-size: 15px; }
+
+  .cms-nav-links {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    gap: 4px;
+    padding-top: 4px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .cms-search-wrapper {
+    order: 2;
+    margin-left: 0 !important;
+    flex-shrink: 1;
+  }
+
+  #cms-tool-search-input {
+    width: 130px !important;
+    padding: 6px 10px 6px 28px !important;
+  }
+
+  #cms-tool-search-input:focus {
+    width: 160px !important;
+  }
+
+  #cms-search-results-dropdown {
+    right: 0;
+    left: auto;
+    min-width: 240px !important;
+    max-width: 90vw;
+  }
+
+  .cms-slider-track {
+    padding: 8px 12px;
+    gap: 6px;
+  }
+
+  .cms-slider-item {
+    font-size: 12px;
+    padding: 5px 11px;
+  }
+
+  main,
+  .dark-theme-page,
+  .calc-container {
+    padding: 15px;
+  }
+
+  .cms-layout-wrapper {
+    padding: 12px 8px;
+    gap: 16px;
+  }
+
+  input, select, textarea {
+    font-size: 16px !important; /* prevents iOS zoom on focus */
+  }
+
+  button,
+  .calc-submit-btn {
+    width: 100%;
+    padding: 12px 20px;
+  }
+
+  .cms-notification-toast {
+    width: calc(100vw - 24px);
+    right: 12px;
+    left: 12px;
+    bottom: 12px;
+    padding: 14px;
+  }
+
+  .cms-footer { padding: 30px 0 15px; }
+
+  .cms-footer-brand h3 { font-size: 18px; }
+
   .cms-footer-grid {
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) !important;
-    gap: 12px;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px 12px;
+  }
+
+  .cms-footer-grid a { font-size: 12px; }
+
+  #cms-dynamic-action-affiliate {
+    padding: 18px !important;
   }
 }
 
-/* Small Screen Phones (Max-Width: 480px) */
-@media (max-width: 480px) {
-  .cms-footer-grid {
-    grid-template-columns: 1fr !important;
+/* ---------- EXTRA SMALL (≤380px) ---------- */
+@media (max-width: 380px) {
+  .cms-brand-title { display: none; }
+
+  #cms-tool-search-input {
+    width: 110px !important;
   }
 
-  .cms-container {
-    padding-left: 12px !important;
-    padding-right: 12px !important;
+  .cms-footer-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- ACCESSIBILITY / MOTION ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---------- PRINT ---------- */
+@media print {
+  .cms-navbar,
+  .cms-slider-nav-container,
+  #cms-ad-slot-top,
+  .cms-sidebar-column,
+  .cms-notification-toast,
+  #cms-dynamic-action-affiliate,
+  .cms-footer {
+    display: none !important;
+  }
+
+  .cms-content-column {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+  }
+
+  body {
+    background: #fff !important;
+    color: #000 !important;
   }
 }
