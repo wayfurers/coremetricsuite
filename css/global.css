@@ -124,6 +124,7 @@ button, input, select, textarea {
   z-index: 1000;
   background-color: #0f172a; /* Fixed dark header backdrop for crisp contrast */
   border-bottom: 1px solid #1e293b;
+  min-height: 110px; /* Pre-allocated height to mitigate Cumulative Layout Shift */
 }
 
 .cms-navbar {
@@ -166,7 +167,6 @@ button, input, select, textarea {
   display: flex;
   align-items: center;
   gap: 1.5rem;
-  margin-left: auto;
 }
 
 .cms-nav-item {
@@ -181,6 +181,30 @@ button, input, select, textarea {
   color: #f8fafc;
 }
 
+.cms-search-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 1 1 200px;
+  max-width: 320px;
+}
+
+/* Dropdown Container Defaults */
+#cms-search-results-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  background-color: #1e293b;
+  border: 1px solid #334155;
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-lg);
+  z-index: 9999;
+  display: none;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
 /* Horizontal Sub-Silo Slider Track */
 .cms-slider-nav-container {
   width: 100%;
@@ -189,6 +213,7 @@ button, input, select, textarea {
   overflow-x: auto;
   scrollbar-width: none; /* Hide scrollbar for Firefox */
   -ms-overflow-style: none; /* Hide scrollbar for IE/Edge */
+  -webkit-overflow-scrolling: touch;
 }
 
 .cms-slider-nav-container::-webkit-scrollbar {
@@ -248,11 +273,11 @@ button, input, select, textarea {
 #cms-ad-slot-2 {
   width: 100%;
   max-width: var(--max-content-width);
-  margin: 0 auto;
+  margin: 15px auto;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 0;
+  min-height: 90px;
 }
 
 .cms-hero-block {
@@ -430,7 +455,7 @@ button, input, select, textarea {
 }
 
 /* ==========================================================================
-   6. FOOTER ENGINE MATRIX (MATCHING COMPONENTS.JS SECTION 5.4)
+   6. FOOTER ENGINE MATRIX
    ========================================================================== */
 #site-footer {
   width: 100%;
@@ -438,6 +463,7 @@ button, input, select, textarea {
   border-top: 1px solid #1e293b;
   color: #cbd5e1;
   margin-top: auto;
+  min-height: 300px; /* Layout Shift Protection */
 }
 
 .cms-footer {
@@ -538,7 +564,7 @@ button, input, select, textarea {
 }
 
 /* ==========================================================================
-   7. COMPLIANCE DISCLAIMER & TOAST POPUP (SECTIONS 5.5 & 8)
+   7. COMPLIANCE DISCLAIMER & TOAST POPUP
    ========================================================================== */
 .cms-compliance-disclaimer {
   max-width: var(--max-content-width);
@@ -627,7 +653,7 @@ button, input, select, textarea {
 }
 
 /* ==========================================================================
-   8. RESPONSIVE MEDIA QUERIES
+   8. RESPONSIVE MEDIA QUERIES (DESKTOP & MOBILE OPTIMIZED)
    ========================================================================== */
 @media (max-width: 1024px) {
   .cms-directory-grid {
@@ -640,13 +666,51 @@ button, input, select, textarea {
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
+  .cms-navbar {
+    padding: 0.5rem 0.75rem;
+  }
+
   .cms-container {
     flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: space-between;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .cms-brand {
+    font-size: 1.1rem;
   }
 
   .cms-nav-links {
     margin-left: 0;
+    gap: 0.85rem;
+  }
+
+  /* Force search wrapper to drop gracefully to full row on mobile */
+  .cms-search-wrapper {
+    width: 100%;
+    max-width: 100%;
+    flex: 1 1 100%;
+    order: 3;
+    margin-top: 0.25rem;
+  }
+
+  #cms-tool-search-input {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* CONSTRAIN MOBILE SUGGESTIONS DROPDOWN */
+  #cms-search-results-dropdown {
+    max-height: 200px !important;
+    overflow-y: auto !important;
+    border-radius: var(--border-radius-sm) !important;
+  }
+
+  #cms-search-results-dropdown a {
+    padding: 8px 10px !important;
+    font-size: 12px !important;
   }
 
   .cms-directory-grid {
@@ -679,44 +743,4 @@ button, input, select, textarea {
     right: 20px;
     width: auto;
   }
-/* Core Metric Suite - Layout Reserve CSS (Eliminates CLS) */
-#site-header {
-  min-height: 110px;
-  width: 100%;
-  display: block;
-}
-
-#cms-ad-slot-1 {
-  min-height: 90px;
-  width: 100%;
-  max-width: 1280px;
-  margin: 15px auto;
-  display: block;
-}
-
-#site-footer {
-  min-height: 300px;
-  width: 100%;
-  display: block;
-}
-   /* Core Metric Suite - Strict Pre-Allocation for Zero Shift */
-#site-header {
-  min-height: 110px;
-  width: 100%;
-  display: block;
-}
-
-#cms-ad-slot-1 {
-  min-height: 90px;
-  width: 100%;
-  max-width: 1280px;
-  margin: 15px auto;
-  display: block;
-}
-
-#site-footer {
-  min-height: 300px;
-  width: 100%;
-  display: block;
-}
 }
