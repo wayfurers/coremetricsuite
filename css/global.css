@@ -1,10 +1,10 @@
 /* ==========================================================================
-   Core Metric Suite (CMS) - Global System Stylesheet
-   Version: 3.8.0 (Production Master - Fully Audited & Verified)
+   Core Metric Suite (CMS) - Global System Master Stylesheet
+   Version: 5.0.0 (Production Master - Pure CSS & JS-Compatible Engine)
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
-   1. CSS Custom Properties & Base Variables
+   1. CSS Custom Properties & Base System Variables
    -------------------------------------------------------------------------- */
 :root {
   --cms-font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
@@ -17,7 +17,7 @@
   --cms-accent-green: #22c55e;
   --cms-accent-green-hover: #16a34a;
   
-  /* Shared Structural Constants */
+  /* Structural Constants */
   --cms-navbar-height: 64px;
   --cms-max-width: 1280px;
   --cms-radius-sm: 6px;
@@ -54,10 +54,10 @@
 }
 
 /* --------------------------------------------------------------------------
-   2. Reset & Strict Viewport Protection Rules
+   2. Strict Viewport & Anti-Overflow System Protection Rules
    -------------------------------------------------------------------------- */
 *, *::before, *::after {
-  box-sizing: border-box;
+  box-sizing: border-box !important;
   margin: 0;
   padding: 0;
 }
@@ -96,13 +96,38 @@ body {
 .cms-container {
   width: 100% !important;
   max-width: var(--cms-max-width) !important;
-  margin: 0 auto;
-  padding: 0 16px;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: 16px !important;
+  padding-right: 16px !important;
   box-sizing: border-box !important;
 }
 
 /* --------------------------------------------------------------------------
-   3. Header & Dynamic Navigation Bar
+   3. Fluid Typography, Auto Break & Heading Rules
+   -------------------------------------------------------------------------- */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--cms-text-main);
+  font-weight: 700;
+  line-height: 1.25;
+  margin-bottom: 0.75em;
+  overflow-wrap: anywhere !important;
+  word-break: normal !important;
+  hyphens: auto;
+}
+
+h1 { font-size: clamp(1.4rem, 5vw, 2.3rem); }
+h2 { font-size: clamp(1.2rem, 4vw, 1.8rem); }
+h3 { font-size: clamp(1.05rem, 3vw, 1.4rem); }
+h4 { font-size: clamp(0.95rem, 2.5vw, 1.2rem); }
+
+p, li, span, td, th, div, label, button, a {
+  overflow-wrap: anywhere !important;
+  word-break: normal;
+}
+
+/* --------------------------------------------------------------------------
+   4. Header & Dynamic Navigation Engine
    -------------------------------------------------------------------------- */
 #site-header {
   position: sticky;
@@ -115,14 +140,12 @@ body {
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   padding-top: env(safe-area-inset-top, 0px);
   box-sizing: border-box !important;
-  overflow: visible !important;
 }
 
 .cms-navbar {
   display: flex;
   flex-direction: column;
   width: 100%;
-  overflow: visible !important;
 }
 
 .cms-navbar .cms-container {
@@ -131,6 +154,7 @@ body {
   justify-content: space-between;
   min-height: var(--cms-navbar-height);
   gap: 16px;
+  width: 100%;
 }
 
 .cms-brand {
@@ -173,14 +197,13 @@ body {
   color: #ffffff;
 }
 
-/* Global Search Component */
+/* Search Dropdown Safeguard */
 .cms-search-wrapper {
   position: relative;
   display: flex;
   align-items: center;
   width: 100%;
   max-width: 100%;
-  overflow: visible !important;
 }
 
 #cms-tool-search-input {
@@ -189,12 +212,6 @@ body {
   box-sizing: border-box !important;
 }
 
-#cms-tool-search-input::-webkit-search-decoration,
-#cms-tool-search-input::-webkit-search-cancel-button {
-  -webkit-appearance: none;
-}
-
-/* Search Results Dropdown */
 #cms-search-results-dropdown {
   position: absolute;
   top: calc(100% + 8px);
@@ -215,7 +232,7 @@ body {
   display: block;
 }
 
-/* Category Slider Nav Track (Smooth Mobile Touch Optimization) */
+/* Horizontal Category Slider Track */
 .cms-slider-nav-container {
   width: 100% !important;
   max-width: 100% !important;
@@ -273,28 +290,12 @@ body {
 }
 
 /* --------------------------------------------------------------------------
-   4. Layout Engine & Strict Content Containment
+   5. Layout Engine & Responsive Grid Safeguards
    -------------------------------------------------------------------------- */
-#cms-ad-slot-top {
-  width: 100% !important;
-  max-width: 100% !important;
-  box-sizing: border-box !important;
-  overflow: hidden;
-}
-
-#cms-ad-slot-top.cms-ad-visible {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0, 0, 0, 0.02);
-  border-radius: var(--cms-radius-sm);
-  overflow: hidden;
-}
-
 .cms-layout-wrapper {
   display: flex;
   flex-wrap: wrap;
-  gap: 30px;
+  gap: 24px;
   width: 100% !important;
   max-width: var(--cms-max-width) !important;
   margin: 0 auto;
@@ -303,17 +304,17 @@ body {
 }
 
 .cms-content-column {
-  flex: 1 1 calc(70% - 15px);
-  min-width: 0 !important;
+  flex: 1 1 0% !important;
+  min-width: 0 !important; /* Critical flex fix: forces content column to contract inside mobile viewports */
   max-width: 100% !important;
+  width: 100% !important;
   box-sizing: border-box !important;
 }
 
 .cms-sidebar-column {
-  flex: 1 1 calc(30% - 15px);
-  max-width: 30%;
+  flex: 0 0 320px;
   min-width: 0 !important;
-  align-self: flex-start;
+  max-width: 100% !important;
   box-sizing: border-box !important;
 }
 
@@ -328,41 +329,59 @@ body {
   width: 100%;
 }
 
-/* Dynamic Tool & Content Internal Isolation Clamp */
+/* Isolation & Strict Container Bounds */
 #cms-main-content,
-#cms-main-content *:not(.cms-tooltip, .cms-popover) {
+#cms-main-content * {
   max-width: 100%;
   box-sizing: border-box !important;
 }
 
+/* Pure CSS Native Table Scroll (No HTML Wrapper Required) */
+table,
 #cms-main-content table,
-.cms-content-column table {
+.cms-content-column table,
+.table-responsive {
   display: block !important;
   width: 100% !important;
-  overflow-x: auto !important;
-  -webkit-overflow-scrolling: touch !important;
-}
-
-#cms-main-content pre,
-.cms-content-column pre {
-  display: block !important;
-  width: 100% !important;
-  white-space: pre !important;
-  overflow-x: auto !important;
-  word-break: normal !important;
-  -webkit-overflow-scrolling: touch !important;
-}
-
-#cms-main-content input,
-#cms-main-content select,
-#cms-main-content textarea,
-#cms-main-content canvas,
-#cms-main-content img {
   max-width: 100% !important;
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  border-collapse: collapse !important;
+  margin-bottom: 1.5rem !important;
+}
+
+thead, tbody, tfoot {
+  display: table !important;
+  width: 100% !important;
+}
+
+th, td {
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--cms-border-color);
+  white-space: nowrap;
+}
+
+/* Pre & Code Containers Protection */
+pre, code {
+  max-width: 100% !important;
+  overflow-x: auto !important;
+  white-space: pre !important;
+  display: block;
+}
+
+/* FAQ & Accordion Container Boundaries */
+.cms-faq-container,
+.faq-section,
+.accordion-wrapper {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  margin-top: 24px;
 }
 
 /* --------------------------------------------------------------------------
-   5. Compliance Disclaimer
+   6. Statutory Disclaimer & Ad Containers
    -------------------------------------------------------------------------- */
 .cms-compliance-disclaimer {
   width: 100% !important;
@@ -376,95 +395,15 @@ body {
   color: var(--cms-text-muted);
   font-size: 13px;
   line-height: 1.5;
-  word-break: break-word;
 }
 
-.cms-compliance-disclaimer strong {
-  color: #f59e0b;
-}
-
-/* --------------------------------------------------------------------------
-   6. Suggested Utility Notification Toast
-   -------------------------------------------------------------------------- */
-.cms-notification-toast {
-  position: fixed;
-  bottom: -160px;
-  right: 20px;
-  width: 320px;
-  max-width: calc(100vw - 32px);
-  background-color: #1e293b;
-  border: 1px solid #334155;
-  border-radius: var(--cms-radius-md);
-  padding: 16px;
-  box-shadow: var(--cms-shadow-lg);
-  z-index: 99999;
-  pointer-events: none;
-  visibility: hidden;
+#cms-ad-slot-1, 
+#cms-ad-slot-2, 
+#cms-ad-slot-top {
+  width: 100% !important;
+  max-width: 100% !important;
   box-sizing: border-box !important;
-  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), bottom 0.4s ease, visibility 0.4s;
-}
-
-.cms-notification-toast.reveal {
-  bottom: max(20px, env(safe-area-inset-bottom, 20px));
-  pointer-events: auto;
-  visibility: visible;
-}
-
-.cms-toast-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 8px;
-}
-
-.cms-toast-title {
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: #60a5fa;
-}
-
-.cms-toast-close {
-  background: transparent;
-  border: none;
-  color: #94a3b8;
-  font-size: 20px;
-  line-height: 1;
-  cursor: pointer;
-  padding: 0 4px;
-  transition: color var(--cms-transition-fast);
-}
-
-.cms-toast-close:hover {
-  color: #f8fafc;
-}
-
-.cms-toast-body {
-  font-size: 14px;
-  font-weight: 600;
-  color: #f8fafc;
-  margin-bottom: 12px;
-  line-height: 1.3;
-}
-
-.cms-toast-action {
-  display: block;
-  width: 100%;
-  padding: 10px 12px;
-  background-color: var(--cms-primary);
-  color: #ffffff;
-  text-align: center;
-  font-size: 12px;
-  font-weight: 600;
-  text-decoration: none;
-  border-radius: var(--cms-radius-sm);
-  transition: background-color var(--cms-transition-fast);
-  box-sizing: border-box !important;
-}
-
-.cms-toast-action:hover {
-  background-color: var(--cms-primary-hover);
+  overflow: hidden;
 }
 
 /* --------------------------------------------------------------------------
@@ -477,98 +416,35 @@ body {
   background-color: #090d16;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   color: #94a3b8;
-  padding-bottom: env(safe-area-inset-bottom, 0px);
-  box-sizing: border-box !important;
-  overflow: hidden;
-}
-
-.cms-footer {
   padding: 32px 0 24px 0;
-  width: 100%;
+  padding-bottom: env(safe-area-inset-bottom, 24px);
   box-sizing: border-box !important;
 }
 
 .cms-footer-content {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 24px;
-  margin-bottom: 24px;
-}
-
-.cms-footer-brand h3 {
-  color: #f8fafc;
-  font-size: 18px;
-  margin-bottom: 8px;
-}
-
-.cms-footer-brand p {
-  font-size: 13px;
-  line-height: 1.6;
-  color: #64748b;
-}
-
-.cms-footer-column h4 {
-  color: #f8fafc;
-  font-size: 14px;
-  margin-bottom: 12px;
-}
-
-.cms-footer-links {
-  list-style: none;
-}
-
-.cms-footer-links li {
-  margin-bottom: 8px;
-}
-
-.cms-footer-links a {
-  color: #94a3b8;
-  text-decoration: none;
-  font-size: 13px;
-  transition: color var(--cms-transition-fast);
-}
-
-.cms-footer-links a:hover {
-  color: #f8fafc;
-}
-
-.cms-footer-catalog-matrix {
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-  padding-top: 20px;
-  margin-bottom: 20px;
   width: 100%;
-  box-sizing: border-box !important;
-}
-
-.cms-footer-catalog-matrix h4 {
-  color: #cbd5e1;
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 14px;
 }
 
 .cms-footer-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px 14px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
   width: 100%;
-  box-sizing: border-box !important;
 }
 
 .cms-footer-grid a {
-  color: #64748b;
+  color: #94a3b8;
   text-decoration: none;
-  font-size: 12px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  font-size: 13px;
   display: block;
   transition: color var(--cms-transition-fast);
 }
 
 .cms-footer-grid a:hover {
-  color: #60a5fa;
+  color: #f8fafc;
 }
 
 .cms-footer-bottom {
@@ -580,10 +456,10 @@ body {
 }
 
 /* --------------------------------------------------------------------------
-   8. Responsive Mobile & Tablet Breakpoints
+   8. Responsive Viewport Media Queries
    -------------------------------------------------------------------------- */
 
-/* Tablet & Mobile Stack (Max-Width: 991px) */
+/* Tablet (Max-Width: 991px) */
 @media (max-width: 991px) {
   .cms-layout-wrapper {
     padding: 16px;
@@ -599,23 +475,17 @@ body {
 
   .cms-sticky-panel {
     position: static !important;
-    min-height: auto !important;
     max-height: none !important;
-    margin-top: 16px;
-  }
-
-  .cms-footer-content {
-    grid-template-columns: 1fr;
-    gap: 20px;
   }
 }
 
-/* Narrow Mobile Viewports (Max-Width: 767px) */
+/* Mobile Devices (Max-Width: 767px) */
 @media (max-width: 767px) {
   .cms-navbar .cms-container {
     padding: 10px 16px;
     flex-wrap: wrap;
-    gap: 10px;
+    justify-content: space-between;
+    gap: 12px;
   }
 
   .cms-brand-title {
@@ -636,14 +506,19 @@ body {
   }
 
   .cms-footer-grid {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) !important;
+    gap: 12px;
+  }
+}
+
+/* Small Screen Phones (Max-Width: 480px) */
+@media (max-width: 480px) {
+  .cms-footer-grid {
     grid-template-columns: 1fr !important;
-    gap: 10px;
   }
 
-  .cms-notification-toast {
-    right: 12px;
-    left: 12px;
-    width: auto;
-    max-width: 100%;
+  .cms-container {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
   }
 }
