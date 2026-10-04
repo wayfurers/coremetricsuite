@@ -1,6 +1,6 @@
 /* ==========================================================================
    Core Metric Suite (CMS) - Global System Stylesheet
-   Version: 3.1.0 (Production Master - Fully Audited & Bug-Free)
+   Version: 3.8.0 (Production Master - Fully Audited & Verified)
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
@@ -27,7 +27,7 @@
   --cms-transition-normal: 0.3s ease;
 }
 
-/* Light Theme Variables (Default Directory Engine) */
+/* Light Theme Variables */
 [data-theme="light"] {
   --cms-bg-main: #f8fafc;
   --cms-bg-card: #ffffff;
@@ -40,7 +40,7 @@
   --cms-shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
 }
 
-/* Dark Theme Variables (Calculation Tools & Workspaces) */
+/* Dark Theme Variables */
 [data-theme="dark"] {
   --cms-bg-main: #0f172a;
   --cms-bg-card: #1e293b;
@@ -54,7 +54,7 @@
 }
 
 /* --------------------------------------------------------------------------
-   2. Reset & Core Base Rules
+   2. Reset & Strict Viewport Protection Rules
    -------------------------------------------------------------------------- */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -62,10 +62,17 @@
   padding: 0;
 }
 
+canvas {
+  box-sizing: content-box !important;
+}
+
 html {
   font-size: 16px;
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: hidden !important;
 }
 
 body {
@@ -77,16 +84,21 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+  position: relative !important;
   display: flex;
   flex-direction: column;
 }
 
-/* Base Container */
+/* Base Universal Container */
 .cms-container {
-  width: 100%;
-  max-width: var(--cms-max-width);
+  width: 100% !important;
+  max-width: var(--cms-max-width) !important;
   margin: 0 auto;
   padding: 0 16px;
+  box-sizing: border-box !important;
 }
 
 /* --------------------------------------------------------------------------
@@ -96,23 +108,28 @@ body {
   position: sticky;
   top: 0;
   z-index: 1000;
+  width: 100% !important;
+  max-width: 100% !important;
   background-color: var(--cms-bg-nav);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   padding-top: env(safe-area-inset-top, 0px);
+  box-sizing: border-box !important;
+  overflow: visible !important;
 }
 
 .cms-navbar {
   display: flex;
   flex-direction: column;
   width: 100%;
+  overflow: visible !important;
 }
 
 .cms-navbar .cms-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: var(--cms-navbar-height);
+  min-height: var(--cms-navbar-height);
   gap: 16px;
 }
 
@@ -156,11 +173,20 @@ body {
   color: #ffffff;
 }
 
-/* Search Module Base Styles */
+/* Global Search Component */
 .cms-search-wrapper {
   position: relative;
   display: flex;
   align-items: center;
+  width: 100%;
+  max-width: 100%;
+  overflow: visible !important;
+}
+
+#cms-tool-search-input {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box !important;
 }
 
 #cms-tool-search-input::-webkit-search-decoration,
@@ -168,13 +194,13 @@ body {
   -webkit-appearance: none;
 }
 
-/* Search Results Dropdown Engine */
+/* Search Results Dropdown */
 #cms-search-results-dropdown {
   position: absolute;
   top: calc(100% + 8px);
   left: 0;
   right: 0;
-  min-width: 280px;
+  width: 100%;
   background-color: var(--cms-bg-card);
   border: 1px solid var(--cms-border-color);
   border-radius: var(--cms-radius-md);
@@ -189,21 +215,14 @@ body {
   display: block;
 }
 
-#cms-search-results-dropdown::-webkit-scrollbar {
-  width: 6px;
-}
-
-#cms-search-results-dropdown::-webkit-scrollbar-thumb {
-  background: #475569;
-  border-radius: 4px;
-}
-
-/* Category Slider Nav Track */
+/* Category Slider Nav Track (Smooth Mobile Touch Optimization) */
 .cms-slider-nav-container {
-  width: 100%;
+  width: 100% !important;
+  max-width: 100% !important;
   background: rgba(0, 0, 0, 0.2);
   border-top: 1px solid rgba(255, 255, 255, 0.05);
   overflow: hidden;
+  box-sizing: border-box !important;
 }
 
 .cms-slider-track {
@@ -214,7 +233,11 @@ body {
   overflow-x: auto;
   white-space: nowrap;
   -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
   scrollbar-width: none;
+  -ms-overflow-style: none;
+  width: 100%;
+  box-sizing: border-box !important;
 }
 
 .cms-slider-track::-webkit-scrollbar {
@@ -234,6 +257,7 @@ body {
   transition: all var(--cms-transition-fast);
   flex-shrink: 0;
   border: 1px solid transparent;
+  scroll-snap-align: start;
 }
 
 .cms-slider-item:hover {
@@ -249,13 +273,13 @@ body {
 }
 
 /* --------------------------------------------------------------------------
-   4. Monetization Slots & 70/30 Dynamic Layout Engine
+   4. Layout Engine & Strict Content Containment
    -------------------------------------------------------------------------- */
-
-/* Top Leaderboard Container */
 #cms-ad-slot-top {
-  box-sizing: border-box;
-  transition: min-height var(--cms-transition-normal);
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  overflow: hidden;
 }
 
 #cms-ad-slot-top.cms-ad-visible {
@@ -267,71 +291,96 @@ body {
   overflow: hidden;
 }
 
-/* Dynamic Layout Classes (Injected by JS when adsActive: true) */
 .cms-layout-wrapper {
   display: flex;
   flex-wrap: wrap;
   gap: 30px;
-  width: 100%;
-  max-width: var(--cms-max-width);
+  width: 100% !important;
+  max-width: var(--cms-max-width) !important;
   margin: 0 auto;
   padding: 24px 16px;
-  box-sizing: border-box;
+  box-sizing: border-box !important;
 }
 
 .cms-content-column {
   flex: 1 1 calc(70% - 15px);
-  min-width: 0;
-  box-sizing: border-box;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
 }
 
 .cms-sidebar-column {
-  flex: 0 0 calc(30% - 15px);
-  min-width: 0;
+  flex: 1 1 calc(30% - 15px);
+  max-width: 30%;
+  min-width: 0 !important;
   align-self: flex-start;
-  box-sizing: border-box;
+  box-sizing: border-box !important;
 }
 
 .cms-sticky-panel {
   position: -webkit-sticky;
   position: sticky;
   top: 84px;
-  min-height: 600px;
+  height: fit-content;
+  max-height: calc(100vh - 100px);
   border-radius: var(--cms-radius-md);
-  box-sizing: border-box;
+  box-sizing: border-box !important;
+  width: 100%;
+}
+
+/* Dynamic Tool & Content Internal Isolation Clamp */
+#cms-main-content,
+#cms-main-content *:not(.cms-tooltip, .cms-popover) {
+  max-width: 100%;
+  box-sizing: border-box !important;
+}
+
+#cms-main-content table,
+.cms-content-column table {
+  display: block !important;
+  width: 100% !important;
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+}
+
+#cms-main-content pre,
+.cms-content-column pre {
+  display: block !important;
+  width: 100% !important;
+  white-space: pre !important;
+  overflow-x: auto !important;
+  word-break: normal !important;
+  -webkit-overflow-scrolling: touch !important;
+}
+
+#cms-main-content input,
+#cms-main-content select,
+#cms-main-content textarea,
+#cms-main-content canvas,
+#cms-main-content img {
+  max-width: 100% !important;
 }
 
 /* --------------------------------------------------------------------------
-   5. Compliance Disclaimer & Affiliate Action Module
+   5. Compliance Disclaimer
    -------------------------------------------------------------------------- */
 .cms-compliance-disclaimer {
-  margin: 30px auto 10px auto;
-  padding: 16px 20px;
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  margin: 16px 0;
+  padding: 16px;
   background-color: rgba(245, 158, 11, 0.08);
   border: 1px solid rgba(245, 158, 11, 0.25);
   border-radius: var(--cms-radius-md);
   color: var(--cms-text-muted);
   font-size: 13px;
   line-height: 1.5;
+  word-break: break-word;
 }
 
 .cms-compliance-disclaimer strong {
   color: #f59e0b;
-}
-
-#cms-dynamic-action-affiliate {
-  animation: cmsFadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-@keyframes cmsFadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 /* --------------------------------------------------------------------------
@@ -339,21 +388,26 @@ body {
    -------------------------------------------------------------------------- */
 .cms-notification-toast {
   position: fixed;
-  bottom: -120px;
+  bottom: -160px;
   right: 20px;
   width: 320px;
-  max-width: calc(100vw - 40px);
+  max-width: calc(100vw - 32px);
   background-color: #1e293b;
   border: 1px solid #334155;
   border-radius: var(--cms-radius-md);
   padding: 16px;
   box-shadow: var(--cms-shadow-lg);
   z-index: 99999;
-  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), bottom 0.4s ease;
+  pointer-events: none;
+  visibility: hidden;
+  box-sizing: border-box !important;
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), bottom 0.4s ease, visibility 0.4s;
 }
 
 .cms-notification-toast.reveal {
   bottom: max(20px, env(safe-area-inset-bottom, 20px));
+  pointer-events: auto;
+  visibility: visible;
 }
 
 .cms-toast-header {
@@ -395,9 +449,9 @@ body {
 }
 
 .cms-toast-action {
-  display: inline-block;
+  display: block;
   width: 100%;
-  padding: 8px 12px;
+  padding: 10px 12px;
   background-color: var(--cms-primary);
   color: #ffffff;
   text-align: center;
@@ -406,6 +460,7 @@ body {
   text-decoration: none;
   border-radius: var(--cms-radius-sm);
   transition: background-color var(--cms-transition-fast);
+  box-sizing: border-box !important;
 }
 
 .cms-toast-action:hover {
@@ -413,44 +468,49 @@ body {
 }
 
 /* --------------------------------------------------------------------------
-   7. System Footer & Utility Directory Matrix
+   7. System Footer & Directory Matrix
    -------------------------------------------------------------------------- */
 #site-footer {
   margin-top: auto;
+  width: 100% !important;
+  max-width: 100% !important;
   background-color: #090d16;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   color: #94a3b8;
   padding-bottom: env(safe-area-inset-bottom, 0px);
+  box-sizing: border-box !important;
+  overflow: hidden;
 }
 
 .cms-footer {
-  padding: 48px 0 24px 0;
+  padding: 32px 0 24px 0;
+  width: 100%;
+  box-sizing: border-box !important;
 }
 
 .cms-footer-content {
   display: grid;
   grid-template-columns: 2fr 1fr;
-  gap: 40px;
-  margin-bottom: 40px;
+  gap: 24px;
+  margin-bottom: 24px;
 }
 
 .cms-footer-brand h3 {
   color: #f8fafc;
   font-size: 18px;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 
 .cms-footer-brand p {
   font-size: 13px;
   line-height: 1.6;
-  max-width: 480px;
   color: #64748b;
 }
 
 .cms-footer-column h4 {
   color: #f8fafc;
   font-size: 14px;
-  margin-bottom: 14px;
+  margin-bottom: 12px;
 }
 
 .cms-footer-links {
@@ -474,22 +534,26 @@ body {
 
 .cms-footer-catalog-matrix {
   border-top: 1px solid rgba(255, 255, 255, 0.05);
-  padding-top: 30px;
-  margin-bottom: 30px;
+  padding-top: 20px;
+  margin-bottom: 20px;
+  width: 100%;
+  box-sizing: border-box !important;
 }
 
 .cms-footer-catalog-matrix h4 {
   color: #cbd5e1;
-  font-size: 13px;
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
 .cms-footer-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 10px 16px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px 14px;
+  width: 100%;
+  box-sizing: border-box !important;
 }
 
 .cms-footer-grid a {
@@ -499,6 +563,7 @@ body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  display: block;
   transition: color var(--cms-transition-fast);
 }
 
@@ -508,17 +573,17 @@ body {
 
 .cms-footer-bottom {
   border-top: 1px solid rgba(255, 255, 255, 0.05);
-  padding-top: 20px;
+  padding-top: 16px;
   text-align: center;
   font-size: 12px;
   color: #475569;
 }
 
 /* --------------------------------------------------------------------------
-   8. Mobile & Tablet Responsive Optimization Breakpoints
+   8. Responsive Mobile & Tablet Breakpoints
    -------------------------------------------------------------------------- */
 
-/* Tablet & Smaller Laptops (Max-Width: 991px) */
+/* Tablet & Mobile Stack (Max-Width: 991px) */
 @media (max-width: 991px) {
   .cms-layout-wrapper {
     padding: 16px;
@@ -535,19 +600,19 @@ body {
   .cms-sticky-panel {
     position: static !important;
     min-height: auto !important;
-    margin-top: 20px;
+    max-height: none !important;
+    margin-top: 16px;
   }
 
   .cms-footer-content {
     grid-template-columns: 1fr;
-    gap: 24px;
+    gap: 20px;
   }
 }
 
-/* Mobile Devices (Max-Width: 767px) */
+/* Narrow Mobile Viewports (Max-Width: 767px) */
 @media (max-width: 767px) {
   .cms-navbar .cms-container {
-    height: auto;
     padding: 10px 16px;
     flex-wrap: wrap;
     gap: 10px;
@@ -563,44 +628,22 @@ body {
 
   .cms-nav-item {
     font-size: 13px;
-    padding: 6px 0;
   }
 
-  /* Full-Width Relative Search Module on Mobile */
   .cms-search-wrapper {
     width: 100%;
-    margin-left: 0 !important;
     order: 3;
   }
 
-  #cms-tool-search-input {
-    width: 100% !important;
-  }
-
-  #cms-tool-search-input:focus {
-    width: 100% !important;
-  }
-
-  #cms-search-results-dropdown {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    width: 100%;
-    min-width: 100%;
-    max-height: 60vh;
-    margin-top: 6px;
-  }
-
   .cms-footer-grid {
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 8px 12px;
+    grid-template-columns: 1fr !important;
+    gap: 10px;
   }
 
   .cms-notification-toast {
     right: 12px;
     left: 12px;
     width: auto;
-    max-width: none;
+    max-width: 100%;
   }
 }
