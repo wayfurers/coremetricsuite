@@ -2,6 +2,11 @@
    CORE METRIC SUITE - GLOBAL STYLESHEET
    Production-Ready | Mobile-First | Zero-Bug | Dark/Light Dual Theme
    ========================================================================== */
+/* Add this to your main CSS file */
+#site-header {
+    min-height: 84px; /* Matches the exact height of the incoming menu navbar */
+    background-color: #0f172a; /* Pre-paints the background color so it doesn't flash white */
+}
 
 /* ---------- 1. CSS RESET & BASE ---------- */
 *,
