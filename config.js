@@ -1,54 +1,87 @@
 /**
  * ============================================================================
- * CORE METRIC SUITE (CMS) - SITE CONFIGURATION & CATALOG
- * ============================================================================
- * File: config.js
- * Mode: MONETIZATION DISABLED / FAST CLIENT-SIDE RENDER
+ * CORE METRIC SUITE (CMS) - CONFIGURATION & MONETIZATION SWITCHBOARD
+ * File Name: config.js
+ * Mode: PRODUCTION / LAUNCH READY
  * ============================================================================
  */
 
 window.CMS_CONFIG = {
-  // --------------------------------------------------------------------------
-  // 1. MONETIZATION ENGINE (OFF)
-  // --------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
+  // 1. MONETIZATION & ANALYTICS SWITCHBOARD
+  // ---------------------------------------------------------------------------
   monetization: {
+    // Master Ad Toggle: Set to 'true' to enable ad rendering & 70/30 layout shifts
     adsActive: false,
-    adsense: {
-      clientId: "",
-      slotId: ""
+
+    // ACTIVE AD PROVIDER SETUP (AdSense + Media.net High-RPM Configuration)
+    adProvider: {
+      type: "adsense_medianet",
+      adsense_client_id: "ca-pub-XXXXXXXXXXXXXXXX",
+      adsense_slot_id: "1234567890",
+      medianet_sidebar_html: `<div id="medianet-sidebar-unit"><!-- Media.net Sidebar Ads Unit Code --></div>`
     },
-    medianet: {
-      customerID: "",
-      containerId: "medianet-sticky-unit",
-      crtype: "300x600"
+
+    /* 
+    =============================================================================
+    FUTURE MEDIAVINE SWITCH INSTRUCTIONS:
+    When ready for Mediavine, replace the 'adProvider' object above with this:
+
+    adProvider: {
+      type: "mediavine",
+      script_url: "https://scripts.mediavine.com/tags/your-site-id.js"
     },
-    grow: {
-      active: false,
-      scriptUrl: ""
+    =============================================================================
+    */
+
+    // ---------------------------------------------------------------------------
+    // TRACKING & ANALYTICS TOGGLES
+    // ---------------------------------------------------------------------------
+    tracking: {
+      // 🔴 MEDIAVINE GROW TOGGLE: Set to 'true' when ready to monitor/collect data
+      grow: {
+        active: false,
+        script_url: "https://grow.me"
+      },
+
+      // 🔴 GOOGLE ANALYTICS 4 TOGGLE: Set to 'true' when ready to run GA4
+      ga4: {
+        active: false,
+        measurement_id: "G-XXXXXXXXXX",
+        options: {
+          send_page_view: true,
+          anonymize_ip: true,
+          cookie_flags: "SameSite=None;Secure",
+          
+          // Custom Event Tracking Switches (Active only when ga4.active is true)
+          track_tool_calculations: true,
+          track_tool_search: true,
+          track_affiliate_clicks: true
+        }
+      }
     }
   },
 
-  // --------------------------------------------------------------------------
-  // 2. ANALYTICS & TRACKING
-  // --------------------------------------------------------------------------
-  analytics: {
-    ga4: {
-      active: false,
-      measurementId: ""
-    }
-  },
-
-  // --------------------------------------------------------------------------
-  // 3. AFFILIATE NETWORK OFFERS
-  // --------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
+  // 2. CATEGORY SILO AFFILIATE OFFERS
+  // ---------------------------------------------------------------------------
   affiliates: {
-    active: false,
-    offers: {}
+    active: false, // Set to 'true' to activate calculation delay offers
+    offers: {
+      "AU TAX": { url: "https://partnerstack.com" },
+      "AU LABOUR": { url: "https://partnerstack.com" },
+      "US TAX": { url: "https://partnerstack.com" },
+      "UK LEGAL": { url: "https://sjv.io" },
+      "UK TAX": { url: "https://sjv.io" },
+      "MEDIA": { url: "https://fiverr.com" },
+      "ECOM": { url: "https://pxf.io" },
+      "DEFAULT": { url: "https://your-default-hosting-affiliate.com" }
+    }
   },
 
-  // --------------------------------------------------------------------------
-  // 4. TIMING & BEHAVIORAL SETTINGS
-  // --------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
+  // 3. SYSTEM TIMING & BEHAVIORAL SETTINGS
+  // ---------------------------------------------------------------------------
   timing: {
     affiliateCalculationBufferMs: 600,
     affiliateLoaderDurationMs: 5000,
@@ -56,21 +89,30 @@ window.CMS_CONFIG = {
     toastRevealAnimationMs: 100
   },
 
-  // --------------------------------------------------------------------------
-  // 5. MASTER TOOLS CATALOG
-  // --------------------------------------------------------------------------
-  tools: [
+  // ---------------------------------------------------------------------------
+  // 4. MASTER TOOLS CATALOG
+  // ---------------------------------------------------------------------------
+  toolsCatalog: [
+    // --- AUSTRALIA SUITE ---
     { name: "AU Cents Per Km", url: "/au-cents-per-km-estimator", tag: "AU TAX" },
     { name: "AU SCHADS Allowance", url: "/au-schads-vehicle-allowance", tag: "AU LABOUR" },
     { name: "AU Superannuation Charge", url: "/au-superannuation-charge-tracker", tag: "AU TAX" },
+
+    // --- UNITED STATES SUITE ---
     { name: "US Section 179 Truck", url: "/us-section-179-truck-calculator", tag: "US TAX" },
     { name: "US LLC Late Penalty", url: "/us-llc-late-penalty-estimator", tag: "US TAX" },
+
+    // --- UNITED KINGDOM SUITE ---
     { name: "UK Form 4A Rent", url: "/uk-form-4a-rent-tracker", tag: "UK LEGAL" },
     { name: "UK Stamp Duty SDLT", url: "/uk-sdlt-bracket-estimator", tag: "UK TAX" },
     { name: "UK Section 8 Eviction", url: "/uk-section-8-calculator", tag: "UK LEGAL" },
+
+    // --- MEDIA & CREATOR SUITE ---
     { name: "Instagram Reels Preview", url: "/instagram-reels-preview", tag: "MEDIA" },
     { name: "YouTube Shorts UI Zone", url: "/shorts-ui-safe-zone", tag: "MEDIA" },
     { name: "TikTok Ad Safe Zone", url: "/tiktok-ad-safe-zone", tag: "MEDIA" },
+
+    // --- E-COMMERCE SUITE ---
     { name: "Shopify Metafields Parser", url: "/shopify-metafields-parser", tag: "ECOM" }
   ]
-};
+}; 
