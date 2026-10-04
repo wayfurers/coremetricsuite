@@ -112,6 +112,10 @@ img, svg, video {
   border-bottom: 1px solid #1e293b;
   font-family: system-ui, -apple-system, sans-serif;
 }
+#site-header {
+  min-height: 70px; /* Reserves layout space before JS navigation loads */
+  width: 100%;
+}
 
 .cms-navbar {
   display: flex;
