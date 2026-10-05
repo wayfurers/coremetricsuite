@@ -91,10 +91,18 @@
             padding: 0 1.5rem;
             display: grid;
             grid-template-columns: 400px 1fr;
+            grid-template-areas: 
+                "upload preview"
+                "panel preview";
             gap: 2rem;
         }
 
+        .upload-card-wrapper {
+            grid-area: upload;
+        }
+
         .panel {
+            grid-area: panel;
             background-color: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 12px;
@@ -245,7 +253,12 @@
         .btn-share-pin { background-color: #e60023; }
         .btn-share-copy { background-color: #374151; color: #fff; grid-column: span 3; margin-top: 0.25rem; }
 
-        .preview-stage { display: flex; flex-direction: column; align-items: center; }
+        .preview-stage { 
+            grid-area: preview;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+        }
         .canvas-wrapper {
             position: relative; width: 320px; height: 568px; border-radius: 16px;
             overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.6); background-color: #000;
@@ -316,12 +329,13 @@
             background: rgba(255,255,255,0.02); border-radius: 8px; display: block;
         }
 
-        /* Mobile Responsive Overrides */
+        /* Mobile Responsive Overrides: File upload first, then canvas preview */
         @media screen and (max-width: 900px) {
             html, body { width: 100%!important; max-width: 100vw!important; overflow-x: hidden!important; margin: 0!important; padding: 0!important; }
             main.container { display: flex!important; flex-direction: column!important; width: 100%!important; max-width: 100%!important; padding: 0 12px!important; margin: 8px auto!important; gap: 16px!important; box-sizing: border-box!important; }
-            main.container > section.preview-stage { order: -1!important; width: 100%!important; display: flex!important; flex-direction: column!important; align-items: center!important; margin: 0 auto!important; box-sizing: border-box!important; }
-            main.container > section.panel { order: 2!important; width: 100%!important; max-width: 100%!important; box-sizing: border-box!important; }
+            .upload-card-wrapper { order: 1!important; width: 100%!important; }
+            main.container > section.preview-stage { order: 2!important; width: 100%!important; display: flex!important; flex-direction: column!important; align-items: center!important; margin: 0 auto!important; box-sizing: border-box!important; }
+            main.container > section.panel { order: 3!important; width: 100%!important; max-width: 100%!important; box-sizing: border-box!important; }
             .canvas-wrapper { width: 75vw!important; height: 133.33vw!important; max-width: 290px!important; max-height: 515px!important; margin: 0 auto!important; box-sizing: border-box!important; }
             input, textarea, select { font-size: 16px!important; }
         }
@@ -337,20 +351,38 @@
 
     <!-- Main Tool Container -->
     <main class="container">
+        <!-- Module 1: File Upload Section (Rendered 1st on mobile) -->
+        <div class="upload-card-wrapper">
+            <div class="panel">
+                <div class="panel-title">
+                    <span>Upload Media File</span>
+                    <span class="badge">STEP 1</span>
+                </div>
+                <div class="drop-zone" id="dropZone">
+                    <p class="drop-title">Click or Drag Video / Image File</p>
+                    <p class="drop-sub">MP4, MOV, PNG, JPG (1080x1920 recommended)</p>
+                    <input type="file" id="fileInput" accept="image/*,video/*" style="display:none;">
+                </div>
+                <button class="btn-demo" id="loadDemoBtn" type="button" style="margin-bottom:0;">⚡ Load Demo Sample Data</button>
+            </div>
+        </div>
+
+        <!-- Module 2: Live Canvas Stage (Rendered 2nd on mobile) -->
+        <section class="preview-stage">
+            <div class="canvas-wrapper">
+                <canvas id="previewCanvas" width="1080" height="1920"></canvas>
+            </div>
+            <p class="canvas-caption">
+                Client-side preview canvas. Ensures text and key subjects remain centered for 1:1 grid safety.
+            </p>
+        </section>
+
+        <!-- Module 3: Tool Controls Panel (Rendered 3rd on mobile) -->
         <section class="panel">
             <div class="panel-title">
                 <span>Aspect Ratio Controls</span>
                 <span class="badge">REELS SPECS</span>
             </div>
-
-            <!-- Upload Box & Demo File CTA -->
-            <div class="drop-zone" id="dropZone">
-                <p class="drop-title">Click or Drag Video / Image File</p>
-                <p class="drop-sub">MP4, MOV, PNG, JPG (1080x1920 recommended)</p>
-                <input type="file" id="fileInput" accept="image/*,video/*" style="display:none;">
-            </div>
-            
-            <button class="btn-demo" id="loadDemoBtn" type="button">⚡ Load Demo Sample Data</button>
 
             <div class="form-group">
                 <label for="previewMode">Target Display Mode</label>
@@ -393,16 +425,6 @@
                     <button id="copyShareLink" type="button" class="btn-share btn-share-copy">🔗 Copy Tool Link</button>
                 </div>
             </div>
-        </section>
-
-        <!-- Canvas Stage Wrapper -->
-        <section class="preview-stage">
-            <div class="canvas-wrapper">
-                <canvas id="previewCanvas" width="1080" height="1920"></canvas>
-            </div>
-            <p class="canvas-caption">
-                Client-side preview canvas. Ensures text and key subjects remain centered for 1:1 grid safety.
-            </p>
         </section>
     </main>
 
