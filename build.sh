@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# 1. Protect your original 250px container layout shields to stop ad shifts (YOUR ORIGINAL CODE)
+# 1. Protect your original 250px container layout shields to stop ad shifts
 SHIELD="<style>#cms-ad-slot-top,#cms-ad-slot-1,.cms-medianet-box{display:block!important;height:250px!important;min-height:250px!important;max-height:250px!important;overflow:hidden!important;background-color:var(--cms-surface-alt)}</style>"
 
 # 2. Define the absolute, high-priority responsive layout rules for mobile viewports
@@ -13,11 +13,10 @@ find . -name "*.html" -type f | while read -r file; do
   if grep -q "</head>" "$file"; then
     # Inject your high-speed ad shield first
     perl -pi -e "s|<\/head>|${SHIELD}<\/head>|g" "$file"
-    # Inject the universal mobile responsive placeholder second
-    perl -pi -e "s|<\/head>|MOBILE_RULES PacTAG<\/head>|g" "$file"
     
-    # Safely swap out the plain text placeholder for the full responsive styling rules array
-    sed -i "s|MOBILE_RULES PacTAG|${MOBILE_RULES}|g" "$file"
+    # Inject the universal mobile responsive rules safely using Perl to prevent delimiter syntax crashes
+    export MOBILE_RULES
+    perl -pi -e 's|<\/head>|$ENV{MOBILE_RULES}<\/head>|g' "$file"
     
     echo "Successfully fortified layout container & injected mobile rules: $file"
   fi
