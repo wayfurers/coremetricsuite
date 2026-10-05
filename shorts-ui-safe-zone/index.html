@@ -91,10 +91,18 @@
             padding: 0 1.5rem;
             display: grid;
             grid-template-columns: 400px 1fr;
+            grid-template-areas: 
+                "upload preview"
+                "panel preview";
             gap: 2rem;
         }
 
+        .upload-card-wrapper {
+            grid-area: upload;
+        }
+
         .panel {
+            grid-area: panel;
             background-color: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 12px;
@@ -245,7 +253,12 @@
         .btn-share-pin { background-color: #e60023; }
         .btn-share-copy { background-color: #374151; color: #fff; grid-column: span 3; margin-top: 0.25rem; }
 
-        .preview-stage { display: flex; flex-direction: column; align-items: center; }
+        .preview-stage { 
+            grid-area: preview;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+        }
         .canvas-wrapper {
             position: relative; width: 320px; height: 568px; border-radius: 16px;
             overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.6); background-color: #000;
@@ -316,12 +329,13 @@
             background: rgba(255,255,255,0.02); border-radius: 8px; display: block;
         }
 
-        /* Mobile Responsive Overrides */
+        /* Mobile Responsive Overrides: File upload first, then canvas preview */
         @media screen and (max-width: 900px) {
             html, body { width: 100%!important; max-width: 100vw!important; overflow-x: hidden!important; margin: 0!important; padding: 0!important; }
             main.container { display: flex!important; flex-direction: column!important; width: 100%!important; max-width: 100%!important; padding: 0 12px!important; margin: 8px auto!important; gap: 16px!important; box-sizing: border-box!important; }
-            main.container > section.preview-stage { order: -1!important; width: 100%!important; display: flex!important; flex-direction: column!important; align-items: center!important; margin: 0 auto!important; box-sizing: border-box!important; }
-            main.container > section.panel { order: 2!important; width: 100%!important; max-width: 100%!important; box-sizing: border-box!important; }
+            .upload-card-wrapper { order: 1!important; width: 100%!important; }
+            main.container > section.preview-stage { order: 2!important; width: 100%!important; display: flex!important; flex-direction: column!important; align-items: center!important; margin: 0 auto!important; box-sizing: border-box!important; }
+            main.container > section.panel { order: 3!important; width: 100%!important; max-width: 100%!important; box-sizing: border-box!important; }
             .canvas-wrapper { width: 75vw!important; height: 133.33vw!important; max-width: 290px!important; max-height: 515px!important; margin: 0 auto!important; box-sizing: border-box!important; }
             input, textarea, select { font-size: 16px!important; }
         }
@@ -337,20 +351,38 @@
 
     <!-- Main Tool Container -->
     <main class="container">
+        <!-- Module 1: File Upload Section (Rendered 1st on mobile) -->
+        <div class="upload-card-wrapper">
+            <div class="panel">
+                <div class="panel-title">
+                    <span>Upload Media File</span>
+                    <span class="badge">STEP 1</span>
+                </div>
+                <div class="drop-zone" id="dropZone">
+                    <p class="drop-title">Click or Drag Video / Image File</p>
+                    <p class="drop-sub">MP4, MOV, PNG, JPG (1080x1920 recommended)</p>
+                    <input type="file" id="fileInput" accept="image/*,video/*" style="display:none;">
+                </div>
+                <button class="btn-demo" id="loadDemoBtn" type="button" style="margin-bottom:0;">⚡ Load Demo Sample Data</button>
+            </div>
+        </div>
+
+        <!-- Module 2: Live Canvas Stage (Rendered 2nd on mobile) -->
+        <section class="preview-stage">
+            <div class="canvas-wrapper">
+                <canvas id="previewCanvas" width="1080" height="1920"></canvas>
+            </div>
+            <p class="canvas-caption">
+                Interactive client-side canvas. Clear central zone (840x1120px) guarantees zero text clipping.
+            </p>
+        </section>
+
+        <!-- Module 3: Tool Controls Panel (Rendered 3rd on mobile) -->
         <section class="panel">
             <div class="panel-title">
                 <span>Safe Zone Controls</span>
                 <span class="badge">9:16 SPECS</span>
             </div>
-
-            <!-- Upload Box & Demo File CTA -->
-            <div class="drop-zone" id="dropZone">
-                <p class="drop-title">Click or Drag Video / Image File</p>
-                <p class="drop-sub">MP4, MOV, PNG, JPG (1080x1920 recommended)</p>
-                <input type="file" id="fileInput" accept="image/*,video/*" style="display:none;">
-            </div>
-            
-            <button class="btn-demo" id="loadDemoBtn" type="button">⚡ Load Demo Sample Data</button>
 
             <div class="toggle-group">
                 <span class="toggle-label">Shorts Audio Track Banner</span>
@@ -402,16 +434,6 @@
                 </div>
             </div>
         </section>
-
-        <!-- Canvas Stage Wrapper -->
-        <section class="preview-stage">
-            <div class="canvas-wrapper">
-                <canvas id="previewCanvas" width="1080" height="1920"></canvas>
-            </div>
-            <p class="canvas-caption">
-                Interactive client-side canvas. Clear central zone (840x1120px) guarantees zero text clipping.
-            </p>
-        </section>
     </main>
 
     <!-- SEO & Educational Guide Section -->
@@ -419,15 +441,15 @@
         <div class="content-card">
             <h1>YouTube Shorts UI Safe Zone Guide &amp; Mockup Studio</h1>
             <p>
-                When publishing vertical video content to YouTube Shorts, ensuring critical titles, captions, hooks, and call-to-actions remain entirely visible is vital for audience retention[cite: 6]. Unlike standard horizontal YouTube uploads, Shorts feature heavy native UI elements overlaid directly across the player interface—including the channel subscribe badge, title snippet, sound track info ticker, and the right-hand vertical interaction column (Like, Dislike, Comments, Remix, and Share buttons)[cite: 6].
+                When publishing vertical video content to YouTube Shorts, ensuring critical titles, captions, hooks, and call-to-actions remain entirely visible is vital for audience retention. Unlike standard horizontal YouTube uploads, Shorts feature heavy native UI elements overlaid directly across the player interface—including the channel subscribe badge, title snippet, sound track info ticker, and the right-hand vertical interaction column (Like, Dislike, Comments, Remix, and Share buttons).
             </p>
             <p>
-                This browser-based <strong>shorts-ui-safe-zone</strong> utility provides video creators, editors, and digital marketers with an instant sandbox to test 1080x1920 pixel (9:16) compositions[cite: 6]. Preview your layouts against YouTube mobile UI boundaries instantly, ensuring your creative elements remain protected before uploading[cite: 6].
+                This browser-based <strong>shorts-ui-safe-zone</strong> utility provides video creators, editors, and digital marketers with an instant sandbox to test 1080x1920 pixel (9:16) compositions. Preview your layouts against YouTube mobile UI boundaries instantly, ensuring your creative elements remain protected before uploading.
             </p>
 
             <h2>YouTube Shorts Safe Area Dimensions Breakdown</h2>
             <p>
-                Mobile aspect ratio variations across smartphones mean interface overlays can shift slightly[cite: 6]. Structuring your video graphics around precise boundary clearances prevents clipping across all devices[cite: 6]:
+                Mobile aspect ratio variations across smartphones mean interface overlays can shift slightly. Structuring your video graphics around precise boundary clearances prevents clipping across all devices:
             </p>
 
             <div class="table-responsive">
@@ -445,31 +467,31 @@
                             <td><strong>Top Margin</strong></td>
                             <td>0 px – 280 px</td>
                             <td><strong style="color: #ff4d4d;">High Risk</strong></td>
-                            <td>Reserved for search icon, cast button, camera shortcut, and top player headers[cite: 6].</td>
+                            <td>Reserved for search icon, cast button, camera shortcut, and top player headers.</td>
                         </tr>
                         <tr>
                             <td><strong>Bottom Margin</strong></td>
                             <td>1400 px – 1920 px</td>
                             <td><strong style="color: #ff4d4d;">High Risk</strong></td>
-                            <td>Contains channel handle, multi-line caption, subscribe button, and sound track ticker[cite: 6].</td>
+                            <td>Contains channel handle, multi-line caption, subscribe button, and sound track ticker.</td>
                         </tr>
                         <tr>
                             <td><strong>Right Margin</strong></td>
                             <td>880 px – 1080 px</td>
                             <td><strong style="color: #ff4d4d;">High Risk</strong></td>
-                            <td>Houses the vertical engagement column (Like, Dislike, Comments, Remix, Share)[cite: 6].</td>
+                            <td>Houses the vertical engagement column (Like, Dislike, Comments, Remix, Share).</td>
                         </tr>
                         <tr>
                             <td><strong>Left Margin</strong></td>
                             <td>0 px – 40 px</td>
                             <td><strong style="color: #ff944d;">Medium Risk</strong></td>
-                            <td>Buffer zone to protect against edge bezels and curved screen cropping[cite: 6].</td>
+                            <td>Buffer zone to protect against edge bezels and curved screen cropping.</td>
                         </tr>
                         <tr>
                             <td><strong>Central Safe Zone</strong></td>
                             <td>840 × 1120 px</td>
                             <td><strong style="color: #00ff80;">Optimal</strong></td>
-                            <td>The ideal focal area for primary hook text, facial alignment, and critical graphics[cite: 6].</td>
+                            <td>The ideal focal area for primary hook text, facial alignment, and critical graphics.</td>
                         </tr>
                     </tbody>
                 </table>
@@ -480,23 +502,23 @@
 
             <h2>Why UI Safe Zones Matter for Shorts Retention</h2>
             <p>
-                Viewers decide within the first two seconds whether to watch or swipe away from a YouTube Short[cite: 6]. If your primary hook or auto-caption text is obscured by the sound track marquee or like button counter, viewer confusion spikes, leading to immediate drop-off[cite: 6].
+                Viewers decide within the first two seconds whether to watch or swipe away from a YouTube Short. If your primary hook or auto-caption text is obscured by the sound track marquee or like button counter, viewer confusion spikes, leading to immediate drop-off.
             </p>
             <ul>
-                <li><strong>Text Overlay Legibility:</strong> Captions generated in editing apps must sit well above the lower 520px threshold to avoid overlapping with channel descriptions and audio titles[cite: 6].</li>
-                <li><strong>Graphic Alignment:</strong> Product callouts, arrows, and brand watermarks placed on the right-hand side will be hidden behind engagement icons unless kept within the left 880px boundary[cite: 6].</li>
-                <li><strong>Cross-Device Consistency:</strong> Taller mobile aspect ratios (like 19.5:9 or 20:9) crop horizontal bounds differently, making adherence to the central safe zone a necessity[cite: 6].</li>
+                <li><strong>Text Overlay Legibility:</strong> Captions generated in editing apps must sit well above the lower 520px threshold to avoid overlapping with channel descriptions and audio titles.</li>
+                <li><strong>Graphic Alignment:</strong> Product callouts, arrows, and brand watermarks placed on the right-hand side will be hidden behind engagement icons unless kept within the left 880px boundary.</li>
+                <li><strong>Cross-Device Consistency:</strong> Taller mobile aspect ratios (like 19.5:9 or 20:9) crop horizontal bounds differently, making adherence to the central safe zone a necessity.</li>
             </ul>
 
             <h2>Workflow Integration in Premiere Pro, CapCut, or DaVinci Resolve</h2>
             <p>
-                Integrating this safety check into your video editing pipeline takes only a few steps[cite: 6]:
+                Integrating this safety check into your video editing pipeline takes only a few steps:
             </p>
             <ol>
-                <li><strong>Generate Overlay Guide:</strong> Click the "Export 1080x1920 PNG Preview" button in our tool to save a transparent reference grid[cite: 6].</li>
-                <li><strong>Import to Timeline:</strong> Drop the PNG onto the uppermost track of your video editor (Adobe Premiere Pro, CapCut, DaVinci Resolve, or Final Cut Pro)[cite: 6].</li>
-                <li><strong>Reposition Elements:</strong> Adjust your text templates, subtitles, and graphical highlights so they fit cleanly inside the unshaded central box[cite: 6].</li>
-                <li><strong>Export Video:</strong> Delete or hide the guideline layer before rendering your final MP4 video file for upload[cite: 6].</li>
+                <li><strong>Generate Overlay Guide:</strong> Click the "Export 1080x1920 PNG Preview" button in our tool to save a transparent reference grid.</li>
+                <li><strong>Import to Timeline:</strong> Drop the PNG onto the uppermost track of your video editor (Adobe Premiere Pro, CapCut, DaVinci Resolve, or Final Cut Pro).</li>
+                <li><strong>Reposition Elements:</strong> Adjust your text templates, subtitles, and graphical highlights so they fit cleanly inside the unshaded central box.</li>
+                <li><strong>Export Video:</strong> Delete or hide the guideline layer before rendering your final MP4 video file for upload.</li>
             </ol>
 
             <h2>Frequently Asked Questions</h2>
@@ -504,35 +526,35 @@
                 <details class="faq-accordion" open>
                     <summary class="faq-summary">What are the exact YouTube Shorts safe zone dimensions for 1080x1920 videos?</summary>
                     <div class="faq-answer">
-                        For standard 1080x1920 vertical YouTube Shorts, keep essential text and titles clear of the top 280px and bottom 520px[cite: 6]. Additionally, maintain a 200px right-side margin to prevent interface buttons (like, comments, remix) from obscuring your visuals[cite: 6].
+                        For standard 1080x1920 vertical YouTube Shorts, keep essential text and titles clear of the top 280px and bottom 520px. Additionally, maintain a 200px right-side margin to prevent interface buttons (like, comments, remix) from obscuring your visuals.
                     </div>
                 </details>
 
                 <details class="faq-accordion">
                     <summary class="faq-summary">How does client-side frame checking protect user data privacy?</summary>
                     <div class="faq-answer">
-                        All uploaded video frames, images, canvas rendering, and safe area calculations are processed 100% locally inside your web browser using HTML5 Canvas[cite: 6]. No media files or creative assets are ever uploaded to any remote server[cite: 6].
+                        All uploaded video frames, images, canvas rendering, and safe area calculations are processed 100% locally inside your web browser using HTML5 Canvas. No media files or creative assets are ever uploaded to any remote server.
                     </div>
                 </details>
 
                 <details class="faq-accordion">
                     <summary class="faq-summary">How do I use a safe zone template PNG in CapCut or Premiere Pro?</summary>
                     <div class="faq-answer">
-                        Click the 'Export 1080x1920 PNG Preview' button to download a transparent reference template[cite: 6]. Place this image on the topmost track of your video timeline while positioning text and subtitles, then remove or disable the track before final export[cite: 6].
+                        Click the 'Export 1080x1920 PNG Preview' button to download a transparent reference template. Place this image on the topmost track of your video timeline while positioning text and subtitles, then remove or disable the track before final export.
                     </div>
                 </details>
 
                 <details class="faq-accordion">
                     <summary class="faq-summary">Why are my automatic captions getting covered by the YouTube Shorts interface?</summary>
                     <div class="faq-answer">
-                        Automatic captions and video descriptions occupy the bottom 400px to 500px of the mobile screen[cite: 6]. Hardcoded subtitles placed too low will clash with native text, making them difficult for viewers to read[cite: 6].
+                        Automatic captions and video descriptions occupy the bottom 400px to 500px of the mobile screen. Hardcoded subtitles placed too low will clash with native text, making them difficult for viewers to read.
                     </div>
                 </details>
 
                 <details class="faq-accordion">
                     <summary class="faq-summary">What video formats and aspect ratios are supported by this tool?</summary>
                     <div class="faq-answer">
-                        The utility supports standard image files (PNG, JPG) and vertical video containers (MP4, MOV)[cite: 6]. While any aspect ratio can be tested, a 9:16 vertical resolution (1080x1920 pixels) yields the most accurate preview results[cite: 6].
+                        The utility supports standard image files (PNG, JPG) and vertical video containers (MP4, MOV). While any aspect ratio can be tested, a 9:16 vertical resolution (1080x1920 pixels) yields the most accurate preview results.
                     </div>
                 </details>
             </div>
