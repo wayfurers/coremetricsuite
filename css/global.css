@@ -1,9 +1,10 @@
 /* ==========================================================================
-   CORE METRIC SUITE - GLOBAL STYLESHEET (OPTIMIZED)
-   Production-Ready | Mobile-First | Zero-Bug | Dark/Light Dual Theme
+   SECTION 1: CRITICAL CORE (INLINE IN HTML <HEAD>)
+   Minimal structural reset, theme design tokens, basic base rules,
+   and skeleton layout containers for zero-LCP/CLS header rendering.
    ========================================================================== */
 
-/* ---------- 1. CSS RESET & BASE ---------- */
+/* ---------- 1.1 STRUCTURAL RESET ---------- */
 *,
 *::before,
 *::after {
@@ -31,7 +32,7 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* ---------- 2. THEME TOKENS ---------- */
+/* ---------- 1.2 LIGHT / DARK THEME DESIGN TOKENS ---------- */
 body[data-theme="light"] {
   background-color: #f8fafc;
   color: #0f172a;
@@ -72,63 +73,22 @@ body[data-theme="dark"] {
   --cms-shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
 }
 
-/* ---------- 3. TYPOGRAPHY ---------- */
-h1, h2, h3, h4, h5, h6 {
-  font-weight: 700;
-  line-height: 1.25;
-  color: var(--cms-text);
-  margin-bottom: 0.75em;
-}
-
-h1 { font-size: clamp(1.75rem, 4vw, 2.5rem); }
-h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
-h3 { font-size: clamp(1.25rem, 2.5vw, 1.5rem); }
-h4 { font-size: clamp(1.1rem, 2vw, 1.25rem); }
-
-p {
-  margin-bottom: 1em;
-  color: var(--cms-text);
-}
-
-a {
-  color: var(--cms-primary);
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-a:hover { color: var(--cms-primary-hover); }
-
-img, svg, video {
+/* ---------- 1.3 BASE MEDIA & SKELETON HEADER CONTAINERS ---------- */
+img,
+svg,
+video {
   max-width: 100%;
   height: auto;
   display: block;
 }
 
-/* ---------- 4. HEADER / NAVBAR ---------- */
-/* ============================================================================
-   1. CORE LAYOUT & HEADER CONTAINERS
-   ============================================================================ */
-
-/* Replaced: Locks layout height before JavaScript inserts navigation & sub-tracks */
 #site-header {
-  min-height: 110px; /* Covers main nav (~70px) + slider track (~40px) */
+  min-height: 110px;
   width: 100%;
   display: block;
+  contain: layout;
 }
 
-.cms-navbar {
-  min-height: 60px;
-}
-
-.cms-slider-nav-container {
-  min-height: 40px;
-}
-
-#cms-ad-slot-1 {
-  min-height: 0px;
-  display: block;
-  overflow: hidden;
-}
 .cms-navbar {
   display: flex;
   flex-direction: column;
@@ -141,6 +101,8 @@ img, svg, video {
   top: 0;
   z-index: 1000;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  min-height: 60px;
+  contain: layout;
 }
 
 .cms-container {
@@ -155,8 +117,60 @@ img, svg, video {
   gap: 16px;
   flex-wrap: wrap;
   box-sizing: border-box;
+  contain: layout;
 }
 
+/* ==========================================================================
+   SECTION 2: ASYNC DEFERRABLE LAYER
+   Heavy components, typography, dynamic elements, ad placeholders,
+   utilities, footers, and complex media queries loaded asynchronously.
+   ========================================================================== */
+
+/* ---------- 2.1 TYPOGRAPHY ---------- */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--cms-text);
+  margin-bottom: 0.75em;
+}
+
+h1 {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+}
+
+h2 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+h3 {
+  font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+}
+
+h4 {
+  font-size: clamp(1.1rem, 2vw, 1.25rem);
+}
+
+p {
+  margin-bottom: 1em;
+  color: var(--cms-text);
+}
+
+a {
+  color: var(--cms-primary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--cms-primary-hover);
+}
+
+/* ---------- 2.2 HEADER BRAND & NAVIGATION LINKS ---------- */
 .cms-brand {
   display: flex;
   align-items: center;
@@ -168,7 +182,9 @@ img, svg, video {
   text-decoration: none;
 }
 
-.cms-brand:hover { color: var(--cms-navbar-text); }
+.cms-brand:hover {
+  color: var(--cms-navbar-text);
+}
 
 .cms-brand-logo {
   font-size: 24px;
@@ -207,7 +223,7 @@ img, svg, video {
   color: var(--cms-navbar-text);
 }
 
-/* ---------- 4b. SEARCH ---------- */
+/* ---------- 2.3 SEARCH COMPONENT ---------- */
 .cms-search-wrapper {
   position: relative;
   display: flex;
@@ -263,12 +279,21 @@ img, svg, video {
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: #475569 #1e293b;
+  contain: layout;
 }
 
-#cms-search-results-dropdown.visible { display: block; }
+#cms-search-results-dropdown.visible {
+  display: block;
+}
 
-#cms-search-results-dropdown::-webkit-scrollbar { width: 6px; }
-#cms-search-results-dropdown::-webkit-scrollbar-track { background: #1e293b; }
+#cms-search-results-dropdown::-webkit-scrollbar {
+  width: 6px;
+}
+
+#cms-search-results-dropdown::-webkit-scrollbar-track {
+  background: #1e293b;
+}
+
 #cms-search-results-dropdown::-webkit-scrollbar-thumb {
   background: #475569;
   border-radius: 3px;
@@ -291,7 +316,9 @@ img, svg, video {
   transition: background-color 0.15s ease;
 }
 
-.cms-search-result-item:hover { background-color: #334155; }
+.cms-search-result-item:hover {
+  background-color: #334155;
+}
 
 .cms-search-result-name {
   font-size: 13px;
@@ -309,7 +336,7 @@ img, svg, video {
   text-transform: uppercase;
 }
 
-/* ---------- 5. SLIDER NAVIGATION ---------- */
+/* ---------- 2.4 SLIDER NAVIGATION ---------- */
 .cms-slider-nav-container {
   width: 100%;
   background-color: rgba(0, 0, 0, 0.25);
@@ -318,9 +345,13 @@ img, svg, video {
   overflow-y: hidden;
   white-space: nowrap;
   -webkit-overflow-scrolling: touch;
+  min-height: 40px;
+  contain: layout;
 }
 
-.cms-slider-nav-container::-webkit-scrollbar { display: none; }
+.cms-slider-nav-container::-webkit-scrollbar {
+  display: none;
+}
 
 .cms-slider-track {
   display: flex;
@@ -358,33 +389,49 @@ img, svg, video {
   font-weight: 600;
 }
 
-/* ---------- 6. AD SLOTS ---------- */
+/* ---------- 2.5 RUGGED CLS DEFENSE FOR AD SLOTS ---------- */
+/* The fixed block size applies at every viewport, including widths below 380px. */
+#cms-ad-slot-1,
+#cms-ad-slot-top,
+.cms-ad-visible,
+.cms-ad-hidden,
+.cms-medianet-box {
+  box-sizing: border-box;
+  display: block;
+  height: 250px;
+  min-height: 250px;
+  max-height: 250px;
+  overflow: hidden;
+  background-color: var(--cms-surface-alt);
+  contain: layout;
+}
+
 #cms-ad-slot-top {
   text-align: center;
   margin: 15px auto;
   width: 100%;
   max-width: 1280px;
   padding: 0 15px;
-  min-height: 90px;
-  box-sizing: border-box;
-  display: block;
+  border-radius: 6px;
 }
-
-.cms-ad-visible { min-height: 90px; }
-.cms-ad-hidden { display: none !important; }
 
 .cms-ad-visible ins.adsbygoogle {
   display: block;
   text-align: center;
 }
 
-.cms-medianet-box {
-  width: 100%;
-  min-height: 600px;
-  text-align: center;
+.cms-ad-hidden {
+  visibility: hidden;
+  pointer-events: none;
 }
 
-/* ---------- 7. LAYOUT (70/30) ---------- */
+.cms-medianet-box {
+  width: 100%;
+  text-align: center;
+  border-radius: 6px;
+}
+
+/* ---------- 2.6 MAIN LAYOUT GRID ---------- */
 .cms-layout-wrapper {
   display: flex;
   flex-wrap: wrap;
@@ -403,6 +450,7 @@ img, svg, video {
   width: calc(70% - 15px);
   box-sizing: border-box;
   min-width: 0;
+  contain: layout paint;
 }
 
 .cms-sidebar-column {
@@ -411,17 +459,19 @@ img, svg, video {
   width: calc(30% - 15px);
   box-sizing: border-box;
   min-width: 0;
+  contain: layout paint;
 }
 
 .cms-sticky-panel {
   position: -webkit-sticky;
   position: sticky;
   top: 84px;
-  min-height: 600px;
+  min-height: 250px;
   box-sizing: border-box;
+  contain: layout;
 }
 
-/* ---------- 8. MAIN / CALC CONTAINERS ---------- */
+/* ---------- 2.7 MAIN / CARD CONTAINERS ---------- */
 main,
 .dark-theme-page,
 .calc-container {
@@ -431,6 +481,7 @@ main,
   border-radius: 10px;
   box-shadow: var(--cms-shadow);
   border: 1px solid var(--cms-border);
+  contain: layout paint;
 }
 
 body[data-theme="light"] main,
@@ -438,8 +489,11 @@ body[data-theme="light"] .calc-container {
   background-color: #ffffff;
 }
 
-/* ---------- 9. FORMS / BUTTONS / INPUTS ---------- */
-input, select, textarea, button {
+/* ---------- 2.8 FORMS & UI CONTROLS ---------- */
+input,
+select,
+textarea,
+button {
   font-family: inherit;
   font-size: 14px;
 }
@@ -462,7 +516,9 @@ textarea {
   outline: none;
 }
 
-input:focus, select:focus, textarea:focus {
+input:focus,
+select:focus,
+textarea:focus {
   border-color: var(--cms-primary);
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
 }
@@ -489,7 +545,8 @@ input[type="submit"]:hover {
   background-color: var(--cms-primary-hover);
 }
 
-button:active, .calc-submit-btn:active {
+button:active,
+.calc-submit-btn:active {
   transform: translateY(1px);
 }
 
@@ -506,7 +563,7 @@ label {
   font-size: 14px;
 }
 
-/* ---------- 10. COMPLIANCE DISCLAIMER ---------- */
+/* ---------- 2.9 COMPLIANCE DISCLAIMER ---------- */
 .cms-compliance-disclaimer {
   max-width: 1280px;
   margin: 25px auto;
@@ -518,12 +575,18 @@ label {
   line-height: 1.5;
   color: var(--cms-text-muted);
   box-sizing: border-box;
+  contain: layout;
 }
 
-.cms-compliance-disclaimer p { margin: 0; }
-.cms-compliance-disclaimer strong { color: #eab308; }
+.cms-compliance-disclaimer p {
+  margin: 0;
+}
 
-/* ---------- 11. DYNAMIC AFFILIATE PANEL ---------- */
+.cms-compliance-disclaimer strong {
+  color: #eab308;
+}
+
+/* ---------- 2.10 DYNAMIC AFFILIATE PANEL ---------- */
 .cms-affiliate-box {
   margin-top: 25px;
   padding: 25px;
@@ -535,9 +598,12 @@ label {
   text-align: center;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   transition: all 0.3s ease;
+  contain: layout;
 }
 
-.cms-affiliate-box.verified { border-style: solid; }
+.cms-affiliate-box.verified {
+  border-style: solid;
+}
 
 .cms-affiliate-title {
   font-weight: 600;
@@ -590,7 +656,7 @@ label {
   background: #16a34a !important;
 }
 
-/* ---------- 12. TOAST NOTIFICATION ---------- */
+/* ---------- 2.11 TOAST NOTIFICATION ---------- */
 .cms-notification-toast {
   position: fixed;
   bottom: 20px;
@@ -607,6 +673,7 @@ label {
   opacity: 0;
   transform: translateY(30px);
   transition: opacity 0.35s ease, transform 0.35s ease;
+  contain: layout;
 }
 
 .cms-notification-toast.reveal {
@@ -666,7 +733,7 @@ label {
   color: #ffffff !important;
 }
 
-/* ---------- 13. FOOTER ---------- */
+/* ---------- 2.12 FOOTER ---------- */
 #site-footer {
   width: 100%;
   background-color: #0f172a;
@@ -674,6 +741,7 @@ label {
   color: #94a3b8;
   font-family: system-ui, -apple-system, sans-serif;
   margin-top: 60px;
+  contain: layout;
 }
 
 .cms-footer {
@@ -681,6 +749,7 @@ label {
   color: var(--cms-footer-text);
   padding: 50px 20px 20px;
   border-top: 1px solid rgba(255, 255, 255, 0.05);
+  contain: layout;
 }
 
 .cms-footer .cms-container {
@@ -725,7 +794,9 @@ label {
   padding: 0;
 }
 
-.cms-footer-links li { margin-bottom: 8px; }
+.cms-footer-links li {
+  margin-bottom: 8px;
+}
 
 .cms-footer-links a {
   color: var(--cms-footer-text);
@@ -733,7 +804,9 @@ label {
   transition: color 0.2s ease;
 }
 
-.cms-footer-links a:hover { color: #ffffff; }
+.cms-footer-links a:hover {
+  color: #ffffff;
+}
 
 .cms-footer-catalog-matrix {
   width: 100%;
@@ -760,7 +833,9 @@ label {
   transition: color 0.2s ease;
 }
 
-.cms-footer-grid a:hover { color: #ffffff; }
+.cms-footer-grid a:hover {
+  color: #ffffff;
+}
 
 .cms-footer-bottom {
   max-width: 1280px;
@@ -776,35 +851,57 @@ label {
   margin: 0;
 }
 
-/* ---------- 14. UTILITIES ---------- */
-.cms-text-center { text-align: center; }
-.cms-mt-1 { margin-top: 8px; }
-.cms-mt-2 { margin-top: 16px; }
-.cms-mt-3 { margin-top: 24px; }
+/* ---------- 2.13 UTILITIES & KEYFRAMES ---------- */
+.cms-text-center {
+  text-align: center;
+}
 
-/* ---------- 15. ANIMATIONS ---------- */
+.cms-mt-1 {
+  margin-top: 8px;
+}
+
+.cms-mt-2 {
+  margin-top: 16px;
+}
+
+.cms-mt-3 {
+  margin-top: 24px;
+}
+
 @keyframes cmsLoadingBar {
-  0% { left: -40%; }
-  50% { left: 100%; }
-  100% { left: 100%; }
+  0% {
+    left: -40%;
+  }
+
+  50% {
+    left: 100%;
+  }
+
+  100% {
+    left: 100%;
+  }
 }
 
 @keyframes cmsFadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* ==========================================================================
-   RESPONSIVE BREAKPOINTS
-   ========================================================================== */
-
-/* ---------- TABLET & SMALLER DESKTOP (≤991px) ---------- */
+/* ---------- 2.14 RESPONSIVE BREAKPOINTS ---------- */
 @media (max-width: 991px) {
   .cms-content-column,
   .cms-sidebar-column {
     flex: 0 0 100% !important;
     max-width: 100% !important;
     width: 100% !important;
+    contain: layout paint;
   }
 
   .cms-sticky-panel {
@@ -823,7 +920,6 @@ label {
   }
 }
 
-/* ---------- TABLET (≤768px) ---------- */
 @media (max-width: 768px) {
   .cms-container {
     padding: 10px 15px;
@@ -834,8 +930,13 @@ label {
     text-align: center;
   }
 
-  .cms-brand-title { font-size: 16px; }
-  .cms-brand-logo { font-size: 22px; }
+  .cms-brand-title {
+    font-size: 16px;
+  }
+
+  .cms-brand-logo {
+    font-size: 22px;
+  }
 
   .cms-nav-links {
     gap: 2px;
@@ -863,6 +964,7 @@ label {
   .calc-container {
     padding: 18px;
     border-radius: 8px;
+    contain: layout paint;
   }
 
   .cms-layout-wrapper {
@@ -870,7 +972,9 @@ label {
     gap: 20px;
   }
 
-  .cms-footer { padding: 40px 20px 20px; }
+  .cms-footer {
+    padding: 40px 20px 20px;
+  }
 
   .cms-footer-content {
     flex-direction: column;
@@ -878,9 +982,10 @@ label {
   }
 }
 
-/* ---------- MOBILE (≤600px) ---------- */
 @media (max-width: 600px) {
-  body { font-size: 15px; }
+  body {
+    font-size: 15px;
+  }
 
   .cms-container {
     flex-wrap: wrap;
@@ -894,7 +999,9 @@ label {
     justify-content: flex-start;
   }
 
-  .cms-brand-title { font-size: 15px; }
+  .cms-brand-title {
+    font-size: 15px;
+  }
 
   .cms-nav-links {
     order: 3;
@@ -949,8 +1056,10 @@ label {
     gap: 16px;
   }
 
-  input, select, textarea {
-    font-size: 16px !important; /* prevents iOS zoom on focus */
+  input,
+  select,
+  textarea {
+    font-size: 16px !important;
   }
 
   button,
@@ -967,24 +1076,32 @@ label {
     padding: 14px;
   }
 
-  .cms-footer { padding: 30px 15px 15px; }
-  .cms-footer-brand h3 { font-size: 18px; }
+  .cms-footer {
+    padding: 30px 15px 15px;
+  }
+
+  .cms-footer-brand h3 {
+    font-size: 18px;
+  }
 
   .cms-footer-grid {
     grid-template-columns: 1fr 1fr;
     gap: 6px 12px;
   }
 
-  .cms-footer-grid a { font-size: 12px; }
+  .cms-footer-grid a {
+    font-size: 12px;
+  }
 
   #cms-dynamic-action-affiliate {
     padding: 18px !important;
   }
 }
 
-/* ---------- EXTRA SMALL (≤380px) ---------- */
 @media (max-width: 380px) {
-  .cms-brand-title { display: none; }
+  .cms-brand-title {
+    display: none;
+  }
 
   #cms-tool-search-input {
     width: 110px !important;
@@ -995,9 +1112,11 @@ label {
   }
 }
 
-/* ---------- ACCESSIBILITY / MOTION ---------- */
+/* ---------- 2.15 ACCESSIBILITY & PRINT ---------- */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -1005,7 +1124,6 @@ label {
   }
 }
 
-/* ---------- PRINT ---------- */
 @media print {
   .cms-navbar,
   .cms-slider-nav-container,
