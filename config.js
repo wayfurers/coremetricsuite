@@ -1,3 +1,37 @@
+// ⚡ AUTOMATED AD SPACE ZERO-CLS PROTECTION LAYER
+(function() {
+  if (typeof document !== 'undefined') {
+    const dynamicStyle = document.createElement('style');
+    dynamicStyle.textContent = `
+      #cms-ad-slot-top, #cms-ad-slot-1, .cms-medianet-box {
+        display: block !important;
+        height: auto !important;
+        min-height: 250px !important;
+        max-height: none !important;
+        overflow: hidden !important;
+        background-color: transparent !important;
+      }
+      #cms-ad-slot-top:empty, #cms-ad-slot-1:empty, .cms-medianet-box:empty {
+        min-height: 0px !important;
+        height: 0px !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        display: none !important;
+      }
+    `;
+    document.head.appendChild(dynamicStyle);
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const topAd = document.getElementById('cms-ad-slot-top');
+      if (topAd && (typeof window.CMS_CONFIG === 'undefined' || !window.CMS_CONFIG.monetization.adsActive)) {
+        topAd.style.setProperty('min-height', '0px', 'important');
+        topAd.style.setProperty('display', 'none', 'important');
+      }
+    });
+  }
+})();
+
+
 /**
  * ============================================================================
  * CORE METRIC SUITE (CMS) - CONFIGURATION & MONETIZATION SWITCHBOARD
