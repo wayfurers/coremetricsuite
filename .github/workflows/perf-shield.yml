@@ -1,0 +1,34 @@
+name: Auto-Inject Performance Layout Shields
+
+on:
+  push:
+    branches: [ master, main ] # Triggers automatically on code push to master or main
+
+jobs:
+  patch-html:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Crucial permission to let the action push optimized files back to your repository
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      - name: Inject CSS Layout Shields into HTML Headers
+        run: |
+          # 1. Define the exact bulletproof 250px layout locks and theme token variables mapped out in our conversation
+          SHIELD="<style>#cms-ad-slot-top,#cms-ad-slot-1,.cms-medianet-box{display:block!important;height:250px!important;min-height:250px!important;max-height:250px!important;overflow:hidden!important;background-color:var(--cms-surface-alt)}</style></head>"
+          
+          # 2. Automatically locate and process every single vanilla HTML file across your repository
+          find . -name "*.html" -type f | while read -r file; do
+            # 3. Check if the file contains a head tag and ensure we haven't already injected the shield to prevent duplicate blocks
+            if grep -q "<\/head>" "$file" && ! grep -q "cms-ad-slot-top" "$file"; then
+              # 4. Use Perl for a safe, non-truncating regex replacement string substitution
+              perl -pi -e "s|<\/head>|${SHIELD}|g" "$file"
+              echo "Successfully fortified performance shields inside layout container: $file"
+            fi
+          done
+
+      - name: Commit and Push Optimizations Live
+        uses: stefanzweimel/commit-push-action@v1
+        with:
+          commit_message: "⚡ Performance optimization: Locked ad layout boundaries against CLS"
