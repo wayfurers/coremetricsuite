@@ -1146,3 +1146,27 @@ label {
     color: #000 !important;
   }
 }
+
+/* ==========================================================================
+   YMYL Compliance Disclaimer Suppression (Media & Developer Utilities)
+   ========================================================================== */
+
+/* Hide YMYL Notice on Media Utility Pages */
+.media-previewer-container #cms-compliance-notice,
+.media-workspace #cms-compliance-notice,
+.aspect-ratio-previewer #cms-compliance-notice,
+.safe-zone-analyzer #cms-compliance-notice,
+
+/* Hide YMYL Notice on Developer & Schema Tool Pages */
+.schema-parser-container #cms-compliance-notice,
+.dev-workspace #cms-compliance-notice,
+.code-utility-container #cms-compliance-notice {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  pointer-events: none !important;
+}
