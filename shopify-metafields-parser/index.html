@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Put this in every tool folder's index.html file -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>shopify-metafields-parser (Shopify Metafields JSON to Liquid Parser)</title>
+    <title>Shopify Metafields JSON to Liquid Parser | Developer Utility</title>
     <meta name="description" content="Convert Shopify JSON metafield definitions into clean, copy-pasteable Liquid code snippets. Automatically generates for loops for arrays and object schemas.">
     <meta name="keywords" content="shopify metafields parser, json to liquid converter, shopify liquid snippet generator, shopify json metafield rendering, product metafields code generator">
     <link rel="canonical" href="https://coremetricsuite.com/shopify-metafields-parser/">
 
     <!-- Open Graph / Social Metadata -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="shopify-metafields-parser (Shopify Metafields JSON to Liquid Parser)">
+    <meta property="og:title" content="Shopify Metafields JSON to Liquid Parser">
     <meta property="og:description" content="Convert Shopify JSON metafield definitions into clean, copy-pasteable Liquid code snippets. Automatically generates for loops for arrays and object schemas.">
     <meta property="og:url" content="https://coremetricsuite.com/shopify-metafields-parser/">
     
@@ -96,13 +95,21 @@
             gap: 2rem;
         }
 
-        @media (max-width: 960px) { .container { grid-template-columns: 1fr; } }
-
         .panel {
             background-color: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 1.5rem;
+        }
+
+        .panel-controls {
+            order: 1;
+        }
+
+        .preview-stage {
+            order: 2;
+            display: flex;
+            flex-direction: column;
         }
 
         .panel-title {
@@ -127,6 +134,7 @@
 
         .btn-demo {
             width: 100%;
+            min-height: 44px;
             padding: 0.6rem;
             background-color: var(--bg-input);
             border: 1px solid var(--border-color);
@@ -145,7 +153,7 @@
         input[type="text"], select, textarea {
             width: 100%; padding: 0.65rem 0.85rem; background-color: var(--bg-input);
             border: 1px solid var(--border-color); border-radius: 6px; color: #fff;
-            font-size: 0.9rem; outline: none; font-family: inherit;
+            font-size: 1rem; outline: none; font-family: inherit;
         }
         textarea {
             font-family: var(--font-mono);
@@ -154,13 +162,12 @@
         }
 
         .btn-action {
-            width: 100%; padding: 0.85rem; background: linear-gradient(135deg, var(--accent-purple), #7c3aed);
+            width: 100%; min-height: 48px; padding: 0.85rem; background: linear-gradient(135deg, var(--accent-purple), #7c3aed);
             color: #fff; font-weight: 700; border: none; border-radius: 6px; cursor: pointer; font-size: 0.95rem;
             transition: opacity 0.2s;
         }
         .btn-action:hover { opacity: 0.9; }
 
-        .preview-stage { display: flex; flex-direction: column; }
         .result-box {
             background-color: var(--bg-input);
             border: 1px solid var(--border-color);
@@ -196,6 +203,7 @@
             color: #fff;
             font-weight: 600;
             padding: 0.6rem 1rem;
+            min-height: 40px;
             border: none;
             border-radius: 6px;
             cursor: pointer;
@@ -226,7 +234,6 @@
         .spec-table th { background-color: var(--bg-input); color: #fff; }
         .spec-table td { color: var(--text-secondary); }
 
-        /* Accordion FAQ Styling */
         .faq-block { margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem; }
         .faq-accordion {
             background-color: var(--bg-input);
@@ -271,18 +278,10 @@
 
         .cms-ad-slot-1, .cms-ad-slot-2 {
             width: 100%; max-width: 970px; min-height: 90px; margin: 1.5rem auto;
-            background: rgba(255,255,255,0.02); border-radius: 8px;
+            background: rgba(255,255,255,0.02); border-radius: 8px; display: block;
         }
 
-        #cms-ad-slot-top, #cms-ad-slot-1, .cms-medianet-box {
-            display: block !important;
-            height: 250px !important;
-            min-height: 250px !important;
-            max-height: 250px !important;
-            overflow: hidden !important;
-            background-color: var(--bg-card);
-        }
-
+        /* Mobile Layout Adjustments: Input box is explicitly at the top on mobile */
         @media screen and (max-width: 900px) {
             html, body {
                 width: 100% !important;
@@ -301,12 +300,13 @@
                 gap: 16px !important;
                 box-sizing: border-box !important;
             }
-            #cms-ad-slot-top, #cms-ad-slot-1, .cms-medianet-box, .cms-ad-slot-1, .cms-ad-slot-2 {
+            .panel-controls {
+                order: 1 !important;
                 width: 100% !important;
-                max-width: 100% !important;
-                height: auto !important;
-                min-height: 90px !important;
-                display: block !important;
+            }
+            .preview-stage {
+                order: 2 !important;
+                width: 100% !important;
             }
             .spec-table {
                 display: block;
@@ -316,6 +316,7 @@
             input, textarea, select {
                 font-size: 16px !important;
             }
+            .canvas-caption { text-align: center; }
         }
     </style>
 </head>
@@ -324,12 +325,13 @@
     <!-- Header Container -->
     <div id="global-header"></div>
 
-    <!-- Ad Slot 1 Container (Above Main Workspace Title) -->
+    <!-- Ad Slot 1 Container -->
     <div class="cms-ad-slot-1"></div>
 
     <!-- Main Tool Container -->
     <main class="container">
-        <section class="panel">
+        <!-- Input & Controls (Order 1 on Mobile) -->
+        <section class="panel panel-controls">
             <div class="panel-title">
                 <span>Metafield Parser Controls</span>
                 <span class="badge">SHOPIFY LIQUID</span>
@@ -376,7 +378,7 @@
             <button class="btn-action" id="generateBtn" type="button">Generate Liquid Snippet</button>
         </section>
 
-        <!-- Result Stage Wrapper -->
+        <!-- Result Stage Wrapper (Order 2 on Mobile) -->
         <section class="preview-stage">
             <div class="panel" style="flex: 1; display: flex; flex-direction: column;">
                 <div class="panel-title">
@@ -406,7 +408,7 @@
                 This browser-based <strong>shopify-metafields-parser</strong> utility parses your custom JSON metafield structures and converts them into production-ready Shopify Liquid code snippets. It handles object properties, nested sub-keys, and generates native <code>{% for %}</code> loops for array values automatically.
             </p>
 
-            <h2>Metafield Type & Liquid Mapping Matrix</h2>
+            <h2>Metafield Type &amp; Liquid Mapping Matrix</h2>
             <p>
                 Understanding how Shopify interprets different metafield types in Liquid ensures optimal store performance and clean HTML rendering:
             </p>
@@ -425,7 +427,7 @@
                         <td><strong>JSON Object</strong></td>
                         <td><code>metafield.value.key</code></td>
                         <td>Generates structured HTML blocks with nested key-value tags.</td>
-                        <td>Complex product specifications & specs tables.</td>
+                        <td>Complex product specifications &amp; specs tables.</td>
                     </tr>
                     <tr>
                         <td><strong>JSON Array</strong></td>
@@ -448,17 +450,17 @@
                 </tbody>
             </table>
 
-            <!-- Ad Slot 2 Container (Immediately Below Data Table) -->
+            <!-- Ad Slot 2 Container -->
             <div class="cms-ad-slot-2"></div>
 
-            <h2>Operational Breakdown & Workflow Integration</h2>
+            <h2>Operational Breakdown &amp; Workflow Integration</h2>
             <p>
                 Integrating these generated Liquid snippets into your Shopify Theme Editor workspace takes just a few steps:
             </p>
             <ul>
-                <li><strong>Specify Namespace & Key:</strong> Enter your exact metafield namespace and key (e.g., <code>custom.product_specifications</code>).</li>
+                <li><strong>Specify Namespace &amp; Key:</strong> Enter your exact metafield namespace and key (e.g., <code>custom.product_specifications</code>).</li>
                 <li><strong>Paste Sample JSON:</strong> Paste an example JSON payload or schema matching your store's metafield setup.</li>
-                <li><strong>Generate & Copy:</strong> Click "Generate Liquid Snippet" to compile the code, then copy it directly to your clipboard.</li>
+                <li><strong>Generate &amp; Copy:</strong> Click "Generate Liquid Snippet" to compile the code, then copy it directly to your clipboard.</li>
                 <li><strong>Paste into Shopify Theme:</strong> Add the code into a Custom Liquid block in your theme customizer or directly inside template liquid files.</li>
             </ul>
 
@@ -526,48 +528,56 @@
                     .replace(/'/g, "&#039;");
             }
 
-            loadDemoBtn.addEventListener('click', function() {
-                metaNamespaceInput.value = 'custom';
-                metaKeyInput.value = 'product_specifications';
-                metaTypeSelect.value = 'json';
-                jsonInput.value = JSON.stringify({
-                    "material": "100% Organic Cotton",
-                    "care_instructions": [
-                        "Machine wash cold",
-                        "Tumble dry low",
-                        "Do not bleach"
-                    ],
-                    "dimensions": {
-                        "width": "12 in",
-                        "height": "18 in"
+            if (loadDemoBtn) {
+                loadDemoBtn.addEventListener('click', function() {
+                    if (metaNamespaceInput) metaNamespaceInput.value = 'custom';
+                    if (metaKeyInput) metaKeyInput.value = 'product_specifications';
+                    if (metaTypeSelect) metaTypeSelect.value = 'json';
+                    if (jsonInput) {
+                        jsonInput.value = JSON.stringify({
+                            "material": "100% Organic Cotton",
+                            "care_instructions": [
+                                "Machine wash cold",
+                                "Tumble dry low",
+                                "Do not bleach"
+                            ],
+                            "dimensions": {
+                                "width": "12 in",
+                                "height": "18 in"
+                            }
+                        }, null, 2);
                     }
-                }, null, 2);
-                generateCode();
-            });
+                    generateCode();
+                });
+            }
 
-            generateBtn.addEventListener('click', function() {
-                generateCode();
-            });
+            if (generateBtn) {
+                generateBtn.addEventListener('click', function() {
+                    generateCode();
+                });
+            }
 
-            metaNamespaceInput.addEventListener('input', generateCode);
-            metaKeyInput.addEventListener('input', generateCode);
-            metaTypeSelect.addEventListener('change', generateCode);
-            jsonInput.addEventListener('input', generateCode);
+            if (metaNamespaceInput) metaNamespaceInput.addEventListener('input', generateCode);
+            if (metaKeyInput) metaKeyInput.addEventListener('input', generateCode);
+            if (metaTypeSelect) metaTypeSelect.addEventListener('change', generateCode);
+            if (jsonInput) jsonInput.addEventListener('input', generateCode);
 
             function generateCode() {
-                var ns = metaNamespaceInput.value.trim() || 'custom';
-                var key = metaKeyInput.value.trim() || 'field_key';
-                var type = metaTypeSelect.value;
-                var rawJson = jsonInput.value.trim();
+                if (!liquidOutput) return;
+                
+                var ns = (metaNamespaceInput && metaNamespaceInput.value.trim()) || 'custom';
+                var key = (metaKeyInput && metaKeyInput.value.trim()) || 'field_key';
+                var type = (metaTypeSelect && metaTypeSelect.value) || 'json';
+                var rawJson = (jsonInput && jsonInput.value.trim()) || '';
                 var parsedData = null;
 
-                jsonError.style.display = 'none';
+                if (jsonError) jsonError.style.display = 'none';
 
                 if (type === 'json' && rawJson.length > 0) {
                     try {
                         parsedData = JSON.parse(rawJson);
                     } catch (e) {
-                        jsonError.style.display = 'block';
+                        if (jsonError) jsonError.style.display = 'block';
                         liquidOutput.textContent = 'Error: Invalid JSON syntax provided.';
                         return;
                     }
@@ -640,20 +650,22 @@
                     .replace(/\b\w/g, function (l) { return l.toUpperCase(); });
             }
 
-            copyBtn.addEventListener('click', function() {
-                var textToCopy = liquidOutput.textContent;
-                if (!textToCopy) return;
+            if (copyBtn) {
+                copyBtn.addEventListener('click', function() {
+                    var textToCopy = liquidOutput ? liquidOutput.textContent : '';
+                    if (!textToCopy) return;
 
-                if (navigator.clipboard && navigator.clipboard.writeText) {
-                    navigator.clipboard.writeText(textToCopy).then(function() {
-                        showCopyFeedback();
-                    }).catch(function() {
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        navigator.clipboard.writeText(textToCopy).then(function() {
+                            showCopyFeedback();
+                        }).catch(function() {
+                            fallbackCopy(textToCopy);
+                        });
+                    } else {
                         fallbackCopy(textToCopy);
-                    });
-                } else {
-                    fallbackCopy(textToCopy);
-                }
-            });
+                    }
+                });
+            }
 
             function fallbackCopy(text) {
                 var tempTextArea = document.createElement('textarea');
@@ -670,6 +682,7 @@
             }
 
             function showCopyFeedback() {
+                if (!copyBtn) return;
                 var originalText = copyBtn.textContent;
                 copyBtn.textContent = 'Copied!';
                 setTimeout(function() {
@@ -679,86 +692,6 @@
 
             generateCode();
         });
-    </script>
-
-    <!-- Global CoreMetricSuite Cross-Linking Index Hub -->
-    <div style="margin-top: 40px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #f8fafc; font-family: system-ui, -apple-system, sans-serif;">
-        <h3 style="margin: 0 0 15px 0; font-size: 18px; color: #0f172a; font-weight: 600;">🛠️ CoreMetricSuite Utility Directory</h3>
-        
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
-            <!-- Group 1 -->
-            <div>
-                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇦🇺 Australia Tax & Labor</h4>
-                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
-                    <li style="margin-bottom: 4px;"><a id="hub-au-cents" href="../au-cents-per-km-estimator/" style="color: #2563eb; text-decoration: underline;">Cents-Per-Km Tax Estimator</a></li>
-                    <li style="margin-bottom: 4px;"><a id="hub-au-schads" href="../au-schads-vehicle-allowance/" style="color: #2563eb; text-decoration: underline;">SCHADS Vehicle Allowance</a></li>
-                    <li style="margin-bottom: 4px;"><a id="hub-au-super" href="../au-superannuation-charge-tracker/" style="color: #2563eb; text-decoration: underline;">Superannuation Tracker</a></li>
-                </ul>
-            </div>
-
-            <!-- Group 2 -->
-            <div>
-                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇺🇸 US Corporate Tax</h4>
-                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
-                    <li style="margin-bottom: 4px;"><a id="hub-us-llc" href="../us-llc-late-penalty-estimator/" style="color: #2563eb; text-decoration: underline;">LLC Late Tax Penalty</a></li>
-                    <li style="margin-bottom: 4px;"><a id="hub-us-179" href="../us-section-179-truck-calculator/" style="color: #2563eb; text-decoration: underline;">Section 179 Vehicle Deduction</a></li>
-                </ul>
-            </div>
-
-            <!-- Group 3 -->
-            <div>
-                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇬🇧 UK Property Management</h4>
-                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
-                    <li style="margin-bottom: 4px;"><a id="hub-uk-rent" href="../uk-form-4a-rent-tracker/" style="color: #2563eb; text-decoration: underline;">Form 4A Rent Tracker</a></li>
-                    <li style="margin-bottom: 4px;"><a id="hub-uk-sdlt" href="../uk-sdlt-bracket-estimator/" style="color: #2563eb; text-decoration: underline;">Stamp Duty Estimator</a></li>
-                    <li style="margin-bottom: 4px;"><a id="hub-uk-sec8" href="../uk-section-8-calculator/" style="color: #2563eb; text-decoration: underline;">Section 8 Calculator</a></li>
-                </ul>
-            </div>
-
-            <!-- Group 4 -->
-            <div>
-                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🎬 Digital Media Layouts</h4>
-                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
-                    <li style="margin-bottom: 4px;"><a id="hub-media-ig" href="../instagram-reels-preview/" style="color: #2563eb; text-decoration: underline;">Instagram Reels Grid</a></li>
-                    <li style="margin-bottom: 4px;"><a id="hub-media-shorts" href="../shorts-ui-safe-zone/" style="color: #2563eb; text-decoration: underline;">YouTube Shorts Safe Zone</a></li>
-                    <li style="margin-bottom: 4px;"><a id="hub-media-tiktok" href="../tiktok-ad-safe-zone/" style="color: #2563eb; text-decoration: underline;">TikTok Ad Checker</a></li>
-                    <li style="margin-bottom: 4px;"><a id="hub-media-shopify" href="../shopify-metafields-parser/" style="color: #2563eb; text-decoration: underline;">Shopify Metafields Parser</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <script defer>
-        (function() {
-            var path = window.location.pathname.toLowerCase();
-            
-            var toolsMap = {
-                'au-cents-per-km-estimator': 'hub-au-cents',
-                'au-schads-vehicle-allowance': 'hub-au-schads',
-                'au-superannuation-charge-tracker': 'hub-au-super',
-                'us-llc-late-penalty-estimator': 'hub-us-llc',
-                'us-section-179-truck-calculator': 'hub-us-179',
-                'uk-form-4a-rent-tracker': 'hub-uk-rent',
-                'uk-sdlt-bracket-estimator': 'hub-uk-sdlt',
-                'uk-section-8-calculator': 'hub-uk-sec8',
-                'instagram-reels-preview': 'hub-media-ig',
-                'shorts-ui-safe-zone': 'hub-media-shorts',
-                'tiktok-ad-safe-zone': 'hub-media-tiktok',
-                'shopify-metafields-parser': 'hub-media-shopify'
-            };
-
-            for (var folderName in toolsMap) {
-                if (Object.prototype.hasOwnProperty.call(toolsMap, folderName)) {
-                    if (path.includes(folderName)) {
-                        var targetEl = document.getElementById(toolsMap[folderName]);
-                        if (targetEl) {
-                            targetEl.outerHTML = '<span style="font-weight: 600; color: #0f172a;">' + targetEl.textContent + ' (Current)</span>';
-                        }
-                        break;
-                    }
-                }
-            }
-        })();
     </script>
 </body>
 </html>
