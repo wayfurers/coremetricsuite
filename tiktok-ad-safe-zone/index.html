@@ -102,6 +102,17 @@
             height: fit-content;
         }
 
+        .panel-controls {
+            order: 1;
+        }
+
+        .preview-stage {
+            order: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
         .panel-title {
             font-size: 1.1rem;
             font-weight: 600;
@@ -139,6 +150,7 @@
 
         .btn-demo {
             width: 100%;
+            min-height: 44px;
             padding: 0.65rem;
             background-color: var(--bg-input);
             border: 1px solid var(--border-color);
@@ -184,12 +196,12 @@
         input[type="text"], textarea, select {
             width: 100%; padding: 0.65rem 0.85rem; background-color: var(--bg-input);
             border: 1px solid var(--border-color); border-radius: 6px; color: #fff;
-            font-size: 0.9rem; outline: none; font-family: inherit;
+            font-size: 1rem; outline: none; font-family: inherit;
         }
         input[type="text"]:focus, textarea:focus, select:focus { border-color: var(--accent-cyan); }
 
         .btn-action {
-            width: 100%; padding: 0.85rem; background: linear-gradient(135deg, var(--accent-pink), #cc0040);
+            width: 100%; min-height: 48px; padding: 0.85rem; background: linear-gradient(135deg, var(--accent-pink), #cc0040);
             color: #fff; font-weight: 600; border: none; border-radius: 6px; cursor: pointer; font-size: 0.95rem;
             box-shadow: 0 4px 12px rgba(255, 0, 80, 0.3);
             transition: transform 0.1s, opacity 0.2s;
@@ -198,7 +210,6 @@
         .btn-action:hover { opacity: 0.95; }
         .btn-action:active { transform: scale(0.99); }
 
-        /* Social Share Integrated Module */
         .social-share-container {
             background-color: var(--bg-input);
             border: 1px solid var(--border-color);
@@ -234,6 +245,7 @@
             border-radius: 4px;
             cursor: pointer;
             text-decoration: none;
+            min-height: 40px;
             transition: opacity 0.2s, transform 0.1s;
         }
         .btn-share:hover { opacity: 0.88; }
@@ -245,7 +257,6 @@
         .btn-share-pin { background-color: #e60023; }
         .btn-share-copy { background-color: #374151; color: #fff; grid-column: span 3; margin-top: 0.25rem; }
 
-        .preview-stage { display: flex; flex-direction: column; align-items: center; }
         .canvas-wrapper {
             position: relative; width: 320px; height: 568px; border-radius: 16px;
             overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.6); background-color: #000;
@@ -268,7 +279,6 @@
         .spec-table th { background-color: var(--bg-input); color: #fff; font-size: 0.9rem; }
         .spec-table td { color: var(--text-secondary); font-size: 0.875rem; }
 
-        /* Accordion FAQ Styling */
         .faq-block { margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem; }
         .faq-accordion {
             background-color: var(--bg-input);
@@ -316,12 +326,12 @@
             background: rgba(255,255,255,0.02); border-radius: 8px; display: block;
         }
 
-        /* Mobile Responsive Overrides */
+        /* Mobile Responsive Overrides: Input control panel positioned strictly at top */
         @media screen and (max-width: 900px) {
             html, body { width: 100%!important; max-width: 100vw!important; overflow-x: hidden!important; margin: 0!important; padding: 0!important; }
             main.container { display: flex!important; flex-direction: column!important; width: 100%!important; max-width: 100%!important; padding: 0 12px!important; margin: 8px auto!important; gap: 16px!important; box-sizing: border-box!important; }
-            main.container > section.preview-stage { order: -1!important; width: 100%!important; display: flex!important; flex-direction: column!important; align-items: center!important; margin: 0 auto!important; box-sizing: border-box!important; }
-            main.container > section.panel { order: 2!important; width: 100%!important; max-width: 100%!important; box-sizing: border-box!important; }
+            .panel-controls { order: 1!important; width: 100%!important; max-width: 100%!important; box-sizing: border-box!important; }
+            .preview-stage { order: 2!important; width: 100%!important; display: flex!important; flex-direction: column!important; align-items: center!important; margin: 0 auto!important; box-sizing: border-box!important; }
             .canvas-wrapper { width: 75vw!important; height: 133.33vw!important; max-width: 290px!important; max-height: 515px!important; margin: 0 auto!important; box-sizing: border-box!important; }
             input, textarea, select { font-size: 16px!important; }
         }
@@ -337,13 +347,13 @@
 
     <!-- Main Tool Container -->
     <main class="container">
-        <section class="panel">
+        <!-- Input & Controls (Order 1 on Mobile) -->
+        <section class="panel panel-controls">
             <div class="panel-title">
                 <span>Safe Zone Controls</span>
                 <span class="badge">9:16 SPECS</span>
             </div>
 
-            <!-- Upload Box & Demo File CTA -->
             <div class="drop-zone" id="dropZone">
                 <p class="drop-title">Click or Drag Video / Image File</p>
                 <p class="drop-sub">MP4, MOV, PNG, JPG (1080x1920 recommended)</p>
@@ -390,7 +400,6 @@
 
             <button class="btn-action" id="downloadBtn" type="button">Export 1080x1920 PNG Preview</button>
 
-            <!-- Social Media Share Section -->
             <div class="social-share-container">
                 <span class="share-label">Share This Tool</span>
                 <div class="share-buttons-grid">
@@ -404,7 +413,7 @@
             </div>
         </section>
 
-        <!-- Canvas Stage Wrapper -->
+        <!-- Canvas Stage Wrapper (Order 2 on Mobile) -->
         <section class="preview-stage">
             <div class="canvas-wrapper">
                 <canvas id="previewCanvas" width="1080" height="1920"></canvas>
@@ -562,92 +571,104 @@
             var currentMedia = null;
             var isVideo = false;
 
-            /* Setup Social Share Links */
+            /* Social Share Link Handler */
             var currentUrl = encodeURIComponent(window.location.href);
             var shareTitle = encodeURIComponent("Check out this free TikTok Video Ad Safe Zone Overlay & Checker!");
             
-            document.getElementById('shareX').href = 'https://twitter.com/intent/tweet?url=' + currentUrl + '&text=' + shareTitle;
-            document.getElementById('shareFB').href = 'https://www.facebook.com/sharer/sharer.php?u=' + currentUrl;
-            document.getElementById('shareWA').href = 'https://api.whatsapp.com/send?text=' + shareTitle + '%20' + currentUrl;
-            document.getElementById('shareLI').href = 'https://www.linkedin.com/sharing/share-offsite/?url=' + currentUrl;
-            document.getElementById('sharePIN').href = 'https://pinterest.com/pin/create/button/?url=' + currentUrl + '&description=' + shareTitle;
+            var shareX = document.getElementById('shareX');
+            var shareFB = document.getElementById('shareFB');
+            var shareWA = document.getElementById('shareWA');
+            var shareLI = document.getElementById('shareLI');
+            var sharePIN = document.getElementById('sharePIN');
+
+            if (shareX) shareX.href = 'https://twitter.com/intent/tweet?url=' + currentUrl + '&text=' + shareTitle;
+            if (shareFB) shareFB.href = 'https://www.facebook.com/sharer/sharer.php?u=' + currentUrl;
+            if (shareWA) shareWA.href = 'https://api.whatsapp.com/send?text=' + shareTitle + '%20' + currentUrl;
+            if (shareLI) shareLI.href = 'https://www.linkedin.com/sharing/share-offsite/?url=' + currentUrl;
+            if (sharePIN) sharePIN.href = 'https://pinterest.com/pin/create/button/?url=' + currentUrl + '&description=' + shareTitle;
 
             var copyBtn = document.getElementById('copyShareLink');
-            copyBtn.addEventListener('click', function() {
-                if (navigator.share) {
-                    navigator.share({
-                        title: 'TikTok Ad Safe Zone Overlay',
-                        text: 'Test your TikTok video ad safe zones instantly.',
-                        url: window.location.href
-                    }).catch(function() {});
-                } else if (navigator.clipboard) {
-                    navigator.clipboard.writeText(window.location.href).then(function() {
-                        var origText = copyBtn.textContent;
-                        copyBtn.textContent = '✓ Link Copied!';
-                        setTimeout(function() { copyBtn.textContent = origText; }, 2000);
-                    });
-                }
-            });
+            if (copyBtn) {
+                copyBtn.addEventListener('click', function() {
+                    if (navigator.share) {
+                        navigator.share({
+                            title: 'TikTok Ad Safe Zone Overlay',
+                            text: 'Test your TikTok video ad safe zones instantly.',
+                            url: window.location.href
+                        }).catch(function() {});
+                    } else if (navigator.clipboard) {
+                        navigator.clipboard.writeText(window.location.href).then(function() {
+                            var origText = copyBtn.textContent;
+                            copyBtn.textContent = '✓ Link Copied!';
+                            setTimeout(function() { copyBtn.textContent = origText; }, 2000);
+                        });
+                    }
+                });
+            }
 
-            dropZone.addEventListener('click', function() { fileInput.click(); });
+            if (dropZone && fileInput) {
+                dropZone.addEventListener('click', function() { fileInput.click(); });
 
-            dropZone.addEventListener('dragover', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                dropZone.style.borderColor = 'var(--accent-cyan)';
-            });
+                dropZone.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    dropZone.style.borderColor = 'var(--accent-cyan)';
+                });
 
-            dropZone.addEventListener('dragleave', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                dropZone.style.borderColor = 'var(--border-color)';
-            });
+                dropZone.addEventListener('dragleave', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    dropZone.style.borderColor = 'var(--border-color)';
+                });
 
-            dropZone.addEventListener('drop', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                dropZone.style.borderColor = 'var(--border-color)';
-                if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-                    processFile(e.dataTransfer.files[0]);
-                }
-            });
+                dropZone.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    dropZone.style.borderColor = 'var(--border-color)';
+                    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+                        processFile(e.dataTransfer.files[0]);
+                    }
+                });
 
-            fileInput.addEventListener('change', function(e) {
-                if (e.target.files && e.target.files[0]) {
-                    processFile(e.target.files[0]);
-                }
-            });
+                fileInput.addEventListener('change', function(e) {
+                    if (e.target.files && e.target.files[0]) {
+                        processFile(e.target.files[0]);
+                    }
+                });
+            }
 
-            loadDemoBtn.addEventListener('click', function() {
-                var demoCanvas = document.createElement('canvas');
-                demoCanvas.width = 1080;
-                demoCanvas.height = 1920;
-                var dCtx = demoCanvas.getContext('2d');
+            if (loadDemoBtn) {
+                loadDemoBtn.addEventListener('click', function() {
+                    var demoCanvas = document.createElement('canvas');
+                    demoCanvas.width = 1080;
+                    demoCanvas.height = 1920;
+                    var dCtx = demoCanvas.getContext('2d');
 
-                var grad = dCtx.createLinearGradient(0, 0, 1080, 1920);
-                grad.addColorStop(0, '#00f2fe');
-                grad.addColorStop(0.5, '#111111');
-                grad.addColorStop(1, '#ff0050');
-                dCtx.fillStyle = grad;
-                dCtx.fillRect(0, 0, 1080, 1920);
+                    var grad = dCtx.createLinearGradient(0, 0, 1080, 1920);
+                    grad.addColorStop(0, '#00f2fe');
+                    grad.addColorStop(0.5, '#111111');
+                    grad.addColorStop(1, '#ff0050');
+                    dCtx.fillStyle = grad;
+                    dCtx.fillRect(0, 0, 1080, 1920);
 
-                dCtx.fillStyle = '#ffffff';
-                dCtx.font = 'bold 54px sans-serif';
-                dCtx.textAlign = 'center';
-                dCtx.fillText('TIKTOK AD SAFE ZONE TEST', 540, 850);
-                
-                dCtx.fillStyle = '#00f2fe';
-                dCtx.font = '36px sans-serif';
-                dCtx.fillText('1080 x 1920 High-Converting Frame', 540, 920);
+                    dCtx.fillStyle = '#ffffff';
+                    dCtx.font = 'bold 54px sans-serif';
+                    dCtx.textAlign = 'center';
+                    dCtx.fillText('TIKTOK AD SAFE ZONE TEST', 540, 850);
+                    
+                    dCtx.fillStyle = '#00f2fe';
+                    dCtx.font = '36px sans-serif';
+                    dCtx.fillText('1080 x 1920 High-Converting Frame', 540, 920);
 
-                var img = new Image();
-                img.src = demoCanvas.toDataURL();
-                img.onload = function() {
-                    currentMedia = img;
-                    isVideo = false;
-                    draw();
-                };
-            });
+                    var img = new Image();
+                    img.src = demoCanvas.toDataURL();
+                    img.onload = function() {
+                        currentMedia = img;
+                        isVideo = false;
+                        draw();
+                    };
+                });
+            }
 
             function processFile(file) {
                 var fileURL = URL.createObjectURL(file);
@@ -688,8 +709,8 @@
                     ctx.fillText('Upload 1080x1920 Media', canvas.width / 2, canvas.height / 2);
                 }
 
-                var showAdCta = adModeToggle.checked;
-                var showOverlay = overlayToggle.checked;
+                var showAdCta = adModeToggle ? adModeToggle.checked : true;
+                var showOverlay = overlayToggle ? overlayToggle.checked : true;
 
                 var topM = 130;
                 var bottomM = 440;
@@ -710,7 +731,6 @@
                     ctx.setLineDash([]);
                 }
 
-                // TikTok Right Rail Engagement Column
                 var railX = canvas.width - 70;
                 var railY = canvas.height - bottomM - 320;
 
@@ -727,18 +747,19 @@
                     ctx.fillText(icons[i], railX, railY);
                 }
 
-                // Bottom Account & Caption UI
                 var bottomX = leftM + 20;
                 var bottomY = canvas.height - bottomM + 40;
 
                 ctx.textAlign = 'left';
                 ctx.fillStyle = '#ffffff';
                 ctx.font = 'bold 32px sans-serif';
-                ctx.fillText(accountNameInput.value, bottomX, bottomY);
+                var accountVal = (accountNameInput && accountNameInput.value) || '@BrandName';
+                ctx.fillText(accountVal, bottomX, bottomY);
 
                 ctx.font = '24px sans-serif';
                 ctx.fillStyle = '#e5e7eb';
-                var captionText = adCaptionInput.value.length > 55 ? adCaptionInput.value.substring(0, 55) + '...' : adCaptionInput.value;
+                var rawCaption = (adCaptionInput && adCaptionInput.value) || '';
+                var captionText = rawCaption.length > 55 ? rawCaption.substring(0, 55) + '...' : rawCaption;
                 ctx.fillText(captionText, bottomX, bottomY + 40);
 
                 if (showAdCta) {
@@ -755,7 +776,8 @@
                     ctx.fillStyle = '#ffffff';
                     ctx.font = 'bold 28px sans-serif';
                     ctx.textAlign = 'center';
-                    ctx.fillText(ctaButtonSelect.value + '  ➔', (canvas.width - rightM) / 2, ctaY + 42);
+                    var ctaVal = (ctaButtonSelect && ctaButtonSelect.value) || 'Shop Now';
+                    ctx.fillText(ctaVal + '  ➔', (canvas.width - rightM) / 2, ctaY + 42);
                 }
             }
 
@@ -769,93 +791,24 @@
 
             var controls = [adModeToggle, overlayToggle, accountNameInput, adCaptionInput, ctaButtonSelect];
             for (var j = 0; j < controls.length; j++) {
-                controls[j].addEventListener('input', function() {
-                    if (!isVideo) draw();
-                });
+                if (controls[j]) {
+                    controls[j].addEventListener('input', function() {
+                        if (!isVideo) draw();
+                    });
+                }
             }
 
             draw();
 
-            downloadBtn.addEventListener('click', function() {
-                var link = document.createElement('a');
-                link.download = 'tiktok-ad-safe-zone-preview.png';
-                link.href = canvas.toDataURL('image/png');
-                link.click();
-            });
-        });
-    </script>
-
-    <!-- Global CoreMetricSuite Cross-Linking Index Hub -->
-    <div style="margin-top: 40px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #f8fafc; font-family: system-ui, -apple-system, sans-serif;">
-        <h3 style="margin: 0 0 15px 0; font-size: 18px; color: #0f172a; font-weight: 600;">🛠️ CoreMetricSuite Utility Directory</h3>
-        
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
-            <div>
-                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇦🇺 Australia Tax &amp; Labor</h4>
-                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
-                    <li style="margin-bottom: 4px;"><a id="hub-au-cents" href="../au-cents-per-km-estimator/" style="color: #2563eb; text-decoration: underline;">Cents-Per-Km Tax Estimator</a></li>
-                    <li style="margin-bottom: 4px;"><a id="hub-au-schads" href="../au-schads-vehicle-allowance/" style="color: #2563eb; text-decoration: underline;">SCHADS Vehicle Allowance</a></li>
-                    <li style="margin-bottom: 4px;"><a id="hub-au-super" href="../au-superannuation-charge-tracker/" style="color: #2563eb; text-decoration: underline;">Superannuation Tracker</a></li>
-                </ul>
-            </div>
-
-            <div>
-                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇺🇸 US Corporate Tax</h4>
-                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
-                    <li style="margin-bottom: 4px;"><a id="hub-us-llc" href="../us-llc-late-penalty-estimator/" style="color: #2563eb; text-decoration: underline;">LLC Late Tax Penalty</a></li>
-                    <li style="margin-bottom: 4px;"><a id="hub-us-179" href="../us-section-179-truck-calculator/" style="color: #2563eb; text-decoration: underline;">Section 179 Vehicle Deduction</a></li>
-                </ul>
-            </div>
-
-            <div>
-                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇬🇧 UK Property Management</h4>
-                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
-                    <li style="margin-bottom: 4px;"><a id="hub-uk-rent" href="../uk-form-4a-rent-tracker/" style="color: #2563eb; text-decoration: underline;">Form 4A Rent Tracker</a></li>
-                    <li style="margin-bottom: 4px;"><a id="hub-uk-sdlt" href="../uk-sdlt-bracket-estimator/" style="color: #2563eb; text-decoration: underline;">Stamp Duty Estimator</a></li>
-                    <li style="margin-bottom: 4px;"><a id="hub-uk-sec8" href="../uk-section-8-calculator/" style="color: #2563eb; text-decoration: underline;">Section 8 Calculator</a></li>
-                </ul>
-            </div>
-
-            <div>
-                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🎬 Digital Media Layouts</h4>
-                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
-                    <li style="margin-bottom: 4px;"><a id="hub-media-ig" href="../instagram-reels-preview/" style="color: #2563eb; text-decoration: underline;">Instagram Reels Grid</a></li>
-                    <li style="margin-bottom: 4px;"><a id="hub-media-shorts" href="../shorts-ui-safe-zone/" style="color: #2563eb; text-decoration: underline;">YouTube Shorts Safe Zone</a></li>
-                    <li style="margin-bottom: 4px;"><a id="hub-media-tiktok" href="../tiktok-ad-safe-zone/" style="color: #2563eb; text-decoration: underline;">TikTok Ad Checker</a></li>
-                    <li style="margin-bottom: 4px;"><a id="hub-media-shopify" href="../shopify-metafields-parser/" style="color: #2563eb; text-decoration: underline;">Shopify Metafields Parser</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <script defer>
-        (function() {
-            const path = window.location.pathname.toLowerCase();
-            const toolsMap = {
-                'au-cents-per-km-estimator': 'hub-au-cents',
-                'au-schads-vehicle-allowance': 'hub-au-schads',
-                'au-superannuation-charge-tracker': 'hub-au-super',
-                'us-llc-late-penalty-estimator': 'hub-us-llc',
-                'us-section-179-truck-calculator': 'hub-us-179',
-                'uk-form-4a-rent-tracker': 'hub-uk-rent',
-                'uk-sdlt-bracket-estimator': 'hub-uk-sdlt',
-                'uk-section-8-calculator': 'hub-uk-sec8',
-                'instagram-reels-preview': 'hub-media-ig',
-                'shorts-ui-safe-zone': 'hub-media-shorts',
-                'tiktok-ad-safe-zone': 'hub-media-tiktok',
-                'shopify-metafields-parser': 'hub-media-shopify'
-            };
-
-            for (const [folderName, elementId] of Object.entries(toolsMap)) {
-                if (path.includes(folderName)) {
-                    const targetEl = document.getElementById(elementId);
-                    if (targetEl) {
-                        targetEl.outerHTML = `<span style="font-weight: 600; color: #0f172a;">${targetEl.textContent} (Current)</span>`;
-                    }
-                    break;
-                }
+            if (downloadBtn) {
+                downloadBtn.addEventListener('click', function() {
+                    var link = document.createElement('a');
+                    link.download = 'tiktok-ad-safe-zone-preview.png';
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+                });
             }
-        })();
+        });
     </script>
 </body>
 </html>
