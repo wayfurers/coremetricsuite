@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Put this in every tool folder's index.html file -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TikTok Safe Zone Checker & Ad Mockup Studio (9:16 Guide)</title>
@@ -13,63 +12,61 @@
     <meta property="og:type" content="website">
     <meta property="og:title" content="TikTok Safe Zone Checker & Ad Mockup Studio (9:16 Guide)">
     <meta property="og:description" content="Verify your vertical 1080x1920 video layouts instantly. Test organic and paid In-Feed ad safe area dimensions.">
-    <link rel="canonical" href="https://coremetricsuite.com" />
     
     <!-- Global Framework Dependencies -->
     <link rel="stylesheet" href="/css/global.css">
-<script src="/config.js" defer></script>
-<script src="/global.min.js" defer></script>
+    <script src="/config.js" defer></script>
+    <script src="/global.min.js" defer></script>
 
     <!-- FAQ JSON-LD Schema Markup -->
-    <!-- FAQ JSON-LD Schema Markup -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
+    <script type="application/ld+json">
     {
-      "@type": "Question",
-      "name": "What are the exact TikTok safe zone dimensions for 1080x1920 videos?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "For a standard 1080x1920 pixel (9:16) vertical video, keep essential text and visual elements clear of the top 130px and the bottom 320px to prevent obstruction by UI elements."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Why is my TikTok text getting covered by the CTA or caption box?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Paid ad placements overlay a Sponsored tag and interactive Call-To-Action (CTA) button directly over the lower portion of your video, which crops or hides text placed too low."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "What is the aspect ratio requirement for TikTok video uploads?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "TikTok standard video uploads require a 9:16 vertical aspect ratio. While horizontal videos are supported, vertical layouts maximize screen real estate and user engagement."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "How does the right-side sidebar UI affect TikTok video visibility?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "The right side of the TikTok interface contains action icons for profile, likes, comments, shares, and audio. Keep text and key actions shifted to the left to avoid overlapping these icons."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Can I test my organic and paid TikTok layouts instantly before exporting?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes, using an interactive TikTok safe zone checker tool allows you to upload your design and instantly preview how it looks behind both organic UI and paid ad overlay skins."
-      }
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What are the exact TikTok safe zone dimensions for 1080x1920 videos?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For a standard 1080x1920 pixel (9:16) vertical video, keep essential text and visual elements clear of the top 130px and the bottom 320px to prevent obstruction by UI elements."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why is my TikTok text getting covered by the CTA or caption box?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Paid ad placements overlay a Sponsored tag and interactive Call-To-Action (CTA) button directly over the lower portion of your video, which crops or hides text placed too low."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the aspect ratio requirement for TikTok video uploads?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "TikTok standard video uploads require a 9:16 vertical aspect ratio. While horizontal videos are supported, vertical layouts maximize screen real estate and user engagement."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does the right-side sidebar UI affect TikTok video visibility?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The right side of the TikTok interface contains action icons for profile, likes, comments, shares, and audio. Keep text and key actions shifted to the left to avoid overlapping these icons."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I test my organic and paid TikTok layouts instantly before exporting?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, using an interactive TikTok safe zone checker tool allows you to upload your design and instantly preview how it looks behind both organic UI and paid ad overlay skins."
+          }
+        }
+      ]
     }
-  ]
-}
-</script>
+    </script>
 
     <style>
         :root {
@@ -84,25 +81,42 @@
             --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background-color: var(--bg-main); color: var(--text-primary); font-family: var(--font-sans); line-height: 1.6; }
-        
-        .container {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1.5rem;
-            display: grid;
-            grid-template-columns: 400px 1fr;
-            gap: 2rem;
+        *, *::before, *::after { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
         }
 
-        @media (max-width: 900px) { .container { grid-template-columns: 1fr; } }
+        html, body {
+            width: 100%;
+            max-width: 100vw;
+            overflow-x: hidden;
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            line-height: 1.6;
+        }
+
+        #site-header {
+            min-height: auto;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 1rem auto;
+            padding: 0 1rem;
+            display: grid;
+            grid-template-columns: 380px 1fr;
+            gap: 1.5rem;
+            width: 100%;
+        }
 
         .panel {
             background-color: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 1.5rem;
+            padding: 1.25rem;
+            width: 100%;
         }
 
         .panel-title {
@@ -127,7 +141,7 @@
 
         .drop-zone {
             border: 2px dashed var(--border-color);
-            padding: 1.25rem;
+            padding: 1rem;
             text-align: center;
             border-radius: 8px;
             background-color: var(--bg-input);
@@ -137,12 +151,12 @@
         }
 
         .drop-zone:hover { border-color: var(--accent-cyan); }
-        .drop-title { font-weight: 600; color: #fff; }
+        .drop-title { font-weight: 600; color: #fff; font-size: 0.95rem; }
         .drop-sub { font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px; }
 
         .btn-demo {
             width: 100%;
-            padding: 0.6rem;
+            padding: 0.65rem;
             background-color: var(--bg-input);
             border: 1px solid var(--border-color);
             color: var(--accent-cyan);
@@ -150,7 +164,7 @@
             cursor: pointer;
             font-weight: 600;
             font-size: 0.85rem;
-            margin-bottom: 1.25rem;
+            margin-bottom: 1rem;
         }
 
         .toggle-group {
@@ -158,13 +172,13 @@
             align-items: center;
             justify-content: space-between;
             background-color: var(--bg-input);
-            padding: 0.75rem 0.85rem;
+            padding: 0.65rem 0.85rem;
             border-radius: 6px;
             border: 1px solid var(--border-color);
-            margin-bottom: 1rem;
+            margin-bottom: 0.85rem;
         }
 
-        .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+        .switch { position: relative; display: inline-block; width: 44px; height: 24px; flex-shrink: 0; }
         .switch input { opacity: 0; width: 0; height: 0; }
         .slider {
             position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
@@ -177,57 +191,92 @@
         input:checked + .slider { background-color: var(--accent-red); }
         input:checked + .slider:before { transform: translateX(20px); }
 
-        .form-group { margin-bottom: 1.25rem; }
+        .form-group { margin-bottom: 1rem; }
         label { display: block; font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 0.4rem; }
         input[type="text"], textarea, select {
             width: 100%; padding: 0.65rem 0.85rem; background-color: var(--bg-input);
             border: 1px solid var(--border-color); border-radius: 6px; color: #fff;
-            font-size: 0.9rem; outline: none; font-family: inherit;
+            font-size: 16px; outline: none; font-family: inherit;
         }
 
         .btn-action {
             width: 100%; padding: 0.85rem; background: linear-gradient(135deg, var(--accent-red), #e00046);
             color: #fff; font-weight: 600; border: none; border-radius: 6px; cursor: pointer; font-size: 0.95rem;
+            margin-bottom: 0.75rem;
         }
 
-        .preview-stage { display: flex; flex-direction: column; align-items: center; }
+        /* Share Button Styling */
+        .btn-share {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.88rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: background-color 0.2s, border-color 0.2s;
+        }
+        .btn-share:hover {
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+        }
+
+        .preview-stage { display: flex; flex-direction: column; align-items: center; width: 100%; }
         .canvas-wrapper {
-            position: relative; width: 320px; height: 568px; border-radius: 16px;
-            overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.6); background-color: #000;
+            position: relative; 
+            width: 100%;
+            max-width: 320px; 
+            aspect-ratio: 9 / 16;
+            border-radius: 16px;
+            overflow: hidden; 
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6); 
+            background-color: #000;
             border: 2px solid var(--border-color);
         }
-        canvas { width: 100%; height: 100%; display: block; }
-        .canvas-caption { margin-top: 1rem; font-size: 0.85rem; color: var(--text-secondary); text-align: center; }
+        canvas { width: 100%; height: 100%; display: block; object-fit: contain; }
+        .canvas-caption { margin-top: 0.75rem; font-size: 0.85rem; color: var(--text-secondary); text-align: center; }
 
-        .content-area { max-width: 1200px; margin: 3rem auto; padding: 0 1.5rem; }
-        .content-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 2.5rem; }
-        .content-card h1 { font-size: 2rem; margin-bottom: 1rem; color: #fff; }
-        .content-card h2 { font-size: 1.4rem; margin: 1.8rem 0 1rem; color: #fff; }
-        .content-card p { color: var(--text-secondary); margin-bottom: 1.2rem; }
-        .content-card ul, .content-card ol { color: var(--text-secondary); margin: 0 0 1.2rem 1.5rem; }
-        .content-card li { margin-bottom: 0.5rem; }
+        .content-area { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; width: 100%; }
+        .content-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; }
+        .content-card h1 { font-size: 1.6rem; margin-bottom: 1rem; color: #fff; }
+        .content-card h2 { font-size: 1.25rem; margin: 1.5rem 0 0.85rem; color: #fff; }
+        .content-card p { color: var(--text-secondary); margin-bottom: 1rem; font-size: 0.95rem; }
+        .content-card ul, .content-card ol { color: var(--text-secondary); margin: 0 0 1rem 1.2rem; font-size: 0.95rem; }
+        .content-card li { margin-bottom: 0.4rem; }
 
-        .spec-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; text-align: left; }
-        .spec-table th, .spec-table td { padding: 0.85rem 1rem; border: 1px solid var(--border-color); }
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin: 1rem 0;
+        }
+
+        .spec-table { width: 100%; border-collapse: collapse; text-align: left; min-width: 500px; }
+        .spec-table th, .spec-table td { padding: 0.75rem 0.85rem; border: 1px solid var(--border-color); font-size: 0.85rem; }
         .spec-table th { background-color: var(--bg-input); color: #fff; }
         .spec-table td { color: var(--text-secondary); }
 
-        /* Accordion FAQ Styling */
-        .faq-block { margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem; }
+        .faq-block { margin-top: 1.25rem; border-top: 1px solid var(--border-color); padding-top: 1rem; }
         .faq-accordion {
             background-color: var(--bg-input);
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            margin-bottom: 0.85rem;
+            margin-bottom: 0.75rem;
             overflow: hidden;
             transition: border-color 0.2s;
         }
         .faq-accordion[open] { border-color: var(--accent-cyan); }
         .faq-summary {
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 600;
             color: #fff;
-            padding: 1rem 1.2rem;
+            padding: 0.85rem 1rem;
             cursor: pointer;
             list-style: none;
             display: flex;
@@ -238,7 +287,7 @@
         .faq-summary::-webkit-details-marker { display: none; }
         .faq-summary::after {
             content: "+";
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: var(--accent-cyan);
             transition: transform 0.2s;
         }
@@ -247,30 +296,54 @@
             color: var(--accent-red);
         }
         .faq-answer {
-            padding: 0 1.2rem 1.2rem;
+            padding: 0 1rem 1rem;
             color: var(--text-secondary);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             border-top: 1px solid rgba(255,255,255,0.05);
-            margin-top: 0.4rem;
-            padding-top: 0.8rem;
+            margin-top: 0.3rem;
+            padding-top: 0.7rem;
         }
 
         .cms-ad-slot-1, .cms-ad-slot-2 {
-            width: 100%; max-width: 970px; min-height: 90px; margin: 1.5rem auto;
-            background: rgba(255,255,255,0.02); border-radius: 8px;
+            width: 100%; 
+            max-width: 970px; 
+            min-height: 0; 
+            margin: 0.5rem auto;
+            background: transparent;
+            border-radius: 8px;
+        }
+
+        /* Responsive Mobile Layout Fixes */
+        @media (max-width: 900px) {
+            .container { 
+                display: flex;
+                flex-direction: column;
+                margin: 0.5rem auto;
+                gap: 1.25rem;
+            }
+            .panel {
+                order: 1;
+            }
+            .preview-stage {
+                order: 2;
+            }
+            .content-card { padding: 1.15rem; }
+            .content-card h1 { font-size: 1.35rem; }
+            .content-card h2 { font-size: 1.1rem; }
         }
     </style>
-<style>#cms-ad-slot-top,#cms-ad-slot-1,.cms-medianet-box{display:block!important;height:250px!important;min-height:250px!important;max-height:250px!important;overflow:hidden!important;background-color:var(--cms-surface-alt)}</style></head>
+</head>
 <body>
 
     <!-- Header Container -->
-    <div id="site-header" style="min-height: 100px;"></div>
+    <div id="site-header"></div>
 
     <!-- Ad Slot 1 Container (Above Main Workspace Title) -->
     <div class="cms-ad-slot-1"></div>
 
     <!-- Main Tool Container -->
     <main class="container dark-theme-page">
+        <!-- Control Panel First -->
         <section class="panel">
             <div class="panel-title">
                 <span>Safe Zone Controls</span>
@@ -323,9 +396,10 @@
             </div>
 
             <button class="btn-action" id="downloadBtn" type="button">Export 1080x1920 PNG Preview</button>
+            <button class="btn-share" id="shareBtn" type="button">🔗 Share Tool with Friends</button>
         </section>
 
-        <!-- Canvas Stage Wrapper -->
+        <!-- Canvas Stage Wrapper Second -->
         <section class="preview-stage">
             <div class="canvas-wrapper">
                 <canvas id="previewCanvas" width="1080" height="1920"></canvas>
@@ -352,48 +426,50 @@
                 Mobile viewports vary across devices—from traditional 16:9 displays to taller 19.5:9 aspect ratios found on modern smartphones. To ensure graphics and captions remain visible across all screen sizes, structure video templates around standard offset margins:
             </p>
 
-            <table class="spec-table">
-                <thead>
-                    <tr>
-                        <th>Boundary Region</th>
-                        <th>Organic Clearance</th>
-                        <th>Paid In-Feed Clearance</th>
-                        <th>Interface Component Notes</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Top Margin</strong></td>
-                        <td>130 px</td>
-                        <td>130 px</td>
-                        <td>Clears top navigation tabs ('Following / For You'), search bar, and camera notches.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Bottom Margin</strong></td>
-                        <td>320 px</td>
-                        <td>480 px</td>
-                        <td>Prevents occlusion by creator handle, caption stack, audio ticker, and Sponsored CTA cards.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Right Margin</strong></td>
-                        <td>140 px</td>
-                        <td>140 px</td>
-                        <td>Reserves clearance for creator profile avatar, like button, comment drawer, and share tray.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Left Margin</strong></td>
-                        <td>44 px</td>
-                        <td>44 px</td>
-                        <td>Provides safety buffer for edge bezel variations and display cropping.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Guaranteed Safe Area</strong></td>
-                        <td>896 × 1470 px</td>
-                        <td>896 × 1310 px</td>
-                        <td>Optimal focal zone for main video hooks, primary text placement, and key product graphics.</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="spec-table">
+                    <thead>
+                        <tr>
+                            <th>Boundary Region</th>
+                            <th>Organic Clearance</th>
+                            <th>Paid In-Feed Clearance</th>
+                            <th>Interface Component Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Top Margin</strong></td>
+                            <td>130 px</td>
+                            <td>130 px</td>
+                            <td>Clears top navigation tabs ('Following / For You'), search bar, and camera notches.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Bottom Margin</strong></td>
+                            <td>320 px</td>
+                            <td>480 px</td>
+                            <td>Prevents occlusion by creator handle, caption stack, audio ticker, and Sponsored CTA cards.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Right Margin</strong></td>
+                            <td>140 px</td>
+                            <td>140 px</td>
+                            <td>Reserves clearance for creator profile avatar, like button, comment drawer, and share tray.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Left Margin</strong></td>
+                            <td>44 px</td>
+                            <td>44 px</td>
+                            <td>Provides safety buffer for edge bezel variations and display cropping.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Guaranteed Safe Area</strong></td>
+                            <td>896 × 1470 px</td>
+                            <td>896 × 1310 px</td>
+                            <td>Optimal focal zone for main video hooks, primary text placement, and key product graphics.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
             <!-- Ad Slot 2 Container (Immediately Below Data Table) -->
             <div class="cms-ad-slot-2"></div>
@@ -477,6 +553,7 @@
             var adCaptionInput = document.getElementById('adCaption');
             var ctaButtonSelect = document.getElementById('ctaButton');
             var downloadBtn = document.getElementById('downloadBtn');
+            var shareBtn = document.getElementById('shareBtn');
 
             var currentMedia = null;
             var isVideo = false;
@@ -665,86 +742,103 @@
                 link.href = canvas.toDataURL('image/png');
                 link.click();
             });
+
+            // Native Web Share API with Clipboard Fallback
+            shareBtn.addEventListener('click', function() {
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'TikTok Safe Zone Checker & Ad Mockup Studio',
+                        text: 'Check your 1080x1920 vertical video safe zones and test ad overlays instantly!',
+                        url: window.location.href
+                    }).catch(function(err) {
+                        console.log('Share cancelled or failed:', err);
+                    });
+                } else if (navigator.clipboard) {
+                    navigator.clipboard.writeText(window.location.href).then(function() {
+                        var originalText = shareBtn.innerHTML;
+                        shareBtn.innerHTML = '✅ Link Copied to Clipboard!';
+                        setTimeout(function() {
+                            shareBtn.innerHTML = originalText;
+                        }, 2500);
+                    });
+                } else {
+                    alert('Copy this link to share: ' + window.location.href);
+                }
+            });
         });
     </script>
+
     <!-- Global CoreMetricSuite Cross-Linking Index Hub -->
-<div style="margin-top: 40px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #f8fafc; font-family: system-ui, -apple-system, sans-serif;">
-    <h3 style="margin: 0 0 15px 0; font-size: 18px; color: #0f172a; font-weight: 600;">🛠️ CoreMetricSuite Utility Directory</h3>
-    
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
-        <!-- Group 1 -->
-        <div>
-            <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇦🇺 Australia Tax & Labor</h4>
-            <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
-                <li style="margin-bottom: 4px;"><a id="hub-au-cents" href="../au-cents-per-km-estimator/" style="color: #2563eb; text-decoration: underline;">Cents-Per-Km Tax Estimator</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-au-schads" href="../au-schads-vehicle-allowance/" style="color: #2563eb; text-decoration: underline;">SCHADS Vehicle Allowance</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-au-super" href="../au-superannuation-charge-tracker/" style="color: #2563eb; text-decoration: underline;">Superannuation Tracker</a></li>
-            </ul>
-        </div>
+    <div style="margin-top: 30px; padding: 20px; border: 1px solid #2e3446; border-radius: 8px; background-color: #181b24; font-family: system-ui, -apple-system, sans-serif;">
+        <h3 style="margin: 0 0 15px 0; font-size: 18px; color: #f3f4f6; font-weight: 600;">🛠️ CoreMetricSuite Utility Directory</h3>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.05em;">🇦🇺 Australia Tax & Labor</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-au-cents" href="../au-cents-per-km-estimator/" style="color: #00f2fe; text-decoration: underline;">Cents-Per-Km Tax Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-au-schads" href="../au-schads-vehicle-allowance/" style="color: #00f2fe; text-decoration: underline;">SCHADS Vehicle Allowance</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-au-super" href="../au-superannuation-charge-tracker/" style="color: #00f2fe; text-decoration: underline;">Superannuation Tracker</a></li>
+                </ul>
+            </div>
 
-        <!-- Group 2 -->
-        <div>
-            <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇺🇸 US Corporate Tax</h4>
-            <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
-                <li style="margin-bottom: 4px;"><a id="hub-us-llc" href="../us-llc-late-penalty-estimator/" style="color: #2563eb; text-decoration: underline;">LLC Late Tax Penalty</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-us-179" href="../us-section-179-truck-calculator/" style="color: #2563eb; text-decoration: underline;">Section 179 Vehicle Deduction</a></li>
-            </ul>
-        </div>
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.05em;">🇺🇸 US Corporate Tax</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-us-llc" href="../us-llc-late-penalty-estimator/" style="color: #00f2fe; text-decoration: underline;">LLC Late Tax Penalty</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-us-179" href="../us-section-179-truck-calculator/" style="color: #00f2fe; text-decoration: underline;">Section 179 Vehicle Deduction</a></li>
+                </ul>
+            </div>
 
-        <!-- Group 3 -->
-        <div>
-            <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇬🇧 UK Property Management</h4>
-            <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
-                <li style="margin-bottom: 4px;"><a id="hub-uk-rent" href="../uk-form-4a-rent-tracker/" style="color: #2563eb; text-decoration: underline;">Form 4A Rent Tracker</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-uk-sdlt" href="../uk-sdlt-bracket-estimator/" style="color: #2563eb; text-decoration: underline;">Stamp Duty Estimator</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-uk-sec8" href="../uk-section-8-calculator/" style="color: #2563eb; text-decoration: underline;">Section 8 Calculator</a></li>
-            </ul>
-        </div>
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.05em;">🇬🇧 UK Property Management</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-rent" href="../uk-form-4a-rent-tracker/" style="color: #00f2fe; text-decoration: underline;">Form 4A Rent Tracker</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-sdlt" href="../uk-sdlt-bracket-estimator/" style="color: #00f2fe; text-decoration: underline;">Stamp Duty Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-sec8" href="../uk-section-8-calculator/" style="color: #00f2fe; text-decoration: underline;">Section 8 Calculator</a></li>
+                </ul>
+            </div>
 
-        <!-- Group 4 -->
-        <div>
-            <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🎬 Digital Media Layouts</h4>
-            <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
-                <li style="margin-bottom: 4px;"><a id="hub-media-ig" href="../instagram-reels-preview/" style="color: #2563eb; text-decoration: underline;">Instagram Reels Grid</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-media-shorts" href="../shorts-ui-safe-zone/" style="color: #2563eb; text-decoration: underline;">YouTube Shorts Safe Zone</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-media-tiktok" href="../tiktok-ad-safe-zone/" style="color: #2563eb; text-decoration: underline;">TikTok Ad Checker</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-media-shopify" href="../shopify-metafields-parser/" style="color: #2563eb; text-decoration: underline;">Shopify Metafields Parser</a></li>
-            </ul>
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.05em;">🎬 Digital Media Layouts</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-media-ig" href="../instagram-reels-preview/" style="color: #00f2fe; text-decoration: underline;">Instagram Reels Grid</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-shorts" href="../shorts-ui-safe-zone/" style="color: #00f2fe; text-decoration: underline;">YouTube Shorts Safe Zone</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-tiktok" href="../tiktok-ad-safe-zone/" style="color: #00f2fe; text-decoration: underline;">TikTok Ad Checker</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-shopify" href="../shopify-metafields-parser/" style="color: #00f2fe; text-decoration: underline;">Shopify Metafields Parser</a></li>
+                </ul>
+            </div>
         </div>
     </div>
-</div>
 
-<script defer>
-    (function() {
-        // Scans the active browser path to determine which self-link to intercept
-        const path = window.location.pathname.toLowerCase();
-        
-        const toolsMap = {
-            'au-cents-per-km-estimator': 'hub-au-cents',
-            'au-schads-vehicle-allowance': 'hub-au-schads',
-            'au-superannuation-charge-tracker': 'hub-au-super',
-            'us-llc-late-penalty-estimator': 'hub-us-llc',
-            'us-section-179-truck-calculator': 'hub-us-179',
-            'uk-form-4a-rent-tracker': 'hub-uk-rent',
-            'uk-sdlt-bracket-estimator': 'hub-uk-sdlt',
-            'uk-section-8-calculator': 'hub-uk-sec8',
-            'instagram-reels-preview': 'hub-media-ig',
-            'shorts-ui-safe-zone': 'hub-media-shorts',
-            'tiktok-ad-safe-zone': 'hub-media-tiktok',
-            'shopify-metafields-parser': 'hub-media-shopify'
-        };
+    <script defer>
+        (function() {
+            const path = window.location.pathname.toLowerCase();
+            const toolsMap = {
+                'au-cents-per-km-estimator': 'hub-au-cents',
+                'au-schads-vehicle-allowance': 'hub-au-schads',
+                'au-superannuation-charge-tracker': 'hub-au-super',
+                'us-llc-late-penalty-estimator': 'hub-us-llc',
+                'us-section-179-truck-calculator': 'hub-us-179',
+                'uk-form-4a-rent-tracker': 'hub-uk-rent',
+                'uk-sdlt-bracket-estimator': 'hub-uk-sdlt',
+                'uk-section-8-calculator': 'hub-uk-sec8',
+                'instagram-reels-preview': 'hub-media-ig',
+                'shorts-ui-safe-zone': 'hub-media-shorts',
+                'tiktok-ad-safe-zone': 'hub-media-tiktok',
+                'shopify-metafields-parser': 'hub-media-shopify'
+            };
 
-        for (const [folderName, elementId] of Object.entries(toolsMap)) {
-            if (path.includes(folderName)) {
-                const targetEl = document.getElementById(elementId);
-                if (targetEl) {
-                    // Replaces the hyperlinked state with unclickable bold text styling
-                    targetEl.outerHTML = `<span style="font-weight: 600; color: #0f172a;">${targetEl.textContent} (Current)</span>`;
+            for (const [folderName, elementId] of Object.entries(toolsMap)) {
+                if (path.includes(folderName)) {
+                    const targetEl = document.getElementById(elementId);
+                    if (targetEl) {
+                        targetEl.outerHTML = `<span style="font-weight: 600; color: #f3f4f6;">${targetEl.textContent} (Current)</span>`;
+                    }
+                    break;
                 }
-                break;
             }
-        }
-    })();
-</script>
-<style type="text/css">@media screen and (max-width:900px){html,body{width:100%!important;max-width:100vw!important;overflow-x:hidden!important;margin:0!important;padding:0!important}main.container{display:flex!important;flex-direction:column!important;width:100%!important;max-width:100%!important;padding:0 12px!important;margin:8px auto!important;gap:16px!important;box-sizing:border-box!important}main.container>section.preview-stage{order:-1!important;width:100%!important;display:flex!important;flex-direction:column!important;align-items:center!important;margin:0 auto!important;box-sizing:border-box!important}main.container>section.panel{order:2!important;width:100%!important;max-width:100%!important;box-sizing:border-box!important}.canvas-wrapper{width:75vw!important;height:133.33vw!important;max-width:290px!important;max-height:515px!important;margin:0 auto!important;box-sizing:border-box!important}#cms-ad-slot-top,#cms-ad-slot-1,.cms-medianet-box,.cms-ad-slot-1,.cms-ad-slot-2{width:100%!important;max-width:100%!important;height:auto!important;min-height:90px!important;display:block!important}.spec-table,.content-card div[style*="display: grid"]{grid-template-columns:1fr!important;width:100%!important}input,textarea,select{font-size:16px!important}}</style></body>
+        })();
+    </script>
+</body>
 </html>
