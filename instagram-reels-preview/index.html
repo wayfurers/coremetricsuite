@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Instagram Reels & Stories Safe Zone Checker (9:16 Mockup Studio)</title>
-    <meta name="description" content="Verify your vertical 1080x1920 Instagram layouts instantly. Preview Reels and Stories overlays alongside a 4:5 feed crop tool using client-side HTML5 Canvas.">
-    <meta name="keywords" content="instagram reels safe zone checker, instagram stories safe area template, reels overlay specs 1080x1920, 4:5 feed preview ratio checker, instagram reels safe zone capcut, instagram story overlay generator, reels text safe margins">
-    <link rel="canonical" href="https://coremetricsuite.com/instagram-reels-preview">
+    <title>Instagram Reels Aspect Ratio & Grid Previewer (4:5 & 1:1 Crop Studio)</title>
+    <meta name="description" content="Test your Instagram Reels vertical videos against 9:16 full-screen overlays, 4:5 home feed previews, and 1:1 profile grid crops instantly.">
+    <meta name="keywords" content="instagram reels previewer, reels grid crop checker, 4:5 feed aspect ratio preview, instagram safe area tool, 1:1 profile grid framing">
+    <link rel="canonical" href="https://coremetricsuite.com/instagram-reels-preview/">
 
     <!-- Open Graph / Social Metadata -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Instagram Reels & Stories Safe Zone Checker (9:16 Mockup Studio)">
-    <meta property="og:description" content="Verify your vertical 1080x1920 Instagram layouts instantly. Preview Reels and Stories overlays alongside a 4:5 feed crop tool using client-side HTML5 Canvas.">
-    <meta property="og:url" content="https://coremetricsuite.com/instagram-reels-preview">
+    <meta property="og:title" content="Instagram Reels Aspect Ratio & Grid Previewer">
+    <meta property="og:description" content="Test your Instagram Reels vertical videos against 9:16 full-screen overlays, 4:5 home feed previews, and 1:1 profile grid crops instantly.">
+    <meta property="og:url" content="https://coremetricsuite.com/instagram-reels-preview/">
     
     <!-- Global Framework Dependencies -->
     <link rel="stylesheet" href="/css/global.css">
@@ -27,42 +27,42 @@
       "mainEntity": [
         {
           "@type": "Question",
-          "name": "What are the exact Instagram Reels safe zone dimensions for 1080x1920 pixels?",
+          "name": "How does Instagram crop 9:16 Reels for the home feed and profile grid?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "For a standard 1080x1920 pixel (9:16) Instagram Reel, reserve the top 220px for header controls, the bottom 420px for captions and audio details, and 130px on the right edge for interactive action icons."
+            "text": "Instagram displays Reels in full 9:16 vertical format (1080x1920) in the Reels tab. However, in the main Home Feed, videos are cropped vertically to 4:5 (1080x1350), and on your Profile Grid, covers are cropped to a square 1:1 ratio (1080x1080)."
           }
         },
         {
           "@type": "Question",
-          "name": "Why does text get cropped when Instagram Reels appear in the main profile grid?",
+          "name": "How can I prevent text and faces from being cropped out on the Instagram grid?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Instagram automatically crops 9:16 vertical video assets into a 4:5 ratio in home feed previews and a 1:1 square in profile grid views. Keep main titles centered to prevent clipping."
+            "text": "Keep all main text, titles, logos, and focal subjects centered within the middle 1080x1080 pixel square of your 1080x1920 canvas. This guarantees perfect visibility across all three feed views."
           }
         },
         {
           "@type": "Question",
-          "name": "Does the Instagram Reels UI change when viewed from the feed vs. the Reels tab?",
+          "name": "Is my video uploaded to any server during testing?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Yes. While browsing the home feed, captions can overlay a larger lower portion of the frame. In the dedicated Reels player, action buttons and audio tags take up specific right-hand and bottom screen regions."
+            "text": "No. All rendering, canvas cropping, and aspect ratio overlays are generated 100% locally within your web browser. Your video files and assets remain completely private."
           }
         },
         {
           "@type": "Question",
-          "name": "What is the safe area for Instagram Stories compared to Reels?",
+          "name": "Can I download reference templates for my editing software?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Both format sizes use 1080x1920 pixels, but Stories feature top progress bars and a bottom reply box, leaving a safe central area roughly between 250px and 1640px vertically."
+            "text": "Yes. Clicking the 'Export 1080x1920 PNG Preview' button downloads a transparent reference grid that can be placed over your timeline in CapCut, Premiere Pro, or DaVinci Resolve."
           }
         },
         {
           "@type": "Question",
-          "name": "How do I use an Instagram Reels safe zone overlay PNG in CapCut or Premiere Pro?",
+          "name": "What file types are supported by this Instagram preview tool?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Export a transparent 1080x1920 PNG preview from our studio, place it on the top track layer of your timeline in CapCut or Premiere Pro, position text inside the guides, and hide the track before exporting."
+            "text": "The utility supports vertical video formats (MP4, MOV) as well as static images (PNG, JPG, WEBP)."
           }
         }
       ]
@@ -75,9 +75,7 @@
             --bg-card: #181b24;
             --bg-input: #222634;
             --border-color: #2e3446;
-            --accent-pink: #e1306c;
-            --accent-purple: #833ab4;
-            --accent-orange: #f77737;
+            --accent-purple: #c13584;
             --accent-cyan: #00f2fe;
             --text-primary: #f3f4f6;
             --text-secondary: #9ca3af;
@@ -117,8 +115,8 @@
 
         .badge {
             font-size: 0.75rem;
-            background: linear-gradient(45deg, var(--accent-purple), var(--accent-pink));
-            color: #fff;
+            background: var(--accent-cyan);
+            color: #000;
             padding: 3px 8px;
             border-radius: 4px;
             font-weight: 700;
@@ -135,7 +133,7 @@
             margin-bottom: 0.75rem;
         }
 
-        .drop-zone:hover { border-color: var(--accent-pink); background-color: rgba(225, 48, 108, 0.05); }
+        .drop-zone:hover { border-color: var(--accent-cyan); background-color: rgba(0, 242, 254, 0.05); }
         .drop-title { font-weight: 600; color: #fff; font-size: 0.95rem; }
         .drop-sub { font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px; }
 
@@ -178,7 +176,7 @@
             position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px;
             background-color: white; transition: .3s; border-radius: 50%;
         }
-        input:checked + .slider { background: linear-gradient(45deg, var(--accent-purple), var(--accent-pink)); }
+        input:checked + .slider { background-color: var(--accent-purple); }
         input:checked + .slider:before { transform: translateX(20px); }
 
         .form-group { margin-bottom: 1.25rem; }
@@ -188,16 +186,64 @@
             border: 1px solid var(--border-color); border-radius: 6px; color: #fff;
             font-size: 0.9rem; outline: none; font-family: inherit;
         }
-        input[type="text"]:focus, textarea:focus, select:focus { border-color: var(--accent-pink); }
+        input[type="text"]:focus, textarea:focus, select:focus { border-color: var(--accent-cyan); }
 
         .btn-action {
-            width: 100%; padding: 0.85rem; background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple));
+            width: 100%; padding: 0.85rem; background: linear-gradient(135deg, var(--accent-purple), #833ab4);
             color: #fff; font-weight: 600; border: none; border-radius: 6px; cursor: pointer; font-size: 0.95rem;
-            box-shadow: 0 4px 12px rgba(225, 48, 108, 0.3);
+            box-shadow: 0 4px 12px rgba(193, 53, 132, 0.3);
             transition: transform 0.1s, opacity 0.2s;
+            margin-bottom: 1rem;
         }
         .btn-action:hover { opacity: 0.95; }
         .btn-action:active { transform: scale(0.99); }
+
+        /* Social Share Integrated Module */
+        .social-share-container {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        .share-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
+            display: block;
+            text-align: center;
+        }
+        .share-buttons-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+        }
+        .btn-share {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            padding: 0.5rem 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: opacity 0.2s, transform 0.1s;
+        }
+        .btn-share:hover { opacity: 0.88; }
+        .btn-share:active { transform: scale(0.97); }
+        .btn-share-x { background-color: #000000; border: 1px solid #333; }
+        .btn-share-fb { background-color: #1877f2; }
+        .btn-share-li { background-color: #0a66c2; }
+        .btn-share-wa { background-color: #25d366; color: #000; }
+        .btn-share-pin { background-color: #e60023; }
+        .btn-share-copy { background-color: #374151; color: #fff; grid-column: span 3; margin-top: 0.25rem; }
 
         .preview-stage { display: flex; flex-direction: column; align-items: center; }
         .canvas-wrapper {
@@ -232,7 +278,7 @@
             overflow: hidden;
             transition: border-color 0.2s;
         }
-        .faq-accordion[open] { border-color: var(--accent-pink); }
+        .faq-accordion[open] { border-color: var(--accent-cyan); }
         .faq-summary {
             font-size: 1rem;
             font-weight: 600;
@@ -249,12 +295,12 @@
         .faq-summary::after {
             content: "+";
             font-size: 1.2rem;
-            color: var(--accent-pink);
+            color: var(--accent-cyan);
             transition: transform 0.2s;
         }
         .faq-accordion[open] .faq-summary::after {
             content: "−";
-            color: var(--accent-cyan);
+            color: var(--accent-purple);
         }
         .faq-answer {
             padding: 0 1.2rem 1.2rem;
@@ -293,37 +339,30 @@
     <main class="container">
         <section class="panel">
             <div class="panel-title">
-                <span>Instagram Safe Zone Controls</span>
-                <span class="badge">INSTAGRAM 9:16</span>
+                <span>Aspect Ratio Controls</span>
+                <span class="badge">REELS SPECS</span>
             </div>
 
             <!-- Upload Box & Demo File CTA -->
             <div class="drop-zone" id="dropZone">
-                <p class="drop-title">Click or Drag Media File Here</p>
-                <p class="drop-sub">Supports MP4, MOV, PNG, JPG (1080x1920 recommended)</p>
+                <p class="drop-title">Click or Drag Video / Image File</p>
+                <p class="drop-sub">MP4, MOV, PNG, JPG (1080x1920 recommended)</p>
                 <input type="file" id="fileInput" accept="image/*,video/*" style="display:none;">
             </div>
             
-            <button class="btn-demo" id="loadDemoBtn" type="button">⚡ Load Instagram Demo Background</button>
+            <button class="btn-demo" id="loadDemoBtn" type="button">⚡ Load Demo Sample Data</button>
 
             <div class="form-group">
-                <label for="formatSelect">Placement Preview Mode</label>
-                <select id="formatSelect">
-                    <option value="reels">Instagram Reels Overlay</option>
-                    <option value="stories">Instagram Stories Overlay</option>
+                <label for="previewMode">Target Display Mode</label>
+                <select id="previewMode">
+                    <option value="reels">9:16 Full Screen Reels Tab</option>
+                    <option value="feed">4:5 Home Feed Preview</option>
+                    <option value="grid">1:1 Profile Grid Cover Crop</option>
                 </select>
             </div>
 
-            <div class="toggle-group" id="feedToggleContainer">
-                <span class="toggle-label">Show 4:5 Feed Preview Box</span>
-                <label class="switch">
-                    <input type="checkbox" id="feedPreviewToggle" checked>
-                    <span class="slider"></span>
-                </label>
-            </div>
-
             <div class="toggle-group">
-                <span class="toggle-label">Show Safe Zone Red Margins</span>
+                <span class="toggle-label">Show Instagram UI Overlay</span>
                 <label class="switch">
                     <input type="checkbox" id="overlayToggle" checked>
                     <span class="slider"></span>
@@ -331,16 +370,29 @@
             </div>
 
             <div class="form-group">
-                <label for="accountName">Account Username</label>
-                <input type="text" id="accountName" value="@yourbrand">
+                <label for="accountName">Account Handle</label>
+                <input type="text" id="accountName" value="@YourInstagram">
             </div>
 
             <div class="form-group">
-                <label for="adCaption">Caption / Audio Track Title</label>
-                <textarea id="adCaption" rows="3">Elevate your visual creative workflow! 🚀 Original Audio - brand.official</textarea>
+                <label for="adCaption">Reels Caption / Hashtags</label>
+                <textarea id="adCaption" rows="3">Aesthetics &amp; framing check for Instagram Reels! ✨ #reels #contentcreator</textarea>
             </div>
 
-            <button class="btn-action" id="downloadBtn" type="button">Export 1080x1920 PNG Safe Zone Overlay</button>
+            <button class="btn-action" id="downloadBtn" type="button">Export 1080x1920 PNG Preview</button>
+
+            <!-- Social Media Share Section -->
+            <div class="social-share-container">
+                <span class="share-label">Share This Tool</span>
+                <div class="share-buttons-grid">
+                    <a id="shareX" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-x">𝕏 Post</a>
+                    <a id="shareFB" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-fb">Facebook</a>
+                    <a id="shareWA" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-wa">WhatsApp</a>
+                    <a id="shareLI" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-li">LinkedIn</a>
+                    <a id="sharePIN" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-pin">Pinterest</a>
+                    <button id="copyShareLink" type="button" class="btn-share btn-share-copy">🔗 Copy Tool Link</button>
+                </div>
+            </div>
         </section>
 
         <!-- Canvas Stage Wrapper -->
@@ -349,7 +401,7 @@
                 <canvas id="previewCanvas" width="1080" height="1920"></canvas>
             </div>
             <p class="canvas-caption">
-                Client-side HTML5 canvas render. Keep titles within central box for uncropped 4:5 feed previews.
+                Client-side preview canvas. Ensures text and key subjects remain centered for 1:1 grid safety.
             </p>
         </section>
     </main>
@@ -357,59 +409,47 @@
     <!-- SEO & Educational Guide Section -->
     <article class="content-area">
         <div class="content-card">
-            <h1>Instagram Reels &amp; Stories Safe Zone Guide (1080x1920)</h1>
+            <h1>Instagram Reels Aspect Ratio &amp; Profile Grid Crop Previewer</h1>
             <p>
-                Navigating Instagram's interface can be challenging for creators and performance marketers. Between top account handles, bottom caption blocks, right-hand interaction icons, and automatic 4:5 aspect ratio feed cropping, important text or logos can easily get hidden or cut off.
+                Creating vertical videos for Instagram Reels requires balancing three distinct viewing formats across the app. While Reels are recorded and published in a 9:16 full-screen vertical resolution (1080x1920 pixels), Instagram automatically crops them into a 4:5 ratio (1080x1350 pixels) when viewed in the main Home Feed, and further condenses them into a square 1:1 ratio (1080x1080 pixels) on your Profile Grid.
             </p>
             <p>
-                This real-time browser-based <strong>Instagram Reels &amp; Stories Safe Zone Checker</strong> processes media entirely in your browser. Verify text visibility, action button margins, and feed crop boundaries before publishing.
+                This <strong>instagram-reels-preview</strong> studio allows creators, social media managers, and digital strategists to test their compositions client-side. Check how captions, faces, and brand logos line up across all three display modes before hitting publish.
             </p>
 
-            <h2>Instagram Reels vs. Stories Safe Area Specifications</h2>
+            <h2>Instagram Reels Aspect Ratio Specifications</h2>
             <p>
-                While both Instagram Reels and Stories use a standard full-screen vertical resolution of 1080x1920 pixels (9:16 aspect ratio), their UI element overlays vary significantly:
+                To avoid unwanted graphic cutoffs across Instagram's varying user interfaces, structure your visual hierarchy around these exact pixel boundaries:
             </p>
 
             <div class="table-responsive">
                 <table class="spec-table">
                     <thead>
                         <tr>
-                            <th>Boundary Margin</th>
-                            <th>Instagram Reels Specs</th>
-                            <th>Instagram Stories Specs</th>
-                            <th>UI Clearance Purpose</th>
+                            <th>Display Location</th>
+                            <th>Aspect Ratio</th>
+                            <th>Resolution (Pixels)</th>
+                            <th>Formatting &amp; Safe Zone Notes</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td><strong>Top Margin</strong></td>
-                            <td>220 px</td>
-                            <td>250 px</td>
-                            <td>Clears top header bars, account handles, story progress segments, and close buttons.</td>
+                            <td><strong>Reels Dedicated Tab</strong></td>
+                            <td>9:16 Vertical</td>
+                            <td>1080 × 1920 px</td>
+                            <td>Full-screen canvas. Bottom 380px and right 120px are obscured by account details and action buttons.</td>
                         </tr>
                         <tr>
-                            <td><strong>Bottom Margin</strong></td>
-                            <td>420 px</td>
-                            <td>280 px</td>
-                            <td>Reserves space for account usernames, multiline captions, audio tags, and reply boxes.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Right Margin</strong></td>
-                            <td>130 px</td>
-                            <td>44 px</td>
-                            <td>Clears vertical engagement icons (Like, Comment, Share, Save, Audio disc).</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Left Margin</strong></td>
-                            <td>44 px</td>
-                            <td>44 px</td>
-                            <td>Safety buffer against side bezel clipping on curved smartphone screens.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>4:5 Feed Safe Box</strong></td>
+                            <td><strong>Home Feed View</strong></td>
+                            <td>4:5 Portrait</td>
                             <td>1080 × 1350 px</td>
-                            <td>N/A</td>
-                            <td>Guarantees zero text cropping when vertical Reels appear in the main Instagram feed.</td>
+                            <td>Top and bottom 285px are cropped out. Keep essential headlines inside this 1350px vertical window.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Profile Grid Cover</strong></td>
+                            <td>1:1 Square</td>
+                            <td>1080 × 1080 px</td>
+                            <td>Top and bottom 420px are cropped out. Central 1080x1080 region must contain primary subject and main title.</td>
                         </tr>
                     </tbody>
                 </table>
@@ -418,54 +458,50 @@
             <!-- Ad Slot 2 Container -->
             <div class="cms-ad-slot-2"></div>
 
-            <h2>How to Ensure Zero Crop in Instagram Feed Previews</h2>
+            <h2>Why Multi-Format Safe Zones Matter on Instagram</h2>
             <p>
-                When Instagram serves a Reel inside the primary user home feed, it crops the vertical canvas from a 9:16 aspect ratio (1080x1920) down to a 4:5 ratio (1080x1350) by trimming 285 pixels off the top and bottom.
+                A high-performing Reel can lose engagement if its visual thumbnail looks broken or misaligned on a brand's main profile grid. Ensuring that subtitles and visual hooks sit cleanly inside the central square protects brand presentation:
             </p>
             <ul>
-                <li><strong>Keep Main Message Centered:</strong> Position titles, subtitles, callouts, and logos inside the central 1080x1350 pixel zone.</li>
-                <li><strong>Avoid Engagement Column:</strong> Leave a 130-pixel margin on the right side of the canvas to avoid overlapping with like and comment icons.</li>
-                <li><strong>Optimize for Profile Grid:</strong> Check key design elements against a central 1:1 square (1080x1080) to ensure your profile grid thumbnails look clean.</li>
+                <li><strong>Profile Grid Aesthetics:</strong> Text placed near the extreme top or bottom of a 9:16 frame will be sliced off on your profile grid, leaving awkward, incomplete letters.</li>
+                <li><strong>Feed Caption Overlap:</strong> In the 4:5 Home Feed, Instagram overlays native caption text directly across the lower portion of the video frame.</li>
+                <li><strong>Conversion Optimization:</strong> On-screen text CTAs (like "Read Caption") must remain fully visible across all device screen sizes.</li>
             </ul>
-
-            <h2>CapCut, Premiere Pro &amp; Canva Integration Workflow</h2>
-            <p>
-                Streamline your editing process using a transparent safe zone guide overlay:
-            </p>
-            <ol>
-                <li><strong>Export PNG Overlay:</strong> Click the "Export 1080x1920 PNG Safe Zone Overlay" button to download your transparent guide grid.</li>
-                <li><strong>Add to Timeline:</strong> Import the PNG file into CapCut, Adobe Premiere Pro, Final Cut Pro, or Canva, placing it on the top track layer.</li>
-                <li><strong>Adjust Text Alignment:</strong> Position all subtitles, text callouts, and graphic assets within the clear central safe zone.</li>
-                <li><strong>Remove Before Render:</strong> Turn off or delete the overlay track before rendering your final video file.</li>
-            </ol>
 
             <h2>Frequently Asked Questions</h2>
             <div class="faq-block">
                 <details class="faq-accordion" open>
-                    <summary class="faq-summary">What are the exact Instagram Reels safe zone dimensions for 1080x1920 videos?</summary>
+                    <summary class="faq-summary">How does Instagram crop 9:16 Reels for the home feed and profile grid?</summary>
                     <div class="faq-answer">
-                        For a standard 1080x1920 pixel (9:16) Instagram Reel, keep text inside a safe zone with a top margin of 220px, a bottom margin of 420px, a left margin of 44px, and a right margin of 130px.
+                        Instagram displays Reels in full 9:16 vertical format (1080x1920) in the Reels tab. However, in the main Home Feed, videos are cropped vertically to 4:5 (1080x1350), and on your Profile Grid, covers are cropped to a square 1:1 ratio (1080x1080).
                     </div>
                 </details>
 
                 <details class="faq-accordion">
-                    <summary class="faq-summary">Why does text get cropped when Instagram Reels appear in the main profile grid?</summary>
+                    <summary class="faq-summary">How can I prevent text and faces from being cropped out on the Instagram grid?</summary>
                     <div class="faq-answer">
-                        Instagram automatically crops 9:16 vertical video assets into a 4:5 aspect ratio card (1080x1350px) for feed previews and a 1:1 square thumbnail (1080x1080px) on profile grids. Text placed too high or low gets cut off in these non-full-screen views.
+                        Keep all main text, titles, logos, and focal subjects centered within the middle 1080x1080 pixel square of your 1080x1920 canvas. This guarantees perfect visibility across all three feed views.
                     </div>
                 </details>
 
                 <details class="faq-accordion">
-                    <summary class="faq-summary">How do I use an Instagram Reels safe zone overlay PNG in CapCut or Premiere Pro?</summary>
+                    <summary class="faq-summary">Is my video uploaded to any server during testing?</summary>
                     <div class="faq-answer">
-                        Download our transparent 1080x1920 PNG overlay, place it on the top track layer in your editor (CapCut, Premiere Pro, or Canva), align your visual elements within the clear central area, and turn off the guide track before exporting.
+                        No. All rendering, canvas cropping, and aspect ratio overlays are generated 100% locally within your web browser. Your video files and assets remain completely private.
                     </div>
                 </details>
 
                 <details class="faq-accordion">
-                    <summary class="faq-summary">Are my media files uploaded to an external server?</summary>
+                    <summary class="faq-summary">Can I download reference templates for my editing software?</summary>
                     <div class="faq-answer">
-                        No. All frame rendering, image generation, and canvas drawing happen locally inside your browser using client-side JavaScript and the HTML5 Canvas API.
+                        Yes. Clicking the 'Export 1080x1920 PNG Preview' button downloads a transparent reference grid that can be placed over your timeline in CapCut, Premiere Pro, or DaVinci Resolve.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">What file types are supported by this Instagram preview tool?</summary>
+                    <div class="faq-answer">
+                        The utility supports vertical video formats (MP4, MOV) as well as static images (PNG, JPG, WEBP).
                     </div>
                 </details>
             </div>
@@ -484,9 +520,7 @@
             var fileInput = document.getElementById('fileInput');
             var dropZone = document.getElementById('dropZone');
             var loadDemoBtn = document.getElementById('loadDemoBtn');
-            var formatSelect = document.getElementById('formatSelect');
-            var feedToggleContainer = document.getElementById('feedToggleContainer');
-            var feedPreviewToggle = document.getElementById('feedPreviewToggle');
+            var previewModeSelect = document.getElementById('previewMode');
             var overlayToggle = document.getElementById('overlayToggle');
             var accountNameInput = document.getElementById('accountName');
             var adCaptionInput = document.getElementById('adCaption');
@@ -495,12 +529,39 @@
             var currentMedia = null;
             var isVideo = false;
 
+            /* Setup Social Share Links */
+            var currentUrl = encodeURIComponent(window.location.href);
+            var shareTitle = encodeURIComponent("Check out this free Instagram Reels Aspect Ratio & Grid Previewer!");
+            
+            document.getElementById('shareX').href = 'https://twitter.com/intent/tweet?url=' + currentUrl + '&text=' + shareTitle;
+            document.getElementById('shareFB').href = 'https://www.facebook.com/sharer/sharer.php?u=' + currentUrl;
+            document.getElementById('shareWA').href = 'https://api.whatsapp.com/send?text=' + shareTitle + '%20' + currentUrl;
+            document.getElementById('shareLI').href = 'https://www.linkedin.com/sharing/share-offsite/?url=' + currentUrl;
+            document.getElementById('sharePIN').href = 'https://pinterest.com/pin/create/button/?url=' + currentUrl + '&description=' + shareTitle;
+
+            var copyBtn = document.getElementById('copyShareLink');
+            copyBtn.addEventListener('click', function() {
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'Instagram Reels Previewer',
+                        text: 'Test your Instagram Reels framing and grid crops instantly.',
+                        url: window.location.href
+                    }).catch(function() {});
+                } else if (navigator.clipboard) {
+                    navigator.clipboard.writeText(window.location.href).then(function() {
+                        var origText = copyBtn.textContent;
+                        copyBtn.textContent = '✓ Link Copied!';
+                        setTimeout(function() { copyBtn.textContent = origText; }, 2000);
+                    });
+                }
+            });
+
             dropZone.addEventListener('click', function() { fileInput.click(); });
 
             dropZone.addEventListener('dragover', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
-                dropZone.style.borderColor = 'var(--accent-pink)';
+                dropZone.style.borderColor = 'var(--accent-cyan)';
             });
 
             dropZone.addEventListener('dragleave', function(e) {
@@ -531,20 +592,22 @@
                 var dCtx = demoCanvas.getContext('2d');
 
                 var grad = dCtx.createLinearGradient(0, 0, 1080, 1920);
-                grad.addColorStop(0, '#833ab4');
-                grad.addColorStop(0.5, '#fd1d1d');
-                grad.addColorStop(1, '#fcb045');
+                grad.addColorStop(0, '#f09433');
+                grad.addColorStop(0.25, '#e6683c');
+                grad.addColorStop(0.5, '#dc2743');
+                grad.addColorStop(0.75, '#cc2366');
+                grad.addColorStop(1, '#bc1888');
                 dCtx.fillStyle = grad;
                 dCtx.fillRect(0, 0, 1080, 1920);
 
                 dCtx.fillStyle = '#ffffff';
-                dCtx.font = 'bold 52px sans-serif';
+                dCtx.font = 'bold 54px sans-serif';
                 dCtx.textAlign = 'center';
-                dCtx.fillText('INSTAGRAM REELS STUDIO', 540, 860);
+                dCtx.fillText('INSTAGRAM REELS PREVIEW', 540, 850);
                 
-                dCtx.fillStyle = '#f3f4f6';
-                dCtx.font = '32px sans-serif';
-                dCtx.fillText('1080 x 1920 Safe Zone Checker Stage', 540, 920);
+                dCtx.fillStyle = '#ffffff';
+                dCtx.font = '36px sans-serif';
+                dCtx.fillText('Center 1:1 Square Grid Alignment', 540, 920);
 
                 var img = new Image();
                 img.src = demoCanvas.toDataURL();
@@ -594,65 +657,50 @@
                     ctx.fillText('Upload 1080x1920 Media', canvas.width / 2, canvas.height / 2);
                 }
 
-                var mode = formatSelect.value;
+                var mode = previewModeSelect.value;
                 var showOverlay = overlayToggle.checked;
-                var showFeedBox = feedPreviewToggle.checked && mode === 'reels';
 
-                if (mode === 'stories') {
-                    feedToggleContainer.style.display = 'none';
-                } else {
-                    feedToggleContainer.style.display = 'flex';
-                }
-
-                var topM = mode === 'reels' ? 220 : 250;
-                var bottomM = mode === 'reels' ? 420 : 280;
-                var rightM = mode === 'reels' ? 130 : 44;
-                var leftM = 44;
-
-                if (showOverlay) {
-                    ctx.fillStyle = 'rgba(225, 48, 108, 0.22)';
-                    ctx.fillRect(0, 0, canvas.width, topM);
-                    ctx.fillRect(0, canvas.height - bottomM, canvas.width, bottomM);
-                    ctx.fillRect(canvas.width - rightM, topM, rightM, canvas.height - topM - bottomM);
-                    ctx.fillRect(0, topM, leftM, canvas.height - topM - bottomM);
+                // Render Crop Mask Overlay according to mode
+                if (mode === 'feed') {
+                    // 4:5 Crop (1080x1350) -> Mask top/bottom 285px
+                    ctx.fillStyle = 'rgba(0, 0, 0, 0.75)';
+                    ctx.fillRect(0, 0, canvas.width, 285);
+                    ctx.fillRect(0, canvas.height - 285, canvas.width, 285);
 
                     ctx.strokeStyle = '#00f2fe';
                     ctx.lineWidth = 4;
-                    ctx.setLineDash([12, 8]);
-                    ctx.strokeRect(leftM, topM, canvas.width - leftM - rightM, canvas.height - topM - bottomM);
-                    ctx.setLineDash([]);
-                }
+                    ctx.strokeRect(0, 285, canvas.width, 1350);
+                } else if (mode === 'grid') {
+                    // 1:1 Crop (1080x1080) -> Mask top/bottom 420px
+                    ctx.fillStyle = 'rgba(0, 0, 0, 0.82)';
+                    ctx.fillRect(0, 0, canvas.width, 420);
+                    ctx.fillRect(0, canvas.height - 420, canvas.width, 420);
 
-                if (showFeedBox) {
-                    var feedHeight = 1350;
-                    var feedY = (canvas.height - feedHeight) / 2;
-                    ctx.strokeStyle = '#e1306c';
+                    ctx.strokeStyle = '#c13584';
                     ctx.lineWidth = 4;
-                    ctx.setLineDash([8, 6]);
-                    ctx.strokeRect(0, feedY, canvas.width, feedHeight);
-                    ctx.setLineDash([]);
-
-                    ctx.fillStyle = '#e1306c';
-                    ctx.font = 'bold 24px sans-serif';
-                    ctx.textAlign = 'left';
-                    ctx.fillText('4:5 Feed Preview Zone (1080x1350)', 24, feedY + 38);
+                    ctx.strokeRect(0, 420, canvas.width, 1080);
                 }
 
-                if (mode === 'reels') {
-                    var railX = canvas.width - 65;
-                    var railY = canvas.height - bottomM - 240;
-                    var icons = ['♥ 84.2K', '💬 1.1K', '✈ Share', '🎵 Audio'];
+                if (showOverlay && mode === 'reels') {
+                    // Draw IG Reels Right Action Bar
+                    var railX = canvas.width - 70;
+                    var railY = canvas.height - 450;
+                    var icons = ['❤️ 42.1K', '💬 812', '↗️ Share', '🎵 Audio'];
                     ctx.font = 'bold 22px sans-serif';
                     ctx.textAlign = 'center';
                     for (var i = 0; i < icons.length; i++) {
+                        railY += 80;
+                        ctx.fillStyle = 'rgba(0,0,0,0.4)';
+                        ctx.beginPath();
+                        ctx.arc(railX, railY - 8, 28, 0, Math.PI * 2);
+                        ctx.fill();
                         ctx.fillStyle = '#ffffff';
                         ctx.fillText(icons[i], railX, railY);
-                        railY += 85;
                     }
 
-                    var bottomX = leftM + 15;
-                    var bottomY = canvas.height - bottomM + 55;
-
+                    // Bottom Account Info
+                    var bottomX = 50;
+                    var bottomY = canvas.height - 180;
                     ctx.textAlign = 'left';
                     ctx.fillStyle = '#ffffff';
                     ctx.font = 'bold 32px sans-serif';
@@ -661,24 +709,7 @@
                     ctx.font = '24px sans-serif';
                     ctx.fillStyle = '#e5e7eb';
                     var captionText = adCaptionInput.value.length > 50 ? adCaptionInput.value.substring(0, 50) + '...' : adCaptionInput.value;
-                    ctx.fillText(captionText, bottomX, bottomY + 42);
-                } else {
-                    // Stories UI Overlay Mockup
-                    ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
-                    ctx.fillRect(20, 20, canvas.width - 40, 6);
-
-                    ctx.fillStyle = '#ffffff';
-                    ctx.font = 'bold 28px sans-serif';
-                    ctx.textAlign = 'left';
-                    ctx.fillText(accountNameInput.value, 30, 75);
-
-                    ctx.strokeStyle = '#ffffff';
-                    ctx.lineWidth = 3;
-                    ctx.strokeRect(20, canvas.height - 100, canvas.width - 120, 60);
-
-                    ctx.font = '24px sans-serif';
-                    ctx.fillStyle = '#ffffff';
-                    ctx.fillText('Send message...', 40, canvas.height - 62);
+                    ctx.fillText(captionText, bottomX, bottomY + 40);
                 }
             }
 
@@ -690,7 +721,7 @@
             }
             requestAnimationFrame(renderLoop);
 
-            var controls = [formatSelect, feedPreviewToggle, overlayToggle, accountNameInput, adCaptionInput];
+            var controls = [previewModeSelect, overlayToggle, accountNameInput, adCaptionInput];
             for (var j = 0; j < controls.length; j++) {
                 controls[j].addEventListener('input', function() {
                     if (!isVideo) draw();
@@ -701,7 +732,7 @@
 
             downloadBtn.addEventListener('click', function() {
                 var link = document.createElement('a');
-                link.download = 'instagram-safezone-preview.png';
+                link.download = 'instagram-reels-preview.png';
                 link.href = canvas.toDataURL('image/png');
                 link.click();
             });
