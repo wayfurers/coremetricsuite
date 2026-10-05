@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Put this in every tool folder's index.html file -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Instagram Reels & Stories Safe Zone Checker (9:16 Mockup Studio)</title>
@@ -13,63 +12,62 @@
     <meta property="og:type" content="website">
     <meta property="og:title" content="Instagram Reels & Stories Safe Zone Checker (9:16 Mockup Studio)">
     <meta property="og:description" content="Verify your vertical 1080x1920 Instagram layouts instantly. Preview Reels and Stories overlays alongside a 4:5 feed crop tool using client-side HTML5 Canvas.">
-    <meta property="og:url" content="https://coremetricsuite.com">
+    <meta property="og:url" content="https://coremetricsuite.com/instagram-reels-preview">
     
     <!-- Global Framework Dependencies -->
     <link rel="stylesheet" href="/css/global.css">
-<script src="/config.js" defer></script>
-<script src="/global.min.js" defer></script>
+    <script src="/config.js" defer></script>
+    <script src="/global.min.js" defer></script>
 
     <!-- FAQ JSON-LD Schema Markup -->
-    <!-- FAQ JSON-LD Schema Markup -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
+    <script type="application/ld+json">
     {
-      "@type": "Question",
-      "name": "What are the exact Instagram Reels safe zone dimensions for 1080x1920 pixels?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "For a standard 1080x1920 pixel (9:16) Instagram Reel, reserve the top 220px for header controls, the bottom 420px for captions/audio details, and 35px on the right edge."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Why does text get cropped when Instagram Reels appear in the main profile grid?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Instagram automatically crops 9:16 vertical video assets into a 1:1 square ratio in your main profile grid. Content must be centered vertically to look correct in grid view."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Does the Instagram Reels UI change when viewed from the feed vs. the Reels tab?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Yes, when viewed from the home feed, captions can overlay up to the bottom third of the video. In the dedicated Reels tab, the interface displays more compact overlay elements."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "What is the safe area for Instagram Stories compared to Reels?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Both format sizes use 1080x1920 pixels, but Stories feature top progress bars and a bottom reply box, leaving a safe central title area roughly between 250px and 1600px vertically."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "How can I verify if my video text fits inside the Instagram Reels safe zone?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "You can use a real-time Instagram Reels safe zone template checker to overlay standard app interfaces onto your video files or mockups before publishing."
-      }
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What are the exact Instagram Reels safe zone dimensions for 1080x1920 pixels?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For a standard 1080x1920 pixel (9:16) Instagram Reel, reserve the top 220px for header controls, the bottom 420px for captions and audio details, and 130px on the right edge for interactive action icons."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why does text get cropped when Instagram Reels appear in the main profile grid?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Instagram automatically crops 9:16 vertical video assets into a 4:5 ratio in home feed previews and a 1:1 square in profile grid views. Keep main titles centered to prevent clipping."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does the Instagram Reels UI change when viewed from the feed vs. the Reels tab?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. While browsing the home feed, captions can overlay a larger lower portion of the frame. In the dedicated Reels player, action buttons and audio tags take up specific right-hand and bottom screen regions."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the safe area for Instagram Stories compared to Reels?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Both format sizes use 1080x1920 pixels, but Stories feature top progress bars and a bottom reply box, leaving a safe central area roughly between 250px and 1640px vertically."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I use an Instagram Reels safe zone overlay PNG in CapCut or Premiere Pro?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Export a transparent 1080x1920 PNG preview from our studio, place it on the top track layer of your timeline in CapCut or Premiere Pro, position text inside the guides, and hide the track before exporting."
+          }
+        }
+      ]
     }
-  ]
-}
-</script>
+    </script>
 
     <style>
         :root {
@@ -77,11 +75,13 @@
             --bg-card: #181b24;
             --bg-input: #222634;
             --border-color: #2e3446;
-            --accent-red: #ff0050;
+            --accent-pink: #e1306c;
+            --accent-purple: #833ab4;
+            --accent-orange: #f77737;
             --accent-cyan: #00f2fe;
             --text-primary: #f3f4f6;
             --text-secondary: #9ca3af;
-            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -96,13 +96,12 @@
             gap: 2rem;
         }
 
-        @media (max-width: 900px) { .container { grid-template-columns: 1fr; } }
-
         .panel {
             background-color: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 1.5rem;
+            height: fit-content;
         }
 
         .panel-title {
@@ -118,9 +117,9 @@
 
         .badge {
             font-size: 0.75rem;
-            background: var(--accent-cyan);
-            color: #000;
-            padding: 2px 6px;
+            background: linear-gradient(45deg, var(--accent-purple), var(--accent-pink));
+            color: #fff;
+            padding: 3px 8px;
             border-radius: 4px;
             font-weight: 700;
         }
@@ -132,17 +131,17 @@
             border-radius: 8px;
             background-color: var(--bg-input);
             cursor: pointer;
-            transition: border-color 0.2s;
+            transition: border-color 0.2s, background-color 0.2s;
             margin-bottom: 0.75rem;
         }
 
-        .drop-zone:hover { border-color: var(--accent-cyan); }
-        .drop-title { font-weight: 600; color: #fff; }
+        .drop-zone:hover { border-color: var(--accent-pink); background-color: rgba(225, 48, 108, 0.05); }
+        .drop-title { font-weight: 600; color: #fff; font-size: 0.95rem; }
         .drop-sub { font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px; }
 
         .btn-demo {
             width: 100%;
-            padding: 0.6rem;
+            padding: 0.65rem;
             background-color: var(--bg-input);
             border: 1px solid var(--border-color);
             color: var(--accent-cyan);
@@ -151,7 +150,10 @@
             font-weight: 600;
             font-size: 0.85rem;
             margin-bottom: 1.25rem;
+            transition: background-color 0.2s;
         }
+
+        .btn-demo:hover { background-color: #2a2f42; }
 
         .toggle-group {
             display: flex;
@@ -164,6 +166,8 @@
             margin-bottom: 1rem;
         }
 
+        .toggle-label { font-size: 0.85rem; font-weight: 500; color: var(--text-primary); }
+
         .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
         .switch input { opacity: 0; width: 0; height: 0; }
         .slider {
@@ -174,7 +178,7 @@
             position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px;
             background-color: white; transition: .3s; border-radius: 50%;
         }
-        input:checked + .slider { background-color: var(--accent-red); }
+        input:checked + .slider { background: linear-gradient(45deg, var(--accent-purple), var(--accent-pink)); }
         input:checked + .slider:before { transform: translateX(20px); }
 
         .form-group { margin-bottom: 1.25rem; }
@@ -184,11 +188,16 @@
             border: 1px solid var(--border-color); border-radius: 6px; color: #fff;
             font-size: 0.9rem; outline: none; font-family: inherit;
         }
+        input[type="text"]:focus, textarea:focus, select:focus { border-color: var(--accent-pink); }
 
         .btn-action {
-            width: 100%; padding: 0.85rem; background: linear-gradient(135deg, var(--accent-red), #e00046);
+            width: 100%; padding: 0.85rem; background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple));
             color: #fff; font-weight: 600; border: none; border-radius: 6px; cursor: pointer; font-size: 0.95rem;
+            box-shadow: 0 4px 12px rgba(225, 48, 108, 0.3);
+            transition: transform 0.1s, opacity 0.2s;
         }
+        .btn-action:hover { opacity: 0.95; }
+        .btn-action:active { transform: scale(0.99); }
 
         .preview-stage { display: flex; flex-direction: column; align-items: center; }
         .canvas-wrapper {
@@ -207,10 +216,11 @@
         .content-card ul, .content-card ol { color: var(--text-secondary); margin: 0 0 1.2rem 1.5rem; }
         .content-card li { margin-bottom: 0.5rem; }
 
-        .spec-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; text-align: left; }
+        .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 1.5rem 0; }
+        .spec-table { width: 100%; border-collapse: collapse; text-align: left; min-width: 600px; }
         .spec-table th, .spec-table td { padding: 0.85rem 1rem; border: 1px solid var(--border-color); }
-        .spec-table th { background-color: var(--bg-input); color: #fff; }
-        .spec-table td { color: var(--text-secondary); }
+        .spec-table th { background-color: var(--bg-input); color: #fff; font-size: 0.9rem; }
+        .spec-table td { color: var(--text-secondary); font-size: 0.875rem; }
 
         /* Accordion FAQ Styling */
         .faq-block { margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem; }
@@ -222,7 +232,7 @@
             overflow: hidden;
             transition: border-color 0.2s;
         }
-        .faq-accordion[open] { border-color: var(--accent-cyan); }
+        .faq-accordion[open] { border-color: var(--accent-pink); }
         .faq-summary {
             font-size: 1rem;
             font-weight: 600;
@@ -239,12 +249,12 @@
         .faq-summary::after {
             content: "+";
             font-size: 1.2rem;
-            color: var(--accent-cyan);
+            color: var(--accent-pink);
             transition: transform 0.2s;
         }
         .faq-accordion[open] .faq-summary::after {
             content: "−";
-            color: var(--accent-red);
+            color: var(--accent-cyan);
         }
         .faq-answer {
             padding: 0 1.2rem 1.2rem;
@@ -257,45 +267,55 @@
 
         .cms-ad-slot-1, .cms-ad-slot-2 {
             width: 100%; max-width: 970px; min-height: 90px; margin: 1.5rem auto;
-            background: rgba(255,255,255,0.02); border-radius: 8px;
+            background: rgba(255,255,255,0.02); border-radius: 8px; display: block;
+        }
+
+        /* Mobile Responsive Overrides */
+        @media screen and (max-width: 900px) {
+            html, body { width: 100%!important; max-width: 100vw!important; overflow-x: hidden!important; margin: 0!important; padding: 0!important; }
+            main.container { display: flex!important; flex-direction: column!important; width: 100%!important; max-width: 100%!important; padding: 0 12px!important; margin: 8px auto!important; gap: 16px!important; box-sizing: border-box!important; }
+            main.container > section.preview-stage { order: -1!important; width: 100%!important; display: flex!important; flex-direction: column!important; align-items: center!important; margin: 0 auto!important; box-sizing: border-box!important; }
+            main.container > section.panel { order: 2!important; width: 100%!important; max-width: 100%!important; box-sizing: border-box!important; }
+            .canvas-wrapper { width: 75vw!important; height: 133.33vw!important; max-width: 290px!important; max-height: 515px!important; margin: 0 auto!important; box-sizing: border-box!important; }
+            input, textarea, select { font-size: 16px!important; }
         }
     </style>
-<style>#cms-ad-slot-top,#cms-ad-slot-1,.cms-medianet-box{display:block!important;height:250px!important;min-height:250px!important;max-height:250px!important;overflow:hidden!important;background-color:var(--cms-surface-alt)}</style></head>
+</head>
 <body>
 
     <!-- Header Container -->
     <div id="global-header"></div>
 
-    <!-- Ad Slot 1 Container (Above Main Workspace Title) -->
-    <div class="cms-ad-slot-1"></div>
+    <!-- Ad Slot 1 Container -->
+    <div class="cms-ad-slot-1" id="cms-ad-slot-top"></div>
 
     <!-- Main Tool Container -->
     <main class="container">
         <section class="panel">
             <div class="panel-title">
                 <span>Instagram Safe Zone Controls</span>
-                <span class="badge">9:16 SPECS</span>
+                <span class="badge">INSTAGRAM 9:16</span>
             </div>
 
             <!-- Upload Box & Demo File CTA -->
             <div class="drop-zone" id="dropZone">
-                <p class="drop-title">Click or Drag Video / Image File</p>
-                <p class="drop-sub">MP4, MOV, PNG, JPG (1080x1920 recommended)</p>
+                <p class="drop-title">Click or Drag Media File Here</p>
+                <p class="drop-sub">Supports MP4, MOV, PNG, JPG (1080x1920 recommended)</p>
                 <input type="file" id="fileInput" accept="image/*,video/*" style="display:none;">
             </div>
             
-            <button class="btn-demo" id="loadDemoBtn" type="button">⚡ Load Demo Sample File</button>
+            <button class="btn-demo" id="loadDemoBtn" type="button">⚡ Load Instagram Demo Background</button>
 
             <div class="form-group">
-                <label for="formatSelect">Placement Mode</label>
+                <label for="formatSelect">Placement Preview Mode</label>
                 <select id="formatSelect">
                     <option value="reels">Instagram Reels Overlay</option>
                     <option value="stories">Instagram Stories Overlay</option>
                 </select>
             </div>
 
-            <div class="toggle-group">
-                <label for="feedPreviewToggle">Show 4:5 Feed Preview Box</label>
+            <div class="toggle-group" id="feedToggleContainer">
+                <span class="toggle-label">Show 4:5 Feed Preview Box</span>
                 <label class="switch">
                     <input type="checkbox" id="feedPreviewToggle" checked>
                     <span class="slider"></span>
@@ -303,7 +323,7 @@
             </div>
 
             <div class="toggle-group">
-                <label for="overlayToggle">Show Safe Zone Grid</label>
+                <span class="toggle-label">Show Safe Zone Red Margins</span>
                 <label class="switch">
                     <input type="checkbox" id="overlayToggle" checked>
                     <span class="slider"></span>
@@ -316,11 +336,11 @@
             </div>
 
             <div class="form-group">
-                <label for="adCaption">Caption / Audio Title</label>
+                <label for="adCaption">Caption / Audio Track Title</label>
                 <textarea id="adCaption" rows="3">Elevate your visual creative workflow! 🚀 Original Audio - brand.official</textarea>
             </div>
 
-            <button class="btn-action" id="downloadBtn" type="button">Export 1080x1920 PNG Preview</button>
+            <button class="btn-action" id="downloadBtn" type="button">Export 1080x1920 PNG Safe Zone Overlay</button>
         </section>
 
         <!-- Canvas Stage Wrapper -->
@@ -329,94 +349,94 @@
                 <canvas id="previewCanvas" width="1080" height="1920"></canvas>
             </div>
             <p class="canvas-caption">
-                Client-side HTML5 canvas. 4:5 Feed guide ensures primary text remains uncropped.
+                Client-side HTML5 canvas render. Keep titles within central box for uncropped 4:5 feed previews.
             </p>
         </section>
     </main>
 
     <!-- SEO & Educational Guide Section -->
     <article class="content-area">
-
-        <!-- Main H1 Banner Title -->
         <div class="content-card">
-            <h1>Instagram Reels &amp; Stories Safe Zone Guide</h1>
+            <h1>Instagram Reels &amp; Stories Safe Zone Guide (1080x1920)</h1>
             <p>
-                With the continuous evolution of Instagram's UI—including transparent navigation overlays, action buttons, bottom caption blocks, and variable screen ratio scaling—maintaining accurate safety margins for 1080x1920 (9:16) video assets is vital. Crucial callouts or logos placed outside the safe area often get obstructed by UI controls or clipped when Instagram automatically reformats vertical videos into a 4:5 aspect ratio for user feeds.
+                Navigating Instagram's interface can be challenging for creators and performance marketers. Between top account handles, bottom caption blocks, right-hand interaction icons, and automatic 4:5 aspect ratio feed cropping, important text or logos can easily get hidden or cut off.
             </p>
             <p>
-                This browser-based <strong>Instagram Reels Preview &amp; Safe Zone Studio</strong> gives creators, social media managers, and performance agencies an instant real-time canvas to verify video layouts, caption positions, and text boundaries prior to publishing.
+                This real-time browser-based <strong>Instagram Reels &amp; Stories Safe Zone Checker</strong> processes media entirely in your browser. Verify text visibility, action button margins, and feed crop boundaries before publishing.
             </p>
 
             <h2>Instagram Reels vs. Stories Safe Area Specifications</h2>
             <p>
-                Although both Reels and Stories share a full-screen vertical resolution of 1080x1920 pixels (9:16 aspect ratio), their UI element overlays differ significantly:
+                While both Instagram Reels and Stories use a standard full-screen vertical resolution of 1080x1920 pixels (9:16 aspect ratio), their UI element overlays vary significantly:
             </p>
 
-            <table class="spec-table">
-                <thead>
-                    <tr>
-                        <th>Boundary Margin</th>
-                        <th>Instagram Reels Specs</th>
-                        <th>Instagram Stories Specs</th>
-                        <th>UI Clearance Purpose</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Top Margin</strong></td>
-                        <td>220 px</td>
-                        <td>250 px</td>
-                        <td>Clears top navigation tabs, camera switchers, story progress bars, and header icons.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Bottom Margin</strong></td>
-                        <td>420 px</td>
-                        <td>280 px</td>
-                        <td>Reserves room for username, caption lines, audio track title, and interactive reply/sticker bars.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Right Margin</strong></td>
-                        <td>130 px</td>
-                        <td>44 px</td>
-                        <td>Clears vertical engagement icons (Like, Comment, Share, Audio Reel disc).</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Left Margin</strong></td>
-                        <td>44 px</td>
-                        <td>44 px</td>
-                        <td>Safety buffer against edge bezel clipping on modern rounded displays.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>4:5 Feed Safe Box</strong></td>
-                        <td>1080 × 1350 px</td>
-                        <td>N/A</td>
-                        <td>Guarantees zero content cropping when vertical Reels are previewed in the main home feed.</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="spec-table">
+                    <thead>
+                        <tr>
+                            <th>Boundary Margin</th>
+                            <th>Instagram Reels Specs</th>
+                            <th>Instagram Stories Specs</th>
+                            <th>UI Clearance Purpose</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Top Margin</strong></td>
+                            <td>220 px</td>
+                            <td>250 px</td>
+                            <td>Clears top header bars, account handles, story progress segments, and close buttons.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Bottom Margin</strong></td>
+                            <td>420 px</td>
+                            <td>280 px</td>
+                            <td>Reserves space for account usernames, multiline captions, audio tags, and reply boxes.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Right Margin</strong></td>
+                            <td>130 px</td>
+                            <td>44 px</td>
+                            <td>Clears vertical engagement icons (Like, Comment, Share, Save, Audio disc).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Left Margin</strong></td>
+                            <td>44 px</td>
+                            <td>44 px</td>
+                            <td>Safety buffer against side bezel clipping on curved smartphone screens.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>4:5 Feed Safe Box</strong></td>
+                            <td>1080 × 1350 px</td>
+                            <td>N/A</td>
+                            <td>Guarantees zero text cropping when vertical Reels appear in the main Instagram feed.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
-            <!-- Ad Slot 2 Container (Immediately Below Data Table) -->
+            <!-- Ad Slot 2 Container -->
             <div class="cms-ad-slot-2"></div>
 
-            <h2>Instagram Reels Preview &amp; 4:5 Feed Crop Strategy</h2>
+            <h2>How to Ensure Zero Crop in Instagram Feed Previews</h2>
             <p>
-                When Instagram serves a Reel to a user browsing their main home feed, the app crops the top and bottom 285 pixels from the 1080x1920 canvas, converting the frame into a 4:5 aspect ratio (1080x1350 pixels). To maximize engagement across both full-screen Reels viewer and main feed impressions:
+                When Instagram serves a Reel inside the primary user home feed, it crops the vertical canvas from a 9:16 aspect ratio (1080x1920) down to a 4:5 ratio (1080x1350) by trimming 285 pixels off the top and bottom.
             </p>
             <ul>
-                <li><strong>Center Core Message:</strong> Position main hooks, subtitles, animated titles, and brand logos within the central 1080x1350 pixel zone.</li>
-                <li><strong>Avoid Peripheral Edges:</strong> Keep essential text at least 130 pixels away from the right vertical edge to prevent overlap with the interaction stack.</li>
-                <li><strong>Test Profile Grid Centering:</strong> Keep key graphic elements centered horizontally and vertically to maintain visual appeal when cropped to a 1:1 square on your account profile grid.</li>
+                <li><strong>Keep Main Message Centered:</strong> Position titles, subtitles, callouts, and logos inside the central 1080x1350 pixel zone.</li>
+                <li><strong>Avoid Engagement Column:</strong> Leave a 130-pixel margin on the right side of the canvas to avoid overlapping with like and comment icons.</li>
+                <li><strong>Optimize for Profile Grid:</strong> Check key design elements against a central 1:1 square (1080x1080) to ensure your profile grid thumbnails look clean.</li>
             </ul>
 
-            <h2>CapCut, Premiere Pro &amp; Canva Workflow Integration</h2>
+            <h2>CapCut, Premiere Pro &amp; Canva Integration Workflow</h2>
             <p>
-                Avoid visual clipping and lengthy rendering revisions with a transparent overlay guide:
+                Streamline your editing process using a transparent safe zone guide overlay:
             </p>
             <ol>
-                <li><strong>Export Safety Template:</strong> Click the "Export 1080x1920 PNG Preview" button to download a transparent grid layer.</li>
-                <li><strong>Place on Top Track:</strong> Import the PNG file into CapCut, Adobe Premiere Pro, Final Cut Pro, or Canva and lock it on the highest video track layer.</li>
-                <li><strong>Align Text &amp; Callouts:</strong> Drag and resize your text boxes, subtitles, stickers, and logos so they sit comfortably inside the designated safety boundaries.</li>
-                <li><strong>Toggle Layer Off:</strong> Mute or delete the transparent guide layer before finalizing your video export.</li>
+                <li><strong>Export PNG Overlay:</strong> Click the "Export 1080x1920 PNG Safe Zone Overlay" button to download your transparent guide grid.</li>
+                <li><strong>Add to Timeline:</strong> Import the PNG file into CapCut, Adobe Premiere Pro, Final Cut Pro, or Canva, placing it on the top track layer.</li>
+                <li><strong>Adjust Text Alignment:</strong> Position all subtitles, text callouts, and graphic assets within the clear central safe zone.</li>
+                <li><strong>Remove Before Render:</strong> Turn off or delete the overlay track before rendering your final video file.</li>
             </ol>
 
             <h2>Frequently Asked Questions</h2>
@@ -424,28 +444,28 @@
                 <details class="faq-accordion" open>
                     <summary class="faq-summary">What are the exact Instagram Reels safe zone dimensions for 1080x1920 videos?</summary>
                     <div class="faq-answer">
-                        For a standard 1080x1920 pixel (9:16) Instagram Reel, reserve the top 220px for header controls, the bottom 420px for caption overlays and audio metadata, and the right 130px for engagement icons. For guaranteed 4:5 main feed preview visibility, keep core elements within the central 1080x1350px box.
+                        For a standard 1080x1920 pixel (9:16) Instagram Reel, keep text inside a safe zone with a top margin of 220px, a bottom margin of 420px, a left margin of 44px, and a right margin of 130px.
                     </div>
                 </details>
 
                 <details class="faq-accordion">
                     <summary class="faq-summary">Why does text get cropped when Instagram Reels appear in the main profile grid?</summary>
                     <div class="faq-answer">
-                        Instagram automatically crops 9:16 vertical video assets into a 4:5 aspect ratio card (1080x1350px) when displayed inside the home feed, and a 1:1 square thumbnail (1080x1080px) on profile grids. Placing text outside these central focus bounds causes important information to get cut off in feed previews.
+                        Instagram automatically crops 9:16 vertical video assets into a 4:5 aspect ratio card (1080x1350px) for feed previews and a 1:1 square thumbnail (1080x1080px) on profile grids. Text placed too high or low gets cut off in these non-full-screen views.
                     </div>
                 </details>
 
                 <details class="faq-accordion">
                     <summary class="faq-summary">How do I use an Instagram Reels safe zone overlay PNG in CapCut or Premiere Pro?</summary>
                     <div class="faq-answer">
-                        Export a 1080x1920 PNG preview guide from our studio, place it on the top layer of your video timeline in CapCut, Adobe Premiere Pro, or Canva, position all text and graphics inside the unshaded safety box, then delete the guide track before final video rendering.
+                        Download our transparent 1080x1920 PNG overlay, place it on the top track layer in your editor (CapCut, Premiere Pro, or Canva), align your visual elements within the clear central area, and turn off the guide track before exporting.
                     </div>
                 </details>
 
                 <details class="faq-accordion">
-                    <summary class="faq-summary">Are my images or videos sent to a backend server?</summary>
+                    <summary class="faq-summary">Are my media files uploaded to an external server?</summary>
                     <div class="faq-answer">
-                        No. All video frame extraction, canvas rendering, grid adjustments, and image exports happen entirely inside your web browser via HTML5 Canvas API technology. Your creative files never leave your device.
+                        No. All frame rendering, image generation, and canvas drawing happen locally inside your browser using client-side JavaScript and the HTML5 Canvas API.
                     </div>
                 </details>
             </div>
@@ -465,6 +485,7 @@
             var dropZone = document.getElementById('dropZone');
             var loadDemoBtn = document.getElementById('loadDemoBtn');
             var formatSelect = document.getElementById('formatSelect');
+            var feedToggleContainer = document.getElementById('feedToggleContainer');
             var feedPreviewToggle = document.getElementById('feedPreviewToggle');
             var overlayToggle = document.getElementById('overlayToggle');
             var accountNameInput = document.getElementById('accountName');
@@ -479,11 +500,19 @@
             dropZone.addEventListener('dragover', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
+                dropZone.style.borderColor = 'var(--accent-pink)';
+            });
+
+            dropZone.addEventListener('dragleave', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                dropZone.style.borderColor = 'var(--border-color)';
             });
 
             dropZone.addEventListener('drop', function(e) {
                 e.preventDefault();
                 e.stopPropagation();
+                dropZone.style.borderColor = 'var(--border-color)';
                 if (e.dataTransfer.files && e.dataTransfer.files[0]) {
                     processFile(e.dataTransfer.files[0]);
                 }
@@ -509,13 +538,13 @@
                 dCtx.fillRect(0, 0, 1080, 1920);
 
                 dCtx.fillStyle = '#ffffff';
-                dCtx.font = 'bold 54px sans-serif';
+                dCtx.font = 'bold 52px sans-serif';
                 dCtx.textAlign = 'center';
-                dCtx.fillText('INSTAGRAM REELS DEMO', 540, 850);
+                dCtx.fillText('INSTAGRAM REELS STUDIO', 540, 860);
                 
                 dCtx.fillStyle = '#f3f4f6';
-                dCtx.font = '36px sans-serif';
-                dCtx.fillText('1080 x 1920 Vertical Safe Zone Test', 540, 920);
+                dCtx.font = '32px sans-serif';
+                dCtx.fillText('1080 x 1920 Safe Zone Checker Stage', 540, 920);
 
                 var img = new Image();
                 img.src = demoCanvas.toDataURL();
@@ -569,13 +598,19 @@
                 var showOverlay = overlayToggle.checked;
                 var showFeedBox = feedPreviewToggle.checked && mode === 'reels';
 
+                if (mode === 'stories') {
+                    feedToggleContainer.style.display = 'none';
+                } else {
+                    feedToggleContainer.style.display = 'flex';
+                }
+
                 var topM = mode === 'reels' ? 220 : 250;
                 var bottomM = mode === 'reels' ? 420 : 280;
                 var rightM = mode === 'reels' ? 130 : 44;
                 var leftM = 44;
 
                 if (showOverlay) {
-                    ctx.fillStyle = 'rgba(255, 0, 80, 0.18)';
+                    ctx.fillStyle = 'rgba(225, 48, 108, 0.22)';
                     ctx.fillRect(0, 0, canvas.width, topM);
                     ctx.fillRect(0, canvas.height - bottomM, canvas.width, bottomM);
                     ctx.fillRect(canvas.width - rightM, topM, rightM, canvas.height - topM - bottomM);
@@ -591,22 +626,21 @@
                 if (showFeedBox) {
                     var feedHeight = 1350;
                     var feedY = (canvas.height - feedHeight) / 2;
-                    ctx.strokeStyle = '#ff0050';
+                    ctx.strokeStyle = '#e1306c';
                     ctx.lineWidth = 4;
                     ctx.setLineDash([8, 6]);
                     ctx.strokeRect(0, feedY, canvas.width, feedHeight);
                     ctx.setLineDash([]);
 
-                    ctx.fillStyle = '#ff0050';
+                    ctx.fillStyle = '#e1306c';
                     ctx.font = 'bold 24px sans-serif';
                     ctx.textAlign = 'left';
-                    ctx.fillText('4:5 Feed Preview Zone (1080x1350)', 20, feedY + 35);
+                    ctx.fillText('4:5 Feed Preview Zone (1080x1350)', 24, feedY + 38);
                 }
 
-                var railX = canvas.width - 70;
-                var railY = canvas.height - bottomM - 260;
-
                 if (mode === 'reels') {
+                    var railX = canvas.width - 65;
+                    var railY = canvas.height - bottomM - 240;
                     var icons = ['♥ 84.2K', '💬 1.1K', '✈ Share', '🎵 Audio'];
                     ctx.font = 'bold 22px sans-serif';
                     ctx.textAlign = 'center';
@@ -615,20 +649,37 @@
                         ctx.fillText(icons[i], railX, railY);
                         railY += 85;
                     }
+
+                    var bottomX = leftM + 15;
+                    var bottomY = canvas.height - bottomM + 55;
+
+                    ctx.textAlign = 'left';
+                    ctx.fillStyle = '#ffffff';
+                    ctx.font = 'bold 32px sans-serif';
+                    ctx.fillText(accountNameInput.value, bottomX, bottomY);
+
+                    ctx.font = '24px sans-serif';
+                    ctx.fillStyle = '#e5e7eb';
+                    var captionText = adCaptionInput.value.length > 50 ? adCaptionInput.value.substring(0, 50) + '...' : adCaptionInput.value;
+                    ctx.fillText(captionText, bottomX, bottomY + 42);
+                } else {
+                    // Stories UI Overlay Mockup
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+                    ctx.fillRect(20, 20, canvas.width - 40, 6);
+
+                    ctx.fillStyle = '#ffffff';
+                    ctx.font = 'bold 28px sans-serif';
+                    ctx.textAlign = 'left';
+                    ctx.fillText(accountNameInput.value, 30, 75);
+
+                    ctx.strokeStyle = '#ffffff';
+                    ctx.lineWidth = 3;
+                    ctx.strokeRect(20, canvas.height - 100, canvas.width - 120, 60);
+
+                    ctx.font = '24px sans-serif';
+                    ctx.fillStyle = '#ffffff';
+                    ctx.fillText('Send message...', 40, canvas.height - 62);
                 }
-
-                var bottomX = leftM + 20;
-                var bottomY = canvas.height - bottomM + 50;
-
-                ctx.textAlign = 'left';
-                ctx.fillStyle = '#ffffff';
-                ctx.font = 'bold 34px sans-serif';
-                ctx.fillText(accountNameInput.value, bottomX, bottomY);
-
-                ctx.font = '26px sans-serif';
-                ctx.fillStyle = '#e5e7eb';
-                var captionText = adCaptionInput.value.length > 50 ? adCaptionInput.value.substring(0, 50) + '...' : adCaptionInput.value;
-                ctx.fillText(captionText, bottomX, bottomY + 45);
             }
 
             function renderLoop() {
@@ -656,84 +707,78 @@
             });
         });
     </script>
+
     <!-- Global CoreMetricSuite Cross-Linking Index Hub -->
-<div style="margin-top: 40px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #f8fafc; font-family: system-ui, -apple-system, sans-serif;">
-    <h3 style="margin: 0 0 15px 0; font-size: 18px; color: #0f172a; font-weight: 600;">🛠️ CoreMetricSuite Utility Directory</h3>
-    
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
-        <!-- Group 1 -->
-        <div>
-            <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇦🇺 Australia Tax & Labor</h4>
-            <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
-                <li style="margin-bottom: 4px;"><a id="hub-au-cents" href="../au-cents-per-km-estimator/" style="color: #2563eb; text-decoration: underline;">Cents-Per-Km Tax Estimator</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-au-schads" href="../au-schads-vehicle-allowance/" style="color: #2563eb; text-decoration: underline;">SCHADS Vehicle Allowance</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-au-super" href="../au-superannuation-charge-tracker/" style="color: #2563eb; text-decoration: underline;">Superannuation Tracker</a></li>
-            </ul>
-        </div>
+    <div style="margin-top: 40px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #f8fafc; font-family: system-ui, -apple-system, sans-serif;">
+        <h3 style="margin: 0 0 15px 0; font-size: 18px; color: #0f172a; font-weight: 600;">🛠️ CoreMetricSuite Utility Directory</h3>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇦🇺 Australia Tax &amp; Labor</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-au-cents" href="../au-cents-per-km-estimator/" style="color: #2563eb; text-decoration: underline;">Cents-Per-Km Tax Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-au-schads" href="../au-schads-vehicle-allowance/" style="color: #2563eb; text-decoration: underline;">SCHADS Vehicle Allowance</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-au-super" href="../au-superannuation-charge-tracker/" style="color: #2563eb; text-decoration: underline;">Superannuation Tracker</a></li>
+                </ul>
+            </div>
 
-        <!-- Group 2 -->
-        <div>
-            <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇺🇸 US Corporate Tax</h4>
-            <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
-                <li style="margin-bottom: 4px;"><a id="hub-us-llc" href="../us-llc-late-penalty-estimator/" style="color: #2563eb; text-decoration: underline;">LLC Late Tax Penalty</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-us-179" href="../us-section-179-truck-calculator/" style="color: #2563eb; text-decoration: underline;">Section 179 Vehicle Deduction</a></li>
-            </ul>
-        </div>
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇺🇸 US Corporate Tax</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-us-llc" href="../us-llc-late-penalty-estimator/" style="color: #2563eb; text-decoration: underline;">LLC Late Tax Penalty</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-us-179" href="../us-section-179-truck-calculator/" style="color: #2563eb; text-decoration: underline;">Section 179 Vehicle Deduction</a></li>
+                </ul>
+            </div>
 
-        <!-- Group 3 -->
-        <div>
-            <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇬🇧 UK Property Management</h4>
-            <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
-                <li style="margin-bottom: 4px;"><a id="hub-uk-rent" href="../uk-form-4a-rent-tracker/" style="color: #2563eb; text-decoration: underline;">Form 4A Rent Tracker</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-uk-sdlt" href="../uk-sdlt-bracket-estimator/" style="color: #2563eb; text-decoration: underline;">Stamp Duty Estimator</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-uk-sec8" href="../uk-section-8-calculator/" style="color: #2563eb; text-decoration: underline;">Section 8 Calculator</a></li>
-            </ul>
-        </div>
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇬🇧 UK Property Management</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-rent" href="../uk-form-4a-rent-tracker/" style="color: #2563eb; text-decoration: underline;">Form 4A Rent Tracker</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-sdlt" href="../uk-sdlt-bracket-estimator/" style="color: #2563eb; text-decoration: underline;">Stamp Duty Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-sec8" href="../uk-section-8-calculator/" style="color: #2563eb; text-decoration: underline;">Section 8 Calculator</a></li>
+                </ul>
+            </div>
 
-        <!-- Group 4 -->
-        <div>
-            <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🎬 Digital Media Layouts</h4>
-            <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
-                <li style="margin-bottom: 4px;"><a id="hub-media-ig" href="../instagram-reels-preview/" style="color: #2563eb; text-decoration: underline;">Instagram Reels Grid</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-media-shorts" href="../shorts-ui-safe-zone/" style="color: #2563eb; text-decoration: underline;">YouTube Shorts Safe Zone</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-media-tiktok" href="../tiktok-ad-safe-zone/" style="color: #2563eb; text-decoration: underline;">TikTok Ad Checker</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-media-shopify" href="../shopify-metafields-parser/" style="color: #2563eb; text-decoration: underline;">Shopify Metafields Parser</a></li>
-            </ul>
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🎬 Digital Media Layouts</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-media-ig" href="../instagram-reels-preview/" style="color: #2563eb; text-decoration: underline;">Instagram Reels Grid</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-shorts" href="../shorts-ui-safe-zone/" style="color: #2563eb; text-decoration: underline;">YouTube Shorts Safe Zone</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-tiktok" href="../tiktok-ad-safe-zone/" style="color: #2563eb; text-decoration: underline;">TikTok Ad Checker</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-shopify" href="../shopify-metafields-parser/" style="color: #2563eb; text-decoration: underline;">Shopify Metafields Parser</a></li>
+                </ul>
+            </div>
         </div>
     </div>
-</div>
 
-<script defer>
-    (function() {
-        // Scans the active browser path to determine which self-link to intercept
-        const path = window.location.pathname.toLowerCase();
-        
-        const toolsMap = {
-            'au-cents-per-km-estimator': 'hub-au-cents',
-            'au-schads-vehicle-allowance': 'hub-au-schads',
-            'au-superannuation-charge-tracker': 'hub-au-super',
-            'us-llc-late-penalty-estimator': 'hub-us-llc',
-            'us-section-179-truck-calculator': 'hub-us-179',
-            'uk-form-4a-rent-tracker': 'hub-uk-rent',
-            'uk-sdlt-bracket-estimator': 'hub-uk-sdlt',
-            'uk-section-8-calculator': 'hub-uk-sec8',
-            'instagram-reels-preview': 'hub-media-ig',
-            'shorts-ui-safe-zone': 'hub-media-shorts',
-            'tiktok-ad-safe-zone': 'hub-media-tiktok',
-            'shopify-metafields-parser': 'hub-media-shopify'
-        };
+    <script defer>
+        (function() {
+            const path = window.location.pathname.toLowerCase();
+            const toolsMap = {
+                'au-cents-per-km-estimator': 'hub-au-cents',
+                'au-schads-vehicle-allowance': 'hub-au-schads',
+                'au-superannuation-charge-tracker': 'hub-au-super',
+                'us-llc-late-penalty-estimator': 'hub-us-llc',
+                'us-section-179-truck-calculator': 'hub-us-179',
+                'uk-form-4a-rent-tracker': 'hub-uk-rent',
+                'uk-sdlt-bracket-estimator': 'hub-uk-sdlt',
+                'uk-section-8-calculator': 'hub-uk-sec8',
+                'instagram-reels-preview': 'hub-media-ig',
+                'shorts-ui-safe-zone': 'hub-media-shorts',
+                'tiktok-ad-safe-zone': 'hub-media-tiktok',
+                'shopify-metafields-parser': 'hub-media-shopify'
+            };
 
-        for (const [folderName, elementId] of Object.entries(toolsMap)) {
-            if (path.includes(folderName)) {
-                const targetEl = document.getElementById(elementId);
-                if (targetEl) {
-                    // Replaces the hyperlinked state with unclickable bold text styling
-                    targetEl.outerHTML = `<span style="font-weight: 600; color: #0f172a;">${targetEl.textContent} (Current)</span>`;
+            for (const [folderName, elementId] of Object.entries(toolsMap)) {
+                if (path.includes(folderName)) {
+                    const targetEl = document.getElementById(elementId);
+                    if (targetEl) {
+                        targetEl.outerHTML = `<span style="font-weight: 600; color: #0f172a;">${targetEl.textContent} (Current)</span>`;
+                    }
+                    break;
                 }
-                break;
             }
-        }
-    })();
-</script>
-<style type="text/css">@media screen and (max-width:900px){html,body{width:100%!important;max-width:100vw!important;overflow-x:hidden!important;margin:0!important;padding:0!important}main.container{display:flex!important;flex-direction:column!important;width:100%!important;max-width:100%!important;padding:0 12px!important;margin:8px auto!important;gap:16px!important;box-sizing:border-box!important}main.container>section.preview-stage{order:-1!important;width:100%!important;display:flex!important;flex-direction:column!important;align-items:center!important;margin:0 auto!important;box-sizing:border-box!important}main.container>section.panel{order:2!important;width:100%!important;max-width:100%!important;box-sizing:border-box!important}.canvas-wrapper{width:75vw!important;height:133.33vw!important;max-width:290px!important;max-height:515px!important;margin:0 auto!important;box-sizing:border-box!important}#cms-ad-slot-top,#cms-ad-slot-1,.cms-medianet-box,.cms-ad-slot-1,.cms-ad-slot-2{width:100%!important;max-width:100%!important;height:auto!important;min-height:90px!important;display:block!important}.spec-table,.content-card div[style*="display: grid"]{grid-template-columns:1fr!important;width:100%!important}input,textarea,select{font-size:16px!important}}</style></body>
+        })();
+    </script>
+</body>
 </html>
