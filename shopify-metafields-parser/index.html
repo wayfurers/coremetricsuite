@@ -17,8 +17,8 @@
     
     <!-- Global Framework Dependencies -->
     <link rel="stylesheet" href="/css/global.css">
-<script src="/config.js" defer></script>
-<script src="/global.min.js" defer></script>
+    <script src="/config.js" defer></script>
+    <script src="/global.min.js" defer></script>
 
     <!-- FAQ JSON-LD Schema Markup -->
     <script type="application/ld+json">
@@ -31,7 +31,7 @@
           "name": "How does this tool process array data inside JSON metafields?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "The parser inspects your JSON schema and automatically writesLiquid for loops (e.g., {% for item in meta_value.key %}) for array properties instead of printing raw [object Object] strings."
+            "text": "The parser inspects your JSON schema and automatically writes Liquid for loops (e.g., {% for item in meta_value.key %}) for array properties instead of printing raw [object Object] strings."
           }
         },
         {
@@ -273,8 +273,52 @@
             width: 100%; max-width: 970px; min-height: 90px; margin: 1.5rem auto;
             background: rgba(255,255,255,0.02); border-radius: 8px;
         }
+
+        #cms-ad-slot-top, #cms-ad-slot-1, .cms-medianet-box {
+            display: block !important;
+            height: 250px !important;
+            min-height: 250px !important;
+            max-height: 250px !important;
+            overflow: hidden !important;
+            background-color: var(--bg-card);
+        }
+
+        @media screen and (max-width: 900px) {
+            html, body {
+                width: 100% !important;
+                max-width: 100vw !important;
+                overflow-x: hidden !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            main.container {
+                display: flex !important;
+                flex-direction: column !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                padding: 0 12px !important;
+                margin: 8px auto !important;
+                gap: 16px !important;
+                box-sizing: border-box !important;
+            }
+            #cms-ad-slot-top, #cms-ad-slot-1, .cms-medianet-box, .cms-ad-slot-1, .cms-ad-slot-2 {
+                width: 100% !important;
+                max-width: 100% !important;
+                height: auto !important;
+                min-height: 90px !important;
+                display: block !important;
+            }
+            .spec-table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+            input, textarea, select {
+                font-size: 16px !important;
+            }
+        }
     </style>
-<style>#cms-ad-slot-top,#cms-ad-slot-1,.cms-medianet-box{display:block!important;height:250px!important;min-height:250px!important;max-height:250px!important;overflow:hidden!important;background-color:var(--cms-surface-alt)}</style></head>
+</head>
 <body>
 
     <!-- Header Container -->
@@ -356,10 +400,10 @@
         <section class="content-card">
             <h1>Shopify Metafields JSON to Liquid Parser Guide</h1>
             <p>
-                Managing custom data schemas in Shopify Online Store 2.0 often involves JSON-type metafields. While JSON metafields allow store owners to structure complex nested specifications, bullet lists, and attributes, rendering them on liquid product templates can be tricky. Standard tags frequently return raw string representations or unformatted `[object Object]` values.
+                Managing custom data schemas in Shopify Online Store 2.0 often involves JSON-type metafields. While JSON metafields allow store owners to structure complex nested specifications, bullet lists, and attributes, rendering them on liquid product templates can be tricky. Standard tags frequently return raw string representations or unformatted <code>[object Object]</code> values.
             </p>
             <p>
-                This browser-based <strong>shopify-metafields-parser</strong> utility parses your custom JSON metafield structures and converts them into production-ready Shopify Liquid code snippets. It handles object properties, nested sub-keys, and generates native `{% for %}` loops for array values automatically.
+                This browser-based <strong>shopify-metafields-parser</strong> utility parses your custom JSON metafield structures and converts them into production-ready Shopify Liquid code snippets. It handles object properties, nested sub-keys, and generates native <code>{% for %}</code> loops for array values automatically.
             </p>
 
             <h2>Metafield Type & Liquid Mapping Matrix</h2>
@@ -379,25 +423,25 @@
                 <tbody>
                     <tr>
                         <td><strong>JSON Object</strong></td>
-                        <td>`metafield.value.key`</td>
+                        <td><code>metafield.value.key</code></td>
                         <td>Generates structured HTML blocks with nested key-value tags.</td>
                         <td>Complex product specifications & specs tables.</td>
                     </tr>
                     <tr>
                         <td><strong>JSON Array</strong></td>
-                        <td>`{% for item in metafield.value %}`</td>
-                        <td>Generates HTML `<ul>` list iteration loops.</td>
+                        <td><code>{% for item in metafield.value %}</code></td>
+                        <td>Generates HTML <code>&lt;ul&gt;</code> list iteration loops.</td>
                         <td>Care instructions, features, package contents.</td>
                     </tr>
                     <tr>
                         <td><strong>Single Line Text</strong></td>
-                        <td>`metafield.value`</td>
+                        <td><code>metafield.value</code></td>
                         <td>Renders standard single-value string output block.</td>
                         <td>Subtitles, short badges, custom origin codes.</td>
                     </tr>
                     <tr>
                         <td><strong>Multi Line Text</strong></td>
-                        <td>`metafield.value | newline_to_br`</td>
+                        <td><code>metafield.value | newline_to_br</code></td>
                         <td>Formats line breaks cleanly into HTML paragraphs.</td>
                         <td>Extended warranty disclosures, ingredient lists.</td>
                     </tr>
@@ -412,7 +456,7 @@
                 Integrating these generated Liquid snippets into your Shopify Theme Editor workspace takes just a few steps:
             </p>
             <ul>
-                <li><strong>Specify Namespace & Key:</strong> Enter your exact metafield namespace and key (e.g., `custom.product_specifications`).</li>
+                <li><strong>Specify Namespace & Key:</strong> Enter your exact metafield namespace and key (e.g., <code>custom.product_specifications</code>).</li>
                 <li><strong>Paste Sample JSON:</strong> Paste an example JSON payload or schema matching your store's metafield setup.</li>
                 <li><strong>Generate & Copy:</strong> Click "Generate Liquid Snippet" to compile the code, then copy it directly to your clipboard.</li>
                 <li><strong>Paste into Shopify Theme:</strong> Add the code into a Custom Liquid block in your theme customizer or directly inside template liquid files.</li>
@@ -423,7 +467,7 @@
                 <details class="faq-accordion" open>
                     <summary class="faq-summary">How does this tool process array data inside JSON metafields?</summary>
                     <div class="faq-answer">
-                        The parser inspects your JSON schema and automatically writes Liquid for loops (e.g., {% for item in meta_value.key %}) for array properties instead of printing raw [object Object] strings.
+                        The parser inspects your JSON schema and automatically writes Liquid for loops (e.g., <code>{% for item in meta_value.key %}</code>) for array properties instead of printing raw [object Object] strings.
                     </div>
                 </details>
 
@@ -473,6 +517,15 @@
             var liquidOutput = document.getElementById('liquidOutput');
             var copyBtn = document.getElementById('copyBtn');
 
+            function escapeHtml(text) {
+                return String(text)
+                    .replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")
+                    .replace(/"/g, "&quot;")
+                    .replace(/'/g, "&#039;");
+            }
+
             loadDemoBtn.addEventListener('click', function() {
                 metaNamespaceInput.value = 'custom';
                 metaKeyInput.value = 'product_specifications';
@@ -496,6 +549,11 @@
                 generateCode();
             });
 
+            metaNamespaceInput.addEventListener('input', generateCode);
+            metaKeyInput.addEventListener('input', generateCode);
+            metaTypeSelect.addEventListener('change', generateCode);
+            jsonInput.addEventListener('input', generateCode);
+
             function generateCode() {
                 var ns = metaNamespaceInput.value.trim() || 'custom';
                 var key = metaKeyInput.value.trim() || 'field_key';
@@ -510,6 +568,7 @@
                         parsedData = JSON.parse(rawJson);
                     } catch (e) {
                         jsonError.style.display = 'block';
+                        liquidOutput.textContent = 'Error: Invalid JSON syntax provided.';
                         return;
                     }
                 }
@@ -552,8 +611,8 @@
                             var val = obj[k];
                             var propAccessor = currentAccessor + '.' + k;
 
-                            code += indent + '<div class="metafield-group metafield-' + k + '">\n';
-                            code += innerIndent + '<strong class="metafield-label">' + formatLabel(k) + ':</strong>\n';
+                            code += indent + '<div class="metafield-group metafield-' + escapeHtml(k) + '">\n';
+                            code += innerIndent + '<strong class="metafield-label">' + escapeHtml(formatLabel(k)) + ':</strong>\n';
 
                             if (Array.isArray(val)) {
                                 code += innerIndent + '<ul>\n';
@@ -585,96 +644,121 @@
                 var textToCopy = liquidOutput.textContent;
                 if (!textToCopy) return;
 
-                navigator.clipboard.writeText(textToCopy).then(function() {
-                    var originalText = copyBtn.textContent;
-                    copyBtn.textContent = 'Copied!';
-                    setTimeout(function() {
-                        copyBtn.textContent = originalText;
-                    }, 2000);
-                });
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(textToCopy).then(function() {
+                        showCopyFeedback();
+                    }).catch(function() {
+                        fallbackCopy(textToCopy);
+                    });
+                } else {
+                    fallbackCopy(textToCopy);
+                }
             });
+
+            function fallbackCopy(text) {
+                var tempTextArea = document.createElement('textarea');
+                tempTextArea.value = text;
+                document.body.appendChild(tempTextArea);
+                tempTextArea.select();
+                try {
+                    document.execCommand('copy');
+                    showCopyFeedback();
+                } catch (err) {
+                    console.error('Fallback copy failed', err);
+                }
+                document.body.removeChild(tempTextArea);
+            }
+
+            function showCopyFeedback() {
+                var originalText = copyBtn.textContent;
+                copyBtn.textContent = 'Copied!';
+                setTimeout(function() {
+                    copyBtn.textContent = originalText;
+                }, 2000);
+            }
 
             generateCode();
         });
     </script>
+
     <!-- Global CoreMetricSuite Cross-Linking Index Hub -->
-<div style="margin-top: 40px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #f8fafc; font-family: system-ui, -apple-system, sans-serif;">
-    <h3 style="margin: 0 0 15px 0; font-size: 18px; color: #0f172a; font-weight: 600;">🛠️ CoreMetricSuite Utility Directory</h3>
-    
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
-        <!-- Group 1 -->
-        <div>
-            <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇦🇺 Australia Tax & Labor</h4>
-            <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
-                <li style="margin-bottom: 4px;"><a id="hub-au-cents" href="../au-cents-per-km-estimator/" style="color: #2563eb; text-decoration: underline;">Cents-Per-Km Tax Estimator</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-au-schads" href="../au-schads-vehicle-allowance/" style="color: #2563eb; text-decoration: underline;">SCHADS Vehicle Allowance</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-au-super" href="../au-superannuation-charge-tracker/" style="color: #2563eb; text-decoration: underline;">Superannuation Tracker</a></li>
-            </ul>
-        </div>
+    <div style="margin-top: 40px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #f8fafc; font-family: system-ui, -apple-system, sans-serif;">
+        <h3 style="margin: 0 0 15px 0; font-size: 18px; color: #0f172a; font-weight: 600;">🛠️ CoreMetricSuite Utility Directory</h3>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
+            <!-- Group 1 -->
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇦🇺 Australia Tax & Labor</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-au-cents" href="../au-cents-per-km-estimator/" style="color: #2563eb; text-decoration: underline;">Cents-Per-Km Tax Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-au-schads" href="../au-schads-vehicle-allowance/" style="color: #2563eb; text-decoration: underline;">SCHADS Vehicle Allowance</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-au-super" href="../au-superannuation-charge-tracker/" style="color: #2563eb; text-decoration: underline;">Superannuation Tracker</a></li>
+                </ul>
+            </div>
 
-        <!-- Group 2 -->
-        <div>
-            <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇺🇸 US Corporate Tax</h4>
-            <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
-                <li style="margin-bottom: 4px;"><a id="hub-us-llc" href="../us-llc-late-penalty-estimator/" style="color: #2563eb; text-decoration: underline;">LLC Late Tax Penalty</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-us-179" href="../us-section-179-truck-calculator/" style="color: #2563eb; text-decoration: underline;">Section 179 Vehicle Deduction</a></li>
-            </ul>
-        </div>
+            <!-- Group 2 -->
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇺🇸 US Corporate Tax</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-us-llc" href="../us-llc-late-penalty-estimator/" style="color: #2563eb; text-decoration: underline;">LLC Late Tax Penalty</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-us-179" href="../us-section-179-truck-calculator/" style="color: #2563eb; text-decoration: underline;">Section 179 Vehicle Deduction</a></li>
+                </ul>
+            </div>
 
-        <!-- Group 3 -->
-        <div>
-            <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇬🇧 UK Property Management</h4>
-            <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
-                <li style="margin-bottom: 4px;"><a id="hub-uk-rent" href="../uk-form-4a-rent-tracker/" style="color: #2563eb; text-decoration: underline;">Form 4A Rent Tracker</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-uk-sdlt" href="../uk-sdlt-bracket-estimator/" style="color: #2563eb; text-decoration: underline;">Stamp Duty Estimator</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-uk-sec8" href="../uk-section-8-calculator/" style="color: #2563eb; text-decoration: underline;">Section 8 Calculator</a></li>
-            </ul>
-        </div>
+            <!-- Group 3 -->
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇬🇧 UK Property Management</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-rent" href="../uk-form-4a-rent-tracker/" style="color: #2563eb; text-decoration: underline;">Form 4A Rent Tracker</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-sdlt" href="../uk-sdlt-bracket-estimator/" style="color: #2563eb; text-decoration: underline;">Stamp Duty Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-sec8" href="../uk-section-8-calculator/" style="color: #2563eb; text-decoration: underline;">Section 8 Calculator</a></li>
+                </ul>
+            </div>
 
-        <!-- Group 4 -->
-        <div>
-            <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🎬 Digital Media Layouts</h4>
-            <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
-                <li style="margin-bottom: 4px;"><a id="hub-media-ig" href="../instagram-reels-preview/" style="color: #2563eb; text-decoration: underline;">Instagram Reels Grid</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-media-shorts" href="../shorts-ui-safe-zone/" style="color: #2563eb; text-decoration: underline;">YouTube Shorts Safe Zone</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-media-tiktok" href="../tiktok-ad-safe-zone/" style="color: #2563eb; text-decoration: underline;">TikTok Ad Checker</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-media-shopify" href="../shopify-metafields-parser/" style="color: #2563eb; text-decoration: underline;">Shopify Metafields Parser</a></li>
-            </ul>
+            <!-- Group 4 -->
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🎬 Digital Media Layouts</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-media-ig" href="../instagram-reels-preview/" style="color: #2563eb; text-decoration: underline;">Instagram Reels Grid</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-shorts" href="../shorts-ui-safe-zone/" style="color: #2563eb; text-decoration: underline;">YouTube Shorts Safe Zone</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-tiktok" href="../tiktok-ad-safe-zone/" style="color: #2563eb; text-decoration: underline;">TikTok Ad Checker</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-shopify" href="../shopify-metafields-parser/" style="color: #2563eb; text-decoration: underline;">Shopify Metafields Parser</a></li>
+                </ul>
+            </div>
         </div>
     </div>
-</div>
 
-<script defer>
-    (function() {
-        // Scans the active browser path to determine which self-link to intercept
-        const path = window.location.pathname.toLowerCase();
-        
-        const toolsMap = {
-            'au-cents-per-km-estimator': 'hub-au-cents',
-            'au-schads-vehicle-allowance': 'hub-au-schads',
-            'au-superannuation-charge-tracker': 'hub-au-super',
-            'us-llc-late-penalty-estimator': 'hub-us-llc',
-            'us-section-179-truck-calculator': 'hub-us-179',
-            'uk-form-4a-rent-tracker': 'hub-uk-rent',
-            'uk-sdlt-bracket-estimator': 'hub-uk-sdlt',
-            'uk-section-8-calculator': 'hub-uk-sec8',
-            'instagram-reels-preview': 'hub-media-ig',
-            'shorts-ui-safe-zone': 'hub-media-shorts',
-            'tiktok-ad-safe-zone': 'hub-media-tiktok',
-            'shopify-metafields-parser': 'hub-media-shopify'
-        };
+    <script defer>
+        (function() {
+            var path = window.location.pathname.toLowerCase();
+            
+            var toolsMap = {
+                'au-cents-per-km-estimator': 'hub-au-cents',
+                'au-schads-vehicle-allowance': 'hub-au-schads',
+                'au-superannuation-charge-tracker': 'hub-au-super',
+                'us-llc-late-penalty-estimator': 'hub-us-llc',
+                'us-section-179-truck-calculator': 'hub-us-179',
+                'uk-form-4a-rent-tracker': 'hub-uk-rent',
+                'uk-sdlt-bracket-estimator': 'hub-uk-sdlt',
+                'uk-section-8-calculator': 'hub-uk-sec8',
+                'instagram-reels-preview': 'hub-media-ig',
+                'shorts-ui-safe-zone': 'hub-media-shorts',
+                'tiktok-ad-safe-zone': 'hub-media-tiktok',
+                'shopify-metafields-parser': 'hub-media-shopify'
+            };
 
-        for (const [folderName, elementId] of Object.entries(toolsMap)) {
-            if (path.includes(folderName)) {
-                const targetEl = document.getElementById(elementId);
-                if (targetEl) {
-                    // Replaces the hyperlinked state with unclickable bold text styling
-                    targetEl.outerHTML = `<span style="font-weight: 600; color: #0f172a;">${targetEl.textContent} (Current)</span>`;
+            for (var folderName in toolsMap) {
+                if (Object.prototype.hasOwnProperty.call(toolsMap, folderName)) {
+                    if (path.includes(folderName)) {
+                        var targetEl = document.getElementById(toolsMap[folderName]);
+                        if (targetEl) {
+                            targetEl.outerHTML = '<span style="font-weight: 600; color: #0f172a;">' + targetEl.textContent + ' (Current)</span>';
+                        }
+                        break;
+                    }
                 }
-                break;
             }
-        }
-    })();
-</script>
-<style type="text/css">@media screen and (max-width:900px){html,body{width:100%!important;max-width:100vw!important;overflow-x:hidden!important;margin:0!important;padding:0!important}main.container{display:flex!important;flex-direction:column!important;width:100%!important;max-width:100%!important;padding:0 12px!important;margin:8px auto!important;gap:16px!important;box-sizing:border-box!important}main.container>section.preview-stage{order:-1!important;width:100%!important;display:flex!important;flex-direction:column!important;align-items:center!important;margin:0 auto!important;box-sizing:border-box!important}main.container>section.panel{order:2!important;width:100%!important;max-width:100%!important;box-sizing:border-box!important}.canvas-wrapper{width:75vw!important;height:133.33vw!important;max-width:290px!important;max-height:515px!important;margin:0 auto!important;box-sizing:border-box!important}#cms-ad-slot-top,#cms-ad-slot-1,.cms-medianet-box,.cms-ad-slot-1,.cms-ad-slot-2{width:100%!important;max-width:100%!important;height:auto!important;min-height:90px!important;display:block!important}.spec-table,.content-card div[style*="display: grid"]{grid-template-columns:1fr!important;width:100%!important}input,textarea,select{font-size:16px!important}}</style></body>
+        })();
+    </script>
+</body>
 </html>
