@@ -26,5 +26,5 @@ jobs:
           git config --global user.name 'Sitemap Bot'
           git config --global user.email 'bot@github.com'
           git add sitemap.xml
-          git commit -am "Automated Sitemap Update [skip ci]" || echo "No changes to commit"
+          git commit -am "Deploy updated sitemap.xml" || echo "No changes to commit"
           git push
