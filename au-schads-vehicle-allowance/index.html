@@ -5,20 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AU SCHADS Award Vehicle Allowance & Paid Travel Calculator</title>
-    <meta name="description" content="Calculate statutory Care Worker travel reimbursements, motor vehicle per-km allowances, and paid travel time under SCHADS Award Clauses 20.5 and 25.5.">
-    <meta name="keywords" content="SCHADS vehicle allowance calculator, SCHADS mileage reimbursement, disability support worker travel allowance, award kilometer rate 2026, client transport reimbursement SCHADS">
-    <link rel="canonical" href="https://coremetricsuite.com" />
+    <meta name="description" content="Calculate statutory Disability Support & Care Worker travel reimbursements, per-km vehicle allowances, and paid travel time under SCHADS Award Clauses 20.5 & 25.5.">
+    <meta name="keywords" content="SCHADS vehicle allowance calculator, SCHADS mileage reimbursement, disability support worker travel allowance, award kilometer rate 2026, client transport reimbursement SCHADS, MA000100 travel pay, NDIS provider travel calculator">
+    <link rel="canonical" href="https://coremetricsuite.com/au-schads-vehicle-allowance/" />
 
     <!-- Architecture Links -->
     <link rel="stylesheet" href="/css/global.css">
-<script src="/config.js" defer></script>
-<script src="/global.min.js" defer></script>
+    <script src="/config.js" defer></script>
+    <script src="/global.min.js" defer></script>
 
     <!-- Open Graph / Social Metadata -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="AU SCHADS Award Vehicle Allowance & Paid Travel Calculator">
     <meta property="og:description" content="Calculate statutory Care Worker travel reimbursements, motor vehicle per-km allowances, and paid travel time under SCHADS Award Clauses 20.5 and 25.5.">
-    <meta property="og:url" content="https://coremetricsuite.com">
+    <meta property="og:url" content="https://coremetricsuite.com/au-schads-vehicle-allowance/">
 
     <!-- JSON-LD Schema: FAQPage Structured Data -->
     <script type="application/ld+json">
@@ -78,31 +78,31 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background-color: var(--bg-main); color: var(--text-primary); font-family: var(--font-sans); line-height: 1.6; }
+        html, body { width: 100%; max-width: 100vw; overflow-x: hidden; background-color: var(--bg-main); color: var(--text-primary); font-family: var(--font-sans); line-height: 1.6; }
         
         .cms-tool-container {
+            width: 100%;
             max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1.5rem;
+            margin: 1rem auto;
+            padding: 0 1rem;
             display: grid;
             grid-template-columns: 440px 1fr;
-            gap: 2rem;
+            gap: 1.5rem;
         }
-
-        @media (max-width: 960px) { .cms-tool-container { grid-template-columns: 1fr; } }
 
         .panel {
             background-color: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 1.5rem;
+            padding: 1.25rem;
+            width: 100%;
         }
 
         .panel-title {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             font-weight: 600;
-            margin-bottom: 1.25rem;
-            padding-bottom: 0.75rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.6rem;
             border-bottom: 1px solid var(--border-color);
             display: flex;
             justify-content: space-between;
@@ -120,73 +120,116 @@
 
         .btn-demo {
             width: 100%;
-            padding: 0.6rem;
+            min-height: 48px;
+            padding: 0.6rem 1rem;
             background-color: var(--bg-input);
             border: 1px solid var(--border-color);
             color: var(--accent-purple);
             border-radius: 6px;
             cursor: pointer;
             font-weight: 600;
-            font-size: 0.85rem;
-            margin-bottom: 1.25rem;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
             transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .btn-demo:hover { background-color: #2a3042; }
 
-        .form-group { margin-bottom: 1.25rem; }
+        .form-group { margin-bottom: 1rem; }
         label { display: block; font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 0.4rem; }
         input[type="number"], select {
-            width: 100%; padding: 0.65rem 0.85rem; background-color: var(--bg-input);
-            border: 1px solid var(--border-color); border-radius: 6px; color: #fff;
-            font-size: 0.9rem; outline: none; font-family: inherit;
+            width: 100%; 
+            min-height: 48px;
+            padding: 0.65rem 0.85rem; 
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color); 
+            border-radius: 6px; 
+            color: #fff;
+            font-size: 16px; /* Prevents auto-zoom on mobile safari */
+            outline: none; 
+            font-family: inherit;
         }
 
         .btn-action {
-            width: 100%; padding: 0.85rem; background: linear-gradient(135deg, var(--accent-purple), #7c3aed);
-            color: #fff; font-weight: 700; border: none; border-radius: 6px; cursor: pointer; font-size: 0.95rem;
+            width: 100%; 
+            min-height: 48px;
+            padding: 0.85rem; 
+            background: linear-gradient(135deg, var(--accent-purple), #7c3aed);
+            color: #fff; 
+            font-weight: 700; 
+            border: none; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            font-size: 0.95rem;
             transition: opacity 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .btn-action:hover { opacity: 0.9; }
 
-        .preview-stage { display: flex; flex-direction: column; }
+        .btn-download {
+            width: 100%;
+            min-height: 48px;
+            margin-top: 1rem;
+            padding: 0.75rem;
+            background-color: transparent;
+            border: 1px solid var(--accent-cyan);
+            color: var(--accent-cyan);
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .btn-download:hover {
+            background-color: rgba(0, 242, 254, 0.1);
+        }
+
+        .preview-stage { display: flex; flex-direction: column; width: 100%; }
         .result-box {
             background-color: var(--bg-input);
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            padding: 1.5rem;
+            padding: 1.25rem;
             font-size: 0.95rem;
             color: #e5e7eb;
-            min-height: 380px;
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            gap: 0.85rem;
         }
 
         .result-metric {
             background: rgba(255,255,255,0.03);
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            padding: 1rem;
+            padding: 0.85rem 1rem;
         }
         .result-metric h4 {
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.2rem;
         }
         .result-metric .value {
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             font-weight: 700;
             color: #fff;
             font-family: var(--font-mono);
         }
 
         .timeline-breakdown {
-            margin-top: 0.5rem;
+            margin-top: 0.3rem;
             font-size: 0.85rem;
             border-top: 1px solid var(--border-color);
-            padding-top: 0.75rem;
+            padding-top: 0.5rem;
         }
 
         .timeline-row {
@@ -202,37 +245,38 @@
             font-weight: 600;
         }
 
-        .canvas-caption { margin-top: 1rem; font-size: 0.85rem; color: var(--text-secondary); text-align: right; }
+        .canvas-caption { margin-top: 0.75rem; font-size: 0.8rem; color: var(--text-secondary); text-align: right; }
 
-        .content-area { max-width: 1200px; margin: 3rem auto; padding: 0 1.5rem; }
-        .content-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 2.5rem; }
-        .content-card h1 { font-size: 2rem; margin-bottom: 1rem; color: #fff; }
-        .content-card h2 { font-size: 1.4rem; margin: 1.8rem 0 1rem; color: #fff; }
-        .content-card p { color: var(--text-secondary); margin-bottom: 1.2rem; }
-        .content-card ul, .content-card ol { color: var(--text-secondary); margin: 0 0 1.2rem 1.5rem; }
-        .content-card li { margin-bottom: 0.5rem; }
+        .content-area { width: 100%; max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
+        .content-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; }
+        .content-card h1 { font-size: 1.6rem; margin-bottom: 1rem; color: #fff; }
+        .content-card h2 { font-size: 1.25rem; margin: 1.5rem 0 0.8rem; color: #fff; }
+        .content-card p { color: var(--text-secondary); margin-bottom: 1rem; font-size: 0.95rem; }
+        .content-card ul, .content-card ol { color: var(--text-secondary); margin: 0 0 1rem 1.25rem; font-size: 0.95rem; }
+        .content-card li { margin-bottom: 0.4rem; }
 
-        .spec-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; text-align: left; }
-        .spec-table th, .spec-table td { padding: 0.85rem 1rem; border: 1px solid var(--border-color); }
+        .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 1.25rem 0; }
+        .spec-table { width: 100%; border-collapse: collapse; text-align: left; min-width: 500px; }
+        .spec-table th, .spec-table td { padding: 0.75rem 0.85rem; border: 1px solid var(--border-color); font-size: 0.88rem; }
         .spec-table th { background-color: var(--bg-input); color: #fff; }
         .spec-table td { color: var(--text-secondary); }
 
         /* Accordion FAQ Styling */
-        .faq-block { margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem; }
+        .faq-block { margin-top: 1.25rem; border-top: 1px solid var(--border-color); padding-top: 1rem; }
         .faq-accordion {
             background-color: var(--bg-input);
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            margin-bottom: 0.85rem;
+            margin-bottom: 0.75rem;
             overflow: hidden;
             transition: border-color 0.2s;
         }
         .faq-accordion[open] { border-color: var(--accent-purple); }
         .faq-summary {
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 600;
             color: #fff;
-            padding: 1rem 1.2rem;
+            padding: 0.85rem 1rem;
             cursor: pointer;
             list-style: none;
             display: flex;
@@ -252,30 +296,45 @@
             color: var(--accent-purple);
         }
         .faq-answer {
-            padding: 0 1.2rem 1.2rem;
+            padding: 0 1rem 1rem;
             color: var(--text-secondary);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             border-top: 1px solid rgba(255,255,255,0.05);
             margin-top: 0.4rem;
-            padding-top: 0.8rem;
+            padding-top: 0.75rem;
         }
 
         .cms-ad-slot-1, .cms-ad-slot-2 {
-            width: 100%; max-width: 970px; min-height: 90px; margin: 1.5rem auto;
+            width: 100%; max-width: 1200px; min-height: 90px; margin: 1rem auto;
             background: rgba(255,255,255,0.02); border-radius: 8px;
         }
+
+        /* Mobile Layout Stack Optimizations */
+        @media (max-width: 768px) {
+            .cms-tool-container {
+                grid-template-columns: 1fr;
+                gap: 1.25rem;
+                margin: 0.5rem auto;
+            }
+            .panel { padding: 1rem; }
+            .content-card { padding: 1.25rem; }
+            .content-card h1 { font-size: 1.35rem; }
+            .content-card h2 { font-size: 1.1rem; }
+        }
     </style>
-<style>#cms-ad-slot-top,#cms-ad-slot-1,.cms-medianet-box{display:block!important;height:250px!important;min-height:250px!important;max-height:250px!important;overflow:hidden!important;background-color:var(--cms-surface-alt)}</style></head>
+    <style>#cms-ad-slot-top,#cms-ad-slot-1,.cms-medianet-box{display:block!important;height:250px!important;min-height:250px!important;max-height:250px!important;overflow:hidden!important;background-color:var(--cms-surface-alt)}</style>
+</head>
 <body>
 
     <!-- Site Header Integration Hook -->
     <div id="global-header"></div>
 
     <!-- Ad Slot 1 Container (Directly Above Main Title Banner) -->
-    <div class="cms-ad-slot-1"></div>
+    <div class="cms-ad-slot-1" id="cms-ad-slot-1"></div>
 
     <!-- Main Interactive Tool Container -->
     <section class="cms-tool-container">
+        <!-- Input Panel First in DOM and Screen Flow -->
         <form class="panel" id="schadsForm" onsubmit="return false;">
             <div class="panel-title">
                 <span>SCHADS Allowance Controls</span>
@@ -315,7 +374,7 @@
             <button class="btn-action" id="calculateBtn" type="button">Calculate SCHADS Reimbursement</button>
         </form>
 
-        <!-- Result Summary Dashboard -->
+        <!-- Result Summary Dashboard Stacked Below Inputs -->
         <section class="preview-stage">
             <div class="panel" style="flex: 1; display: flex; flex-direction: column;">
                 <div class="panel-title">
@@ -342,6 +401,11 @@
                         </div>
                     </div>
                 </div>
+
+                <button class="btn-download" id="downloadReportBtn" type="button">
+                    📄 Download Watermarked Report (PNG)
+                </button>
+
                 <p class="canvas-caption">
                     Calculated under Fair Work Commission SCHADS Industry Award (MA000100) Clauses 20.5 & 25.5.
                 </p>
@@ -354,10 +418,10 @@
         <section class="content-card">
             <h1>AU SCHADS Award Vehicle Allowance & Paid Travel Calculator</h1>
             <p>
-                Under the <strong>Social, Community, Home Care and Disability Services Industry Award 2020 (SCHADS Award - MA000100)</strong>, disability support workers, home care aides, and community service employees are entitled to financial compensation when using their personal vehicles for work obligations.
+                Under the <strong>Social, Community, Home Care and Disability Services Industry Award 2020 (SCHADS Award - MA000100)</strong>, disability support workers, home care aides, and community service employees are entitled to financial compensation when using their personal vehicles for work obligations[cite: 1].
             </p>
             <p>
-                This browser-based <strong>au-schads-vehicle-allowance</strong> calculator assists employees, employers, and NDIS service providers in determining accurate motor vehicle allowances (Clause 20.5) and paid travel time allowances (Clause 25.5) for multi-client rosters and transport shifts.
+                This browser-based <strong>au-schads-vehicle-allowance</strong> calculator assists employees, employers, and NDIS service providers in determining accurate motor vehicle allowances (Clause 20.5) and paid travel time allowances (Clause 25.5) for multi-client rosters, split shifts, and participant transport itineraries[cite: 1].
             </p>
 
             <h2>SCHADS Industry Award Allowance Entitlements Matrix</h2>
@@ -365,52 +429,54 @@
                 The Fair Work Commission sets statutory vehicle allowance rates and travel time conditions to protect care workers traveling between clients:
             </p>
 
-            <table class="spec-table">
-                <thead>
-                    <tr>
-                        <th>Allowance / Entitlement Category</th>
-                        <th>Award Clause</th>
-                        <th>Statutory SCHADS Rate</th>
-                        <th>Operational Application</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Motor Vehicle Allowance</strong></td>
-                        <td>Clause 20.5(a)</td>
-                        <td>$1.05 per km</td>
-                        <td>Applies when an employee is authorized to drive their personal motor vehicle for work.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Motorcycle Allowance</strong></td>
-                        <td>Clause 20.5(b)</td>
-                        <td>$0.35 per km</td>
-                        <td>Applies when an employee uses their personal motorcycle/scooter for work travel.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Travel Time Between Clients</strong></td>
-                        <td>Clause 25.5</td>
-                        <td>Ordinary Hourly Rate</td>
-                        <td>Time spent driving between consecutive clients during a shift is paid working time.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Client Transport Travel</strong></td>
-                        <td>Clause 20.5 & 25.5</td>
-                        <td>$1.05/km + Hourly Rate</td>
-                        <td>Driving with a client onboard (e.g., outings) triggers both per-km and shift hourly pay.</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="spec-table">
+                    <thead>
+                        <tr>
+                            <th>Allowance / Entitlement Category</th>
+                            <th>Award Clause</th>
+                            <th>Statutory SCHADS Rate</th>
+                            <th>Operational Application</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Motor Vehicle Allowance</strong></td>
+                            <td>Clause 20.5(a)</td>
+                            <td>$1.05 per km</td>
+                            <td>Applies when an employee is authorized to drive their personal motor vehicle for work.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Motorcycle Allowance</strong></td>
+                            <td>Clause 20.5(b)</td>
+                            <td>$0.35 per km</td>
+                            <td>Applies when an employee uses their personal motorcycle/scooter for work travel.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Travel Time Between Clients</strong></td>
+                            <td>Clause 25.5</td>
+                            <td>Ordinary Hourly Rate</td>
+                            <td>Time spent driving between consecutive clients during a shift is paid working time.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Client Transport Travel</strong></td>
+                            <td>Clause 20.5 & 25.5</td>
+                            <td>$1.05/km + Hourly Rate</td>
+                            <td>Driving with a client onboard (e.g., outings) triggers both per-km and shift hourly pay.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
             <!-- Ad Slot 2 Container (Directly Below Specification Table) -->
-            <div class="cms-ad-slot-2"></div>
+            <div class="cms-ad-slot-2" id="cms-ad-slot-2"></div>
 
             <h2>Key Rules for SCHADS Vehicle & Travel Reimbursements</h2>
             <ul>
-                <li><strong>Vehicle Kilometre Allowance:</strong> If you use your personal car to drive between clients or transport a client during a shift, your employer must pay $1.05 per km driven.</li>
-                <li><strong>Travel Time is Paid Work Time:</strong> Clause 25.5 explicitly establishes that the time spent traveling between consecutive appointments during a shift must be treated as paid working time at your applicable hourly rate.</li>
-                <li><strong>Commuting Boundaries:</strong> Your standard morning commute from home to your first client, and your evening commute from your final client back home, is generally unpaid and non-reimbursable unless special remote locality provisions apply.</li>
-                <li><strong>NDIS Provider Billing vs Award Payment:</strong> While NDIS billing rules determine what an agency can charge a participant, employer obligations under the SCHADS Award are legally binding regarding what must be paid to the employee.</li>
+                <li><strong>Vehicle Kilometre Allowance:</strong> If you use your personal car to drive between clients or transport a client during a shift, your employer must pay $1.05 per km driven[cite: 1].</li>
+                <li><strong>Travel Time is Paid Work Time:</strong> Clause 25.5 explicitly establishes that the time spent traveling between consecutive appointments during a shift must be treated as paid working time at your applicable hourly rate[cite: 1].</li>
+                <li><strong>Commuting Boundaries:</strong> Your standard morning commute from home to your first client, and your evening commute from your final client back home, is generally unpaid and non-reimbursable unless special remote locality provisions apply[cite: 1].</li>
+                <li><strong>NDIS Provider Billing vs Award Payment:</strong> While NDIS billing rules determine what an agency can charge a participant, employer obligations under the SCHADS Award are legally binding regarding what must be paid to the employee[cite: 1].</li>
             </ul>
 
             <h2>Frequently Asked Questions</h2>
@@ -418,28 +484,28 @@
                 <details class="faq-accordion" open>
                     <summary class="faq-summary">What is the SCHADS Award motor vehicle allowance rate per kilometre?</summary>
                     <div class="faq-answer">
-                        Under Clause 20.5 of the SCHADS Award (MA000100), an employee who is required and authorized to use their own motor vehicle in the performance of their duties must be paid an allowance per kilometre ($1.05/km for motor vehicles and $0.35/km for motorcycles).
+                        Under Clause 20.5 of the SCHADS Award (MA000100), an employee who is required and authorized to use their own motor vehicle in the performance of their duties must be paid an allowance per kilometre ($1.05/km for motor vehicles and $0.35/km for motorcycles)[cite: 1].
                     </div>
                 </details>
 
                 <details class="faq-accordion">
                     <summary class="faq-summary">Is travel between client appointments considered paid working time under SCHADS?</summary>
                     <div class="faq-answer">
-                        Yes. Clause 25.5 of the SCHADS Award specifies that time spent traveling between consecutive clients or locations during a shift is counted as working time and must be paid at the appropriate ordinary or overtime rate, in addition to the per-kilometre vehicle allowance.
+                        Yes. Clause 25.5 of the SCHADS Award specifies that time spent traveling between consecutive clients or locations during a shift is counted as working time and must be paid at the appropriate ordinary or overtime rate, in addition to the per-kilometre vehicle allowance[cite: 1].
                     </div>
                 </details>
 
                 <details class="faq-accordion">
                     <summary class="faq-summary">Does commuting from home to the first client count for vehicle allowance?</summary>
                     <div class="faq-answer">
-                        Generally, ordinary travel from your home to your first client or workplace, and from your last client back home, is non-payable commuting travel unless specific employer direction or remote locality arrangements apply under the award.
+                        Generally, ordinary travel from your home to your first client or workplace, and from your last client back home, is non-payable commuting travel unless specific employer direction or remote locality arrangements apply under the award[cite: 1].
                     </div>
                 </details>
 
                 <details class="faq-accordion">
                     <summary class="faq-summary">What is the difference between client transport travel and travel between appointments?</summary>
                     <div class="faq-answer">
-                        Travel between appointments refers to driving your vehicle from Client A to Client B. Client transport refers to driving while a client is inside your vehicle (e.g., community outings, medical visits). Both qualify for the per-km vehicle allowance ($1.05/km for cars), but client transport often involves additional insurance and safety requirements.
+                        Travel between appointments refers to driving your vehicle from Client A to Client B[cite: 1]. Client transport refers to driving while a client is inside your vehicle (e.g., community outings, medical visits)[cite: 1]. Both qualify for the per-km vehicle allowance ($1.05/km for cars), but client transport often involves additional insurance and safety requirements[cite: 1].
                     </div>
                 </details>
             </div>
@@ -447,7 +513,7 @@
     </article>
 
     <!-- Site Footer Integration Hook -->
-    <div id="global-footer"></div>
+    <div id="global-footer" id="site-footer"></div>
 
     <!-- Math Calculation Engine JavaScript -->
     <script>
@@ -460,6 +526,7 @@
 
             var calculateBtn = document.getElementById('calculateBtn');
             var loadDemoBtn = document.getElementById('loadDemoBtn');
+            var downloadReportBtn = document.getElementById('downloadReportBtn');
 
             var resAllowance = document.getElementById('Total Vehicle Allowance Payable');
             var resTravelPay = document.getElementById('Travel Time Pay (Paid Working Time)');
@@ -485,6 +552,10 @@
             calculateBtn.addEventListener('click', function() {
                 calculateSCHADS();
             });
+
+            if (downloadReportBtn) {
+                downloadReportBtn.addEventListener('click', generateWatermarkedReport);
+            }
 
             function calculateSCHADS() {
                 var vType = vehicleTypeSelect.value;
@@ -529,88 +600,168 @@
                     '</div>';
             }
 
+            // Client-Side Watermarked Image Report Generator Engine
+            function generateWatermarkedReport() {
+                var canvas = document.createElement('canvas');
+                var ctx = canvas.getContext('2d');
+
+                canvas.width = 700;
+                canvas.height = 620;
+
+                // Background
+                ctx.fillStyle = '#181b24';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Header Card
+                ctx.fillStyle = '#8b5cf6';
+                ctx.fillRect(0, 0, canvas.width, 80);
+
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 22px -apple-system, BlinkMacSystemFont, sans-serif';
+                ctx.fillText('SCHADS Travel Allowance Calculation Summary', 30, 48);
+
+                // Summary Values
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = '14px -apple-system, BlinkMacSystemFont, sans-serif';
+                ctx.fillText('Total Vehicle Allowance:', 40, 130);
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 18px SFMono-Regular, Consolas, monospace';
+                ctx.fillText(resAllowance.textContent, 40, 155);
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = '14px -apple-system, BlinkMacSystemFont, sans-serif';
+                ctx.fillText('Travel Time Pay:', 380, 130);
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 18px SFMono-Regular, Consolas, monospace';
+                ctx.fillText(resTravelPay.textContent, 380, 155);
+
+                ctx.fillStyle = '#10b981';
+                ctx.fillRect(40, 180, 620, 50);
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 16px -apple-system, BlinkMacSystemFont, sans-serif';
+                ctx.fillText('Combined Reimbursement & Pay:', 60, 212);
+                ctx.font = 'bold 20px SFMono-Regular, Consolas, monospace';
+                ctx.fillText(resCombined.textContent, 440, 212);
+
+                // Breakdown Section
+                ctx.fillStyle = '#222634';
+                ctx.fillRect(40, 250, 620, 280);
+
+                ctx.fillStyle = '#00f2fe';
+                ctx.font = 'bold 15px -apple-system, BlinkMacSystemFont, sans-serif';
+                ctx.fillText('Audit Breakdown Details', 60, 280);
+
+                var vType = vehicleTypeSelect.value === 'car' ? 'Motor Vehicle ($1.05/km)' : 'Motorcycle ($0.35/km)';
+                var totalKm = ((parseFloat(betweenKmInput.value) || 0) + (parseFloat(clientTransportKmInput.value) || 0)).toFixed(1);
+
+                ctx.fillStyle = '#e5e7eb';
+                ctx.font = '14px -apple-system, BlinkMacSystemFont, sans-serif';
+                ctx.fillText('Vehicle Category: ' + vType, 60, 320);
+                ctx.fillText('Total Distance Driven: ' + totalKm + ' km', 60, 350);
+                ctx.fillText(' - Inter-Appointment Distance: ' + (parseFloat(betweenKmInput.value) || 0) + ' km', 80, 380);
+                ctx.fillText(' - Client Transport Distance: ' + (parseFloat(clientTransportKmInput.value) || 0) + ' km', 80, 410);
+                ctx.fillText('Paid Travel Duration: ' + travelMinutesInput.value + ' minutes', 60, 440);
+                ctx.fillText('Base Rate Applied: $' + hourlyRateInput.value + ' / hr', 60, 470);
+
+                // Professional Visual Watermark
+                ctx.fillStyle = '#2e3446';
+                ctx.fillRect(0, 560, canvas.width, 60);
+
+                ctx.fillStyle = '#00f2fe';
+                ctx.font = 'bold 14px -apple-system, BlinkMacSystemFont, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('Generated by CoreMetricSuite (coremetricsuite.com)', canvas.width / 2, 595);
+
+                // Trigger Download
+                var link = document.createElement('a');
+                link.download = 'SCHADS_Travel_Allowance_Report.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            }
+
             // Execute initial calculation
             calculateSCHADS();
         });
     </script>
+
     <!-- Global CoreMetricSuite Cross-Linking Index Hub -->
-<div style="margin-top: 40px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #f8fafc; font-family: system-ui, -apple-system, sans-serif;">
-    <h3 style="margin: 0 0 15px 0; font-size: 18px; color: #0f172a; font-weight: 600;">🛠️ CoreMetricSuite Utility Directory</h3>
-    
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
-        <!-- Group 1 -->
-        <div>
-            <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇦🇺 Australia Tax & Labor</h4>
-            <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
-                <li style="margin-bottom: 4px;"><a id="hub-au-cents" href="../au-cents-per-km-estimator/" style="color: #2563eb; text-decoration: underline;">Cents-Per-Km Tax Estimator</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-au-schads" href="../au-schads-vehicle-allowance/" style="color: #2563eb; text-decoration: underline;">SCHADS Vehicle Allowance</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-au-super" href="../au-superannuation-charge-tracker/" style="color: #2563eb; text-decoration: underline;">Superannuation Tracker</a></li>
-            </ul>
-        </div>
+    <div style="margin-top: 40px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #f8fafc; font-family: system-ui, -apple-system, sans-serif;">
+        <h3 style="margin: 0 0 15px 0; font-size: 18px; color: #0f172a; font-weight: 600;">🛠️ CoreMetricSuite Utility Directory</h3>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
+            <!-- Group 1 -->
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇦🇺 Australia Tax & Labor</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-au-cents" href="../au-cents-per-km-estimator/" style="color: #2563eb; text-decoration: underline;">Cents-Per-Km Tax Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-au-schads" href="../au-schads-vehicle-allowance/" style="color: #2563eb; text-decoration: underline;">SCHADS Vehicle Allowance</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-au-super" href="../au-superannuation-charge-tracker/" style="color: #2563eb; text-decoration: underline;">Superannuation Tracker</a></li>
+                </ul>
+            </div>
 
-        <!-- Group 2 -->
-        <div>
-            <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇺🇸 US Corporate Tax</h4>
-            <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
-                <li style="margin-bottom: 4px;"><a id="hub-us-llc" href="../us-llc-late-penalty-estimator/" style="color: #2563eb; text-decoration: underline;">LLC Late Tax Penalty</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-us-179" href="../us-section-179-truck-calculator/" style="color: #2563eb; text-decoration: underline;">Section 179 Vehicle Deduction</a></li>
-            </ul>
-        </div>
+            <!-- Group 2 -->
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇺🇸 US Corporate Tax</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-us-llc" href="../us-llc-late-penalty-estimator/" style="color: #2563eb; text-decoration: underline;">LLC Late Tax Penalty</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-us-179" href="../us-section-179-truck-calculator/" style="color: #2563eb; text-decoration: underline;">Section 179 Vehicle Deduction</a></li>
+                </ul>
+            </div>
 
-        <!-- Group 3 -->
-        <div>
-            <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇬🇧 UK Property Management</h4>
-            <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
-                <li style="margin-bottom: 4px;"><a id="hub-uk-rent" href="../uk-form-4a-rent-tracker/" style="color: #2563eb; text-decoration: underline;">Form 4A Rent Tracker</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-uk-sdlt" href="../uk-sdlt-bracket-estimator/" style="color: #2563eb; text-decoration: underline;">Stamp Duty Estimator</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-uk-sec8" href="../uk-section-8-calculator/" style="color: #2563eb; text-decoration: underline;">Section 8 Calculator</a></li>
-            </ul>
-        </div>
+            <!-- Group 3 -->
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇬BW UK Property Management</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-rent" href="../uk-form-4a-rent-tracker/" style="color: #2563eb; text-decoration: underline;">Form 4A Rent Tracker</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-sdlt" href="../uk-sdlt-bracket-estimator/" style="color: #2563eb; text-decoration: underline;">Stamp Duty Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-sec8" href="../uk-section-8-calculator/" style="color: #2563eb; text-decoration: underline;">Section 8 Calculator</a></li>
+                </ul>
+            </div>
 
-        <!-- Group 4 -->
-        <div>
-            <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🎬 Digital Media Layouts</h4>
-            <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
-                <li style="margin-bottom: 4px;"><a id="hub-media-ig" href="../instagram-reels-preview/" style="color: #2563eb; text-decoration: underline;">Instagram Reels Grid</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-media-shorts" href="../shorts-ui-safe-zone/" style="color: #2563eb; text-decoration: underline;">YouTube Shorts Safe Zone</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-media-tiktok" href="../tiktok-ad-safe-zone/" style="color: #2563eb; text-decoration: underline;">TikTok Ad Checker</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-media-shopify" href="../shopify-metafields-parser/" style="color: #2563eb; text-decoration: underline;">Shopify Metafields Parser</a></li>
-            </ul>
+            <!-- Group 4 -->
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🎬 Digital Media Layouts</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-media-ig" href="../instagram-reels-preview/" style="color: #2563eb; text-decoration: underline;">Instagram Reels Grid</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-shorts" href="../shorts-ui-safe-zone/" style="color: #2563eb; text-decoration: underline;">YouTube Shorts Safe Zone</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-tiktok" href="../tiktok-ad-safe-zone/" style="color: #2563eb; text-decoration: underline;">TikTok Ad Checker</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-shopify" href="../shopify-metafields-parser/" style="color: #2563eb; text-decoration: underline;">Shopify Metafields Parser</a></li>
+                </ul>
+            </div>
         </div>
     </div>
-</div>
 
-<script defer>
-    (function() {
-        // Scans the active browser path to determine which self-link to intercept
-        const path = window.location.pathname.toLowerCase();
-        
-        const toolsMap = {
-            'au-cents-per-km-estimator': 'hub-au-cents',
-            'au-schads-vehicle-allowance': 'hub-au-schads',
-            'au-superannuation-charge-tracker': 'hub-au-super',
-            'us-llc-late-penalty-estimator': 'hub-us-llc',
-            'us-section-179-truck-calculator': 'hub-us-179',
-            'uk-form-4a-rent-tracker': 'hub-uk-rent',
-            'uk-sdlt-bracket-estimator': 'hub-uk-sdlt',
-            'uk-section-8-calculator': 'hub-uk-sec8',
-            'instagram-reels-preview': 'hub-media-ig',
-            'shorts-ui-safe-zone': 'hub-media-shorts',
-            'tiktok-ad-safe-zone': 'hub-media-tiktok',
-            'shopify-metafields-parser': 'hub-media-shopify'
-        };
+    <script defer>
+        (function() {
+            // Scans the active browser path to determine which self-link to intercept
+            const path = window.location.pathname.toLowerCase();
+            
+            const toolsMap = {
+                'au-cents-per-km-estimator': 'hub-au-cents',
+                'au-schads-vehicle-allowance': 'hub-au-schads',
+                'au-superannuation-charge-tracker': 'hub-au-super',
+                'us-llc-late-penalty-estimator': 'hub-us-llc',
+                'us-section-179-truck-calculator': 'hub-us-179',
+                'uk-form-4a-rent-tracker': 'hub-uk-rent',
+                'uk-sdlt-bracket-estimator': 'hub-uk-sdlt',
+                'uk-section-8-calculator': 'hub-uk-sec8',
+                'instagram-reels-preview': 'hub-media-ig',
+                'shorts-ui-safe-zone': 'hub-media-shorts',
+                'tiktok-ad-safe-zone': 'hub-media-tiktok',
+                'shopify-metafields-parser': 'hub-media-shopify'
+            };
 
-        for (const [folderName, elementId] of Object.entries(toolsMap)) {
-            if (path.includes(folderName)) {
-                const targetEl = document.getElementById(elementId);
-                if (targetEl) {
-                    // Replaces the hyperlinked state with unclickable bold text styling
-                    targetEl.outerHTML = `<span style="font-weight: 600; color: #0f172a;">${targetEl.textContent} (Current)</span>`;
+            for (const [folderName, elementId] of Object.entries(toolsMap)) {
+                if (path.includes(folderName)) {
+                    const targetEl = document.getElementById(elementId);
+                    if (targetEl) {
+                        // Replaces the hyperlinked state with unclickable bold text styling
+                        targetEl.outerHTML = `<span style="font-weight: 600; color: #0f172a;">${targetEl.textContent} (Current)</span>`;
+                    }
+                    break;
                 }
-                break;
             }
-        }
-    })();
-</script>
-<style type="text/css">@media screen and (max-width:900px){html,body{width:100%!important;max-width:100vw!important;overflow-x:hidden!important;margin:0!important;padding:0!important}main.container{display:flex!important;flex-direction:column!important;width:100%!important;max-width:100%!important;padding:0 12px!important;margin:8px auto!important;gap:16px!important;box-sizing:border-box!important}main.container>section.preview-stage{order:-1!important;width:100%!important;display:flex!important;flex-direction:column!important;align-items:center!important;margin:0 auto!important;box-sizing:border-box!important}main.container>section.panel{order:2!important;width:100%!important;max-width:100%!important;box-sizing:border-box!important}.canvas-wrapper{width:75vw!important;height:133.33vw!important;max-width:290px!important;max-height:515px!important;margin:0 auto!important;box-sizing:border-box!important}#cms-ad-slot-top,#cms-ad-slot-1,.cms-medianet-box,.cms-ad-slot-1,.cms-ad-slot-2{width:100%!important;max-width:100%!important;height:auto!important;min-height:90px!important;display:block!important}.spec-table,.content-card div[style*="display: grid"]{grid-template-columns:1fr!important;width:100%!important}input,textarea,select{font-size:16px!important}}</style></body>
+        })();
+    </script>
+</body>
 </html>
