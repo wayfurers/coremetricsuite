@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Put this in every tool folder's index.html file -->
+    <!-- Core Engine & Technical SEO Metadata -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AU Superannuation Charge Tracker & SG Compliance Calculator</title>
-    <meta name="description" content="Track Superannuation Guarantee (SG) shortfalls, calculate nominal interest, administrative components, and SGC liability under ATO statutory guidelines.">
-    <meta name="keywords" content="superannuation charge tracker, SGC liability calculator, ATO super shortfall calculator, superannuation guarantee rate 12%, unpaid super liability australia">
-    <link rel="canonical" href="https://coremetricsuite.com" />
+    <meta name="description" content="Calculate ATO Superannuation Guarantee Charge (SGC) shortfalls, 10% nominal interest, admin fees, and non-deductible tax liabilities under 2026 statutory rules.">
+    <meta name="keywords" content="superannuation charge tracker, SGC liability calculator, ATO super shortfall calculator, superannuation guarantee rate 12%, unpaid super liability australia, ATO SGC penalty calculator, late super payment interest, super shortfall formula">
+    <link rel="canonical" href="https://coremetricsuite.com/au-superannuation-charge-tracker/" />
 
     <!-- Architecture Links -->
     <link rel="stylesheet" href="/css/global.css">
-<script src="/config.js" defer></script>
-<script src="/global.min.js" defer></script>
+    <script src="/config.js" defer></script>
+    <script src="/global.min.js" defer></script>
 
     <!-- Open Graph / Social Metadata -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="AU Superannuation Charge Tracker & SG Compliance Calculator">
     <meta property="og:description" content="Track Superannuation Guarantee (SG) shortfalls, calculate nominal interest, administrative components, and SGC liability under ATO statutory guidelines.">
-    <meta property="og:url" content="https://coremetricsuite.com">
+    <meta property="og:url" content="https://coremetricsuite.com/au-superannuation-charge-tracker/">
 
     <!-- JSON-LD Schema: FAQPage Structured Data -->
     <script type="application/ld+json">
@@ -80,30 +80,32 @@
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { background-color: var(--bg-main); color: var(--text-primary); font-family: var(--font-sans); line-height: 1.6; }
-        
+
+        /* Main Workspace Container */
         .cms-tool-container {
+            width: 100%;
             max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1.5rem;
+            margin: 0.5rem auto 2rem auto;
+            padding: 0 1rem;
             display: grid;
             grid-template-columns: 440px 1fr;
-            gap: 2rem;
+            gap: 1.5rem;
+            box-sizing: border-box;
         }
-
-        @media (max-width: 960px) { .cms-tool-container { grid-template-columns: 1fr; } }
 
         .panel {
             background-color: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 1.5rem;
+            padding: 1.25rem;
+            box-sizing: border-box;
         }
 
         .panel-title {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             font-weight: 600;
-            margin-bottom: 1.25rem;
-            padding-bottom: 0.75rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.65rem;
             border-bottom: 1px solid var(--border-color);
             display: flex;
             justify-content: space-between;
@@ -114,50 +116,98 @@
             font-size: 0.75rem;
             background: var(--accent-purple);
             color: #fff;
-            padding: 2px 6px;
+            padding: 3px 8px;
             border-radius: 4px;
             font-weight: 700;
         }
 
+        /* Forms and Touch Targets (Rule #3: 48px Min Target) */
+        .form-group { margin-bottom: 1rem; }
+        label { display: block; font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 0.4rem; }
+        
+        input[type="number"], select {
+            width: 100%;
+            min-height: 48px;
+            padding: 0.75rem 0.85rem;
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            font-family: inherit;
+            box-sizing: border-box;
+        }
+
         .btn-demo {
             width: 100%;
-            padding: 0.6rem;
+            min-height: 48px;
+            padding: 0.75rem;
             background-color: var(--bg-input);
             border: 1px solid var(--border-color);
             color: var(--accent-purple);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
             font-weight: 600;
-            font-size: 0.85rem;
-            margin-bottom: 1.25rem;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
             transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .btn-demo:hover { background-color: #2a3042; }
 
-        .form-group { margin-bottom: 1.25rem; }
-        label { display: block; font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 0.4rem; }
-        input[type="number"], select {
-            width: 100%; padding: 0.65rem 0.85rem; background-color: var(--bg-input);
-            border: 1px solid var(--border-color); border-radius: 6px; color: #fff;
-            font-size: 0.9rem; outline: none; font-family: inherit;
-        }
-
         .btn-action {
-            width: 100%; padding: 0.85rem; background: linear-gradient(135deg, var(--accent-purple), #7c3aed);
-            color: #fff; font-weight: 700; border: none; border-radius: 6px; cursor: pointer; font-size: 0.95rem;
+            width: 100%;
+            min-height: 48px;
+            padding: 0.85rem;
+            background: linear-gradient(135deg, var(--accent-purple), #7c3aed);
+            color: #fff;
+            font-weight: 700;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
             transition: opacity 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .btn-action:hover { opacity: 0.9; }
 
-        .preview-stage { display: flex; flex-direction: column; }
+        .btn-download {
+            width: 100%;
+            min-height: 48px;
+            margin-top: 1rem;
+            padding: 0.85rem;
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid var(--accent-emerald);
+            color: var(--accent-emerald);
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .btn-download:hover {
+            background: var(--accent-emerald);
+            color: #0f1117;
+        }
+
+        /* Dashboard & Metric Display Rules */
+        .preview-stage { display: flex; flex-direction: column; width: 100%; }
         .result-box {
             background-color: var(--bg-input);
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            padding: 1.5rem;
+            padding: 1.25rem;
             font-size: 0.95rem;
             color: #e5e7eb;
-            min-height: 380px;
             display: flex;
             flex-direction: column;
             gap: 1rem;
@@ -167,17 +217,17 @@
             background: rgba(255,255,255,0.03);
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            padding: 1rem;
+            padding: 0.85rem 1rem;
         }
         .result-metric h4 {
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.25rem;
         }
         .result-metric .value {
-            font-size: 1.25rem;
+            font-size: 1.3rem;
             font-weight: 700;
             color: #fff;
             font-family: var(--font-mono);
@@ -187,13 +237,13 @@
             margin-top: 0.5rem;
             font-size: 0.85rem;
             border-top: 1px solid var(--border-color);
-            padding-top: 0.75rem;
+            padding-top: 0.5rem;
         }
 
         .timeline-row {
             display: flex;
             justify-content: space-between;
-            padding: 0.35rem 0;
+            padding: 0.4rem 0;
             color: var(--text-secondary);
             border-bottom: 1px dashed rgba(255,255,255,0.05);
         }
@@ -203,17 +253,19 @@
             font-weight: 600;
         }
 
-        .canvas-caption { margin-top: 1rem; font-size: 0.85rem; color: var(--text-secondary); text-align: right; }
+        .canvas-caption { margin-top: 0.75rem; font-size: 0.8rem; color: var(--text-secondary); text-align: right; }
 
-        .content-area { max-width: 1200px; margin: 3rem auto; padding: 0 1.5rem; }
-        .content-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 2.5rem; }
-        .content-card h1 { font-size: 2rem; margin-bottom: 1rem; color: #fff; }
-        .content-card h2 { font-size: 1.4rem; margin: 1.8rem 0 1rem; color: #fff; }
-        .content-card p { color: var(--text-secondary); margin-bottom: 1.2rem; }
-        .content-card ul, .content-card ol { color: var(--text-secondary); margin: 0 0 1.2rem 1.5rem; }
+        /* SEO & Informational Content */
+        .content-area { width: 100%; max-width: 1200px; margin: 2rem auto; padding: 0 1rem; box-sizing: border-box; }
+        .content-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.75rem; }
+        .content-card h1 { font-size: 1.75rem; margin-bottom: 1rem; color: #fff; }
+        .content-card h2 { font-size: 1.3rem; margin: 1.6rem 0 0.85rem; color: #fff; }
+        .content-card p { color: var(--text-secondary); margin-bottom: 1rem; }
+        .content-card ul, .content-card ol { color: var(--text-secondary); margin: 0 0 1.2rem 1.25rem; }
         .content-card li { margin-bottom: 0.5rem; }
 
-        .spec-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; text-align: left; }
+        .spec-table-wrapper { width: 100%; overflow-x: auto; margin: 1.5rem 0; }
+        .spec-table { width: 100%; border-collapse: collapse; text-align: left; min-width: 500px; }
         .spec-table th, .spec-table td { padding: 0.85rem 1rem; border: 1px solid var(--border-color); }
         .spec-table th { background-color: var(--bg-input); color: #fff; }
         .spec-table td { color: var(--text-secondary); }
@@ -230,10 +282,10 @@
         }
         .faq-accordion[open] { border-color: var(--accent-purple); }
         .faq-summary {
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 600;
             color: #fff;
-            padding: 1rem 1.2rem;
+            padding: 0.85rem 1rem;
             cursor: pointer;
             list-style: none;
             display: flex;
@@ -253,30 +305,51 @@
             color: var(--accent-purple);
         }
         .faq-answer {
-            padding: 0 1.2rem 1.2rem;
+            padding: 0 1rem 1rem;
             color: var(--text-secondary);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             border-top: 1px solid rgba(255,255,255,0.05);
             margin-top: 0.4rem;
-            padding-top: 0.8rem;
+            padding-top: 0.75rem;
         }
 
+        /* Ad Placement Containers */
         .cms-ad-slot-1, .cms-ad-slot-2 {
-            width: 100%; max-width: 970px; min-height: 90px; margin: 1.5rem auto;
-            background: rgba(255,255,255,0.02); border-radius: 8px;
+            width: 100%;
+            max-width: 1200px;
+            min-height: 90px;
+            margin: 1rem auto;
+            background: rgba(255,255,255,0.02);
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        /* Responsive Mobile Architecture (Rule #3) */
+        @media (max-width: 768px) {
+            .cms-tool-container {
+                grid-template-columns: 1fr;
+                margin-top: 0.25rem;
+                padding: 0 0.75rem;
+                gap: 1rem;
+            }
+            .panel { padding: 1rem; }
+            .content-card { padding: 1.25rem; }
+            .content-card h1 { font-size: 1.4rem; }
+            .content-card h2 { font-size: 1.15rem; }
         }
     </style>
-<style>#cms-ad-slot-top,#cms-ad-slot-1,.cms-medianet-box{display:block!important;height:250px!important;min-height:250px!important;max-height:250px!important;overflow:hidden!important;background-color:var(--cms-surface-alt)}</style></head>
+</head>
 <body>
 
     <!-- Site Header Integration Hook -->
     <div id="global-header"></div>
 
     <!-- Ad Slot 1 Container (Directly Above Main Title Banner) -->
-    <div class="cms-ad-slot-1"></div>
+    <div id="cms-ad-slot-1" class="cms-ad-slot-1"></div>
 
     <!-- Main Interactive Tool Container -->
     <section class="cms-tool-container">
+        <!-- Input Form Control Panel -->
         <form class="panel" id="sgcForm" onsubmit="return false;">
             <div class="panel-title">
                 <span>AU SGC Tracker Controls</span>
@@ -345,6 +418,13 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Watermarked Report Download Action (Rule #4) -->
+                <button class="btn-download" id="downloadReportBtn" type="button">
+                    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14m0 0l-6-6m6 6l6-6M4 19h16"></path></svg>
+                    Download Audit Report Image (.PNG)
+                </button>
+
                 <p class="canvas-caption">
                     Calculated under Superannuation Guarantee (Administration) Act 1992 & ATO 12.0% Statutory Rate.
                 </p>
@@ -368,40 +448,42 @@
                 Failing to pay employee superannuation contributions in full by the statutory quarterly due dates triggers an obligation to lodge an SGC Statement with the Australian Taxation Office (ATO).
             </p>
 
-            <table class="spec-table">
-                <thead>
-                    <tr>
-                        <th>Compliance Parameter</th>
-                        <th>Statutory Rate / Rule</th>
-                        <th>ATO Regulation Component</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Statutory SG Rate</strong></td>
-                        <td>12.0% of OTE</td>
-                        <td>Mandatory minimum contribution rate for employee earnings.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>SGC Nominal Interest</strong></td>
-                        <td>10.0% p.a.</td>
-                        <td>Accrues daily from the first day of the relevant quarter until SGC statement lodgment.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Administrative Component</strong></td>
-                        <td>$20 per employee / quarter</td>
-                        <td>Fixed administrative charge levied on all late quarterly returns.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Tax Deductibility Status</strong></td>
-                        <td>Strictly Non-Deductible</td>
-                        <td>SGC liabilities cannot be claimed as tax deductions, unlike on-time super.</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="spec-table-wrapper">
+                <table class="spec-table">
+                    <thead>
+                        <tr>
+                            <th>Compliance Parameter</th>
+                            <th>Statutory Rate / Rule</th>
+                            <th>ATO Regulation Component</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Statutory SG Rate</strong></td>
+                            <td>12.0% of OTE</td>
+                            <td>Mandatory minimum contribution rate for employee earnings.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>SGC Nominal Interest</strong></td>
+                            <td>10.0% p.a.</td>
+                            <td>Accrues daily from the first day of the relevant quarter until SGC statement lodgment.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Administrative Component</strong></td>
+                            <td>$20 per employee / quarter</td>
+                            <td>Fixed administrative charge levied on all late quarterly returns.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tax Deductibility Status</strong></td>
+                            <td>Strictly Non-Deductible</td>
+                            <td>SGC liabilities cannot be claimed as tax deductions, unlike on-time super.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
             <!-- Ad Slot 2 Container (Directly Below Specification Table) -->
-            <div class="cms-ad-slot-2"></div>
+            <div id="cms-ad-slot-2" class="cms-ad-slot-2"></div>
 
             <h2>Key Rules for Superannuation Guarantee Charge Compliance</h2>
             <ul>
@@ -447,7 +529,7 @@
     <!-- Site Footer Integration Hook -->
     <div id="global-footer"></div>
 
-    <!-- Math Calculation Engine JavaScript -->
+    <!-- Math Calculation Engine JavaScript & Download Feature -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var quarterSelect = document.getElementById('quarterSelect');
@@ -458,6 +540,7 @@
 
             var calculateBtn = document.getElementById('calculateBtn');
             var loadDemoBtn = document.getElementById('loadDemoBtn');
+            var downloadReportBtn = document.getElementById('downloadReportBtn');
 
             var resShortfall = document.getElementById('Super Shortfall Component');
             var resInterest = document.getElementById('Statutory Nominal Interest');
@@ -526,88 +609,153 @@
                     '</div>';
             }
 
+            // Client-side Watermarked Image Generator Function (Rule #4)
+            downloadReportBtn.addEventListener('click', function() {
+                var canvas = document.createElement('canvas');
+                canvas.width = 650;
+                canvas.height = 420;
+                var ctx = canvas.getContext('2d');
+
+                // Dark Background Card
+                ctx.fillStyle = '#181b24';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Header Banner
+                ctx.fillStyle = '#8b5cf6';
+                ctx.fillRect(0, 0, canvas.width, 6);
+
+                // Card Title
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 20px -apple-system, sans-serif';
+                ctx.fillText('AU SGC Statutory Audit Report', 30, 45);
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = '13px -apple-system, sans-serif';
+                ctx.fillText('Generated on: ' + new Date().toLocaleDateString('en-AU'), 30, 68);
+
+                // Metric Boxes
+                ctx.fillStyle = '#222634';
+                ctx.fillRect(30, 90, 590, 60);
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = '11px -apple-system, sans-serif';
+                ctx.fillText('NET SUPER SHORTFALL', 45, 110);
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 18px monospace';
+                ctx.fillText(resShortfall.textContent, 45, 135);
+
+                ctx.fillStyle = '#222634';
+                ctx.fillRect(30, 160, 590, 60);
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = '11px -apple-system, sans-serif';
+                ctx.fillText('STATUTORY NOMINAL INTEREST (10% P.A.)', 45, 180);
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 18px monospace';
+                ctx.fillText(resInterest.textContent, 45, 205);
+
+                ctx.fillStyle = '#222634';
+                ctx.fillRect(30, 230, 590, 65);
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = '11px -apple-system, sans-serif';
+                ctx.fillText('TOTAL SGC LIABILITY (NON-DEDUCTIBLE)', 45, 250);
+                ctx.fillStyle = '#f43f5e';
+                ctx.font = 'bold 22px monospace';
+                ctx.fillText(resTotal.textContent, 45, 280);
+
+                // Watermark Text Stamp (Rule #4)
+                ctx.fillStyle = '#8b5cf6';
+                ctx.font = 'bold 14px -apple-system, sans-serif';
+                ctx.fillText('Generated by CoreMetricSuite (coremetricsuite.com)', 30, 365);
+
+                ctx.fillStyle = '#6b7280';
+                ctx.font = '11px -apple-system, sans-serif';
+                ctx.fillText('Calculated under Superannuation Guarantee (Administration) Act 1992', 30, 385);
+
+                // Trigger direct file download
+                var imageURI = canvas.toDataURL('image/png');
+                var link = document.createElement('a');
+                link.download = 'SGC_Audit_Report_CoreMetricSuite.png';
+                link.href = imageURI;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            });
+
             // Execute initial calculation
             calculateSGC();
         });
     </script>
+
     <!-- Global CoreMetricSuite Cross-Linking Index Hub -->
-<div style="margin-top: 40px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #f8fafc; font-family: system-ui, -apple-system, sans-serif;">
-    <h3 style="margin: 0 0 15px 0; font-size: 18px; color: #0f172a; font-weight: 600;">🛠️ CoreMetricSuite Utility Directory</h3>
-    
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
-        <!-- Group 1 -->
-        <div>
-            <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇦🇺 Australia Tax & Labor</h4>
-            <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
-                <li style="margin-bottom: 4px;"><a id="hub-au-cents" href="../au-cents-per-km-estimator/" style="color: #2563eb; text-decoration: underline;">Cents-Per-Km Tax Estimator</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-au-schads" href="../au-schads-vehicle-allowance/" style="color: #2563eb; text-decoration: underline;">SCHADS Vehicle Allowance</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-au-super" href="../au-superannuation-charge-tracker/" style="color: #2563eb; text-decoration: underline;">Superannuation Tracker</a></li>
-            </ul>
-        </div>
+    <div style="margin-top: 40px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #f8fafc; font-family: system-ui, -apple-system, sans-serif;">
+        <h3 style="margin: 0 0 15px 0; font-size: 18px; color: #0f172a; font-weight: 600;">🛠️ CoreMetricSuite Utility Directory</h3>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇦🇺 Australia Tax & Labor</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-au-cents" href="../au-cents-per-km-estimator/" style="color: #2563eb; text-decoration: underline;">Cents-Per-Km Tax Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-au-schads" href="../au-schads-vehicle-allowance/" style="color: #2563eb; text-decoration: underline;">SCHADS Vehicle Allowance</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-au-super" href="../au-superannuation-charge-tracker/" style="color: #2563eb; text-decoration: underline;">Superannuation Tracker</a></li>
+                </ul>
+            </div>
 
-        <!-- Group 2 -->
-        <div>
-            <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇺🇸 US Corporate Tax</h4>
-            <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
-                <li style="margin-bottom: 4px;"><a id="hub-us-llc" href="../us-llc-late-penalty-estimator/" style="color: #2563eb; text-decoration: underline;">LLC Late Tax Penalty</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-us-179" href="../us-section-179-truck-calculator/" style="color: #2563eb; text-decoration: underline;">Section 179 Vehicle Deduction</a></li>
-            </ul>
-        </div>
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇺🇸 US Corporate Tax</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-us-llc" href="../us-llc-late-penalty-estimator/" style="color: #2563eb; text-decoration: underline;">LLC Late Tax Penalty</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-us-179" href="../us-section-179-truck-calculator/" style="color: #2563eb; text-decoration: underline;">Section 179 Vehicle Deduction</a></li>
+                </ul>
+            </div>
 
-        <!-- Group 3 -->
-        <div>
-            <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇬🇧 UK Property Management</h4>
-            <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
-                <li style="margin-bottom: 4px;"><a id="hub-uk-rent" href="../uk-form-4a-rent-tracker/" style="color: #2563eb; text-decoration: underline;">Form 4A Rent Tracker</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-uk-sdlt" href="../uk-sdlt-bracket-estimator/" style="color: #2563eb; text-decoration: underline;">Stamp Duty Estimator</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-uk-sec8" href="../uk-section-8-calculator/" style="color: #2563eb; text-decoration: underline;">Section 8 Calculator</a></li>
-            </ul>
-        </div>
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇬🇧 UK Property Management</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-rent" href="../uk-form-4a-rent-tracker/" style="color: #2563eb; text-decoration: underline;">Form 4A Rent Tracker</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-sdlt" href="../uk-sdlt-bracket-estimator/" style="color: #2563eb; text-decoration: underline;">Stamp Duty Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-sec8" href="../uk-section-8-calculator/" style="color: #2563eb; text-decoration: underline;">Section 8 Calculator</a></li>
+                </ul>
+            </div>
 
-        <!-- Group 4 -->
-        <div>
-            <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🎬 Digital Media Layouts</h4>
-            <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
-                <li style="margin-bottom: 4px;"><a id="hub-media-ig" href="../instagram-reels-preview/" style="color: #2563eb; text-decoration: underline;">Instagram Reels Grid</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-media-shorts" href="../shorts-ui-safe-zone/" style="color: #2563eb; text-decoration: underline;">YouTube Shorts Safe Zone</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-media-tiktok" href="../tiktok-ad-safe-zone/" style="color: #2563eb; text-decoration: underline;">TikTok Ad Checker</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-media-shopify" href="../shopify-metafields-parser/" style="color: #2563eb; text-decoration: underline;">Shopify Metafields Parser</a></li>
-            </ul>
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🎬 Digital Media Layouts</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-media-ig" href="../instagram-reels-preview/" style="color: #2563eb; text-decoration: underline;">Instagram Reels Grid</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-shorts" href="../shorts-ui-safe-zone/" style="color: #2563eb; text-decoration: underline;">YouTube Shorts Safe Zone</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-tiktok" href="../tiktok-ad-safe-zone/" style="color: #2563eb; text-decoration: underline;">TikTok Ad Checker</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-shopify" href="../shopify-metafields-parser/" style="color: #2563eb; text-decoration: underline;">Shopify Metafields Parser</a></li>
+                </ul>
+            </div>
         </div>
     </div>
-</div>
 
-<script defer>
-    (function() {
-        // Scans the active browser path to determine which self-link to intercept
-        const path = window.location.pathname.toLowerCase();
-        
-        const toolsMap = {
-            'au-cents-per-km-estimator': 'hub-au-cents',
-            'au-schads-vehicle-allowance': 'hub-au-schads',
-            'au-superannuation-charge-tracker': 'hub-au-super',
-            'us-llc-late-penalty-estimator': 'hub-us-llc',
-            'us-section-179-truck-calculator': 'hub-us-179',
-            'uk-form-4a-rent-tracker': 'hub-uk-rent',
-            'uk-sdlt-bracket-estimator': 'hub-uk-sdlt',
-            'uk-section-8-calculator': 'hub-uk-sec8',
-            'instagram-reels-preview': 'hub-media-ig',
-            'shorts-ui-safe-zone': 'hub-media-shorts',
-            'tiktok-ad-safe-zone': 'hub-media-tiktok',
-            'shopify-metafields-parser': 'hub-media-shopify'
-        };
+    <script defer>
+        (function() {
+            const path = window.location.pathname.toLowerCase();
+            const toolsMap = {
+                'au-cents-per-km-estimator': 'hub-au-cents',
+                'au-schads-vehicle-allowance': 'hub-au-schads',
+                'au-superannuation-charge-tracker': 'hub-au-super',
+                'us-llc-late-penalty-estimator': 'hub-us-llc',
+                'us-section-179-truck-calculator': 'hub-us-179',
+                'uk-form-4a-rent-tracker': 'hub-uk-rent',
+                'uk-sdlt-bracket-estimator': 'hub-uk-sdlt',
+                'uk-section-8-calculator': 'hub-uk-sec8',
+                'instagram-reels-preview': 'hub-media-ig',
+                'shorts-ui-safe-zone': 'hub-media-shorts',
+                'tiktok-ad-safe-zone': 'hub-media-tiktok',
+                'shopify-metafields-parser': 'hub-media-shopify'
+            };
 
-        for (const [folderName, elementId] of Object.entries(toolsMap)) {
-            if (path.includes(folderName)) {
-                const targetEl = document.getElementById(elementId);
-                if (targetEl) {
-                    // Replaces the hyperlinked state with unclickable bold text styling
-                    targetEl.outerHTML = `<span style="font-weight: 600; color: #0f172a;">${targetEl.textContent} (Current)</span>`;
+            for (const [folderName, elementId] of Object.entries(toolsMap)) {
+                if (path.includes(folderName)) {
+                    const targetEl = document.getElementById(elementId);
+                    if (targetEl) {
+                        targetEl.outerHTML = `<span style="font-weight: 600; color: #0f172a;">${targetEl.textContent} (Current)</span>`;
+                    }
+                    break;
                 }
-                break;
             }
-        }
-    })();
-</script>
-<style type="text/css">@media screen and (max-width:900px){html,body{width:100%!important;max-width:100vw!important;overflow-x:hidden!important;margin:0!important;padding:0!important}main.container{display:flex!important;flex-direction:column!important;width:100%!important;max-width:100%!important;padding:0 12px!important;margin:8px auto!important;gap:16px!important;box-sizing:border-box!important}main.container>section.preview-stage{order:-1!important;width:100%!important;display:flex!important;flex-direction:column!important;align-items:center!important;margin:0 auto!important;box-sizing:border-box!important}main.container>section.panel{order:2!important;width:100%!important;max-width:100%!important;box-sizing:border-box!important}.canvas-wrapper{width:75vw!important;height:133.33vw!important;max-width:290px!important;max-height:515px!important;margin:0 auto!important;box-sizing:border-box!important}#cms-ad-slot-top,#cms-ad-slot-1,.cms-medianet-box,.cms-ad-slot-1,.cms-ad-slot-2{width:100%!important;max-width:100%!important;height:auto!important;min-height:90px!important;display:block!important}.spec-table,.content-card div[style*="display: grid"]{grid-template-columns:1fr!important;width:100%!important}input,textarea,select{font-size:16px!important}}</style></body>
+        })();
+    </script>
+</body>
 </html>
