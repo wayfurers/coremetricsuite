@@ -2,23 +2,23 @@
 <html lang="en">
 <head>
     <!-- Put this in every tool folder's index.html file -->
-   <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AU ATO Cents per KM Tax Deduction Estimator</title>
-    <meta name="description" content="Calculate your Australian Taxation Office (ATO) work-related car expense tax deductions using the official Cents per Kilometre method for Australian financial years.">
-    <meta name="keywords" content="ATO cents per km calculator, Australian tax car deduction, motor vehicle claim rate, 5000 km tax limit Australia, logbook vs cents per km">
-    <link rel="canonical" href="https://coremetricsuite.com" />
+    <meta name="description" content="Calculate your Australian Taxation Office (ATO) work-related car expense tax deductions using the official Cents per Kilometre method for Australian financial years. Estimate refund savings, 5,000 km caps, and logbook threshold comparisons.">
+    <meta name="keywords" content="ATO cents per km calculator, Australian tax car deduction, motor vehicle claim rate, 5000 km tax limit Australia, logbook vs cents per km, work related car expense claim, ATO vehicle allowance refund, Australian tax return motor claim">
+    <link rel="canonical" href="https://coremetricsuite.com/au-cents-per-km-estimator/" />
 
     <!-- Architecture Links -->
     <link rel="stylesheet" href="/css/global.css">
-<script src="/config.js" defer></script>
-<script src="/global.min.js" defer></script>
+    <script src="/config.js" defer></script>
+    <script src="/global.min.js" defer></script>
 
     <!-- Open Graph / Social Metadata -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="AU Cents per KM Tax Deduction Estimator">
     <meta property="og:description" content="Calculate official ATO cents-per-kilometre vehicle expense deductions, 5,000 km cap warnings, and estimated income tax refund savings.">
-    <meta property="og:url" content="https://coremetricsuite.com">
+    <meta property="og:url" content="https://coremetricsuite.com/au-cents-per-km-estimator/">
 
     <!-- JSON-LD Schema: FAQPage Structured Data -->
     <script type="application/ld+json">
@@ -71,6 +71,7 @@
             --accent-purple: #8b5cf6;
             --accent-cyan: #00f2fe;
             --accent-amber: #f59e0b;
+            --accent-green: #10b981;
             --text-primary: #f3f4f6;
             --text-secondary: #9ca3af;
             --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -78,31 +79,39 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background-color: var(--bg-main); color: var(--text-primary); font-family: var(--font-sans); line-height: 1.6; }
+        body { 
+            background-color: var(--bg-main); 
+            color: var(--text-primary); 
+            font-family: var(--font-sans); 
+            line-height: 1.6; 
+            width: 100%;
+            overflow-x: hidden;
+        }
         
         .cms-tool-container {
+            width: 100%;
             max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1.5rem;
+            margin: 1rem auto;
+            padding: 0 1rem;
             display: grid;
             grid-template-columns: 440px 1fr;
-            gap: 2rem;
+            gap: 1.5rem;
+            box-sizing: border-box;
         }
-
-        @media (max-width: 960px) { .cms-tool-container { grid-template-columns: 1fr; } }
 
         .panel {
             background-color: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 1.5rem;
+            padding: 1.25rem;
+            box-sizing: border-box;
         }
 
         .panel-title {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             font-weight: 600;
-            margin-bottom: 1.25rem;
-            padding-bottom: 0.75rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.6rem;
             border-bottom: 1px solid var(--border-color);
             display: flex;
             justify-content: space-between;
@@ -120,43 +129,88 @@
 
         .btn-demo {
             width: 100%;
-            padding: 0.6rem;
+            min-height: 48px;
+            padding: 0.65rem;
             background-color: var(--bg-input);
             border: 1px solid var(--border-color);
             color: var(--accent-purple);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
             font-weight: 600;
-            font-size: 0.85rem;
-            margin-bottom: 1.25rem;
+            font-size: 0.88rem;
+            margin-bottom: 1rem;
             transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .btn-demo:hover { background-color: #2a3042; }
 
-        .form-group { margin-bottom: 1.25rem; }
+        .form-group { margin-bottom: 1.1rem; }
         label { display: block; font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 0.4rem; }
+        
         input[type="number"], select {
-            width: 100%; padding: 0.65rem 0.85rem; background-color: var(--bg-input);
-            border: 1px solid var(--border-color); border-radius: 6px; color: #fff;
-            font-size: 0.9rem; outline: none; font-family: inherit;
+            width: 100%; 
+            min-height: 48px;
+            padding: 0.65rem 0.85rem; 
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color); 
+            border-radius: 8px; 
+            color: #fff;
+            font-size: 16px; /* Prevents auto-zoom on iOS safari */
+            outline: none; 
+            font-family: inherit;
+            box-sizing: border-box;
         }
 
         .btn-action {
-            width: 100%; padding: 0.85rem; background: linear-gradient(135deg, var(--accent-purple), #7c3aed);
-            color: #fff; font-weight: 700; border: none; border-radius: 6px; cursor: pointer; font-size: 0.95rem;
+            width: 100%; 
+            min-height: 48px;
+            padding: 0.85rem; 
+            background: linear-gradient(135deg, var(--accent-purple), #7c3aed);
+            color: #fff; 
+            font-weight: 700; 
+            border: none; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            font-size: 0.95rem;
             transition: opacity 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .btn-action:hover { opacity: 0.9; }
 
-        .preview-stage { display: flex; flex-direction: column; }
+        .btn-download {
+            width: 100%;
+            min-height: 48px;
+            margin-top: 1rem;
+            padding: 0.85rem;
+            background: linear-gradient(135deg, var(--accent-green), #059669);
+            color: #fff;
+            font-weight: 700;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: opacity 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .btn-download:hover { opacity: 0.9; }
+
+        .preview-stage { display: flex; flex-direction: column; width: 100%; }
+        
         .result-box {
             background-color: var(--bg-input);
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            padding: 1.5rem;
+            padding: 1.25rem;
             font-size: 0.95rem;
             color: #e5e7eb;
-            min-height: 380px;
+            min-height: 320px;
             display: flex;
             flex-direction: column;
             gap: 1rem;
@@ -176,7 +230,7 @@
             margin-bottom: 0.3rem;
         }
         .result-metric .value {
-            font-size: 1.25rem;
+            font-size: 1.35rem;
             font-weight: 700;
             color: #fff;
             font-family: var(--font-mono);
@@ -212,18 +266,20 @@
             font-weight: 600;
         }
 
-        .canvas-caption { margin-top: 1rem; font-size: 0.85rem; color: var(--text-secondary); text-align: right; }
+        .canvas-caption { margin-top: 0.8rem; font-size: 0.82rem; color: var(--text-secondary); text-align: right; }
 
-        .content-area { max-width: 1200px; margin: 3rem auto; padding: 0 1.5rem; }
-        .content-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 2.5rem; }
-        .content-card h1 { font-size: 2rem; margin-bottom: 1rem; color: #fff; }
-        .content-card h2 { font-size: 1.4rem; margin: 1.8rem 0 1rem; color: #fff; }
-        .content-card p { color: var(--text-secondary); margin-bottom: 1.2rem; }
-        .content-card ul, .content-card ol { color: var(--text-secondary); margin: 0 0 1.2rem 1.5rem; }
-        .content-card li { margin-bottom: 0.5rem; }
+        .content-area { width: 100%; max-width: 1200px; margin: 2rem auto; padding: 0 1rem; box-sizing: border-box; }
+        .content-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; }
+        .content-card h1 { font-size: 1.8rem; margin-bottom: 1rem; color: #fff; }
+        .content-card h2 { font-size: 1.3rem; margin: 1.6rem 0 0.8rem; color: #fff; }
+        .content-card h3 { font-size: 1.1rem; margin: 1.2rem 0 0.6rem; color: #e5e7eb; }
+        .content-card p { color: var(--text-secondary); margin-bottom: 1rem; font-size: 0.95rem; }
+        .content-card ul, .content-card ol { color: var(--text-secondary); margin: 0 0 1.2rem 1.2rem; font-size: 0.95rem; }
+        .content-card li { margin-bottom: 0.4rem; }
 
-        .spec-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; text-align: left; }
-        .spec-table th, .spec-table td { padding: 0.85rem 1rem; border: 1px solid var(--border-color); }
+        .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 1.2rem 0; }
+        .spec-table { width: 100%; border-collapse: collapse; text-align: left; min-width: 500px; }
+        .spec-table th, .spec-table td { padding: 0.75rem 0.85rem; border: 1px solid var(--border-color); font-size: 0.9rem; }
         .spec-table th { background-color: var(--bg-input); color: #fff; }
         .spec-table td { color: var(--text-secondary); }
 
@@ -239,16 +295,17 @@
         }
         .faq-accordion[open] { border-color: var(--accent-purple); }
         .faq-summary {
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 600;
             color: #fff;
-            padding: 1rem 1.2rem;
+            padding: 0.85rem 1rem;
             cursor: pointer;
             list-style: none;
             display: flex;
             justify-content: space-between;
             align-items: center;
             user-select: none;
+            min-height: 48px;
         }
         .faq-summary::-webkit-details-marker { display: none; }
         .faq-summary::after {
@@ -262,30 +319,63 @@
             color: var(--accent-purple);
         }
         .faq-answer {
-            padding: 0 1.2rem 1.2rem;
+            padding: 0 1rem 1rem;
             color: var(--text-secondary);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             border-top: 1px solid rgba(255,255,255,0.05);
             margin-top: 0.4rem;
             padding-top: 0.8rem;
         }
 
         .cms-ad-slot-1, .cms-ad-slot-2 {
-            width: 100%; max-width: 970px; min-height: 90px; margin: 1.5rem auto;
-            background: rgba(255,255,255,0.02); border-radius: 8px;
+            width: 100%; 
+            max-width: 970px; 
+            min-height: 90px; 
+            margin: 1rem auto;
+            background: rgba(255,255,255,0.02); 
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        /* Mobile Responsive Viewport Layout Adjustments */
+        @media (max-width: 768px) {
+            .cms-tool-container {
+                grid-template-columns: 1fr;
+                margin: 0.5rem auto;
+                padding: 0 0.75rem;
+                gap: 1rem;
+            }
+            .content-area {
+                margin: 1rem auto;
+                padding: 0 0.75rem;
+            }
+            .content-card {
+                padding: 1rem;
+            }
+            .panel {
+                padding: 1rem;
+            }
+            /* Stack calculation results immediately below form controls on mobile */
+            .preview-stage {
+                order: 2;
+            }
+            #atoKmForm {
+                order: 1;
+            }
         }
     </style>
-<style>#cms-ad-slot-top,#cms-ad-slot-1,.cms-medianet-box{display:block!important;height:250px!important;min-height:250px!important;max-height:250px!important;overflow:hidden!important;background-color:var(--cms-surface-alt)}</style></head>
+    <style>#cms-ad-slot-top,#cms-ad-slot-1,.cms-medianet-box{display:block!important;height:250px!important;min-height:250px!important;max-height:250px!important;overflow:hidden!important;background-color:var(--cms-surface-alt)}</style>
+</head>
 <body>
 
     <!-- Site Header Integration Hook -->
     <div id="global-header"></div>
 
     <!-- Ad Slot 1 Container (Directly Above Main Title Banner) -->
-    <div class="cms-ad-slot-1"></div>
+    <div id="cms-ad-slot-1" class="cms-ad-slot-1"></div>
 
     <!-- Main Interactive Tool Container -->
-    <section class="cms-tool-container">
+    <main class="cms-tool-container">
         <form class="panel" id="atoKmForm" onsubmit="return false;">
             <div class="panel-title">
                 <span>ATO Cents per KM Controls</span>
@@ -307,7 +397,7 @@
 
             <div class="form-group">
                 <label for="workKmInput">Total Work-Related Kilometres Driven</label>
-                <input type="number" id="workKmInput" value="4200" min="0" max="100000" step="50">
+                <input type="number" id="workKmInput" value="4200" min="0" max="100000" step="50" inputmode="numeric">
             </div>
 
             <div class="form-group">
@@ -353,12 +443,17 @@
                         </div>
                     </div>
                 </div>
+
+                <button class="btn-download" id="downloadReportBtn" type="button">
+                    <span>📥 Download Watermarked Summary (.PNG)</span>
+                </button>
+
                 <p class="canvas-caption">
                     Calculated under Australian Taxation Office (ATO) Cents per Kilometre statutory rates.
                 </p>
             </div>
         </section>
-    </section>
+    </main>
 
     <!-- SEO & Educational Content Section -->
     <article class="content-area">
@@ -376,51 +471,53 @@
                 The ATO sets an all-inclusive single rate per kilometre for each income year. This flat rate covers all vehicle operational expenses, including fuel, oil, registration, insurance, routine servicing, repairs, and depreciation:
             </p>
 
-            <table class="spec-table">
-                <thead>
-                    <tr>
-                        <th>Financial Year</th>
-                        <th>Approved Rate per KM</th>
-                        <th>Max Statutory Deduction (5,000 km Cap)</th>
-                        <th>Record-Keeping Requirements</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>2026–27</strong></td>
-                        <td>91 cents / km</td>
-                        <td>$4,550.00</td>
-                        <td>Diary records or diary entries showing calculations</td>
-                    </tr>
-                    <tr>
-                        <td><strong>2025–26</strong></td>
-                        <td>88 cents / km</td>
-                        <td>$4,400.00</td>
-                        <td>Diary records or diary entries showing calculations</td>
-                    </tr>
-                    <tr>
-                        <td><strong>2024–25</strong></td>
-                        <td>88 cents / km</td>
-                        <td>$4,400.00</td>
-                        <td>Diary records or diary entries showing calculations</td>
-                    </tr>
-                    <tr>
-                        <td><strong>2023–24</strong></td>
-                        <td>85 cents / km</td>
-                        <td>$4,250.00</td>
-                        <td>Diary records or diary entries showing calculations</td>
-                    </tr>
-                    <tr>
-                        <td><strong>2022–23</strong></td>
-                        <td>78 cents / km</td>
-                        <td>$3,900.00</td>
-                        <td>Diary records or diary entries showing calculations</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="spec-table">
+                    <thead>
+                        <tr>
+                            <th>Financial Year</th>
+                            <th>Approved Rate per KM</th>
+                            <th>Max Statutory Deduction (5,000 km Cap)</th>
+                            <th>Record-Keeping Requirements</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>2026–27</strong></td>
+                            <td>91 cents / km</td>
+                            <td>$4,550.00</td>
+                            <td>Diary records or log entries showing calculations</td>
+                        </tr>
+                        <tr>
+                            <td><strong>2025–26</strong></td>
+                            <td>88 cents / km</td>
+                            <td>$4,400.00</td>
+                            <td>Diary records or log entries showing calculations</td>
+                        </tr>
+                        <tr>
+                            <td><strong>2024–25</strong></td>
+                            <td>88 cents / km</td>
+                            <td>$4,400.00</td>
+                            <td>Diary records or log entries showing calculations</td>
+                        </tr>
+                        <tr>
+                            <td><strong>2023–24</strong></td>
+                            <td>85 cents / km</td>
+                            <td>$4,250.00</td>
+                            <td>Diary records or log entries showing calculations</td>
+                        </tr>
+                        <tr>
+                            <td><strong>2022–23</strong></td>
+                            <td>78 cents / km</td>
+                            <td>$3,900.00</td>
+                            <td>Diary records or log entries showing calculations</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
             <!-- Ad Slot 2 Container (Directly Below Specification Table) -->
-            <div class="cms-ad-slot-2"></div>
+            <div id="cms-ad-slot-2" class="cms-ad-slot-2"></div>
 
             <h2>Key Rules for Claiming Motor Vehicle Expenses in Australia</h2>
             <ul>
@@ -429,6 +526,19 @@
                 <li><strong>Eligible Travel Types:</strong> You can claim travel between separate workplaces, visits to clients or suppliers, driving to offsite training, or carrying bulky tools that cannot be stored at work. Normal commuting from home to your primary workplace is generally non-deductible.</li>
                 <li><strong>Cents per KM vs Logbook Method:</strong> If your work travel significantly exceeds 5,000 km per year, maintaining a 12-week continuous logbook may produce a substantially larger tax refund by allowing you to claim actual vehicle running expenses.</li>
             </ul>
+
+            <h2>Deep Dive: Optimizing Work Vehicle Claims for ATO Audits</h2>
+            <p>
+                When preparing your myTax return or consulting a Registered Tax Agent in Australia, ensuring your work-related car expense claim satisfies ATO compliance checks is critical. While the cents per km option waives the requirement for fuel receipts, taxpayers must prove ownership or operational control of the eligible vehicle (such as a leased car, private vehicle, or vehicle under a financing contract).
+            </p>
+            
+            <h3>Calculating Net Cash Refund Impact</h3>
+            <p>
+                A tax deduction reduces your total assessable income rather than giving a dollar-for-dollar tax refund. For instance, if you drive 4,000 business kilometres in the 2026–27 income year at 91c/km, your total tax deduction equals <strong>$3,640.00</strong>. If your marginal income tax bracket is 30% (plus the 2% Medicare Levy), your net cash refund bonus equals:
+            </p>
+            <p style="text-align: center; font-family: var(--font-mono); font-weight: 700; color: var(--accent-cyan); background: var(--bg-input); padding: 0.75rem; border-radius: 6px;">
+                $3,640.00 × 32% = $1,164.80 Net Refund Addition
+            </p>
 
             <h2>Frequently Asked Questions</h2>
             <div class="faq-block">
@@ -464,9 +574,9 @@
     </article>
 
     <!-- Site Footer Integration Hook -->
-    <div id="global-footer"></div>
+    <div id="site-footer"></div>
 
-    <!-- Math Calculation Engine JavaScript -->
+    <!-- Math Calculation Engine JavaScript & Watermarked Image Generator -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var taxYearSelect = document.getElementById('taxYearSelect');
@@ -475,6 +585,7 @@
 
             var calculateBtn = document.getElementById('calculateBtn');
             var loadDemoBtn = document.getElementById('loadDemoBtn');
+            var downloadReportBtn = document.getElementById('downloadReportBtn');
 
             var resTotalDeduction = document.getElementById('Total Allowable Tax Deduction');
             var resCashSavings = document.getElementById('Estimated Tax Refund Savings');
@@ -500,6 +611,10 @@
 
             calculateBtn.addEventListener('click', function() {
                 calculateKmDeduction();
+            });
+
+            downloadReportBtn.addEventListener('click', function() {
+                generateWatermarkedSummaryImage();
             });
 
             function calculateKmDeduction() {
@@ -545,88 +660,201 @@
                     '</div>';
             }
 
+            // Client-side HTML5 Canvas Watermarked Image Report Generator
+            function generateWatermarkedSummaryImage() {
+                var canvas = document.createElement('canvas');
+                var ctx = canvas.getContext('2d');
+
+                canvas.width = 800;
+                canvas.height = 650;
+
+                // Canvas Background
+                ctx.fillStyle = '#181b24';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Header Bar
+                ctx.fillStyle = '#8b5cf6';
+                ctx.fillRect(0, 0, canvas.width, 10);
+
+                // Title
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 26px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+                ctx.fillText('ATO Cents per KM Tax Deduction Report', 40, 55);
+
+                // Divider Line
+                ctx.strokeStyle = '#2e3446';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(40, 80);
+                ctx.lineTo(760, 80);
+                ctx.stroke();
+
+                // Key Value Metric 1: Total Deduction
+                ctx.fillStyle = '#222634';
+                ctx.fillRect(40, 100, 350, 110);
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = '14px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+                ctx.fillText('TOTAL ALLOWABLE TAX DEDUCTION', 60, 130);
+                ctx.fillStyle = '#00f2fe';
+                ctx.font = 'bold 30px SFMono-Regular, Consolas, monospace';
+                ctx.fillText(resTotalDeduction.textContent, 60, 175);
+
+                // Key Value Metric 2: Estimated Refund
+                ctx.fillStyle = '#222634';
+                ctx.fillRect(410, 100, 350, 110);
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = '14px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+                ctx.fillText('ESTIMATED TAX REFUND SAVINGS', 430, 130);
+                ctx.fillStyle = '#10b981';
+                ctx.font = 'bold 30px SFMono-Regular, Consolas, monospace';
+                ctx.fillText(resCashSavings.textContent, 430, 175);
+
+                // Summary Table Container
+                ctx.fillStyle = '#222634';
+                ctx.fillRect(40, 235, 720, 290);
+
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 18px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+                ctx.fillText('Calculation Breakdown', 60, 270);
+
+                // Data Rows
+                var rows = [
+                    ['Financial Year Selected', taxYearSelect.value],
+                    ['Total Kilometres Driven', workKmInput.value + ' km'],
+                    ['Claimable Kilometres (Capped 5,000 km)', Math.min(parseFloat(workKmInput.value) || 0, 5000).toLocaleString() + ' km'],
+                    ['ATO Official Rate / KM', '$' + (atoRates[taxYearSelect.value] || 0.91).toFixed(2)],
+                    ['Marginal Tax Bracket Applied', (parseFloat(taxBracketSelect.value) * 100).toFixed(0) + '%']
+                ];
+
+                var currentY = 310;
+                ctx.font = '15px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+
+                for (var i = 0; i < rows.length; i++) {
+                    ctx.fillStyle = '#9ca3af';
+                    ctx.fillText(rows[i][0], 60, currentY);
+
+                    ctx.fillStyle = '#ffffff';
+                    ctx.textAlign = 'right';
+                    ctx.fillText(rows[i][1], 740, currentY);
+                    ctx.textAlign = 'left';
+
+                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+                    ctx.beginPath();
+                    ctx.moveTo(60, currentY + 10);
+                    ctx.lineTo(740, currentY + 10);
+                    ctx.stroke();
+
+                    currentY += 40;
+                }
+
+                // Mandatory CoreMetricSuite Watermark Footer
+                ctx.fillStyle = '#0f1117';
+                ctx.fillRect(0, 560, canvas.width, 90);
+
+                ctx.fillStyle = '#8b5cf6';
+                ctx.font = 'bold 16px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+                ctx.fillText('Generated by CoreMetricSuite (coremetricsuite.com)', 40, 610);
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = '12px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+                ctx.textAlign = 'right';
+                var todayDate = new Date().toISOString().split('T')[0];
+                ctx.fillText('Generated Date: ' + todayDate, 760, 610);
+
+                // Convert to downloadable PNG file
+                var imageURI = canvas.toDataURL('image/png');
+                var downloadLink = document.createElement('a');
+                downloadLink.download = 'ATO-Cents-Per-KM-Report-' + taxYearSelect.value + '.png';
+                downloadLink.href = imageURI;
+                document.body.appendChild(downloadLink);
+                downloadLink.click();
+                document.body.removeChild(downloadLink);
+            }
+
             // Execute initial calculation
             calculateKmDeduction();
         });
     </script>
+
     <!-- Global CoreMetricSuite Cross-Linking Index Hub -->
-<div style="margin-top: 40px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #f8fafc; font-family: system-ui, -apple-system, sans-serif;">
-    <h3 style="margin: 0 0 15px 0; font-size: 18px; color: #0f172a; font-weight: 600;">🛠️ CoreMetricSuite Utility Directory</h3>
-    
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
-        <!-- Group 1 -->
-        <div>
-            <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇦🇺 Australia Tax & Labor</h4>
-            <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
-                <li style="margin-bottom: 4px;"><a id="hub-au-cents" href="../au-cents-per-km-estimator/" style="color: #2563eb; text-decoration: underline;">Cents-Per-Km Tax Estimator</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-au-schads" href="../au-schads-vehicle-allowance/" style="color: #2563eb; text-decoration: underline;">SCHADS Vehicle Allowance</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-au-super" href="../au-superannuation-charge-tracker/" style="color: #2563eb; text-decoration: underline;">Superannuation Tracker</a></li>
-            </ul>
-        </div>
+    <div style="margin-top: 40px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #f8fafc; font-family: system-ui, -apple-system, sans-serif;">
+        <h3 style="margin: 0 0 15px 0; font-size: 18px; color: #0f172a; font-weight: 600;">🛠️ CoreMetricSuite Utility Directory</h3>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
+            <!-- Group 1 -->
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇦🇺 Australia Tax & Labor</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-au-cents" href="../au-cents-per-km-estimator/" style="color: #2563eb; text-decoration: underline;">Cents-Per-Km Tax Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-au-schads" href="../au-schads-vehicle-allowance/" style="color: #2563eb; text-decoration: underline;">SCHADS Vehicle Allowance</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-au-super" href="../au-superannuation-charge-tracker/" style="color: #2563eb; text-decoration: underline;">Superannuation Tracker</a></li>
+                </ul>
+            </div>
 
-        <!-- Group 2 -->
-        <div>
-            <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇺🇸 US Corporate Tax</h4>
-            <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
-                <li style="margin-bottom: 4px;"><a id="hub-us-llc" href="../us-llc-late-penalty-estimator/" style="color: #2563eb; text-decoration: underline;">LLC Late Tax Penalty</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-us-179" href="../us-section-179-truck-calculator/" style="color: #2563eb; text-decoration: underline;">Section 179 Vehicle Deduction</a></li>
-            </ul>
-        </div>
+            <!-- Group 2 -->
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇺🇸 US Corporate Tax</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-us-llc" href="../us-llc-late-penalty-estimator/" style="color: #2563eb; text-decoration: underline;">LLC Late Tax Penalty</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-us-179" href="../us-section-179-truck-calculator/" style="color: #2563eb; text-decoration: underline;">Section 179 Vehicle Deduction</a></li>
+                </ul>
+            </div>
 
-        <!-- Group 3 -->
-        <div>
-            <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇬🇧 UK Property Management</h4>
-            <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
-                <li style="margin-bottom: 4px;"><a id="hub-uk-rent" href="../uk-form-4a-rent-tracker/" style="color: #2563eb; text-decoration: underline;">Form 4A Rent Tracker</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-uk-sdlt" href="../uk-sdlt-bracket-estimator/" style="color: #2563eb; text-decoration: underline;">Stamp Duty Estimator</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-uk-sec8" href="../uk-section-8-calculator/" style="color: #2563eb; text-decoration: underline;">Section 8 Calculator</a></li>
-            </ul>
-        </div>
+            <!-- Group 3 -->
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇬🇧 UK Property Management</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-rent" href="../uk-form-4a-rent-tracker/" style="color: #2563eb; text-decoration: underline;">Form 4A Rent Tracker</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-sdlt" href="../uk-sdlt-bracket-estimator/" style="color: #2563eb; text-decoration: underline;">Stamp Duty Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-sec8" href="../uk-section-8-calculator/" style="color: #2563eb; text-decoration: underline;">Section 8 Calculator</a></li>
+                </ul>
+            </div>
 
-        <!-- Group 4 -->
-        <div>
-            <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🎬 Digital Media Layouts</h4>
-            <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
-                <li style="margin-bottom: 4px;"><a id="hub-media-ig" href="../instagram-reels-preview/" style="color: #2563eb; text-decoration: underline;">Instagram Reels Grid</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-media-shorts" href="../shorts-ui-safe-zone/" style="color: #2563eb; text-decoration: underline;">YouTube Shorts Safe Zone</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-media-tiktok" href="../tiktok-ad-safe-zone/" style="color: #2563eb; text-decoration: underline;">TikTok Ad Checker</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-media-shopify" href="../shopify-metafields-parser/" style="color: #2563eb; text-decoration: underline;">Shopify Metafields Parser</a></li>
-            </ul>
+            <!-- Group 4 -->
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🎬 Digital Media Layouts</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-media-ig" href="../instagram-reels-preview/" style="color: #2563eb; text-decoration: underline;">Instagram Reels Grid</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-shorts" href="../shorts-ui-safe-zone/" style="color: #2563eb; text-decoration: underline;">YouTube Shorts Safe Zone</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-tiktok" href="../tiktok-ad-safe-zone/" style="color: #2563eb; text-decoration: underline;">TikTok Ad Checker</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-shopify" href="../shopify-metafields-parser/" style="color: #2563eb; text-decoration: underline;">Shopify Metafields Parser</a></li>
+                </ul>
+            </div>
         </div>
     </div>
-</div>
 
-<script defer>
-    (function() {
-        // Scans the active browser path to determine which self-link to intercept
-        const path = window.location.pathname.toLowerCase();
-        
-        const toolsMap = {
-            'au-cents-per-km-estimator': 'hub-au-cents',
-            'au-schads-vehicle-allowance': 'hub-au-schads',
-            'au-superannuation-charge-tracker': 'hub-au-super',
-            'us-llc-late-penalty-estimator': 'hub-us-llc',
-            'us-section-179-truck-calculator': 'hub-us-179',
-            'uk-form-4a-rent-tracker': 'hub-uk-rent',
-            'uk-sdlt-bracket-estimator': 'hub-uk-sdlt',
-            'uk-section-8-calculator': 'hub-uk-sec8',
-            'instagram-reels-preview': 'hub-media-ig',
-            'shorts-ui-safe-zone': 'hub-media-shorts',
-            'tiktok-ad-safe-zone': 'hub-media-tiktok',
-            'shopify-metafields-parser': 'hub-media-shopify'
-        };
+    <script defer>
+        (function() {
+            // Scans the active browser path to determine which self-link to intercept
+            const path = window.location.pathname.toLowerCase();
+            
+            const toolsMap = {
+                'au-cents-per-km-estimator': 'hub-au-cents',
+                'au-schads-vehicle-allowance': 'hub-au-schads',
+                'au-superannuation-charge-tracker': 'hub-au-super',
+                'us-llc-late-penalty-estimator': 'hub-us-llc',
+                'us-section-179-truck-calculator': 'hub-us-179',
+                'uk-form-4a-rent-tracker': 'hub-uk-rent',
+                'uk-sdlt-bracket-estimator': 'hub-uk-sdlt',
+                'uk-section-8-calculator': 'hub-uk-sec8',
+                'instagram-reels-preview': 'hub-media-ig',
+                'shorts-ui-safe-zone': 'hub-media-shorts',
+                'tiktok-ad-safe-zone': 'hub-media-tiktok',
+                'shopify-metafields-parser': 'hub-media-shopify'
+            };
 
-        for (const [folderName, elementId] of Object.entries(toolsMap)) {
-            if (path.includes(folderName)) {
-                const targetEl = document.getElementById(elementId);
-                if (targetEl) {
-                    // Replaces the hyperlinked state with unclickable bold text styling
-                    targetEl.outerHTML = `<span style="font-weight: 600; color: #0f172a;">${targetEl.textContent} (Current)</span>`;
+            for (const [folderName, elementId] of Object.entries(toolsMap)) {
+                if (path.includes(folderName)) {
+                    const targetEl = document.getElementById(elementId);
+                    if (targetEl) {
+                        // Replaces the hyperlinked state with unclickable bold text styling
+                        targetEl.outerHTML = `<span style="font-weight: 600; color: #0f172a;">${targetEl.textContent} (Current)</span>`;
+                    }
+                    break;
                 }
-                break;
             }
-        }
-    })();
-</script>
-<style type="text/css">@media screen and (max-width:900px){html,body{width:100%!important;max-width:100vw!important;overflow-x:hidden!important;margin:0!important;padding:0!important}main.container{display:flex!important;flex-direction:column!important;width:100%!important;max-width:100%!important;padding:0 12px!important;margin:8px auto!important;gap:16px!important;box-sizing:border-box!important}main.container>section.preview-stage{order:-1!important;width:100%!important;display:flex!important;flex-direction:column!important;align-items:center!important;margin:0 auto!important;box-sizing:border-box!important}main.container>section.panel{order:2!important;width:100%!important;max-width:100%!important;box-sizing:border-box!important}.canvas-wrapper{width:75vw!important;height:133.33vw!important;max-width:290px!important;max-height:515px!important;margin:0 auto!important;box-sizing:border-box!important}#cms-ad-slot-top,#cms-ad-slot-1,.cms-medianet-box,.cms-ad-slot-1,.cms-ad-slot-2{width:100%!important;max-width:100%!important;height:auto!important;min-height:90px!important;display:block!important}.spec-table,.content-card div[style*="display: grid"]{grid-template-columns:1fr!important;width:100%!important}input,textarea,select{font-size:16px!important}}</style></body>
+        })();
+    </script>
+    <style type="text/css">@media screen and (max-width:900px){html,body{width:100%!important;max-width:100vw!important;overflow-x:hidden!important;margin:0!important;padding:0!important}main.container{display:flex!important;flex-direction:column!important;width:100%!important;max-width:100%!important;padding:0 12px!important;margin:8px auto!important;gap:16px!important;box-sizing:border-box!important}main.container>section.preview-stage{order:-1!important;width:100%!important;display:flex!important;flex-direction:column!important;align-items:center!important;margin:0 auto!important;box-sizing:border-box!important}main.container>section.panel{order:2!important;width:100%!important;max-width:100%!important;box-sizing:border-box!important}.canvas-wrapper{width:75vw!important;height:133.33vw!important;max-width:290px!important;max-height:515px!important;margin:0 auto!important;box-sizing:border-box!important}#cms-ad-slot-top,#cms-ad-slot-1,.cms-medianet-box,.cms-ad-slot-1,.cms-ad-slot-2{width:100%!important;max-width:100%!important;height:auto!important;min-height:90px!important;display:block!important}.spec-table,.content-card div[style*="display: grid"]{grid-template-columns:1fr!important;width:100%!important}input,textarea,select{font-size:16px!important}}</style>
+</body>
 </html>
