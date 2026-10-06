@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bluesky Post Previewer & Thread Splitter (300 Char Limit Mockup)</title>
+    <meta name="description" content="Free online Bluesky post previewer & automatic thread splitter. Smart sentence chunking within Bluesky's 300 character limit, live card previews, image attachment mockups, and copy-ready thread output.">
+    <meta name="keywords" content="bluesky thread splitter, bluesky post previewer, bluesky post generator, bsky thread maker, bluesky character limit checker, bluesky thread formatter, split text for bluesky">
+    <link rel="canonical" href="https://coremetricsuite.com/bluesky-post-previewer/">
+
+    <!-- Open Graph / Social Metadata -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Bluesky Post Previewer & Thread Splitter (300 Char Limit Mockup)">
+    <meta property="og:description" content="Free online Bluesky post previewer & automatic thread splitter. Smart sentence chunking within Bluesky's 300 character limit, live card previews, image attachment mockups, and copy-ready thread output.">
+    <meta property="og:url" content="https://coremetricsuite.com/bluesky-post-previewer/">
+    
+    <!-- Global Framework Dependencies -->
+    <link rel="stylesheet" href="/css/global.css">
+    <script src="/config.js" defer></script>
+    <script src="/global.min.js" defer></script>
+
+    <!-- FAQ JSON-LD Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the character limit for posts on Bluesky?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The character limit for an individual post on Bluesky is 300 characters. Web links are counted by their full string length unless shortened, and thread numbering (e.g., 1/5) consumes characters within that 300-character cap."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does the automatic Bluesky thread splitter algorithm work?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Our client-side thread splitter analyzes long-form articles or essays and divides them at natural boundary markers—preferring paragraph breaks, then sentence endings (. ! ?), and finally word spaces—to ensure posts stay strictly under the 300-character ceiling without splitting words awkwardly."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does this tool upload my text or images to external servers?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. In accordance with CoreMetricSuite's privacy-first architecture, all text parsing, character calculations, thread splitting, image previews, and canvas renderings process 100% locally inside your web browser."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How many images can be attached to a single post on Bluesky?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Bluesky allows up to 4 images per post, with alt text supported for each attachment. Videos up to 180 seconds (50 MB) and GIF embeds are also natively supported on the platform."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I automatically copy all generated thread posts to my clipboard?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes! You can copy individual posts with a single click or use the 'Copy Entire Thread' button to copy every chunk sequentialized and formatted with thread markers ready for direct pasting into Bluesky."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-main: #0b0f17;
+            --bg-card: #141a26;
+            --bg-input: #1c2433;
+            --border-color: #2b364a;
+            --accent-blue: #1185fe;
+            --accent-hover: #0070e0;
+            --accent-cyan: #00f2fe;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --bsky-card-bg: #161e2e;
+            --bsky-border: #243044;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: var(--bg-main); color: var(--text-primary); font-family: var(--font-sans); line-height: 1.6; }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 420px 1fr;
+            grid-template-areas: 
+                "upload preview"
+                "panel preview";
+            gap: 2rem;
+        }
+
+        .upload-card-wrapper {
+            grid-area: upload;
+        }
+
+        .panel {
+            grid-area: panel;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            height: fit-content;
+        }
+
+        .panel-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            background: var(--accent-blue);
+            color: #fff;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        .drop-zone {
+            border: 2px dashed var(--border-color);
+            padding: 1.25rem;
+            text-align: center;
+            border-radius: 8px;
+            background-color: var(--bg-input);
+            cursor: pointer;
+            transition: border-color 0.2s, background-color 0.2s;
+            margin-bottom: 0.75rem;
+        }
+
+        .drop-zone:hover { border-color: var(--accent-blue); background-color: rgba(17, 133, 254, 0.08); }
+        .drop-title { font-weight: 600; color: #fff; font-size: 0.95rem; }
+        .drop-sub { font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px; }
+
+        .btn-demo {
+            width: 100%;
+            padding: 0.65rem;
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            color: var(--accent-cyan);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            transition: background-color 0.2s;
+        }
+
+        .btn-demo:hover { background-color: #232d3f; }
+
+        .toggle-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: var(--bg-input);
+            padding: 0.75rem 0.85rem;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 1rem;
+        }
+
+        .toggle-label { font-size: 0.85rem; font-weight: 500; color: var(--text-primary); }
+
+        .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #374151; transition: .3s; border-radius: 24px;
+        }
+        .slider:before {
+            position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px;
+            background-color: white; transition: .3s; border-radius: 50%;
+        }
+        input:checked + .slider { background-color: var(--accent-blue); }
+        input:checked + .slider:before { transform: translateX(20px); }
+
+        .form-group { margin-bottom: 1.25rem; }
+        label { display: block; font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 0.4rem; }
+        input[type="text"], textarea, select {
+            width: 100%; padding: 0.65rem 0.85rem; background-color: var(--bg-input);
+            border: 1px solid var(--border-color); border-radius: 6px; color: #fff;
+            font-size: 0.9rem; outline: none; font-family: inherit;
+        }
+        input[type="text"]:focus, textarea:focus, select:focus { border-color: var(--accent-blue); }
+
+        .btn-action {
+            width: 100%; padding: 0.85rem; background: linear-gradient(135deg, var(--accent-blue), var(--accent-hover));
+            color: #fff; font-weight: 600; border: none; border-radius: 6px; cursor: pointer; font-size: 0.95rem;
+            box-shadow: 0 4px 12px rgba(17, 133, 254, 0.3);
+            transition: transform 0.1s, opacity 0.2s;
+            margin-bottom: 1rem;
+        }
+        .btn-action:hover { opacity: 0.95; }
+        .btn-action:active { transform: scale(0.99); }
+
+        /* Social Share Button Module */
+        .social-share-container {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        .share-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
+            display: block;
+            text-align: center;
+        }
+        .share-buttons-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+        }
+        .btn-share {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            padding: 0.5rem 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: opacity 0.2s, transform 0.1s;
+        }
+        .btn-share:hover { opacity: 0.88; }
+        .btn-share:active { transform: scale(0.97); }
+        .btn-share-x { background-color: #000000; border: 1px solid #333; }
+        .btn-share-fb { background-color: #1877f2; }
+        .btn-share-li { background-color: #0a66c2; }
+        .btn-share-wa { background-color: #25d366; color: #000; }
+        .btn-share-pin { background-color: #e60023; }
+        .btn-share-copy { background-color: #374151; color: #fff; grid-column: span 3; margin-top: 0.25rem; }
+
+        /* Bluesky Live Thread Feed Stage */
+        .preview-stage { 
+            grid-area: preview;
+            display: flex; 
+            flex-direction: column; 
+            gap: 1rem;
+        }
+
+        .thread-feed-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--bg-card);
+            padding: 0.85rem 1.25rem;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+        }
+
+        .thread-counter-badge {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--accent-cyan);
+        }
+
+        .bsky-thread-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0px;
+        }
+
+        /* Bluesky Post Card UI */
+        .bsky-post-card {
+            background-color: var(--bsky-card-bg);
+            border: 1px solid var(--bsky-border);
+            padding: 1.25rem;
+            position: relative;
+            display: flex;
+            gap: 0.85rem;
+            transition: border-color 0.2s;
+        }
+
+        .bsky-post-card:first-child {
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+        }
+
+        .bsky-post-card:last-child {
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
+        }
+
+        .bsky-post-card:not(:last-child) {
+            border-bottom: 1px dashed var(--bsky-border);
+        }
+
+        /* Vertical Thread Line Connector */
+        .bsky-thread-line {
+            position: absolute;
+            left: 2.35rem;
+            top: 4.2rem;
+            bottom: -0.85rem;
+            width: 2px;
+            background-color: #2e3d56;
+            z-index: 1;
+        }
+
+        .bsky-post-card:last-child .bsky-thread-line {
+            display: none;
+        }
+
+        .bsky-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1185fe, #00f2fe);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #fff;
+            flex-shrink: 0;
+            z-index: 2;
+        }
+
+        .bsky-content-body {
+            flex-grow: 1;
+        }
+
+        .bsky-header-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin-bottom: 0.4rem;
+            flex-wrap: wrap;
+        }
+
+        .bsky-display-name {
+            font-weight: 700;
+            color: #fff;
+            font-size: 0.95rem;
+        }
+
+        .bsky-handle {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        .bsky-time {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+
+        .bsky-text {
+            color: #e5e7eb;
+            font-size: 0.95rem;
+            white-space: pre-wrap;
+            word-break: break-word;
+            margin-bottom: 0.75rem;
+            line-height: 1.5;
+        }
+
+        .bsky-media-grid {
+            display: grid;
+            gap: 4px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 0.75rem;
+            max-height: 280px;
+            background-color: #0b0f17;
+        }
+
+        .bsky-media-grid.grid-1 { grid-template-columns: 1fr; }
+        .bsky-media-grid.grid-2 { grid-template-columns: 1fr 1fr; }
+        .bsky-media-grid.grid-3 { grid-template-columns: 1fr 1fr; }
+        .bsky-media-grid.grid-4 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
+
+        .bsky-media-img {
+            width: 100%;
+            height: 100%;
+            max-height: 280px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .bsky-actions-bar {
+            display: flex;
+            justify-content: space-between;
+            max-width: 350px;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+        }
+
+        .bsky-action-item {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .bsky-action-item:hover { color: var(--accent-cyan); }
+
+        .bsky-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 0.6rem;
+            padding-top: 0.5rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .char-counter {
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .char-counter.safe { color: #10b981; }
+        .char-counter.warning { color: #f59e0b; }
+        .char-counter.danger { color: #ef4444; }
+
+        .btn-copy-card {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.25rem 0.65rem;
+            font-size: 0.75rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn-copy-card:hover { background-color: var(--accent-blue); color: #fff; }
+
+        .content-area { max-width: 1200px; margin: 3rem auto; padding: 0 1.5rem; }
+        .content-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 2.5rem; }
+        .content-card h1 { font-size: 2rem; margin-bottom: 1rem; color: #fff; }
+        .content-card h2 { font-size: 1.4rem; margin: 1.8rem 0 1rem; color: #fff; }
+        .content-card p { color: var(--text-secondary); margin-bottom: 1.2rem; }
+        .content-card ul, .content-card ol { color: var(--text-secondary); margin: 0 0 1.2rem 1.5rem; }
+        .content-card li { margin-bottom: 0.5rem; }
+
+        .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 1.5rem 0; }
+        .spec-table { width: 100%; border-collapse: collapse; text-align: left; min-width: 600px; }
+        .spec-table th, .spec-table td { padding: 0.85rem 1rem; border: 1px solid var(--border-color); }
+        .spec-table th { background-color: var(--bg-input); color: #fff; font-size: 0.9rem; }
+        .spec-table td { color: var(--text-secondary); font-size: 0.875rem; }
+
+        /* Accordion FAQ Styling */
+        .faq-block { margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem; }
+        .faq-accordion {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 0.85rem;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .faq-accordion[open] { border-color: var(--accent-blue); }
+        .faq-summary {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            padding: 1rem 1.2rem;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+        .faq-summary::-webkit-details-marker { display: none; }
+        .faq-summary::after {
+            content: "+";
+            font-size: 1.2rem;
+            color: var(--accent-blue);
+            transition: transform 0.2s;
+        }
+        .faq-accordion[open] .faq-summary::after {
+            content: "−";
+            color: var(--accent-cyan);
+        }
+        .faq-answer {
+            padding: 0 1.2rem 1.2rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 0.4rem;
+            padding-top: 0.8rem;
+        }
+
+        .cms-ad-slot-1, .cms-ad-slot-2 {
+            width: 100%; max-width: 970px; min-height: 90px; margin: 1.5rem auto;
+            background: rgba(255,255,255,0.02); border-radius: 8px; display: block;
+        }
+
+        /* Mobile Responsive Overrides: File upload & controls first, then live preview feed */
+        @media screen and (max-width: 900px) {
+            html, body { width: 100%!important; max-width: 100vw!important; overflow-x: hidden!important; margin: 0!important; padding: 0!important; }
+            main.container { display: flex!important; flex-direction: column!important; width: 100%!important; max-width: 100%!important; padding: 0 12px!important; margin: 8px auto!important; gap: 16px!important; box-sizing: border-box!important; }
+            .upload-card-wrapper { order: 1!important; width: 100%!important; }
+            main.container > section.panel { order: 2!important; width: 100%!important; max-width: 100%!important; box-sizing: border-box!important; }
+            main.container > section.preview-stage { order: 3!important; width: 100%!important; display: flex!important; flex-direction: column!important; margin: 0 auto!important; box-sizing: border-box!important; }
+            input, textarea, select { font-size: 16px!important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Container -->
+    <div id="global-header"></div>
+
+    <!-- Ad Slot 1 Container -->
+    <div class="cms-ad-slot-1" id="cms-ad-slot-top"></div>
+
+    <!-- Main Tool Container -->
+    <main class="container">
+        <!-- Module 1: Image Upload Section (Rendered 1st on mobile) -->
+        <div class="upload-card-wrapper">
+            <div class="panel">
+                <div class="panel-title">
+                    <span>Attach Media Images</span>
+                    <span class="badge">UP TO 4</span>
+                </div>
+                <div class="drop-zone" id="dropZone">
+                    <p class="drop-title">Click or Drag Image Attachments</p>
+                    <p class="drop-sub">PNG, JPG, WEBP (Max 4 images for Post 1)</p>
+                    <input type="file" id="fileInput" accept="image/*" multiple style="display:none;">
+                </div>
+                <div id="mediaThumbnailPreview" style="display: flex; gap: 6px; margin-bottom: 0.75rem; flex-wrap: wrap;"></div>
+                <button class="btn-demo" id="loadDemoBtn" type="button">⚡ Load Sample Long Thread</button>
+            </div>
+        </div>
+
+        <!-- Module 2: Tool Controls Panel (Rendered 2nd on mobile) -->
+        <section class="panel">
+            <div class="panel-title">
+                <span>Thread Configuration</span>
+                <span class="badge">300 LIMIT</span>
+            </div>
+
+            <div class="form-group">
+                <label for="displayName">Display Name</label>
+                <input type="text" id="displayName" value="CoreMetric Developer">
+            </div>
+
+            <div class="form-group">
+                <label for="handleName">Bluesky Handle (@handle.bsky.social)</label>
+                <input type="text" id="handleName" value="coremetric.bsky.social">
+            </div>
+
+            <div class="form-group">
+                <label for="rawContent">Long Form Text Content</label>
+                <textarea id="rawContent" rows="7" placeholder="Paste your essay, article, or long thoughts here. The tool will automatically break it into 300-character posts..."></textarea>
+            </div>
+
+            <div class="toggle-group">
+                <span class="toggle-label">Add Thread Indexing (e.g. 1/4)</span>
+                <label class="switch">
+                    <input type="checkbox" id="numberingToggle" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="splitMode">Split Priority Strategy</label>
+                <select id="splitMode">
+                    <option value="sentence">Smart Sentence Boundaries (. ! ?)</option>
+                    <option value="paragraph">Strict Paragraph Breaks (\n\n)</option>
+                    <option value="word">Hard Character Limit (Word Wrap)</option>
+                </select>
+            </div>
+
+            <button class="btn-action" id="copyAllBtn" type="button">Copy Entire Thread to Clipboard</button>
+
+            <!-- Social Media Share Section -->
+            <div class="social-share-container">
+                <span class="share-label">Share This Tool</span>
+                <div class="share-buttons-grid">
+                    <a id="shareX" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-x">𝕏 Post</a>
+                    <a id="shareFB" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-fb">Facebook</a>
+                    <a id="shareWA" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-wa">WhatsApp</a>
+                    <a id="shareLI" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-li">LinkedIn</a>
+                    <a id="sharePIN" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-pin">Pinterest</a>
+                    <button id="copyShareLink" type="button" class="btn-share btn-share-copy">🔗 Copy Tool Link</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Module 3: Live Bluesky Feed Preview (Rendered 3rd on mobile) -->
+        <section class="preview-stage">
+            <div class="thread-feed-header">
+                <span style="font-size: 0.95rem; font-weight: 700; color: #fff;">Bluesky Thread Live Preview</span>
+                <span class="thread-counter-badge" id="threadCountBadge">0 Posts Generated</span>
+            </div>
+
+            <div class="bsky-thread-container" id="threadContainer">
+                <!-- Dynamic Bluesky Post Cards rendered via JavaScript -->
+            </div>
+        </section>
+    </main>
+
+    <!-- SEO & Educational Guide Section -->
+    <article class="content-area">
+        <div class="content-card">
+            <h1>Bluesky Post Previewer &amp; Thread Splitter Utility</h1>
+            <p>
+                Navigating decentralized social media protocols like <strong>Bluesky (AT Protocol)</strong> requires balancing concise messaging with comprehensive long-form storytelling. Bluesky enforces a strict cap of <strong>300 characters per post</strong>. When sharing extended research, news analysis, tech commentary, or multi-step guides, manually cutting paragraphs into compliant 300-character chunks is tedious and prone to word truncation errors.
+            </p>
+            <p>
+                Our client-side <strong>Bluesky Post Previewer &amp; Thread Splitter</strong> automates thread formatting. Simply paste your long text, configure your display handle, and inspect a pixel-accurate mockup of your thread before publishing.
+            </p>
+
+            <h2>Bluesky Character Limits &amp; Specifications (2026 Updated)</h2>
+            <p>
+                Understanding Bluesky's underlying platform rules helps maintain high post engagement and prevents formatting surprises:
+            </p>
+
+            <div class="table-responsive">
+                <table class="spec-table">
+                    <thead>
+                        <tr>
+                            <th>Platform Element</th>
+                            <th>Technical Specification / Limit</th>
+                            <th>Formatting Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Post Character Cap</strong></td>
+                            <td>300 characters</td>
+                            <td>Applies to plain text, spaces, emojis, and inline link text.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Media Attachments</strong></td>
+                            <td>Up to 4 images per post</td>
+                            <td>Supports PNG, JPG, WEBP (up to 1 MB per file) with alt text support.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Video Support</strong></td>
+                            <td>180 seconds max (50 MB)</td>
+                            <td>Native MP4 video playback inside vertical and horizontal aspect ratios.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Thread Numbering</strong></td>
+                            <td>Consumes 4–6 characters</td>
+                            <td>Index prefixes like "1/5 " count toward the total 300-character allowance.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Bio Character Cap</strong></td>
+                            <td>256 characters</td>
+                            <td>Profile description limit on your main AT Protocol user profile page.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Display Name Cap</strong></td>
+                            <td>64 characters</td>
+                            <td>Custom visible profile title shown above handle handle.bsky.social.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Ad Slot 2 Container -->
+            <div class="cms-ad-slot-2"></div>
+
+            <h2>How Smart Sentence Boundary Splitting Works</h2>
+            <p>
+                Unlike basic character counters that chop text abruptly mid-word or mid-sentence, our intelligent algorithm processes text using natural language boundary hierarchy:
+            </p>
+            <ul>
+                <li><strong>Paragraph Preservation:</strong> If two consecutive line breaks exist (\n\n), the splitter prioritizes keeping distinct paragraphs separated across posts.</li>
+                <li><strong>Sentence Boundary Protection:</strong> Sentences terminating with periods, exclamation marks, or question marks are evaluated first to prevent jarring pauses.</li>
+                <li><strong>Thread Index Allocation:</strong> When "Add Thread Indexing" is enabled, the algorithm pre-allocates space (e.g., subtracting 5 characters for " [1/8]") so every generated post strictly satisfies the ≤ 300 character constraint.</li>
+            </ul>
+
+            <h2>Best Practices for Writing High-Engagement Bluesky Threads</h2>
+            <ol>
+                <li><strong>Hook in Post #1:</strong> Make the first post compelling. Place your core thesis statement and primary image attachment in post 1 to capture feed impressions.</li>
+                <li><strong>Leverage Alt Text:</strong> Always include image descriptions for accessibility; Bluesky's community heavily favors inclusive media practices.</li>
+                <li><strong>Use Domain Handles:</strong> Verify your custom domain (e.g., @yourname.com) on Bluesky to boost trust and authority.</li>
+                <li><strong>Include Clear CTAs:</strong> Conclude your thread with a call-to-action, asking readers to repost (re-sky), reply, or visit your web link.</li>
+            </ol>
+
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-block">
+                <details class="faq-accordion" open>
+                    <summary class="faq-summary">What is the character limit for posts on Bluesky?</summary>
+                    <div class="faq-answer">
+                        The character limit for an individual post on Bluesky is 300 characters. Web links are counted by their full string length unless shortened, and thread numbering (e.g., 1/5) consumes characters within that 300-character cap.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">How does the automatic Bluesky thread splitter algorithm work?</summary>
+                    <div class="faq-answer">
+                        Our client-side thread splitter analyzes long-form articles or essays and divides them at natural boundary markers—preferring paragraph breaks, then sentence endings (. ! ?), and finally word spaces—to ensure posts stay strictly under the 300-character ceiling without splitting words awkwardly.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">Does this tool upload my text or images to external servers?</summary>
+                    <div class="faq-answer">
+                        No. In accordance with CoreMetricSuite's privacy-first architecture, all text parsing, character calculations, thread splitting, image previews, and canvas renderings process 100% locally inside your web browser.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">How many images can be attached to a single post on Bluesky?</summary>
+                    <div class="faq-answer">
+                        Bluesky allows up to 4 images per post, with alt text supported for each attachment. Videos up to 180 seconds (50 MB) and GIF embeds are also natively supported on the platform.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">Can I automatically copy all generated thread posts to my clipboard?</summary>
+                    <div class="faq-answer">
+                        Yes! You can copy individual posts with a single click or use the 'Copy Entire Thread' button to copy every chunk sequentialized and formatted with thread markers ready for direct pasting into Bluesky.
+                    </div>
+                </details>
+            </div>
+        </div>
+    </article>
+
+    <!-- Footer Container -->
+    <div id="global-footer"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var rawContentInput = document.getElementById('rawContent');
+            var displayNameInput = document.getElementById('displayName');
+            var handleNameInput = document.getElementById('handleName');
+            var numberingToggle = document.getElementById('numberingToggle');
+            var splitModeSelect = document.getElementById('splitMode');
+            var fileInput = document.getElementById('fileInput');
+            var dropZone = document.getElementById('dropZone');
+            var loadDemoBtn = document.getElementById('loadDemoBtn');
+            var copyAllBtn = document.getElementById('copyAllBtn');
+            var threadContainer = document.getElementById('threadContainer');
+            var threadCountBadge = document.getElementById('threadCountBadge');
+            var mediaThumbnailPreview = document.getElementById('mediaThumbnailPreview');
+
+            var attachedImages = [];
+
+            /* Setup Social Share Links */
+            var currentUrl = encodeURIComponent(window.location.href);
+            var shareTitle = encodeURIComponent("Check out this free Bluesky Post Previewer & Thread Splitter!");
+            
+            document.getElementById('shareX').href = 'https://twitter.com/intent/tweet?url=' + currentUrl + '&text=' + shareTitle;
+            document.getElementById('shareFB').href = 'https://www.facebook.com/sharer/sharer.php?u=' + currentUrl;
+            document.getElementById('shareWA').href = 'https://api.whatsapp.com/send?text=' + shareTitle + '%20' + currentUrl;
+            document.getElementById('shareLI').href = 'https://www.linkedin.com/sharing/share-offsite/?url=' + currentUrl;
+            document.getElementById('sharePIN').href = 'https://pinterest.com/pin/create/button/?url=' + currentUrl + '&description=' + shareTitle;
+
+            var copyBtn = document.getElementById('copyShareLink');
+            copyBtn.addEventListener('click', function() {
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'Bluesky Thread Splitter & Previewer',
+                        text: 'Format and preview your Bluesky threads instantly.',
+                        url: window.location.href
+                    }).catch(function() {});
+                } else if (navigator.clipboard) {
+                    navigator.clipboard.writeText(window.location.href).then(function() {
+                        var origText = copyBtn.textContent;
+                        copyBtn.textContent = '✓ Link Copied!';
+                        setTimeout(function() { copyBtn.textContent = origText; }, 2000);
+                    });
+                }
+            });
+
+            // Handle Drag & Drop Images
+            dropZone.addEventListener('click', function() { fileInput.click(); });
+
+            dropZone.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                dropZone.style.borderColor = 'var(--accent-blue)';
+            });
+
+            dropZone.addEventListener('dragleave', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                dropZone.style.borderColor = 'var(--border-color)';
+            });
+
+            dropZone.addEventListener('drop', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                dropZone.style.borderColor = 'var(--border-color)';
+                if (e.dataTransfer.files) {
+                    handleFiles(e.dataTransfer.files);
+                }
+            });
+
+            fileInput.addEventListener('change', function(e) {
+                if (e.target.files) {
+                    handleFiles(e.target.files);
+                }
+            });
+
+            function handleFiles(files) {
+                var newFiles = Array.from(files).filter(function(file) {
+                    return file.type.indexOf('image/') === 0;
+                });
+
+                newFiles.forEach(function(file) {
+                    if (attachedImages.length < 4) {
+                        var reader = new FileReader();
+                        reader.onload = function(evt) {
+                            attachedImages.push(evt.target.result);
+                            renderThumbnails();
+                            renderThread();
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
+
+            function renderThumbnails() {
+                mediaThumbnailPreview.innerHTML = '';
+                attachedImages.forEach(function(src, index) {
+                    var thumb = document.createElement('div');
+                    thumb.style.position = 'relative';
+                    thumb.style.width = '60px';
+                    thumb.style.height = '60px';
+                    thumb.style.borderRadius = '6px';
+                    thumb.style.overflow = 'hidden';
+                    thumb.style.border = '1px solid var(--border-color)';
+
+                    var img = document.createElement('img');
+                    img.src = src;
+                    img.style.width = '100%';
+                    img.style.height = '100%';
+                    img.style.objectFit = 'cover';
+
+                    var del = document.createElement('button');
+                    del.textContent = '×';
+                    del.style.position = 'absolute';
+                    del.style.top = '2px';
+                    del.style.right = '2px';
+                    del.style.background = 'rgba(0,0,0,0.7)';
+                    del.style.color = '#fff';
+                    del.style.border = 'none';
+                    del.style.borderRadius = '50%';
+                    del.style.width = '18px';
+                    del.style.height = '18px';
+                    del.style.fontSize = '12px';
+                    del.style.cursor = 'pointer';
+                    del.style.display = 'flex';
+                    del.style.alignItems = 'center';
+                    del.style.justifyContent = 'center';
+
+                    del.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        attachedImages.splice(index, 1);
+                        renderThumbnails();
+                        renderThread();
+                    });
+
+                    thumb.appendChild(img);
+                    thumb.appendChild(del);
+                    mediaThumbnailPreview.appendChild(thumb);
+                });
+            }
+
+            // Demo Text Loader
+            loadDemoBtn.addEventListener('click', function() {
+                rawContentInput.value = "Welcome to the open, decentralized future of social media on Bluesky!\n\nBluesky is built on the AT Protocol, a federated network designed to give users autonomy over their identity, algorithms, and social data. Unlike traditional centralized platforms, you own your digital presence.\n\nWhen writing threads on Bluesky, every post has a 300 character limit. That gives you slightly more breathing room than X (280 characters), but smart formatting remains crucial for high legibility.\n\nOur client-side thread splitter automatically chunks long articles, essays, and announcements into clean, sequential posts without severing sentences or words mid-string.\n\nTry adjusting the split strategy or adding image attachments to see live card renderings!";
+                renderThread();
+            });
+
+            // Core Thread Splitting Logic
+            function splitTextIntoThread(text, addNumbering, strategy) {
+                if (!text || text.trim().length === 0) return [];
+
+                var maxLimit = 300;
+                var paragraphs = strategy === 'paragraph' ? text.split(/\n\s*\n/) : [text];
+                var chunks = [];
+
+                paragraphs.forEach(function(pText) {
+                    var trimmed = pText.trim();
+                    if (!trimmed) return;
+
+                    var sentences = [];
+                    if (strategy === 'sentence' || strategy === 'paragraph') {
+                        // Split by sentence endings (. ! ?) while preserving punctuation
+                        var rawSentences = trimmed.match(/[^.!?]+[.!?]+(\s+|$)|[^.!?]+$/g) || [trimmed];
+                        sentences = rawSentences.map(function(s) { return s.trim(); });
+                    } else {
+                        // Word-based split
+                        sentences = trimmed.split(/\s+/);
+                    }
+
+                    var currentChunk = '';
+
+                    sentences.forEach(function(unit) {
+                        var space = currentChunk.length > 0 ? (strategy === 'word' ? ' ' : ' ') : '';
+                        var testChunk = currentChunk + space + unit;
+
+                        // Reserve character buffer for thread index e.g., " (1/10)" -> ~7 chars
+                        var reservedIndexSpace = addNumbering ? 8 : 0;
+                        var effectiveLimit = maxLimit - reservedIndexSpace;
+
+                        if (testChunk.length <= effectiveLimit) {
+                            currentChunk = testChunk;
+                        } else {
+                            if (currentChunk) {
+                                chunks.push(currentChunk.trim());
+                            }
+                            // If unit itself is larger than limit, hard force chop
+                            if (unit.length > effectiveLimit) {
+                                var remainingUnit = unit;
+                                while (remainingUnit.length > effectiveLimit) {
+                                    chunks.push(remainingUnit.substring(0, effectiveLimit));
+                                    remainingUnit = remainingUnit.substring(effectiveLimit);
+                                }
+                                currentChunk = remainingUnit;
+                            } else {
+                                currentChunk = unit;
+                            }
+                        }
+                    });
+
+                    if (currentChunk) {
+                        chunks.push(currentChunk.trim());
+                    }
+                });
+
+                // Apply numbering if toggled
+                if (addNumbering && chunks.length > 0) {
+                    var total = chunks.length;
+                    chunks = chunks.map(function(chunk, idx) {
+                        var indexStr = ' (' + (idx + 1) + '/' + total + ')';
+                        return chunk + indexStr;
+                    });
+                }
+
+                return chunks;
+            }
+
+            function renderThread() {
+                var text = rawContentInput.value;
+                var addNumbering = numberingToggle.checked;
+                var strategy = splitModeSelect.value;
+                var displayName = displayNameInput.value || 'User';
+                var handleName = handleNameInput.value || 'user.bsky.social';
+                if (handleName.indexOf('@') === 0) handleName = handleName.substring(1);
+
+                var posts = splitTextIntoThread(text, addNumbering, strategy);
+                threadContainer.innerHTML = '';
+
+                threadCountBadge.textContent = posts.length + (posts.length === 1 ? ' Post Generated' : ' Posts Generated');
+
+                if (posts.length === 0) {
+                    threadContainer.innerHTML = '<div style="text-align: center; padding: 3rem; background: var(--bsky-card-bg); border: 1px solid var(--bsky-border); border-radius: 12px; color: var(--text-secondary);"><p>Enter text in the left panel to generate live Bluesky thread cards.</p></div>';
+                    return;
+                }
+
+                posts.forEach(function(postText, idx) {
+                    var card = document.createElement('div');
+                    card.className = 'bsky-post-card';
+
+                    // Thread connector line
+                    var threadLine = document.createElement('div');
+                    threadLine.className = 'bsky-thread-line';
+                    card.appendChild(threadLine);
+
+                    // Avatar
+                    var avatar = document.createElement('div');
+                    avatar.className = 'bsky-avatar';
+                    avatar.textContent = displayName.charAt(0).toUpperCase();
+                    card.appendChild(avatar);
+
+                    // Content Body
+                    var body = document.createElement('div');
+                    body.className = 'bsky-content-body';
+
+                    // Meta Header
+                    var metaHeader = document.createElement('div');
+                    metaHeader.className = 'bsky-header-meta';
+                    metaHeader.innerHTML = '<span class="bsky-display-name">' + escapeHtml(displayName) + '</span>' +
+                                           '<span class="bsky-handle">@' + escapeHtml(handleName) + '</span>' +
+                                           '<span class="bsky-time">· ' + (idx + 1) + 'm</span>';
+                    body.appendChild(metaHeader);
+
+                    // Post Text
+                    var textEl = document.createElement('div');
+                    textEl.className = 'bsky-text';
+                    textEl.textContent = postText;
+                    body.appendChild(textEl);
+
+                    // Attached Images (only attached to 1st post for realistic preview)
+                    if (idx === 0 && attachedImages.length > 0) {
+                        var grid = document.createElement('div');
+                        grid.className = 'bsky-media-grid grid-' + attachedImages.length;
+                        attachedImages.forEach(function(imgSrc) {
+                            var img = document.createElement('img');
+                            img.src = imgSrc;
+                            img.className = 'bsky-media-img';
+                            grid.appendChild(img);
+                        });
+                        body.appendChild(grid);
+                    }
+
+                    // Native Bluesky Interactive Actions Bar Mockup
+                    var actionsBar = document.createElement('div');
+                    actionsBar.className = 'bsky-actions-bar';
+                    actionsBar.innerHTML = '<span class="bsky-action-item">💬 0</span>' +
+                                           '<span class="bsky-action-item">🔁 0</span>' +
+                                           '<span class="bsky-action-item">❤️ 0</span>' +
+                                           '<span class="bsky-action-item">⋯</span>';
+                    body.appendChild(actionsBar);
+
+                    // Card Footer (Character Counter & Individual Copy)
+                    var cardFooter = document.createElement('div');
+                    cardFooter.className = 'bsky-card-footer';
+
+                    var charLen = postText.length;
+                    var charClass = charLen <= 270 ? 'safe' : (charLen <= 300 ? 'warning' : 'danger');
+
+                    var counter = document.createElement('span');
+                    counter.className = 'char-counter ' + charClass;
+                    counter.textContent = charLen + ' / 300 characters';
+
+                    var copySingleBtn = document.createElement('button');
+                    copySingleBtn.className = 'btn-copy-card';
+                    copySingleBtn.type = 'button';
+                    copySingleBtn.textContent = '📋 Copy Post ' + (idx + 1);
+                    copySingleBtn.addEventListener('click', function() {
+                        if (navigator.clipboard) {
+                            navigator.clipboard.writeText(postText).then(function() {
+                                copySingleBtn.textContent = '✓ Copied!';
+                                setTimeout(function() { copySingleBtn.textContent = '📋 Copy Post ' + (idx + 1); }, 1800);
+                            });
+                        }
+                    });
+
+                    cardFooter.appendChild(counter);
+                    cardFooter.appendChild(copySingleBtn);
+                    body.appendChild(cardFooter);
+
+                    card.appendChild(body);
+                    threadContainer.appendChild(card);
+                });
+            }
+
+            function escapeHtml(str) {
+                return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+            }
+
+            // Event Listeners for Dynamic Updates
+            [rawContentInput, displayNameInput, handleNameInput, splitModeSelect].forEach(function(el) {
+                el.addEventListener('input', renderThread);
+            });
+            numberingToggle.addEventListener('change', renderThread);
+
+            // Copy Entire Thread Action
+            copyAllBtn.addEventListener('click', function() {
+                var text = rawContentInput.value;
+                var addNumbering = numberingToggle.checked;
+                var strategy = splitModeSelect.value;
+                var posts = splitTextIntoThread(text, addNumbering, strategy);
+
+                if (posts.length === 0) return;
+
+                var fullFormattedThread = posts.join('\n\n---\n\n');
+
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(fullFormattedThread).then(function() {
+                        var orig = copyAllBtn.textContent;
+                        copyAllBtn.textContent = '✓ Entire Thread Copied to Clipboard!';
+                        setTimeout(function() { copyAllBtn.textContent = orig; }, 2200);
+                    });
+                }
+            });
+
+            // Initial Render
+            renderThread();
+        });
+    </script>
+
+    <!-- Global CoreMetricSuite Cross-Linking Index Hub -->
+    <div style="margin-top: 40px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #f8fafc; font-family: system-ui, -apple-system, sans-serif;">
+        <h3 style="margin: 0 0 15px 0; font-size: 18px; color: #0f172a; font-weight: 600;">🛠️ CoreMetricSuite Utility Directory</h3>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇦🇺 Australia Tax &amp; Labor</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-au-cents" href="../au-cents-per-km-estimator/" style="color: #2563eb; text-decoration: underline;">Cents-Per-Km Tax Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-au-schads" href="../au-schads-vehicle-allowance/" style="color: #2563eb; text-decoration: underline;">SCHADS Vehicle Allowance</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-au-super" href="../au-superannuation-charge-tracker/" style="color: #2563eb; text-decoration: underline;">Superannuation Tracker</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇺🇸 US Corporate Tax</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-us-llc" href="../us-llc-late-penalty-estimator/" style="color: #2563eb; text-decoration: underline;">LLC Late Tax Penalty</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-us-179" href="../us-section-179-truck-calculator/" style="color: #2563eb; text-decoration: underline;">Section 179 Vehicle Deduction</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇬🇧 UK Property Management</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-rent" href="../uk-form-4a-rent-tracker/" style="color: #2563eb; text-decoration: underline;">Form 4A Rent Tracker</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-sdlt" href="../uk-sdlt-bracket-estimator/" style="color: #2563eb; text-decoration: underline;">Stamp Duty Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-sec8" href="../uk-section-8-calculator/" style="color: #2563eb; text-decoration: underline;">Section 8 Calculator</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🎬 Digital Media Layouts</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-media-ig" href="../instagram-reels-preview/" style="color: #2563eb; text-decoration: underline;">Instagram Reels Grid</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-shorts" href="../shorts-ui-safe-zone/" style="color: #2563eb; text-decoration: underline;">YouTube Shorts Safe Zone</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-tiktok" href="../tiktok-ad-safe-zone/" style="color: #2563eb; text-decoration: underline;">TikTok Ad Checker</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-bsky" href="../bluesky-post-previewer/" style="color: #2563eb; text-decoration: underline;">Bluesky Thread Splitter</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-shopify" href="../shopify-metafields-parser/" style="color: #2563eb; text-decoration: underline;">Shopify Metafields Parser</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script defer>
+        (function() {
+            const path = window.location.pathname.toLowerCase();
+            const toolsMap = {
+                'au-cents-per-km-estimator': 'hub-au-cents',
+                'au-schads-vehicle-allowance': 'hub-au-schads',
+                'au-superannuation-charge-tracker': 'hub-au-super',
+                'us-llc-late-penalty-estimator': 'hub-us-llc',
+                'us-section-179-truck-calculator': 'hub-us-179',
+                'uk-form-4a-rent-tracker': 'hub-uk-rent',
+                'uk-sdlt-bracket-estimator': 'hub-uk-sdlt',
+                'uk-section-8-calculator': 'hub-uk-sec8',
+                'instagram-reels-preview': 'hub-media-ig',
+                'shorts-ui-safe-zone': 'hub-media-shorts',
+                'tiktok-ad-safe-zone': 'hub-media-tiktok',
+                'bluesky-post-previewer': 'hub-media-bsky',
+                'shopify-metafields-parser': 'hub-media-shopify'
+            };
+
+            for (const [folderName, elementId] of Object.entries(toolsMap)) {
+                if (path.includes(folderName)) {
+                    const targetEl = document.getElementById(elementId);
+                    if (targetEl) {
+                        targetEl.outerHTML = `<span style="font-weight: 600; color: #0f172a;">${targetEl.textContent} (Current)</span>`;
+                    }
+                    break;
+                }
+            }
+        })();
+    </script>
+</body>
+</html>
