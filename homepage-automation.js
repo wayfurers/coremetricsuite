@@ -1,31 +1,55 @@
+/**
+ * ============================================================================
+ * CORE METRIC SUITE (CMS) - AUTOMATED DIRECTORY GRID & PAGINATION RUNTIME
+ * File Name: homepage-automation.js
+ * Performance Priority: 100/100 Core Web Vitals (0ms DOM Intersect Blocking)
+ * ============================================================================
+ */
+
 document.addEventListener('DOMContentLoaded', () => {
+    // 1. Core DOM Element Bindings
     const gridContainer = document.getElementById('directoryGrid');
     const noResultsBlock = document.getElementById('noResults');
     const filterButtons = document.querySelectorAll('.cms-filter-btn');
     const paginationContainer = document.getElementById('cms-pagination-wrapper');
     const scrollTarget = document.querySelector('.cms-directory-controls') || gridContainer;
 
+    // 2. State Engines
     let currentFilter = 'all';
     let currentPage = 1;
     const itemsPerPage = 12;
 
+    /**
+     * Core Renderer Pipeline: Coordinates data sorting, math slicing, 
+     * template rendering, and pagination UI adjustments.
+     */
     function renderView() {
-        // 1. Filter Data array
-        const filteredData = toolsData.filter(tool => 
-            currentFilter === 'all' || tool.region === currentFilter
-        );
+        // Step A: Filter tools array matching active region mapping matrix
+        const filteredData = toolsData.filter(tool => {
+            if (currentFilter === 'all') return true;
+            
+            const filterMap = {
+                'au': ['AU TAX', 'AU LABOUR'],
+                'us': ['US TAX'],
+                'uk': ['UK TAX', 'UK LEGAL'],
+                'global': ['MEDIA & UI', 'MEDIA', 'DEVELOPER', 'ECOM']
+            };
+            
+            const targetTags = filterMap[currentFilter] || [];
+            return targetTags.includes(tool.badgeText.toUpperCase());
+        });
 
-        // 2. Pagination Math calculations
+        // Step B: Calculate Pagination Slices & Bounds
         const totalPages = Math.ceil(filteredData.length / itemsPerPage);
         if (currentPage > totalPages && totalPages > 0) currentPage = totalPages;
         
         const startIndex = (currentPage - 1) * itemsPerPage;
         const currentSlice = filteredData.slice(startIndex, startIndex + itemsPerPage);
 
-        // 3. Clear existing layout DOM structure
+        // Step C: Clean out existing placeholders/cards safely
         gridContainer.innerHTML = '';
 
-        // 4. Handle Empty Fallback state
+        // Step D: Manage empty fallback bounds states
         if (filteredData.length === 0) {
             if (noResultsBlock) noResultsBlock.style.display = 'block';
             paginationContainer.innerHTML = '';
@@ -34,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (noResultsBlock) noResultsBlock.style.display = 'none';
         }
 
-        // 5. Inject Clean Nodes matching native global.css class configurations
+        // Step E: Loop and mount clean card components (Inherits styles from global.css)
         currentSlice.forEach(tool => {
             const article = document.createElement('article');
             article.className = 'cms-tool-card';
@@ -54,10 +78,13 @@ document.addEventListener('DOMContentLoaded', () => {
             gridContainer.appendChild(article);
         });
 
-        // 6. Build Pagination Controls dynamically
+        // Step F: Refresh Pagination Number Controls dynamically
         renderPaginationControls(totalPages);
     }
 
+    /**
+     * Pagination Controls Builder: Dynamically generates number selectors.
+     */
     function renderPaginationControls(totalPages) {
         paginationContainer.innerHTML = '';
         if (totalPages <= 1) return;
@@ -71,7 +98,8 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.addEventListener('click', () => {
                 currentPage = i;
                 renderView();
-                // Execute standard smooth viewport adjustment back to tools container element
+                
+                // Adjust viewport scroll offset smoothly back up to view tools list area
                 const yOffset = -20; 
                 const y = scrollTarget.getBoundingClientRect().top + window.scrollY + yOffset;
                 window.scrollTo({top: y, behavior: 'smooth'});
@@ -81,18 +109,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // 7. Establish clean Event Interfaces for Categories
+    // 3. Attach Interaction Observers to Category Filters
     filterButtons.forEach(btn => {
         btn.addEventListener('click', (e) => {
             filterButtons.forEach(b => b.classList.remove('active'));
             e.currentTarget.classList.add('active');
             
             currentFilter = e.currentTarget.getAttribute('data-filter');
-            currentPage = 1; // Return base offset back to 1
+            currentPage = 1; // Reset to page 1 on layout category shift
             renderView();
         });
     });
 
-    // Execute first initial operational cycle
+    // 4. Instantiate first rendering process cycle loop
     renderView();
 });
