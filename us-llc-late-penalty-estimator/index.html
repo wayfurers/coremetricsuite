@@ -5,20 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>US LLC Late Penalty Estimator (Form 1065 / 1120 / 5472 Tracker)</title>
-    <meta name="description" content="Calculate statutory IRS late filing penalties, Form 5472 non-compliance fines, and interest liabilities instantly and securely inside your browser.">
-    <meta name="keywords" content="us llc late penalty estimator, form 1065 late penalty, form 5472 penalty 25000, irs late filing fee, 255 per partner penalty">
-    <link rel="canonical" href="https://coremetricsuite.com" />
+    <meta name="description" content="Calculate statutory IRS late filing penalties, Form 5472 non-compliance fines, Form 1065 failure-to-file liabilities, and interest charges instantly and securely in your browser.">
+    <meta name="keywords" content="us llc late penalty estimator, form 1065 late penalty, form 5472 penalty 25000, irs late filing fee, 255 per partner penalty, 1120-s late fee, irs failure to pay interest">
+    <link rel="canonical" href="https://coremetricsuite.com/us-llc-late-penalty-estimator/" />
 
     <!-- Architecture Links -->
     <link rel="stylesheet" href="/css/global.css">
-<script src="/config.js" defer></script>
-<script src="/global.min.js" defer></script>
+    <script src="/config.js" defer></script>
+    <script src="/global.min.js" defer></script>
 
     <!-- Open Graph / Social Metadata -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="US LLC Late Penalty Estimator (Form 1065 / 1120 / 5472 Tracker)">
     <meta property="og:description" content="Calculate statutory IRS late filing penalties, Form 5472 non-compliance fines, and interest liabilities instantly and securely inside your browser.">
-    <meta property="og:url" content="https://coremetricsuite.com">
+    <meta property="og:url" content="https://coremetricsuite.com/us-llc-late-penalty-estimator/">
 
     <!-- JSON-LD Schema: FAQPage Mapping Updated $255 Rate Rule -->
     <script type="application/ld+json">
@@ -78,6 +78,7 @@
             --border-color: #2e3446;
             --accent-purple: #8b5cf6;
             --accent-cyan: #00f2fe;
+            --accent-green: #10b981;
             --text-primary: #f3f4f6;
             --text-secondary: #9ca3af;
             --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -85,67 +86,90 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background-color: var(--bg-main); color: var(--text-primary); font-family: var(--font-sans); line-height: 1.6; }
+        body { 
+            background-color: var(--bg-main); 
+            color: var(--text-primary); 
+            font-family: var(--font-sans); 
+            line-height: 1.6; 
+            width: 100%;
+            overflow-x: hidden;
+        }
         
         .cms-tool-container {
             max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1.5rem;
+            width: 100%;
+            margin: 0.5rem auto 2rem auto;
+            padding: 0 1rem;
             display: grid;
             grid-template-columns: 440px 1fr;
-            gap: 2rem;
+            gap: 1.5rem;
+            box-sizing: border-box;
         }
-
-        @media (max-width: 960px) { .cms-tool-container { grid-template-columns: 1fr; } }
 
         .panel {
             background-color: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 1.5rem;
+            padding: 1.25rem;
+            box-sizing: border-box;
         }
 
         .panel-title {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             font-weight: 600;
-            margin-bottom: 1.25rem;
-            padding-bottom: 0.75rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.65rem;
             border-bottom: 1px solid var(--border-color);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 0.5rem;
         }
 
         .badge {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             background: var(--accent-purple);
             color: #fff;
             padding: 2px 6px;
             border-radius: 4px;
             font-weight: 700;
+            white-space: nowrap;
         }
 
         .btn-demo {
             width: 100%;
-            padding: 0.6rem;
+            min-height: 48px;
+            padding: 0.6rem 1rem;
             background-color: var(--bg-input);
             border: 1px solid var(--border-color);
             color: var(--accent-purple);
             border-radius: 6px;
             cursor: pointer;
             font-weight: 600;
-            font-size: 0.85rem;
-            margin-bottom: 1.25rem;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
             transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .btn-demo:hover { background-color: #2a3042; }
 
-        .form-group { margin-bottom: 1.25rem; }
+        .form-group { margin-bottom: 1rem; }
         label { display: block; font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 0.4rem; }
+        
         input[type="date"], input[type="number"], select {
-            width: 100%; padding: 0.65rem 0.85rem; background-color: var(--bg-input);
-            border: 1px solid var(--border-color); border-radius: 6px; color: #fff;
-            font-size: 0.9rem; outline: none; font-family: inherit;
+            width: 100%; 
+            min-height: 48px;
+            padding: 0.65rem 0.85rem; 
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color); 
+            border-radius: 6px; 
+            color: #fff;
+            font-size: 16px; /* Prevents auto-zoom on iOS Safari */
+            outline: none; 
+            font-family: inherit;
+            box-sizing: border-box;
         }
 
         .checkbox-group {
@@ -156,41 +180,74 @@
             padding: 0.85rem;
             border: 1px solid var(--border-color);
             border-radius: 6px;
-            margin-bottom: 1.25rem;
+            margin-bottom: 1rem;
         }
 
         .checkbox-item {
             display: flex;
             align-items: center;
-            gap: 0.6rem;
-            font-size: 0.85rem;
+            gap: 0.75rem;
+            font-size: 0.875rem;
             color: var(--text-primary);
             cursor: pointer;
+            min-height: 48px;
         }
 
         .checkbox-item input[type="checkbox"] {
             accent-color: var(--accent-purple);
-            width: 16px;
-            height: 16px;
+            width: 20px;
+            height: 20px;
             cursor: pointer;
+            flex-shrink: 0;
         }
 
         .btn-action {
-            width: 100%; padding: 0.85rem; background: linear-gradient(135deg, var(--accent-purple), #7c3aed);
-            color: #fff; font-weight: 700; border: none; border-radius: 6px; cursor: pointer; font-size: 0.95rem;
+            width: 100%; 
+            min-height: 48px;
+            padding: 0.85rem; 
+            background: linear-gradient(135deg, var(--accent-purple), #7c3aed);
+            color: #fff; 
+            font-weight: 700; 
+            border: none; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            font-size: 0.95rem;
             transition: opacity 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .btn-action:hover { opacity: 0.9; }
+
+        .btn-download {
+            width: 100%;
+            min-height: 48px;
+            margin-top: 1rem;
+            padding: 0.85rem;
+            background: linear-gradient(135deg, #059669, var(--accent-green));
+            color: #fff;
+            font-weight: 700;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: opacity 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .btn-download:hover { opacity: 0.9; }
 
         .preview-stage { display: flex; flex-direction: column; }
         .result-box {
             background-color: var(--bg-input);
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            padding: 1.5rem;
+            padding: 1.25rem;
             font-size: 0.95rem;
             color: #e5e7eb;
-            min-height: 380px;
+            min-height: 320px;
             display: flex;
             flex-direction: column;
             gap: 1rem;
@@ -200,20 +257,21 @@
             background: rgba(255,255,255,0.03);
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            padding: 1rem;
+            padding: 0.85rem 1rem;
         }
         .result-metric h4 {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.25rem;
         }
         .result-metric .value {
             font-size: 1.25rem;
             font-weight: 700;
             color: #fff;
             font-family: var(--font-mono);
+            word-break: break-word;
         }
 
         .timeline-breakdown {
@@ -226,9 +284,11 @@
         .timeline-row {
             display: flex;
             justify-content: space-between;
-            padding: 0.35rem 0;
+            align-items: center;
+            padding: 0.4rem 0;
             color: var(--text-secondary);
             border-bottom: 1px dashed rgba(255,255,255,0.05);
+            gap: 0.5rem;
         }
         .timeline-row:last-child { border-bottom: none; }
         .timeline-row.active {
@@ -236,80 +296,121 @@
             font-weight: 600;
         }
 
-        .canvas-caption { margin-top: 1rem; font-size: 0.85rem; color: var(--text-secondary); text-align: right; }
+        .canvas-caption { margin-top: 0.75rem; font-size: 0.8rem; color: var(--text-secondary); text-align: right; }
 
-        .content-area { max-width: 1200px; margin: 3rem auto; padding: 0 1.5rem; }
-        .content-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 2.5rem; }
-        .content-card h1 { font-size: 2rem; margin-bottom: 1rem; color: #fff; }
-        .content-card h2 { font-size: 1.4rem; margin: 1.8rem 0 1rem; color: #fff; }
-        .content-card p { color: var(--text-secondary); margin-bottom: 1.2rem; }
-        .content-card ul, .content-card ol { color: var(--text-secondary); margin: 0 0 1.2rem 1.5rem; }
-        .content-card li { margin-bottom: 0.5rem; }
+        /* Content Area */
+        .content-area { max-width: 1200px; width: 100%; margin: 2rem auto; padding: 0 1rem; box-sizing: border-box; }
+        .content-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; }
+        .content-card h1 { font-size: 1.75rem; margin-bottom: 1rem; color: #fff; line-height: 1.3; }
+        .content-card h2 { font-size: 1.3rem; margin: 1.5rem 0 0.85rem; color: #fff; }
+        .content-card p { color: var(--text-secondary); margin-bottom: 1rem; font-size: 0.95rem; }
+        .content-card ul, .content-card ol { color: var(--text-secondary); margin: 0 0 1rem 1.25rem; font-size: 0.95rem; }
+        .content-card li { margin-bottom: 0.4rem; }
 
-        .spec-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; text-align: left; }
-        .spec-table th, .spec-table td { padding: 0.85rem 1rem; border: 1px solid var(--border-color); }
+        /* Table responsiveness wrapper */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            margin: 1.25rem 0;
+            -webkit-overflow-scrolling: touch;
+        }
+        .spec-table { width: 100%; border-collapse: collapse; text-align: left; min-width: 600px; }
+        .spec-table th, .spec-table td { padding: 0.75rem 0.85rem; border: 1px solid var(--border-color); font-size: 0.875rem; }
         .spec-table th { background-color: var(--bg-input); color: #fff; }
         .spec-table td { color: var(--text-secondary); }
 
         /* Accordion FAQ Styling */
-        .faq-block { margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem; }
+        .faq-block { margin-top: 1.25rem; border-top: 1px solid var(--border-color); padding-top: 1rem; }
         .faq-accordion {
             background-color: var(--bg-input);
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            margin-bottom: 0.85rem;
+            margin-bottom: 0.75rem;
             overflow: hidden;
             transition: border-color 0.2s;
         }
         .faq-accordion[open] { border-color: var(--accent-purple); }
         .faq-summary {
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 600;
             color: #fff;
-            padding: 1rem 1.2rem;
+            padding: 0.85rem 1rem;
             cursor: pointer;
             list-style: none;
             display: flex;
             justify-content: space-between;
             align-items: center;
             user-select: none;
+            min-height: 48px;
+            box-sizing: border-box;
         }
         .faq-summary::-webkit-details-marker { display: none; }
         .faq-summary::after {
             content: "+";
             font-size: 1.2rem;
             color: var(--accent-purple);
-            transition: transform 0.2s;
+            margin-left: 0.5rem;
         }
         .faq-accordion[open] .faq-summary::after {
             content: "−";
             color: var(--accent-purple);
         }
         .faq-answer {
-            padding: 0 1.2rem 1.2rem;
+            padding: 0 1rem 1rem;
             color: var(--text-secondary);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             border-top: 1px solid rgba(255,255,255,0.05);
-            margin-top: 0.4rem;
-            padding-top: 0.8rem;
+            margin-top: 0.25rem;
+            padding-top: 0.75rem;
         }
 
         .cms-ad-slot-1, .cms-ad-slot-2 {
-            width: 100%; max-width: 970px; min-height: 90px; margin: 1.5rem auto;
-            background: rgba(255,255,255,0.02); border-radius: 8px;
+            width: 100%; 
+            max-width: 970px; 
+            min-height: 90px; 
+            margin: 1rem auto;
+            background: rgba(255,255,255,0.02); 
+            border-radius: 8px;
+        }
+
+        /* Mobile Viewport Layout Adjustments */
+        @media (max-width: 768px) {
+            .cms-tool-container { 
+                grid-template-columns: 1fr;
+                margin-top: 0;
+                padding: 0 0.75rem;
+            }
+            /* Explicit Mobile Stacking Order: Inputs at Top, Results Directly Below */
+            #llcPenaltyForm {
+                order: 1;
+            }
+            .preview-stage {
+                order: 2;
+            }
+            .content-card {
+                padding: 1.15rem;
+            }
+            .content-card h1 {
+                font-size: 1.45rem;
+            }
+            .content-card h2 {
+                font-size: 1.15rem;
+            }
         }
     </style>
-<style>#cms-ad-slot-top,#cms-ad-slot-1,.cms-medianet-box{display:block!important;height:250px!important;min-height:250px!important;max-height:250px!important;overflow:hidden!important;background-color:var(--cms-surface-alt)}</style></head>
+    <style>#cms-ad-slot-top,#cms-ad-slot-1,.cms-medianet-box{display:block!important;height:250px!important;min-height:250px!important;max-height:250px!important;overflow:hidden!important;background-color:var(--cms-surface-alt)}</style>
+</head>
 <body>
 
     <!-- Site Header Integration Hook -->
-    <div id="global-header"></div>
+    <div id="site-header"></div>
 
     <!-- Ad Slot 1 Container (Directly Above Main Title Banner) -->
-    <div class="cms-ad-slot-1"></div>
+    <div id="cms-ad-slot-1" class="cms-ad-slot-1"></div>
 
     <!-- Main Interactive Tool Container -->
-    <section class="cms-tool-container">
+    <main class="cms-tool-container">
+        <!-- Input Form Section (Top on Mobile Layout) -->
         <form class="panel" id="llcPenaltyForm" onsubmit="return false;">
             <div class="panel-title">
                 <span>LLC Penalty Calculation Controls</span>
@@ -358,7 +459,7 @@
             <button class="btn-action" id="calculateBtn" type="button">Estimate Total IRS Penalties</button>
         </form>
 
-        <!-- Result Summary Dashboard -->
+        <!-- Result Summary Dashboard ( stacked directly below inputs on Mobile Layout ) -->
         <section class="preview-stage">
             <div class="panel" style="flex: 1; display: flex; flex-direction: column;">
                 <div class="panel-title">
@@ -380,80 +481,88 @@
                         </div>
                     </div>
                 </div>
+                
+                <button class="btn-download" id="downloadReportBtn" type="button">
+                    📥 Download Watermarked Audit Report (PNG)
+                </button>
+
                 <p class="canvas-caption">
                     Calculated in compliance with IRS IRC §6038A, §6698, §6699, §6651, and current statutory parameters.
                 </p>
             </div>
         </section>
-    </section>
+    </main>
 
     <!-- SEO & Educational Content Section -->
     <article class="content-area">
         <section class="content-card">
             <h1>US LLC Late Penalty Estimator (Form 1065 / 1120 / 5472 Tracker)</h1>
             <p>
-                Maintaining compliance with Internal Revenue Service (IRS) filing mandates is essential for domestic and foreign-owned US Limited Liability Companies (LLCs). Failing to file annual tax returns or required informational reports by statutory deadlines triggers automated failure-to-file penalties, continuation fines, and interest charges under current Internal Revenue Code (IRC) provisions.
+                Maintaining tax compliance with the Internal Revenue Service (IRS) is crucial for domestic multi-member LLCs, corporate S-Corps, and non-US foreign-owned entity structures. Missing federal filing deadlines causes automatic failure-to-file liabilities, statutory non-compliance fines, and compounding interest charges under current Internal Revenue Code (IRC) laws.
             </p>
             <p>
-                This browser-based <strong>us-llc-late-penalty-estimator</strong> allows corporate managers, registered agents, and international owners to evaluate potential IRS liability instantly and confidentially using client-side JavaScript execution without exposing financial records.
+                This high-precision <strong>us-llc-late-penalty-estimator</strong> enables corporate legal teams, accounting professionals, and foreign business owners to evaluate IRS exposure instantly. All computations run 100% locally in client-side JavaScript without transferring financial data to third-party web servers.
             </p>
 
-            <h2>Current IRS Late Filing Penalty Framework</h2>
+            <h2>Current IRS Late Filing Penalty Rates & Statutory Framework</h2>
             <p>
-                Penalties vary depending on entity tax classification and the specific forms required by federal tax regulations:
+                IRS failure-to-file penalties depend directly on entity tax classification and assigned tax forms:
             </p>
 
-            <table class="spec-table">
-                <thead>
-                    <tr>
-                        <th>Tax Classification</th>
-                        <th>Required IRS Form</th>
-                        <th>Statutory Late Filing Penalty Rate</th>
-                        <th>IRC Code Authority</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Multi-Member LLC (Partnership)</strong></td>
-                        <td>Form 1065</td>
-                        <td>$255 per partner, per month (up to 12 months)</td>
-                        <td>IRC §6698</td>
-                    </tr>
-                    <tr>
-                        <td><strong>LLC Taxed as S-Corporation</strong></td>
-                        <td>Form 1120-S</td>
-                        <td>$255 per shareholder, per month (up to 12 months)</td>
-                        <td>IRC §6699</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Foreign-Owned Single-Member LLC</strong></td>
-                        <td>Form 5472 + Pro Forma 1120</td>
-                        <td>Flat $25,000 per year + $25,000 / 30-day continuation</td>
-                        <td>IRC §6038A / §6038C</td>
-                    </tr>
-                    <tr>
-                        <td><strong>LLC Taxed as C-Corporation</strong></td>
-                        <td>Form 1120</td>
-                        <td>5% of unpaid tax per month (up to 25% max)</td>
-                        <td>IRC §6651(a)(1)</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="spec-table">
+                    <thead>
+                        <tr>
+                            <th>Tax Entity Classification</th>
+                            <th>Mandated Form</th>
+                            <th>Statutory Late Filing Penalty Structure</th>
+                            <th>IRC Code Authority</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Multi-Member LLC (Partnership)</strong></td>
+                            <td>Form 1065</td>
+                            <td>$255 per partner, per month (capped at 12 months)</td>
+                            <td>IRC §6698</td>
+                        </tr>
+                        <tr>
+                            <td><strong>LLC Taxed as S-Corporation</strong></td>
+                            <td>Form 1120-S</td>
+                            <td>$255 per shareholder, per month (capped at 12 months)</td>
+                            <td>IRC §6699</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Foreign-Owned Single-Member LLC</strong></td>
+                            <td>Form 5472 + Pro Forma 1120</td>
+                            <td>Flat initial $25,000 fine + $25,000 per 30-day continuation period</td>
+                            <td>IRC §6038A / §6038C</td>
+                        </tr>
+                        <tr>
+                            <td><strong>LLC Taxed as C-Corporation</strong></td>
+                            <td>Form 1120</td>
+                            <td>5% per month of unpaid tax liability (capped at 25% max)</td>
+                            <td>IRC §6651(a)(1)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
             <!-- Ad Slot 2 Container (Directly Below Specification Table) -->
-            <div class="cms-ad-slot-2"></div>
+            <div id="cms-ad-slot-2" class="cms-ad-slot-2"></div>
 
-            <h2>Key Rules for Pass-Through & Foreign-Owned Entities</h2>
+            <h2>Key Statutory Guidelines for Pass-Through & Foreign-Owned Entities</h2>
             <p>
-                Understanding how IRS penalties accrue is critical to mitigating financial risk:
+                Understanding statutory tax mechanics prevents exponential fine accumulation across fiscal years:
             </p>
             <ul>
-                <li><strong>Per-Partner / Shareholder Rule ($255/mo):</strong> Under IRC §6698 and §6699, pass-through entities (Form 1065 and Form 1120-S) face penalties multiplied by every owner involved, compounding monthly up to 12 full calendar months.</li>
-                <li><strong>Form 5472 Initial & Continuation Fines:</strong> Foreign single-member LLCs face an automatic initial $25,000 failure-to-file fine. If the return remains unfiled 90 days after IRS notice issuance, additional continuation fines of $25,000 accrue for every 30-day period with no ceiling.</li>
-                <li><strong>Zero Income Filings:</strong> Inactive entities or LLCs with $0 net revenue are not exempt from Form 5472 or Form 1065 penalties if informational filing obligations exist.</li>
+                <li><strong>Per-Member Compounding Rate ($255/month):</strong> Partnership returns (Form 1065) and S-Corp returns (Form 1120-S) accrue penalties based on partner/shareholder volume. For example, a 10-partner LLC filing 6 months late incurs a statutory fine of $15,300 ($255 × 10 × 6).</li>
+                <li><strong>Form 5472 Non-Compliance Fines:</strong> Foreign single-member LLCs face an automatic initial statutory fine of $25,000. If unpaid 90 days after IRS notice, additional $25,000 continuation penalties attach every 30 days without upper limits.</li>
+                <li><strong>Dormant or Zero-Revenue LLC Liability:</strong> Zero-revenue foreign-owned single-member LLCs are <em>not</em> exempt from Form 5472 reporting if reportable transactions (such as capital contributions or annual state maintenance fee payments by owners) occurred during the tax year.</li>
+                <li><strong>Failure-to-Pay (FTP) & Compound Interest:</strong> Unpaid tax balances accrue failure-to-pay penalties at 0.5% per month (up to 25%), alongside variable IRS underpayment interest compounded daily (typically ~8% APR).</li>
             </ul>
 
-            <h2>Frequently Asked Questions</h2>
+            <h2>Frequently Asked Questions (FAQ)</h2>
             <div class="faq-block">
                 <details class="faq-accordion" open>
                     <summary class="faq-summary">How is the late filing penalty calculated for a multi-member US LLC (Form 1065)?</summary>
@@ -494,7 +603,7 @@
     </article>
 
     <!-- Site Footer Integration Hook -->
-    <div id="global-footer"></div>
+    <div id="site-footer"></div>
 
     <!-- Math Calculation Engine JavaScript -->
     <script>
@@ -510,10 +619,28 @@
 
             var calculateBtn = document.getElementById('calculateBtn');
             var loadDemoBtn = document.getElementById('loadDemoBtn');
+            var downloadReportBtn = document.getElementById('downloadReportBtn');
 
             var resTotalPenalty = document.getElementById('Total Estimated IRS Penalty Liability');
             var resStatusAssessment = document.getElementById('Statutory Violation & Status Assessment');
             var resTimelineList = document.getElementById('Penalty Itemization Milestones');
+
+            // Calculation state storage for report generation
+            var currentReportData = {
+                entityType: '',
+                dueDate: '',
+                actualDate: '',
+                members: 1,
+                unpaidTax: 0,
+                monthsLate: 0,
+                daysLate: 0,
+                latePenalty: 0,
+                continuationPenalty: 0,
+                ftpPenalty: 0,
+                interest: 0,
+                total: 0,
+                assessment: ''
+            };
 
             entityTypeSelect.addEventListener('change', function() {
                 var type = entityTypeSelect.value;
@@ -564,6 +691,11 @@
                     resTotalPenalty.textContent = '$0.00';
                     resStatusAssessment.textContent = 'Compliant (Filed On or Before Due Date)';
                     resTimelineList.innerHTML = '<div class="timeline-row"><span>No late penalties or interest incurred.</span></div>';
+                    
+                    currentReportData.total = 0;
+                    currentReportData.assessment = 'Compliant (On Time)';
+                    currentReportData.dueDate = rawDueDate;
+                    currentReportData.actualDate = rawActualDate;
                     return;
                 }
 
@@ -581,22 +713,18 @@
                 var assessmentStatus = "";
 
                 if (entityType === 'partnership' || entityType === 's_corp') {
-                    // Form 1065 & Form 1120-S: $255 per partner/shareholder per month (up to 12 months)
                     var cappedMonths = Math.min(monthsLate, 12);
                     lateFilingPenalty = 255 * members * cappedMonths;
                     assessmentStatus = entityType === 'partnership' ? "IRC §6698 Partnership Default ($255/owner/mo)" : "IRC §6699 S-Corp Default ($255/owner/mo)";
                 } else if (entityType === 'foreign_smllc') {
-                    // Form 5472: Flat $25,000 initial penalty
                     lateFilingPenalty = 25000;
                     if (noticeReceived) {
-                        // $25,000 for every 30 days past the initial 90-day grace window
                         var daysOver90 = Math.max(0, daysLate - 90);
                         var continuationPeriods = Math.max(1, Math.ceil(daysOver90 / 30));
                         continuationPenalty = 25000 * continuationPeriods;
                     }
                     assessmentStatus = "IRC §6038A Non-Compliance Violations";
                 } else if (entityType === 'c_corp') {
-                    // Form 1120: 5% of unpaid tax per month (max 25%)
                     var perc = Math.min(monthsLate * 0.05, 0.25);
                     lateFilingPenalty = unpaidTax * perc;
                     if (monthsLate >= 2 && lateFilingPenalty < 485 && unpaidTax > 0) {
@@ -605,12 +733,10 @@
                     assessmentStatus = "IRC §6651 C-Corporation Failure-to-File";
                 }
 
-                // Failure-to-Pay Tax Penalty (0.5% per month, capped at 25%)
                 if (unpaidTax > 0) {
                     var ftpPerc = Math.min(monthsLate * 0.005, 0.25);
                     failureToPayPenalty = unpaidTax * ftpPerc;
 
-                    // Statutory Interest (~8% APR compounded daily)
                     var annualRate = 0.08;
                     estimatedInterest = unpaidTax * (Math.pow(1 + (annualRate / 365), daysLate) - 1);
                 }
@@ -633,6 +759,23 @@
                 timelineHtml += createTimelineRow('Total Estimated Liability', '$' + totalPenalty.toLocaleString('en-US', { minimumFractionDigits: 2 }), true);
 
                 resTimelineList.innerHTML = timelineHtml;
+
+                // Update internal object store for report generator
+                currentReportData = {
+                    entityType: entityTypeSelect.options[entityTypeSelect.selectedIndex].text,
+                    dueDate: rawDueDate,
+                    actualDate: rawActualDate,
+                    members: members,
+                    unpaidTax: unpaidTax,
+                    monthsLate: monthsLate,
+                    daysLate: daysLate,
+                    latePenalty: lateFilingPenalty,
+                    continuationPenalty: continuationPenalty,
+                    ftpPenalty: failureToPayPenalty,
+                    interest: estimatedInterest,
+                    total: totalPenalty,
+                    assessment: assessmentStatus
+                };
             }
 
             function getMonthsLate(startDate, endDate) {
@@ -653,88 +796,206 @@
                     '</div>';
             }
 
+            // Client-side Watermarked Report Generator
+            downloadReportBtn.addEventListener('click', function() {
+                var canvas = document.createElement('canvas');
+                canvas.width = 800;
+                canvas.height = 950;
+                var ctx = canvas.getContext('2d');
+
+                // Canvas Background
+                ctx.fillStyle = '#181b24';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Top Accent Header
+                ctx.fillStyle = '#8b5cf6';
+                ctx.fillRect(0, 0, canvas.width, 10);
+
+                // Title Banner
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 24px -apple-system, BlinkMacSystemFont, sans-serif';
+                ctx.fillText('IRS Penalty Liability Assessment Report', 40, 50);
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = '14px -apple-system, BlinkMacSystemFont, sans-serif';
+                ctx.fillText('Generated client-side via CoreMetricSuite Statutory Engine', 40, 75);
+
+                // Divider
+                ctx.strokeStyle = '#2e3446';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(40, 95);
+                ctx.lineTo(760, 95);
+                ctx.stroke();
+
+                // Entity & Parameter Card
+                ctx.fillStyle = '#222634';
+                ctx.fillRect(40, 115, 720, 160);
+
+                ctx.fillStyle = '#8b5cf6';
+                ctx.font = 'bold 14px -apple-system, BlinkMacSystemFont, sans-serif';
+                ctx.fillText('ASSESSMENT PARAMETERS', 60, 140);
+
+                ctx.fillStyle = '#ffffff';
+                ctx.font = '14px -apple-system, BlinkMacSystemFont, sans-serif';
+                ctx.fillText('Entity Classification: ' + currentReportData.entityType, 60, 170);
+                ctx.fillText('Original Filing Due Date: ' + currentReportData.dueDate, 60, 195);
+                ctx.fillText('Actual Filing Date: ' + currentReportData.actualDate + ' (' + currentReportData.monthsLate + ' Month(s) / ' + currentReportData.daysLate + ' Day(s) Late)', 60, 220);
+                ctx.fillText('Unpaid Federal Tax Owed: $' + currentReportData.unpaidTax.toLocaleString('en-US', {minimumFractionDigits: 2}), 60, 245);
+
+                // Primary Output Metrics Box
+                ctx.fillStyle = '#222634';
+                ctx.fillRect(40, 295, 720, 100);
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = '12px -apple-system, BlinkMacSystemFont, sans-serif';
+                ctx.fillText('TOTAL ESTIMATED STATUTORY LIABILITY', 60, 320);
+
+                ctx.fillStyle = '#00f2fe';
+                ctx.font = 'bold 32px monospace';
+                ctx.fillText('$' + currentReportData.total.toLocaleString('en-US', {minimumFractionDigits: 2}), 60, 360);
+
+                // Itemized Breakdown Table Header
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 16px -apple-system, BlinkMacSystemFont, sans-serif';
+                ctx.fillText('Statutory Fine & Interest Itemization', 40, 430);
+
+                var yPos = 470;
+                function drawReportRow(label, amountStr) {
+                    ctx.fillStyle = '#1f2430';
+                    ctx.fillRect(40, yPos - 20, 720, 36);
+
+                    ctx.fillStyle = '#e5e7eb';
+                    ctx.font = '14px -apple-system, BlinkMacSystemFont, sans-serif';
+                    ctx.fillText(label, 60, yPos);
+
+                    ctx.fillStyle = '#ffffff';
+                    ctx.font = 'bold 14px monospace';
+                    ctx.fillText(amountStr, 600, yPos);
+
+                    yPos += 46;
+                }
+
+                drawReportRow('Base Late Filing Fine', '$' + currentReportData.latePenalty.toLocaleString('en-US', {minimumFractionDigits: 2}));
+                if (currentReportData.continuationPenalty > 0) {
+                    drawReportRow('Continuation Non-Compliance Fine', '$' + currentReportData.continuationPenalty.toLocaleString('en-US', {minimumFractionDigits: 2}));
+                }
+                drawReportRow('Failure-to-Pay Tax Penalty', '$' + currentReportData.ftpPenalty.toLocaleString('en-US', {minimumFractionDigits: 2}));
+                drawReportRow('Accrued IRS Underpayment Interest', '$' + currentReportData.interest.toLocaleString('en-US', {minimumFractionDigits: 2}));
+
+                // Visual Statutory Watermark (Rotated Center Text Overlay)
+                ctx.save();
+                ctx.translate(canvas.width / 2, canvas.height / 2);
+                ctx.rotate(-Math.PI / 8);
+                ctx.font = 'bold 28px -apple-system, BlinkMacSystemFont, sans-serif';
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
+                ctx.textAlign = 'center';
+                ctx.fillText('Generated by CoreMetricSuite (coremetricsuite.com)', 0, 0);
+                ctx.restore();
+
+                // Bottom Footer Watermark Banner
+                ctx.fillStyle = '#222634';
+                ctx.fillRect(0, 890, canvas.width, 60);
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = 'bold 13px -apple-system, BlinkMacSystemFont, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('Generated by CoreMetricSuite (coremetricsuite.com)', canvas.width / 2, 925);
+
+                // Trigger Download File Prompt
+                var link = document.createElement('a');
+                link.download = 'IRS-Penalty-Assessment-Report.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+
             // Execute initial calculation
             calculateLLCPenalty();
         });
     </script>
+
     <!-- Global CoreMetricSuite Cross-Linking Index Hub -->
-<div style="margin-top: 40px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #f8fafc; font-family: system-ui, -apple-system, sans-serif;">
-    <h3 style="margin: 0 0 15px 0; font-size: 18px; color: #0f172a; font-weight: 600;">🛠️ CoreMetricSuite Utility Directory</h3>
-    
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
-        <!-- Group 1 -->
-        <div>
-            <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇦🇺 Australia Tax & Labor</h4>
-            <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
-                <li style="margin-bottom: 4px;"><a id="hub-au-cents" href="../au-cents-per-km-estimator/" style="color: #2563eb; text-decoration: underline;">Cents-Per-Km Tax Estimator</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-au-schads" href="../au-schads-vehicle-allowance/" style="color: #2563eb; text-decoration: underline;">SCHADS Vehicle Allowance</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-au-super" href="../au-superannuation-charge-tracker/" style="color: #2563eb; text-decoration: underline;">Superannuation Tracker</a></li>
-            </ul>
-        </div>
+    <div style="margin-top: 40px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #f8fafc; font-family: system-ui, -apple-system, sans-serif;">
+        <h3 style="margin: 0 0 15px 0; font-size: 18px; color: #0f172a; font-weight: 600;">🛠️ CoreMetricSuite Utility Directory</h3>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
+            <!-- Group 1 -->
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇦🇺 Australia Tax & Labor</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-au-cents" href="../au-cents-per-km-estimator/" style="color: #2563eb; text-decoration: underline;">Cents-Per-Km Tax Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-au-schads" href="../au-schads-vehicle-allowance/" style="color: #2563eb; text-decoration: underline;">SCHADS Vehicle Allowance</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-au-super" href="../au-superannuation-charge-tracker/" style="color: #2563eb; text-decoration: underline;">Superannuation Tracker</a></li>
+                </ul>
+            </div>
 
-        <!-- Group 2 -->
-        <div>
-            <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇺🇸 US Corporate Tax</h4>
-            <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
-                <li style="margin-bottom: 4px;"><a id="hub-us-llc" href="../us-llc-late-penalty-estimator/" style="color: #2563eb; text-decoration: underline;">LLC Late Tax Penalty</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-us-179" href="../us-section-179-truck-calculator/" style="color: #2563eb; text-decoration: underline;">Section 179 Vehicle Deduction</a></li>
-            </ul>
-        </div>
+            <!-- Group 2 -->
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇺🇸 US Corporate Tax</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-us-llc" href="../us-llc-late-penalty-estimator/" style="color: #2563eb; text-decoration: underline;">LLC Late Tax Penalty</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-us-179" href="../us-section-179-truck-calculator/" style="color: #2563eb; text-decoration: underline;">Section 179 Vehicle Deduction</a></li>
+                </ul>
+            </div>
 
-        <!-- Group 3 -->
-        <div>
-            <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇬🇧 UK Property Management</h4>
-            <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
-                <li style="margin-bottom: 4px;"><a id="hub-uk-rent" href="../uk-form-4a-rent-tracker/" style="color: #2563eb; text-decoration: underline;">Form 4A Rent Tracker</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-uk-sdlt" href="../uk-sdlt-bracket-estimator/" style="color: #2563eb; text-decoration: underline;">Stamp Duty Estimator</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-uk-sec8" href="../uk-section-8-calculator/" style="color: #2563eb; text-decoration: underline;">Section 8 Calculator</a></li>
-            </ul>
-        </div>
+            <!-- Group 3 -->
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇬🇧 UK Property Management</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-rent" href="../uk-form-4a-rent-tracker/" style="color: #2563eb; text-decoration: underline;">Form 4A Rent Tracker</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-sdlt" href="../uk-sdlt-bracket-estimator/" style="color: #2563eb; text-decoration: underline;">Stamp Duty Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-sec8" href="../uk-section-8-calculator/" style="color: #2563eb; text-decoration: underline;">Section 8 Calculator</a></li>
+                </ul>
+            </div>
 
-        <!-- Group 4 -->
-        <div>
-            <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🎬 Digital Media Layouts</h4>
-            <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
-                <li style="margin-bottom: 4px;"><a id="hub-media-ig" href="../instagram-reels-preview/" style="color: #2563eb; text-decoration: underline;">Instagram Reels Grid</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-media-shorts" href="../shorts-ui-safe-zone/" style="color: #2563eb; text-decoration: underline;">YouTube Shorts Safe Zone</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-media-tiktok" href="../tiktok-ad-safe-zone/" style="color: #2563eb; text-decoration: underline;">TikTok Ad Checker</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-media-shopify" href="../shopify-metafields-parser/" style="color: #2563eb; text-decoration: underline;">Shopify Metafields Parser</a></li>
-            </ul>
+            <!-- Group 4 -->
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🎬 Digital Media Layouts</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-media-ig" href="../instagram-reels-preview/" style="color: #2563eb; text-decoration: underline;">Instagram Reels Grid</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-shorts" href="../shorts-ui-safe-zone/" style="color: #2563eb; text-decoration: underline;">YouTube Shorts Safe Zone</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-tiktok" href="../tiktok-ad-safe-zone/" style="color: #2563eb; text-decoration: underline;">TikTok Ad Checker</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-shopify" href="../shopify-metafields-parser/" style="color: #2563eb; text-decoration: underline;">Shopify Metafields Parser</a></li>
+                </ul>
+            </div>
         </div>
     </div>
-</div>
 
-<script defer>
-    (function() {
-        // Scans the active browser path to determine which self-link to intercept
-        const path = window.location.pathname.toLowerCase();
-        
-        const toolsMap = {
-            'au-cents-per-km-estimator': 'hub-au-cents',
-            'au-schads-vehicle-allowance': 'hub-au-schads',
-            'au-superannuation-charge-tracker': 'hub-au-super',
-            'us-llc-late-penalty-estimator': 'hub-us-llc',
-            'us-section-179-truck-calculator': 'hub-us-179',
-            'uk-form-4a-rent-tracker': 'hub-uk-rent',
-            'uk-sdlt-bracket-estimator': 'hub-uk-sdlt',
-            'uk-section-8-calculator': 'hub-uk-sec8',
-            'instagram-reels-preview': 'hub-media-ig',
-            'shorts-ui-safe-zone': 'hub-media-shorts',
-            'tiktok-ad-safe-zone': 'hub-media-tiktok',
-            'shopify-metafields-parser': 'hub-media-shopify'
-        };
+    <script defer>
+        (function() {
+            const path = window.location.pathname.toLowerCase();
+            
+            const toolsMap = {
+                'au-cents-per-km-estimator': 'hub-au-cents',
+                'au-schads-vehicle-allowance': 'hub-au-schads',
+                'au-superannuation-charge-tracker': 'hub-au-super',
+                'us-llc-late-penalty-estimator': 'hub-us-llc',
+                'us-section-179-truck-calculator': 'hub-us-179',
+                'uk-form-4a-rent-tracker': 'hub-uk-rent',
+                'uk-sdlt-bracket-estimator': 'hub-uk-sdlt',
+                'uk-section-8-calculator': 'hub-uk-sec8',
+                'instagram-reels-preview': 'hub-media-ig',
+                'shorts-ui-safe-zone': 'hub-media-shorts',
+                'tiktok-ad-safe-zone': 'hub-media-tiktok',
+                'shopify-metafields-parser': 'hub-media-shopify'
+            };
 
-        for (const [folderName, elementId] of Object.entries(toolsMap)) {
-            if (path.includes(folderName)) {
-                const targetEl = document.getElementById(elementId);
-                if (targetEl) {
-                    // Replaces the hyperlinked state with unclickable bold text styling
-                    targetEl.outerHTML = `<span style="font-weight: 600; color: #0f172a;">${targetEl.textContent} (Current)</span>`;
+            for (const [folderName, elementId] of Object.entries(toolsMap)) {
+                if (path.includes(folderName)) {
+                    const targetEl = document.getElementById(elementId);
+                    if (targetEl) {
+                        targetEl.outerHTML = `<span style="font-weight: 600; color: #0f172a;">${targetEl.textContent} (Current)</span>`;
+                    }
+                    break;
                 }
-                break;
             }
+        })();
+    </script>
+    <style type="text/css">
+        @media screen and (max-width:900px){
+            html,body{width:100%!important;max-width:100vw!important;overflow-x:hidden!important;margin:0!important;padding:0!important}
+            #cms-ad-slot-top,#cms-ad-slot-1,.cms-medianet-box,.cms-ad-slot-1,.cms-ad-slot-2{width:100%!important;max-width:100%!important;height:auto!important;min-height:90px!important;display:block!important}
         }
-    })();
-</script>
-<style type="text/css">@media screen and (max-width:900px){html,body{width:100%!important;max-width:100vw!important;overflow-x:hidden!important;margin:0!important;padding:0!important}main.container{display:flex!important;flex-direction:column!important;width:100%!important;max-width:100%!important;padding:0 12px!important;margin:8px auto!important;gap:16px!important;box-sizing:border-box!important}main.container>section.preview-stage{order:-1!important;width:100%!important;display:flex!important;flex-direction:column!important;align-items:center!important;margin:0 auto!important;box-sizing:border-box!important}main.container>section.panel{order:2!important;width:100%!important;max-width:100%!important;box-sizing:border-box!important}.canvas-wrapper{width:75vw!important;height:133.33vw!important;max-width:290px!important;max-height:515px!important;margin:0 auto!important;box-sizing:border-box!important}#cms-ad-slot-top,#cms-ad-slot-1,.cms-medianet-box,.cms-ad-slot-1,.cms-ad-slot-2{width:100%!important;max-width:100%!important;height:auto!important;min-height:90px!important;display:block!important}.spec-table,.content-card div[style*="display: grid"]{grid-template-columns:1fr!important;width:100%!important}input,textarea,select{font-size:16px!important}}</style></body>
+    </style>
+</body>
 </html>
