@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Thumbnail Previewer &amp; Feed Mockup Studio (1280x720 Checker)</title>
+    <meta name="description" content="Test your YouTube video thumbnails instantly across desktop search feeds, mobile home streams, and dark-mode sidebars. Ensure high click-through rates (CTR) with zero text clutter.">
+    <meta name="keywords" content="youtube thumbnail previewer, yt thumbnail checker, youtube feed mockup tool, thumbnail CTR tester, desktop vs mobile thumbnail preview, 1280x720 thumbnail safe zones">
+    <link rel="canonical" href="https://coremetricsuite.com/youtube-thumbnail-previewer/">
+
+    <!-- Open Graph / Social Metadata -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="YouTube Thumbnail Previewer &amp; Feed Mockup Studio (1280x720 Checker)">
+    <meta property="og:description" content="Test your YouTube video thumbnails instantly across desktop search feeds, mobile home streams, and dark-mode sidebars. Ensure high click-through rates (CTR) with zero text clutter.">
+    <meta property="og:url" content="https://coremetricsuite.com/youtube-thumbnail-previewer/">
+    
+    <!-- Global Framework Dependencies -->
+    <link rel="stylesheet" href="/css/global.css">
+    <script src="/config.js" defer></script>
+    <script src="/global.min.js" defer></script>
+
+    <!-- FAQ JSON-LD Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What are the recommended dimensions and aspect ratio for YouTube thumbnails in 2026?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "YouTube requires a 16:9 aspect ratio, with a recommended resolution of 1280 x 720 pixels (minimum width of 640 pixels). Keeping your design sharp at this specification ensures high quality across desktop feeds, mobile streams, and high-DPI retina displays."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Where does the video duration timestamp appear on YouTube thumbnails?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The dark translucent timestamp badge (e.g., '14:25') is overlaid automatically on the bottom-right corner of the thumbnail container. Avoid putting important text, logos, or faces in this lower-right region."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does client-side rendering protect privacy when uploading thumbnails?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "All uploaded graphics, canvas compositions, and feed simulations are executed 100% locally inside your web browser using HTML5 FileReader and Canvas APIs. No media files or creative assets are ever transmitted or stored on remote servers."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How can I improve my YouTube Click-Through Rate (CTR)?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "To boost CTR, use high-contrast focal points, bold sans-serif text limited to 3-4 words, clear facial expressions, and preview your thumbnail at small scale sizes (like mobile feed view) to ensure readability."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the maximum file size allowed for YouTube thumbnail uploads?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "YouTube accepts image file formats including JPG, GIF, or PNG under 2 megabytes. Optimizing your final design file helps maintain clean compression standards."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-main: #0f1117;
+            --bg-card: #181b24;
+            --bg-input: #222634;
+            --border-color: #2e3446;
+            --accent-red: #ff0000;
+            --accent-cyan: #00f2fe;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: var(--bg-main); color: var(--text-primary); font-family: var(--font-sans); line-height: 1.6; }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            grid-template-areas: 
+                "upload preview"
+                "panel preview";
+            gap: 2rem;
+        }
+
+        .upload-card-wrapper {
+            grid-area: upload;
+        }
+
+        .panel {
+            grid-area: panel;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            height: fit-content;
+        }
+
+        .panel-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            background: var(--accent-cyan);
+            color: #000;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        .drop-zone {
+            border: 2px dashed var(--border-color);
+            padding: 1.25rem;
+            text-align: center;
+            border-radius: 8px;
+            background-color: var(--bg-input);
+            cursor: pointer;
+            transition: border-color 0.2s, background-color 0.2s;
+            margin-bottom: 0.75rem;
+        }
+
+        .drop-zone:hover { border-color: var(--accent-cyan); background-color: rgba(0, 242, 254, 0.05); }
+        .drop-title { font-weight: 600; color: #fff; font-size: 0.95rem; }
+        .drop-sub { font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px; }
+
+        .btn-demo {
+            width: 100%;
+            padding: 0.65rem;
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            color: var(--accent-cyan);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 1.25rem;
+            transition: background-color 0.2s;
+        }
+
+        .btn-demo:hover { background-color: #2a2f42; }
+
+        .toggle-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: var(--bg-input);
+            padding: 0.75rem 0.85rem;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 1rem;
+        }
+
+        .toggle-label { font-size: 0.85rem; font-weight: 500; color: var(--text-primary); }
+
+        .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #374151; transition: .3s; border-radius: 24px;
+        }
+        .slider:before {
+            position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px;
+            background-color: white; transition: .3s; border-radius: 50%;
+        }
+        input:checked + .slider { background-color: var(--accent-red); }
+        input:checked + .slider:before { transform: translateX(20px); }
+
+        .form-group { margin-bottom: 1.25rem; }
+        label { display: block; font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 0.4rem; }
+        input[type="text"], textarea, select {
+            width: 100%; padding: 0.65rem 0.85rem; background-color: var(--bg-input);
+            border: 1px solid var(--border-color); border-radius: 6px; color: #fff;
+            font-size: 0.9rem; outline: none; font-family: inherit;
+        }
+        input[type="text"]:focus, textarea:focus, select:focus { border-color: var(--accent-cyan); }
+
+        .btn-action {
+            width: 100%; padding: 0.85rem; background: linear-gradient(135deg, var(--accent-red), #b30000);
+            color: #fff; font-weight: 600; border: none; border-radius: 6px; cursor: pointer; font-size: 0.95rem;
+            box-shadow: 0 4px 12px rgba(255, 0, 0, 0.3);
+            transition: transform 0.1s, opacity 0.2s;
+            margin-bottom: 1rem;
+        }
+        .btn-action:hover { opacity: 0.95; }
+        .btn-action:active { transform: scale(0.99); }
+
+        /* Social Share Button Module */
+        .social-share-container {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        .share-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
+            display: block;
+            text-align: center;
+        }
+        .share-buttons-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+        }
+        .btn-share {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            padding: 0.5rem 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: opacity 0.2s, transform 0.1s;
+        }
+        .btn-share:hover { opacity: 0.88; }
+        .btn-share:active { transform: scale(0.97); }
+        .btn-share-x { background-color: #000000; border: 1px solid #333; }
+        .btn-share-fb { background-color: #1877f2; }
+        .btn-share-li { background-color: #0a66c2; }
+        .btn-share-wa { background-color: #25d366; color: #000; }
+        .btn-share-pin { background-color: #e60023; }
+        .btn-share-copy { background-color: #374151; color: #fff; grid-column: span 3; margin-top: 0.25rem; }
+
+        .preview-stage { 
+            grid-area: preview;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+        }
+        .canvas-wrapper {
+            position: relative; width: 100%; max-width: 640px; aspect-ratio: 16/9; border-radius: 12px;
+            overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.6); background-color: #0f1117;
+            border: 2px solid var(--border-color);
+        }
+        canvas { width: 100%; height: 100%; display: block; }
+        .canvas-caption { margin-top: 1rem; font-size: 0.85rem; color: var(--text-secondary); text-align: center; }
+
+        .content-area { max-width: 1200px; margin: 3rem auto; padding: 0 1.5rem; }
+        .content-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 2.5rem; }
+        .content-card h1 { font-size: 2rem; margin-bottom: 1rem; color: #fff; }
+        .content-card h2 { font-size: 1.4rem; margin: 1.8rem 0 1rem; color: #fff; }
+        .content-card p { color: var(--text-secondary); margin-bottom: 1.2rem; }
+        .content-card ul, .content-card ol { color: var(--text-secondary); margin: 0 0 1.2rem 1.5rem; }
+        .content-card li { margin-bottom: 0.5rem; }
+
+        .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 1.5rem 0; }
+        .spec-table { width: 100%; border-collapse: collapse; text-align: left; min-width: 600px; }
+        .spec-table th, .spec-table td { padding: 0.85rem 1rem; border: 1px solid var(--border-color); }
+        .spec-table th { background-color: var(--bg-input); color: #fff; font-size: 0.9rem; }
+        .spec-table td { color: var(--text-secondary); font-size: 0.875rem; }
+
+        /* Accordion FAQ Styling */
+        .faq-block { margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem; }
+        .faq-accordion {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 0.85rem;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .faq-accordion[open] { border-color: var(--accent-cyan); }
+        .faq-summary {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            padding: 1rem 1.2rem;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+        .faq-summary::-webkit-details-marker { display: none; }
+        .faq-summary::after {
+            content: "+";
+            font-size: 1.2rem;
+            color: var(--accent-cyan);
+            transition: transform 0.2s;
+        }
+        .faq-accordion[open] .faq-summary::after {
+            content: "−";
+            color: var(--accent-red);
+        }
+        .faq-answer {
+            padding: 0 1.2rem 1.2rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 0.4rem;
+            padding-top: 0.8rem;
+        }
+
+        .cms-ad-slot-1, .cms-ad-slot-2 {
+            width: 100%; max-width: 970px; min-height: 90px; margin: 1.5rem auto;
+            background: rgba(255,255,255,0.02); border-radius: 8px; display: block;
+        }
+
+        /* Mobile Responsive Overrides: File upload first, then canvas preview */
+        @media screen and (max-width: 900px) {
+            html, body { width: 100%!important; max-width: 100vw!important; overflow-x: hidden!important; margin: 0!important; padding: 0!important; }
+            main.container { display: flex!important; flex-direction: column!important; width: 100%!important; max-width: 100%!important; padding: 0 12px!important; margin: 8px auto!important; gap: 16px!important; box-sizing: border-box!important; }
+            .upload-card-wrapper { order: 1!important; width: 100%!important; }
+            main.container > section.preview-stage { order: 2!important; width: 100%!important; display: flex!important; flex-direction: column!important; align-items: center!important; margin: 0 auto!important; box-sizing: border-box!important; }
+            main.container > section.panel { order: 3!important; width: 100%!important; max-width: 100%!important; box-sizing: border-box!important; }
+            .canvas-wrapper { width: 100%!important; max-width: 100%!important; aspect-ratio: 16/9!important; margin: 0 auto!important; box-sizing: border-box!important; }
+            input, textarea, select { font-size: 16px!important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Container -->
+    <div id="global-header"></div>
+
+    <!-- Ad Slot 1 Container -->
+    <div class="cms-ad-slot-1" id="cms-ad-slot-top"></div>
+
+    <!-- Main Tool Container -->
+    <main class="container">
+        <!-- Module 1: File Upload Section (Rendered 1st on mobile) -->
+        <div class="upload-card-wrapper">
+            <div class="panel">
+                <div class="panel-title">
+                    <span>Upload Thumbnail Graphic</span>
+                    <span class="badge">STEP 1</span>
+                </div>
+                <div class="drop-zone" id="dropZone">
+                    <p class="drop-title">Click or Drag Thumbnail Image</p>
+                    <p class="drop-sub">PNG, JPG, WEBP (1280x720 recommended)</p>
+                    <input type="file" id="fileInput" accept="image/*" style="display:none;">
+                </div>
+                <button class="btn-demo" id="loadDemoBtn" type="button" style="margin-bottom:0;">⚡ Load Demo Sample Data</button>
+            </div>
+        </div>
+
+        <!-- Module 2: Live Canvas Stage (Rendered 2nd on mobile) -->
+        <section class="preview-stage">
+            <div class="canvas-wrapper">
+                <canvas id="previewCanvas" width="1280" height="720"></canvas>
+            </div>
+            <p class="canvas-caption" id="previewCaptionText">
+                Interactive YouTube Desktop Feed Preview (16:9 - 1280x720px). Check timestamp placement &amp; UI overlays.
+            </p>
+        </section>
+
+        <!-- Module 3: Tool Controls Panel (Rendered 3rd on mobile) -->
+        <section class="panel">
+            <div class="panel-title">
+                <span>Thumbnail Preview Controls</span>
+                <span class="badge">16:9 SPECS</span>
+            </div>
+
+            <div class="form-group">
+                <label for="previewModeSelect">Simulation Feed Mode</label>
+                <select id="previewModeSelect">
+                    <option value="desktop">Desktop Search / Home Grid (16:9)</option>
+                    <option value="mobile">Mobile Stream Feed (Compact View)</option>
+                    <option value="sidebar">Dark-Mode Watch Sidebar / Related</option>
+                </select>
+            </div>
+
+            <div class="toggle-group">
+                <span class="toggle-label">Show Timestamp Overlay (e.g., 14:25)</span>
+                <label class="switch">
+                    <input type="checkbox" id="timestampToggle" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="toggle-group">
+                <span class="toggle-label">Show Safe Zone Grid Lines</span>
+                <label class="switch">
+                    <input type="checkbox" id="overlayToggle" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="videoTitle">Video Title</label>
+                <input type="text" id="videoTitle" value="I Built a Million-Dollar SaaS App in 7 Days (Full Walkthrough)">
+            </div>
+
+            <div class="form-group">
+                <label for="channelName">Channel Name &amp; Meta</label>
+                <input type="text" id="channelName" value="CoreCode • 125K views • 2 days ago">
+            </div>
+
+            <div class="form-group">
+                <label for="timestampValue">Video Duration Badge</label>
+                <input type="text" id="timestampValue" value="14:25">
+            </div>
+
+            <button class="btn-action" id="downloadBtn" type="button">Export 1280x720 PNG Preview</button>
+
+            <!-- Social Media Share Section -->
+            <div class="social-share-container">
+                <span class="share-label">Share This Tool</span>
+                <div class="share-buttons-grid">
+                    <a id="shareX" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-x">𝕏 Post</a>
+                    <a id="shareFB" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-fb">Facebook</a>
+                    <a id="shareWA" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-wa">WhatsApp</a>
+                    <a id="shareLI" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-li">LinkedIn</a>
+                    <a id="sharePIN" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-pin">Pinterest</a>
+                    <button id="copyShareLink" type="button" class="btn-share btn-share-copy">🔗 Copy Tool Link</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- SEO & Educational Guide Section -->
+    <article class="content-area">
+        <div class="content-card">
+            <h1>YouTube Thumbnail Previewer &amp; Feed Mockup Guide</h1>
+            <p>
+                Your video thumbnail is the single most important factor determining your Click-Through Rate (CTR) on YouTube. Even the most engaging video content will struggle to attract views if the thumbnail graphic fails to grab attention or gets obscured by the platform's native interface elements—such as duration timestamps, live badges, or resolution indicators.
+            </p>
+            <p>
+                This browser-based <strong>youtube-thumbnail-previewer</strong> utility lets creators, video editors, and digital marketers test 1280x720 pixel (16:9) graphic assets instantly. Preview how your design looks across desktop search feeds, mobile home streams, and dark-mode sidebars before pushing your video live.
+            </p>
+
+            <h2>YouTube Thumbnail Technical Specifications</h2>
+            <p>
+                Adhering to strict dimension guidelines ensures your artwork renders crisply across high-density retina screens and compact smartphone displays without unwanted compression artifacts:
+            </p>
+
+            <div class="table-responsive">
+                <table class="spec-table">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Requirement</th>
+                            <th>Optimization Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Aspect Ratio</strong></td>
+                            <td>16:9 Widescreen</td>
+                            <td>Standard format used across all YouTube player containers and video grids.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Recommended Resolution</strong></td>
+                            <td>1280 × 720 px (Min width 640px)</td>
+                            <td>Ensures high clarity when scaled up on 4K desktop monitors or down on mobile screens.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>File Formats</strong></td>
+                            <td>JPG, GIF, or PNG</td>
+                            <td>PNG is recommended for text clarity and sharp graphic edges.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>File Size Limit</strong></td>
+                            <td>Under 2 Megabytes (MB)</td>
+                            <td>Compressed cleanly to meet YouTube upload criteria.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Timestamp Danger Zone</strong></td>
+                            <td>Bottom-Right Corner (150×50 px)</td>
+                            <td>Avoid placing crucial text, faces, or logos behind the runtime badge overlay.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Ad Slot 2 Container -->
+            <div class="cms-ad-slot-2"></div>
+
+            <h2>Why Thumbnail Previews Matter for Higher CTR</h2>
+            <p>
+                Most viewers browse YouTube feeds on compact mobile screens or dense desktop recommendation panels where thumbnails appear much smaller than their native edit resolution. If your typography is too intricate or important details are tucked into the corners, engagement plummets.
+            </p>
+            <ul>
+                <li><strong>Avoiding Timestamp Blocks:</strong> The dark runtime badge covers the bottom-right corner of every thumbnail. Keeping your branding or focal text centered or left-aligned prevents information loss.</li>
+                <li><strong>Testing at Thumbnail Scale:</strong> By simulating feed containers (such as desktop grids and mobile streams), you can instantly verify if your text is legible at a glance.</li>
+                <li><strong>High-Contrast Focal Points:</strong> Thumbnails featuring strong color contrast, expressive human faces, and minimalist 3-word headlines consistently outperform cluttered designs.</li>
+            </ul>
+
+            <h2>Best Practices for Designing High-Performing YouTube Thumbnails</h2>
+            <p>
+                Follow these proven guidelines to maximize your video click-through rates:
+            </p>
+            <ol>
+                <li><strong>Keep Text Concise:</strong> Limit headline text to 3 or 4 bold words using clean sans-serif typography. Avoid repeating your video title verbatim.</li>
+                <li><strong>Leverage the Rule of Thirds:</strong> Position your primary subject or facial close-up along the intersecting grid lines to naturally draw the viewer's eye.</li>
+                <li><strong>Check on Mobile Views:</strong> Always preview your thumbnail at a reduced size to ensure mobile viewers can instantly understand the topic.</li>
+            </ol>
+
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-block">
+                <details class="faq-accordion" open>
+                    <summary class="faq-summary">What are the recommended dimensions and aspect ratio for YouTube thumbnails in 2026?</summary>
+                    <div class="faq-answer">
+                        YouTube requires a 16:9 aspect ratio, with a recommended resolution of 1280 x 720 pixels (minimum width of 640 pixels). Keeping your design sharp at this specification ensures high quality across desktop feeds, mobile streams, and high-DPI retina displays.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">Where does the video duration timestamp appear on YouTube thumbnails?</summary>
+                    <div class="faq-answer">
+                        The dark translucent timestamp badge (e.g., '14:25') is overlaid automatically on the bottom-right corner of the thumbnail container. Avoid putting important text, logos, or faces in this lower-right region.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">How does client-side rendering protect privacy when uploading thumbnails?</summary>
+                    <div class="faq-answer">
+                        All uploaded graphics, canvas compositions, and feed simulations are executed 100% locally inside your web browser using HTML5 FileReader and Canvas APIs. No media files or creative assets are ever transmitted or stored on remote servers.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">How can I improve my YouTube Click-Through Rate (CTR)?</summary>
+                    <div class="faq-answer">
+                        To boost CTR, use high-contrast focal points, bold sans-serif text limited to 3-4 words, clear facial expressions, and preview your thumbnail at small scale sizes (like mobile feed view) to ensure readability.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">What is the maximum file size allowed for YouTube thumbnail uploads?</summary>
+                    <div class="faq-answer">
+                        YouTube accepts image file formats including JPG, GIF, or PNG under 2 megabytes. Optimizing your final design file helps maintain clean compression standards.
+                    </div>
+                </details>
+            </div>
+        </div>
+    </article>
+
+    <!-- Footer Container -->
+    <div id="global-footer"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var canvas = document.getElementById('previewCanvas');
+            if (!canvas) return;
+            var ctx = canvas.getContext('2d');
+            
+            var fileInput = document.getElementById('fileInput');
+            var dropZone = document.getElementById('dropZone');
+            var loadDemoBtn = document.getElementById('loadDemoBtn');
+            var previewModeSelect = document.getElementById('previewModeSelect');
+            var timestampToggle = document.getElementById('timestampToggle');
+            var overlayToggle = document.getElementById('overlayToggle');
+            var videoTitleInput = document.getElementById('videoTitle');
+            var channelNameInput = document.getElementById('channelName');
+            var timestampValueInput = document.getElementById('timestampValue');
+            var downloadBtn = document.getElementById('downloadBtn');
+            var previewCaptionText = document.getElementById('previewCaptionText');
+
+            var currentImage = null;
+
+            /* Setup Social Share Links */
+            var currentUrl = encodeURIComponent(window.location.href);
+            var shareTitle = encodeURIComponent("Check out this free YouTube Thumbnail Previewer & Feed Mockup Studio!");
+            
+            document.getElementById('shareX').href = 'https://twitter.com/intent/tweet?url=' + currentUrl + '&text=' + shareTitle;
+            document.getElementById('shareFB').href = 'https://www.facebook.com/sharer/sharer.php?u=' + currentUrl;
+            document.getElementById('shareWA').href = 'https://api.whatsapp.com/send?text=' + shareTitle + '%20' + currentUrl;
+            document.getElementById('shareLI').href = 'https://www.linkedin.com/sharing/share-offsite/?url=' + currentUrl;
+            document.getElementById('sharePIN').href = 'https://pinterest.com/pin/create/button/?url=' + currentUrl + '&description=' + shareTitle;
+
+            var copyBtn = document.getElementById('copyShareLink');
+            copyBtn.addEventListener('click', function() {
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'YouTube Thumbnail Previewer',
+                        text: 'Test your YouTube thumbnails instantly across feed layouts.',
+                        url: window.location.href
+                    }).catch(function() {});
+                } else if (navigator.clipboard) {
+                    navigator.clipboard.writeText(window.location.href).then(function() {
+                        var origText = copyBtn.textContent;
+                        copyBtn.textContent = '✓ Link Copied!';
+                        setTimeout(function() { copyBtn.textContent = origText; }, 2000);
+                    });
+                }
+            });
+
+            dropZone.addEventListener('click', function() { fileInput.click(); });
+
+            dropZone.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                dropZone.style.borderColor = 'var(--accent-cyan)';
+            });
+
+            dropZone.addEventListener('dragleave', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                dropZone.style.borderColor = 'var(--border-color)';
+            });
+
+            dropZone.addEventListener('drop', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                dropZone.style.borderColor = 'var(--border-color)';
+                if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+                    processFile(e.dataTransfer.files[0]);
+                }
+            });
+
+            fileInput.addEventListener('change', function(e) {
+                if (e.target.files && e.target.files[0]) {
+                    processFile(e.target.files[0]);
+                }
+            });
+
+            previewModeSelect.addEventListener('change', function() {
+                var val = previewModeSelect.value;
+                if (val === 'desktop') {
+                    previewCaptionText.textContent = 'Interactive YouTube Desktop Feed Preview (16:9 - 1280x720px). Check timestamp placement & UI overlays.';
+                } else if (val === 'mobile') {
+                    previewCaptionText.textContent = 'Interactive YouTube Mobile Stream Feed Mockup. Test thumbnail legibility on vertical mobile screens.';
+                } else if (val === 'sidebar') {
+                    previewCaptionText.textContent = 'Interactive Dark-Mode Watch Sidebar / Related Videos Preview. Check small-scale thumbnail clarity.';
+                }
+                draw();
+            });
+
+            loadDemoBtn.addEventListener('click', function() {
+                var demoCanvas = document.createElement('canvas');
+                demoCanvas.width = 1280;
+                demoCanvas.height = 720;
+                var dCtx = demoCanvas.getContext('2d');
+
+                var grad = dCtx.createLinearGradient(0, 0, 1280, 720);
+                grad.addColorStop(0, '#11998e');
+                grad.addColorStop(1, '#38ef7d');
+                dCtx.fillStyle = grad;
+                dCtx.fillRect(0, 0, 1280, 720);
+
+                dCtx.fillStyle = '#000000';
+                dCtx.font = 'bold 72px sans-serif';
+                dCtx.textAlign = 'center';
+                dCtx.fillText('10X YOUR CTR', 640, 320);
+                
+                dCtx.fillStyle = '#ffffff';
+                dCtx.font = 'bold 54px sans-serif';
+                dCtx.fillText('PRO THUMBNAIL DESIGN', 640, 420);
+
+                var img = new Image();
+                img.src = demoCanvas.toDataURL();
+                img.onload = function() {
+                    currentImage = img;
+                    draw();
+                };
+            });
+
+            function processFile(file) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var img = new Image();
+                    img.onload = function() {
+                        currentImage = img;
+                        draw();
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                // Background / Feed Container
+                var mode = previewModeSelect.value;
+                if (mode === 'sidebar') {
+                    ctx.fillStyle = '#0f1117';
+                } else if (mode === 'mobile') {
+                    ctx.fillStyle = '#000000';
+                } else {
+                    ctx.fillStyle = '#0f1117';
+                }
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                var showTimestamp = timestampToggle.checked;
+                var showOverlay = overlayToggle.checked;
+
+                // Thumbnail Graphic Box
+                var thumbX = 0;
+                var thumbY = 0;
+                var thumbW = canvas.width;
+                var thumbH = 720; // Full 16:9 canvas height for main preview
+
+                if (currentImage) {
+                    ctx.drawImage(currentImage, thumbX, thumbY, thumbW, thumbH);
+                } else {
+                    ctx.fillStyle = '#181b24';
+                    ctx.fillRect(thumbX, thumbY, thumbW, thumbH);
+                    ctx.fillStyle = '#6b7280';
+                    ctx.font = 'bold 36px sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('Upload 1280x720 Thumbnail Asset', thumbW / 2, thumbH / 2);
+                    ctx.textAlign = 'left';
+                }
+
+                // Timestamp Badge Overlay (Bottom Right)
+                if (showTimestamp && timestampValueInput.value) {
+                    var badgeText = timestampValueInput.value;
+                    ctx.font = 'bold 24px sans-serif';
+                    var textMetrics = ctx.measureText(badgeText);
+                    var badgeW = textMetrics.width + 24;
+                    var badgeH = 40;
+                    var badgeX = thumbW - badgeW - 16;
+                    var badgeY = thumbH - badgeH - 16;
+
+                    ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+                    if (ctx.roundRect) {
+                        ctx.beginPath();
+                        ctx.roundRect(badgeX, badgeY, badgeW, badgeH, 6);
+                        ctx.fill();
+                    } else {
+                        ctx.fillRect(badgeX, badgeY, badgeW, badgeH);
+                    }
+
+                    ctx.fillStyle = '#ffffff';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText(badgeText, badgeX + (badgeW / 2), badgeY + (badgeH / 2));
+                    ctx.textBaseline = 'alphabetic';
+                    ctx.textAlign = 'left';
+                }
+
+                // Safe Zone / Danger Zone Grid Lines
+                if (showOverlay) {
+                    ctx.strokeStyle = 'rgba(0, 242, 254, 0.4)';
+                    ctx.lineWidth = 3;
+                    ctx.setLineDash([10, 8]);
+                    ctx.strokeRect(40, 40, thumbW - 80, thumbH - 80);
+                    ctx.setLineDash([]);
+
+                    // Highlight Timestamp Danger Zone in Bottom Right
+                    ctx.fillStyle = 'rgba(255, 0, 0, 0.2)';
+                    ctx.fillRect(thumbW - 200, thumbH - 90, 180, 70);
+                    ctx.strokeStyle = '#ff0000';
+                    ctx.lineWidth = 2;
+                    ctx.strokeRect(thumbW - 200, thumbH - 90, 180, 70);
+                }
+
+                // Metadata Text Below Thumbnail (Desktop / Mobile Feed Simulation)
+                var metaY = thumbH + 20;
+                
+                // Channel Avatar Circle
+                ctx.fillStyle = '#ff0000';
+                ctx.beginPath();
+                ctx.arc(45, metaY + 25, 25, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 22px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('C', 45, metaY + 25);
+                ctx.textBaseline = 'alphabetic';
+                ctx.textAlign = 'left';
+
+                // Video Title
+                ctx.font = 'bold 28px sans-serif';
+                ctx.fillStyle = '#f3f4f6';
+                var titleText = videoTitleInput.value || '';
+                if (titleText.length > 55) titleText = titleText.substring(0, 55) + '...';
+                ctx.fillText(titleText, 90, metaY + 22);
+
+                // Channel Name & Views
+                ctx.font = '22px sans-serif';
+                ctx.fillStyle = '#9ca3af';
+                ctx.fillText(channelNameInput.value || '', 90, metaY + 60);
+            }
+
+            var controls = [previewModeSelect, timestampToggle, overlayToggle, videoTitleInput, channelNameInput, timestampValueInput];
+            for (var j = 0; j < controls.length; j++) {
+                controls[j].addEventListener('input', function() {
+                    draw();
+                });
+            }
+
+            draw();
+
+            downloadBtn.addEventListener('click', function() {
+                var link = document.createElement('a');
+                link.download = 'youtube-thumbnail-preview.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        });
+    </script>
+
+    <!-- Global CoreMetricSuite Cross-Linking Index Hub -->
+    <div style="margin-top: 40px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #f8fafc; font-family: system-ui, -apple-system, sans-serif;">
+        <h3 style="margin: 0 0 15px 0; font-size: 18px; color: #0f172a; font-weight: 600;">🛠️️ CoreMetricSuite Utility Directory</h3>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇦🇺 Australia Tax &amp; Labor</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-au-cents" href="../au-cents-per-km-estimator/" style="color: #2563eb; text-decoration: underline;">Cents-Per-Km Tax Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-au-schads" href="../au-schads-vehicle-allowance/" style="color: #2563eb; text-decoration: underline;">SCHADS Vehicle Allowance</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-au-super" href="../au-superannuation-charge-tracker/" style="color: #2563eb; text-decoration: underline;">Superannuation Tracker</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇺🇸 US Corporate Tax</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-us-llc" href="../us-llc-late-penalty-estimator/" style="color: #2563eb; text-decoration: underline;">LLC Late Tax Penalty</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-us-179" href="../us-section-179-truck-calculator/" style="color: #2563eb; text-decoration: underline;">Section 179 Vehicle Deduction</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇬🇧 UK Property Management</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-rent" href="../uk-form-4a-rent-tracker/" style="color: #2563eb; text-decoration: underline;">Form 4A Rent Tracker</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-sdlt" href="../uk-sdlt-bracket-estimator/" style="color: #2563eb; text-decoration: underline;">Stamp Duty Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-sec8" href="../uk-section-8-calculator/" style="color: #2563eb; text-decoration: underline;">Section 8 Calculator</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🎬 Digital Media Layouts</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-media-ig" href="../instagram-reels-preview/" style="color: #2563eb; text-decoration: underline;">Instagram Reels Grid</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-thumb" href="../youtube-thumbnail-previewer/" style="color: #2563eb; text-decoration: underline;">YouTube Thumbnail Previewer</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-tiktok" href="../tiktok-ad-safe-zone/" style="color: #2563eb; text-decoration: underline;">TikTok Ad Checker</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-shopify" href="../shopify-metafields-parser/" style="color: #2563eb; text-decoration: underline;">Shopify Metafields Parser</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script defer>
+        (function() {
+            const path = window.location.pathname.toLowerCase();
+            const toolsMap = {
+                'au-cents-per-km-estimator': 'hub-au-cents',
+                'au-schads-vehicle-allowance': 'hub-au-schads',
+                'au-superannuation-charge-tracker': 'hub-au-super',
+                'us-llc-late-penalty-estimator': 'hub-us-llc',
+                'us-section-179-truck-calculator': 'hub-us-179',
+                'uk-form-4a-rent-tracker': 'hub-uk-rent',
+                'uk-sdlt-bracket-estimator': 'hub-uk-sdlt',
+                'uk-section-8-calculator': 'hub-uk-sec8',
+                'instagram-reels-preview': 'hub-media-ig',
+                'youtube-thumbnail-previewer': 'hub-media-thumb',
+                'tiktok-ad-safe-zone': 'hub-media-tiktok',
+                'shopify-metafields-parser': 'hub-media-shopify'
+            };
+
+            for (const [folderName, elementId] of Object.entries(toolsMap)) {
+                if (path.includes(folderName)) {
+                    const targetEl = document.getElementById(elementId);
+                    if (targetEl) {
+                        targetEl.outerHTML = `<span style="font-weight: 600; color: #0f172a;">${targetEl.textContent} (Current)</span>`;
+                    }
+                    break;
+                }
+            }
+        })();
+    </script>
+</body>
+</html>
