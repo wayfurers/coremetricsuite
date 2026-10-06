@@ -5,20 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UK Section 8 Eviction Notice & Ground Calculator (Form 3A Tracker)</title>
-    <meta name="description" content="Calculate statutory minimum notice periods, expiry timelines, and court eligibility for UK Section 8 Form 3A notices instantly and securely.">
-    <meta name="keywords" content="uk section 8 calculator, section 8 eviction notice, ground 8 rent arrears, form 3a tracker, renters rights act eviction timeline">
-    <link rel="canonical" href="https://coremetricsuite.com" />
+    <meta name="description" content="Calculate statutory minimum notice periods, expiry timelines, and court eligibility for UK Section 8 Form 3A notices instantly and securely under current housing law.">
+    <meta name="keywords" content="uk section 8 calculator, section 8 eviction notice, ground 8 rent arrears, form 3a tracker, renters rights act eviction timeline, section 8 notice period calculator, form 3a notice generator, section 8 possession claim timeline">
+    <link rel="canonical" href="https://coremetricsuite.com/uk-section-8-calculator/" />
 
     <!-- Open Graph / Social Metadata -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="UK Section 8 Eviction Notice & Ground Calculator (Form 3A Tracker)">
-    <meta property="og:description" content="Calculate statutory minimum notice periods, expiry timelines, and court eligibility for UK Section 8 Form 3A notices instantly and securely.">
-    <meta property="og:url" content="https://coremetricsuite.com">
+    <meta property="og:description" content="Calculate statutory minimum notice periods, expiry timelines, and court eligibility for UK Section 8 Form 3A notices instantly and securely under current housing law.">
+    <meta property="og:url" content="https://coremetricsuite.com/uk-section-8-calculator/">
     
     <!-- Global Framework Dependencies -->
     <link rel="stylesheet" href="/css/global.css">
-<script src="/config.js" defer></script>
-<script src="/global.min.js" defer></script>
+    <script src="/config.js" defer></script>
+    <script src="/global.min.js" defer></script>
 
     <!-- FAQ JSON-LD Schema Markup (5 FAQs Synchronized with DOM) -->
     <script type="application/ld+json">
@@ -84,31 +84,63 @@
             --font-mono: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background-color: var(--bg-main); color: var(--text-primary); font-family: var(--font-sans); line-height: 1.6; }
-        
-        .cms-tool-container {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1.5rem;
-            display: grid;
-            grid-template-columns: 440px 1fr;
-            gap: 2rem;
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
         }
 
-        @media (max-width: 960px) { .cms-tool-container { grid-template-columns: 1fr; } }
+        body { 
+            background-color: var(--bg-main); 
+            color: var(--text-primary); 
+            font-family: var(--font-sans); 
+            line-height: 1.6; 
+            width: 100%;
+            overflow-x: hidden;
+        }
+        
+        .cms-tool-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 1rem auto;
+            padding: 0 1rem;
+            display: grid;
+            grid-template-columns: 440px 1fr;
+            gap: 1.5rem;
+            box-sizing: border-box;
+        }
+
+        /* Mobile Layout Reordering & Viewport Optimization */
+        @media (max-width: 960px) { 
+            .cms-tool-container { 
+                grid-template-columns: 1fr; 
+                margin: 0.5rem auto;
+                padding: 0 0.75rem;
+                gap: 1rem;
+            }
+
+            .cms-tool-container > .panel#inputPanel {
+                order: 1;
+            }
+
+            .cms-tool-container > .preview-stage {
+                order: 2;
+            }
+        }
 
         .panel {
             background-color: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 1.5rem;
+            padding: 1.25rem;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .panel-title {
             font-size: 1.1rem;
             font-weight: 600;
-            margin-bottom: 1.25rem;
+            margin-bottom: 1rem;
             padding-bottom: 0.75rem;
             border-bottom: 1px solid var(--border-color);
             display: flex;
@@ -127,25 +159,38 @@
 
         .btn-demo {
             width: 100%;
-            padding: 0.6rem;
+            min-height: 48px;
+            padding: 0.75rem;
             background-color: var(--bg-input);
             border: 1px solid var(--border-color);
             color: var(--accent-purple);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
             font-weight: 600;
-            font-size: 0.85rem;
-            margin-bottom: 1.25rem;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
             transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .btn-demo:hover { background-color: #2a3042; }
 
         .form-group { margin-bottom: 1.25rem; }
         label { display: block; font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 0.4rem; }
+        
         input[type="date"], input[type="number"], select {
-            width: 100%; padding: 0.65rem 0.85rem; background-color: var(--bg-input);
-            border: 1px solid var(--border-color); border-radius: 6px; color: #fff;
-            font-size: 0.9rem; outline: none; font-family: inherit;
+            width: 100%; 
+            min-height: 48px;
+            padding: 0.75rem 0.85rem; 
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color); 
+            border-radius: 8px; 
+            color: #fff;
+            font-size: 1rem; /* Prevent iOS zoom */
+            outline: none; 
+            font-family: inherit;
+            box-sizing: border-box;
         }
 
         .checkbox-group {
@@ -155,42 +200,75 @@
             background-color: var(--bg-input);
             padding: 0.85rem;
             border: 1px solid var(--border-color);
-            border-radius: 6px;
+            border-radius: 8px;
             margin-bottom: 1.25rem;
         }
 
         .checkbox-item {
             display: flex;
             align-items: center;
-            gap: 0.6rem;
+            gap: 0.75rem;
             font-size: 0.85rem;
             color: var(--text-primary);
             cursor: pointer;
+            min-height: 36px;
         }
 
         .checkbox-item input[type="checkbox"] {
             accent-color: var(--accent-purple);
-            width: 16px;
-            height: 16px;
+            width: 20px;
+            height: 20px;
             cursor: pointer;
+            flex-shrink: 0;
         }
 
         .btn-action {
-            width: 100%; padding: 0.85rem; background: linear-gradient(135deg, var(--accent-purple), #7c3aed);
-            color: #fff; font-weight: 700; border: none; border-radius: 6px; cursor: pointer; font-size: 0.95rem;
+            width: 100%; 
+            min-height: 48px;
+            padding: 0.85rem; 
+            background: linear-gradient(135deg, var(--accent-purple), #7c3aed);
+            color: #fff; 
+            font-weight: 700; 
+            border: none; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            font-size: 1rem;
             transition: opacity 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .btn-action:hover { opacity: 0.9; }
 
-        .preview-stage { display: flex; flex-direction: column; }
+        .btn-download {
+            width: 100%;
+            min-height: 48px;
+            margin-top: 1rem;
+            background: linear-gradient(135deg, #059669, #10b981);
+            color: #ffffff;
+            font-weight: 700;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: opacity 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .btn-download:hover { opacity: 0.9; }
+
+        .preview-stage { display: flex; flex-direction: column; width: 100%; }
+        
         .result-box {
             background-color: var(--bg-input);
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            padding: 1.5rem;
+            padding: 1.25rem;
             font-size: 0.95rem;
             color: #e5e7eb;
-            min-height: 380px;
+            min-height: 340px;
             display: flex;
             flex-direction: column;
             gap: 1rem;
@@ -210,10 +288,11 @@
             margin-bottom: 0.3rem;
         }
         .result-metric .value {
-            font-size: 1.25rem;
+            font-size: 1.15rem;
             font-weight: 700;
             color: #fff;
             font-family: var(--font-mono);
+            word-break: break-word;
         }
 
         .timeline-breakdown {
@@ -226,9 +305,11 @@
         .timeline-row {
             display: flex;
             justify-content: space-between;
-            padding: 0.35rem 0;
+            align-items: center;
+            padding: 0.5rem 0;
             color: var(--text-secondary);
             border-bottom: 1px dashed rgba(255,255,255,0.05);
+            gap: 0.5rem;
         }
         .timeline-row:last-child { border-bottom: none; }
         .timeline-row.active {
@@ -236,17 +317,44 @@
             font-weight: 600;
         }
 
-        .canvas-caption { margin-top: 1rem; font-size: 0.85rem; color: var(--text-secondary); text-align: right; }
+        .canvas-caption { margin-top: 0.75rem; font-size: 0.8rem; color: var(--text-secondary); text-align: right; }
 
-        .content-area { max-width: 1200px; margin: 3rem auto; padding: 0 1.5rem; }
-        .content-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 2.5rem; }
-        .content-card h1 { font-size: 2rem; margin-bottom: 1rem; color: #fff; }
-        .content-card h2 { font-size: 1.4rem; margin: 1.8rem 0 1rem; color: #fff; }
+        .content-area { 
+            width: 100%;
+            max-width: 1200px; 
+            margin: 2rem auto; 
+            padding: 0 1rem; 
+            box-sizing: border-box;
+        }
+        
+        .content-card { 
+            background-color: var(--bg-card); 
+            border: 1px solid var(--border-color); 
+            border-radius: 12px; 
+            padding: 1.5rem; 
+        }
+        
+        @media (min-width: 769px) {
+            .content-card { padding: 2.5rem; }
+        }
+
+        .content-card h1 { font-size: 1.75rem; margin-bottom: 1rem; color: #fff; line-height: 1.3; }
+        .content-card h2 { font-size: 1.3rem; margin: 1.8rem 0 1rem; color: #fff; }
+        .content-card h3 { font-size: 1.1rem; margin: 1.4rem 0 0.75rem; color: #fff; }
         .content-card p { color: var(--text-secondary); margin-bottom: 1.2rem; }
-        .content-card ul, .content-card ol { color: var(--text-secondary); margin: 0 0 1.2rem 1.5rem; }
+        .content-card ul, .content-card ol { color: var(--text-secondary); margin: 0 0 1.2rem 1.25rem; }
         .content-card li { margin-bottom: 0.5rem; }
 
-        .spec-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; text-align: left; }
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin: 1.5rem 0;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+        }
+
+        .spec-table { width: 100%; border-collapse: collapse; text-align: left; min-width: 500px; }
         .spec-table th, .spec-table td { padding: 0.85rem 1rem; border: 1px solid var(--border-color); }
         .spec-table th { background-color: var(--bg-input); color: #fff; }
         .spec-table td { color: var(--text-secondary); }
@@ -263,7 +371,7 @@
         }
         .faq-accordion[open] { border-color: var(--accent-purple); }
         .faq-summary {
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 600;
             color: #fff;
             padding: 1rem 1.2rem;
@@ -288,29 +396,36 @@
         .faq-answer {
             padding: 0 1.2rem 1.2rem;
             color: var(--text-secondary);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             border-top: 1px solid rgba(255,255,255,0.05);
             margin-top: 0.4rem;
             padding-top: 0.8rem;
         }
 
-        .cms-ad-slot-1, .cms-ad-slot-2 {
-            width: 100%; max-width: 970px; min-height: 90px; margin: 1.5rem auto;
-            background: rgba(255,255,255,0.02); border-radius: 8px;
+        #cms-ad-slot-1, #cms-ad-slot-2 {
+            width: 100%; 
+            max-width: 100%; 
+            min-height: 90px; 
+            margin: 1rem auto;
+            background: rgba(255,255,255,0.02); 
+            border-radius: 8px;
+            overflow: hidden;
         }
     </style>
-<style>#cms-ad-slot-top,#cms-ad-slot-1,.cms-medianet-box{display:block!important;height:250px!important;min-height:250px!important;max-height:250px!important;overflow:hidden!important;background-color:var(--cms-surface-alt)}</style></head>
+</head>
 <body>
 
     <!-- Global Site Header -->
+    <div id="site-header"></div>
     <div id="global-header"></div>
 
     <!-- Ad Slot 1 Container (Directly Above Main Title) -->
-    <div class="cms-ad-slot-1"></div>
+    <div id="cms-ad-slot-1" class="cms-ad-slot-1"></div>
 
     <!-- Main Tool Container -->
     <section class="cms-tool-container">
-        <form class="panel" id="section8Form" onsubmit="return false;">
+        <!-- Input Form Panel (Stacked First on Mobile) -->
+        <form class="panel" id="inputPanel" onsubmit="return false;">
             <div class="panel-title">
                 <span>Form 3A Section 8 Controls</span>
                 <span class="badge">UK LEGAL ENGINE</span>
@@ -366,7 +481,7 @@
             <button class="btn-action" id="calculateBtn" type="button">Calculate Notice Dates & Validity</button>
         </form>
 
-        <!-- Result Stage Wrapper -->
+        <!-- Result Stage Wrapper (Stacked Immediately Below on Mobile) -->
         <section class="preview-stage">
             <div class="panel" style="flex: 1; display: flex; flex-direction: column;">
                 <div class="panel-title">
@@ -388,6 +503,12 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Download Report Button Feature -->
+                <button class="btn-download" id="downloadReportBtn" type="button">
+                    📥 Download Watermarked Report (PNG)
+                </button>
+
                 <p class="canvas-caption">
                     Calculated in compliance with Section 8 Form 3A statutory rules for England under current statutory housing legislation.
                 </p>
@@ -408,60 +529,77 @@
 
             <h2>Statutory Section 8 Notice Periods & Ground Matrix</h2>
             <p>
-                The table below outlines notice requirements and court discretion parameters across statutory Section 8 grounds:
+                The table below outlines notice requirements and court discretion parameters across statutory Section 8 grounds under UK housing law and the Renters' Rights framework:
             </p>
 
-            <table class="spec-table">
-                <thead>
-                    <tr>
-                        <th>Ground Number</th>
-                        <th>Ground Description</th>
-                        <th>Required Notice Period</th>
-                        <th>Court Authority Type</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Ground 8</strong></td>
-                        <td>Serious Rent Arrears (≥ 3 Months)</td>
-                        <td>4 Weeks (28 Days)</td>
-                        <td>Mandatory Possession</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Ground 1</strong></td>
-                        <td>Landlord or Family Member Moving In</td>
-                        <td>4 Months</td>
-                        <td>Mandatory Possession</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Ground 1A</strong></td>
-                        <td>Landlord Intention to Sell Property</td>
-                        <td>4 Months</td>
-                        <td>Mandatory Possession</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Ground 10 / 11</strong></td>
-                        <td>Minor Arrears or Persistent Late Payment</td>
-                        <td>4 Weeks (28 Days)</td>
-                        <td>Discretionary Possession</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Ground 12 / 13</strong></td>
-                        <td>Breach of Tenancy / Property Neglect</td>
-                        <td>4 Weeks (28 Days)</td>
-                        <td>Discretionary Possession</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Ground 14</strong></td>
-                        <td>Nuisance, Anti-Social Behaviour, Crime</td>
-                        <td>Immediate (0 Days)</td>
-                        <td>Discretionary Possession</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="table-wrapper">
+                <table class="spec-table">
+                    <thead>
+                        <tr>
+                            <th>Ground Number</th>
+                            <th>Ground Description</th>
+                            <th>Required Notice Period</th>
+                            <th>Court Authority Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Ground 8</strong></td>
+                            <td>Serious Rent Arrears (≥ 3 Months)</td>
+                            <td>4 Weeks (28 Days)</td>
+                            <td>Mandatory Possession</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ground 1</strong></td>
+                            <td>Landlord or Family Member Moving In</td>
+                            <td>4 Months</td>
+                            <td>Mandatory Possession</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ground 1A</strong></td>
+                            <td>Landlord Intention to Sell Property</td>
+                            <td>4 Months</td>
+                            <td>Mandatory Possession</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ground 10 / 11</strong></td>
+                            <td>Minor Arrears or Persistent Late Payment</td>
+                            <td>4 Weeks (28 Days)</td>
+                            <td>Discretionary Possession</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ground 12 / 13</strong></td>
+                            <td>Breach of Tenancy / Property Neglect</td>
+                            <td>4 Weeks (28 Days)</td>
+                            <td>Discretionary Possession</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ground 14</strong></td>
+                            <td>Nuisance, Anti-Social Behaviour, Crime</td>
+                            <td>Immediate (0 Days)</td>
+                            <td>Discretionary Possession</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
             <!-- Ad Slot 2 Container (Directly Below Specification Table) -->
-            <div class="cms-ad-slot-2"></div>
+            <div id="cms-ad-slot-2" class="cms-ad-slot-2"></div>
+
+            <h2>Comprehensive Guide to Form 3A Serving & Timeline Strategy</h2>
+            <p>
+                Navigating the Section 8 eviction process requires exact compliance with statutory notice periods. Even minor date calculation errors can result in immediate dismissal of your possession claim at the county court level, forfeiting non-refundable court fees and delaying recovery by months.
+            </p>
+
+            <h3>1. Calculating Notice Expiry & Service Days</h3>
+            <p>
+                When determining the statutory notice period for Form 3A, the calculation begins the day <em>after</em> valid service is deemed effected. If serving by first-class post, allow two clear business days for service before commencing the statutory notice period count. Citing multiple grounds on a single notice requires waiting out the ground with the longest mandatory duration before initiating formal court proceedings.
+            </p>
+
+            <h3>2. Mandatory Arrears Thresholds vs Discretionary Claims</h3>
+            <p>
+                Ground 8 remains the primary mandatory ground for serious rent arrears. However, for a judge to issue a mandatory possession order, arrears must equal or exceed 3 full months of contractual rent both on the date Form 3A is served and on the exact date of the court hearing. Citing discretionary Grounds 10 (any rent unpaid) and 11 (persistent late payment) provides an essential legal safeguard should a tenant make partial payments to drop arrears below the mandatory threshold right before court.
+            </p>
 
             <h2>Section 8 Notice Serving Workflow & Integration Checklist</h2>
             <p>
@@ -515,6 +653,7 @@
     </article>
 
     <!-- Global Site Footer -->
+    <div id="site-footer"></div>
     <div id="global-footer"></div>
 
     <script>
@@ -532,6 +671,7 @@
 
             var calculateBtn = document.getElementById('calculateBtn');
             var loadDemoBtn = document.getElementById('loadDemoBtn');
+            var downloadReportBtn = document.getElementById('downloadReportBtn');
 
             var resEarliestCourtDate = document.getElementById('Earliest Date Court Proceedings Can Begin');
             var resArrearsStatus = document.getElementById('Mandatory Arrears Threshold Assessment');
@@ -559,6 +699,10 @@
 
             calculateBtn.addEventListener('click', function() {
                 calculateSection8();
+            });
+
+            downloadReportBtn.addEventListener('click', function() {
+                generateWatermarkedReport();
             });
 
             function calculateSection8() {
@@ -664,87 +808,178 @@
                 return d.toLocaleDateString('en-GB', options);
             }
 
+            // Client-Side Watermarked Report Generator Engine
+            function generateWatermarkedReport() {
+                var canvas = document.createElement('canvas');
+                var ctx = canvas.getContext('2d');
+
+                canvas.width = 800;
+                canvas.height = 700;
+
+                // Background
+                ctx.fillStyle = '#181b24';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Outer Border
+                ctx.strokeStyle = '#2e3446';
+                ctx.lineWidth = 4;
+                ctx.strokeRect(20, 20, canvas.width - 40, canvas.height - 40);
+
+                // Header Title
+                ctx.fillStyle = '#8b5cf6';
+                ctx.font = 'bold 22px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+                ctx.fillText('UK Section 8 Form 3A Calculation Report', 40, 65);
+
+                ctx.strokeStyle = '#2e3446';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(40, 80);
+                ctx.lineTo(760, 80);
+                ctx.stroke();
+
+                // Key Calculation Data
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = '14px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+                ctx.fillText('Planned Service Date: ' + serviceDateInput.value, 40, 115);
+                ctx.fillText('Agreed Monthly Rent: £' + monthlyRentInput.value, 40, 140);
+                ctx.fillText('Current Arrears: £' + currentArrearsInput.value, 40, 165);
+
+                // Results Highlights
+                ctx.fillStyle = '#f3f4f6';
+                ctx.font = 'bold 16px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+                ctx.fillText('Earliest Date Court Proceedings Can Begin:', 40, 210);
+                ctx.fillStyle = '#00f2fe';
+                ctx.font = 'bold 18px monospace';
+                ctx.fillText(resEarliestCourtDate.textContent, 40, 235);
+
+                ctx.fillStyle = '#f3f4f6';
+                ctx.font = 'bold 16px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+                ctx.fillText('Arrears Threshold Assessment:', 40, 280);
+                ctx.fillStyle = '#ffffff';
+                ctx.font = '14px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+                ctx.fillText(resArrearsStatus.textContent, 40, 305);
+
+                // Timeline Milestones
+                ctx.fillStyle = '#8b5cf6';
+                ctx.font = 'bold 16px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+                ctx.fillText('Statutory Timeline Breakdown:', 40, 355);
+
+                var timelineRows = resTimelineList.querySelectorAll('.timeline-row');
+                var startY = 385;
+                
+                timelineRows.forEach(function(row) {
+                    var spans = row.querySelectorAll('span');
+                    if (spans.length >= 2) {
+                        ctx.fillStyle = '#9ca3af';
+                        ctx.font = '13px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+                        ctx.fillText('• ' + spans[0].textContent, 50, startY);
+                        
+                        ctx.fillStyle = '#ffffff';
+                        ctx.font = 'bold 13px monospace';
+                        ctx.fillText(spans[1].textContent, 520, startY);
+                        
+                        startY += 28;
+                    }
+                });
+
+                // Professional Visual Watermark Text Stamp
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.18)';
+                ctx.font = 'bold 20px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('Generated by CoreMetricSuite (coremetricsuite.com)', canvas.width / 2, canvas.height - 45);
+
+                // Convert to PNG & Download Trigger
+                var imageURI = canvas.toDataURL('image/png');
+                var link = document.createElement('a');
+                link.download = 'Section-8-Timeline-Report.png';
+                link.href = imageURI;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+
             calculateSection8();
         });
     </script>
+
     <!-- Global CoreMetricSuite Cross-Linking Index Hub -->
-<div style="margin-top: 40px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #f8fafc; font-family: system-ui, -apple-system, sans-serif;">
-    <h3 style="margin: 0 0 15px 0; font-size: 18px; color: #0f172a; font-weight: 600;">🛠️ CoreMetricSuite Utility Directory</h3>
-    
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
-        <!-- Group 1 -->
-        <div>
-            <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇦🇺 Australia Tax & Labor</h4>
-            <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
-                <li style="margin-bottom: 4px;"><a id="hub-au-cents" href="../au-cents-per-km-estimator/" style="color: #2563eb; text-decoration: underline;">Cents-Per-Km Tax Estimator</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-au-schads" href="../au-schads-vehicle-allowance/" style="color: #2563eb; text-decoration: underline;">SCHADS Vehicle Allowance</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-au-super" href="../au-superannuation-charge-tracker/" style="color: #2563eb; text-decoration: underline;">Superannuation Tracker</a></li>
-            </ul>
-        </div>
+    <div style="margin-top: 40px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #f8fafc; font-family: system-ui, -apple-system, sans-serif;">
+        <h3 style="margin: 0 0 15px 0; font-size: 18px; color: #0f172a; font-weight: 600;">🛠️ CoreMetricSuite Utility Directory</h3>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
+            <!-- Group 1 -->
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇦🇺 Australia Tax & Labor</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-au-cents" href="../au-cents-per-km-estimator/" style="color: #2563eb; text-decoration: underline;">Cents-Per-Km Tax Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-au-schads" href="../au-schads-vehicle-allowance/" style="color: #2563eb; text-decoration: underline;">SCHADS Vehicle Allowance</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-au-super" href="../au-superannuation-charge-tracker/" style="color: #2563eb; text-decoration: underline;">Superannuation Tracker</a></li>
+                </ul>
+            </div>
 
-        <!-- Group 2 -->
-        <div>
-            <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇺🇸 US Corporate Tax</h4>
-            <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
-                <li style="margin-bottom: 4px;"><a id="hub-us-llc" href="../us-llc-late-penalty-estimator/" style="color: #2563eb; text-decoration: underline;">LLC Late Tax Penalty</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-us-179" href="../us-section-179-truck-calculator/" style="color: #2563eb; text-decoration: underline;">Section 179 Vehicle Deduction</a></li>
-            </ul>
-        </div>
+            <!-- Group 2 -->
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇺🇸 US Corporate Tax</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-us-llc" href="../us-llc-late-penalty-estimator/" style="color: #2563eb; text-decoration: underline;">LLC Late Tax Penalty</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-us-179" href="../us-section-179-truck-calculator/" style="color: #2563eb; text-decoration: underline;">Section 179 Vehicle Deduction</a></li>
+                </ul>
+            </div>
 
-        <!-- Group 3 -->
-        <div>
-            <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇬🇧 UK Property Management</h4>
-            <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
-                <li style="margin-bottom: 4px;"><a id="hub-uk-rent" href="../uk-form-4a-rent-tracker/" style="color: #2563eb; text-decoration: underline;">Form 4A Rent Tracker</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-uk-sdlt" href="../uk-sdlt-bracket-estimator/" style="color: #2563eb; text-decoration: underline;">Stamp Duty Estimator</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-uk-sec8" href="../uk-section-8-calculator/" style="color: #2563eb; text-decoration: underline;">Section 8 Calculator</a></li>
-            </ul>
-        </div>
+            <!-- Group 3 -->
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇬🇧 UK Property Management</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-rent" href="../uk-form-4a-rent-tracker/" style="color: #2563eb; text-decoration: underline;">Form 4A Rent Tracker</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-sdlt" href="../uk-sdlt-bracket-estimator/" style="color: #2563eb; text-decoration: underline;">Stamp Duty Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-sec8" href="../uk-section-8-calculator/" style="color: #2563eb; text-decoration: underline;">Section 8 Calculator</a></li>
+                </ul>
+            </div>
 
-        <!-- Group 4 -->
-        <div>
-            <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🎬 Digital Media Layouts</h4>
-            <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
-                <li style="margin-bottom: 4px;"><a id="hub-media-ig" href="../instagram-reels-preview/" style="color: #2563eb; text-decoration: underline;">Instagram Reels Grid</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-media-shorts" href="../shorts-ui-safe-zone/" style="color: #2563eb; text-decoration: underline;">YouTube Shorts Safe Zone</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-media-tiktok" href="../tiktok-ad-safe-zone/" style="color: #2563eb; text-decoration: underline;">TikTok Ad Checker</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-media-shopify" href="../shopify-metafields-parser/" style="color: #2563eb; text-decoration: underline;">Shopify Metafields Parser</a></li>
-            </ul>
+            <!-- Group 4 -->
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🎬 Digital Media Layouts</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-media-ig" href="../instagram-reels-preview/" style="color: #2563eb; text-decoration: underline;">Instagram Reels Grid</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-shorts" href="../shorts-ui-safe-zone/" style="color: #2563eb; text-decoration: underline;">YouTube Shorts Safe Zone</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-tiktok" href="../tiktok-ad-safe-zone/" style="color: #2563eb; text-decoration: underline;">TikTok Ad Checker</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-shopify" href="../shopify-metafields-parser/" style="color: #2563eb; text-decoration: underline;">Shopify Metafields Parser</a></li>
+                </ul>
+            </div>
         </div>
     </div>
-</div>
 
-<script defer>
-    (function() {
-        // Scans the active browser path to determine which self-link to intercept
-        const path = window.location.pathname.toLowerCase();
-        
-        const toolsMap = {
-            'au-cents-per-km-estimator': 'hub-au-cents',
-            'au-schads-vehicle-allowance': 'hub-au-schads',
-            'au-superannuation-charge-tracker': 'hub-au-super',
-            'us-llc-late-penalty-estimator': 'hub-us-llc',
-            'us-section-179-truck-calculator': 'hub-us-179',
-            'uk-form-4a-rent-tracker': 'hub-uk-rent',
-            'uk-sdlt-bracket-estimator': 'hub-uk-sdlt',
-            'uk-section-8-calculator': 'hub-uk-sec8',
-            'instagram-reels-preview': 'hub-media-ig',
-            'shorts-ui-safe-zone': 'hub-media-shorts',
-            'tiktok-ad-safe-zone': 'hub-media-tiktok',
-            'shopify-metafields-parser': 'hub-media-shopify'
-        };
+    <script defer>
+        (function() {
+            // Scans the active browser path to determine which self-link to intercept
+            const path = window.location.pathname.toLowerCase();
+            
+            const toolsMap = {
+                'au-cents-per-km-estimator': 'hub-au-cents',
+                'au-schads-vehicle-allowance': 'hub-au-schads',
+                'au-superannuation-charge-tracker': 'hub-au-super',
+                'us-llc-late-penalty-estimator': 'hub-us-llc',
+                'us-section-179-truck-calculator': 'hub-us-179',
+                'uk-form-4a-rent-tracker': 'hub-uk-rent',
+                'uk-sdlt-bracket-estimator': 'hub-uk-sdlt',
+                'uk-section-8-calculator': 'hub-uk-sec8',
+                'instagram-reels-preview': 'hub-media-ig',
+                'shorts-ui-safe-zone': 'hub-media-shorts',
+                'tiktok-ad-safe-zone': 'hub-media-tiktok',
+                'shopify-metafields-parser': 'hub-media-shopify'
+            };
 
-        for (const [folderName, elementId] of Object.entries(toolsMap)) {
-            if (path.includes(folderName)) {
-                const targetEl = document.getElementById(elementId);
-                if (targetEl) {
-                    // Replaces the hyperlinked state with unclickable bold text styling
-                    targetEl.outerHTML = `<span style="font-weight: 600; color: #0f172a;">${targetEl.textContent} (Current)</span>`;
+            for (const [folderName, elementId] of Object.entries(toolsMap)) {
+                if (path.includes(folderName)) {
+                    const targetEl = document.getElementById(elementId);
+                    if (targetEl) {
+                        // Replaces the hyperlinked state with unclickable bold text styling
+                        targetEl.outerHTML = `<span style="font-weight: 600; color: #0f172a;">${targetEl.textContent} (Current)</span>`;
+                    }
+                    break;
                 }
-                break;
             }
-        }
-    })();
-</script>
-<style type="text/css">@media screen and (max-width:900px){html,body{width:100%!important;max-width:100vw!important;overflow-x:hidden!important;margin:0!important;padding:0!important}main.container{display:flex!important;flex-direction:column!important;width:100%!important;max-width:100%!important;padding:0 12px!important;margin:8px auto!important;gap:16px!important;box-sizing:border-box!important}main.container>section.preview-stage{order:-1!important;width:100%!important;display:flex!important;flex-direction:column!important;align-items:center!important;margin:0 auto!important;box-sizing:border-box!important}main.container>section.panel{order:2!important;width:100%!important;max-width:100%!important;box-sizing:border-box!important}.canvas-wrapper{width:75vw!important;height:133.33vw!important;max-width:290px!important;max-height:515px!important;margin:0 auto!important;box-sizing:border-box!important}#cms-ad-slot-top,#cms-ad-slot-1,.cms-medianet-box,.cms-ad-slot-1,.cms-ad-slot-2{width:100%!important;max-width:100%!important;height:auto!important;min-height:90px!important;display:block!important}.spec-table,.content-card div[style*="display: grid"]{grid-template-columns:1fr!important;width:100%!important}input,textarea,select{font-size:16px!important}}</style></body>
+        })();
+    </script>
+</body>
 </html>
