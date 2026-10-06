@@ -1,0 +1,175 @@
+const toolsData = [
+    // --- 1. NEWLY ADDED UTILITIES (From your repository updates) ---
+    {
+        id: "bluesky-post-previewer",
+        region: "global",
+        badgeText: "MEDIA & UI",
+        badgeColor: "#db2777",
+        title: "Bluesky Post Previewer",
+        description: "Verify layout safe zones, character limits, image scaling, and native interface overlays for text and media posts on Bluesky.",
+        url: "/bluesky-post-previewer",
+        keywords: "bluesky post previewer social media layout safe zone text feed interface character count"
+    },
+    {
+        id: "facebook-ad-safe-zone",
+        region: "global",
+        badgeText: "MEDIA & UI",
+        badgeColor: "#db2777",
+        title: "Facebook Video Ad Safe Zone Overlay",
+        description: "Ensure full layout compatibility for Facebook mobile feed ads by previewing core profile masks, action bounds, and layout overlays.",
+        url: "/facebook-ad-safe-zone",
+        keywords: "facebook video ad safe zone overlay mobile feed aspect ratio compliance creative placement"
+    },
+    {
+        id: "linkedin-carousel-formatter",
+        region: "global",
+        badgeText: "MEDIA & UI",
+        badgeColor: "#db2777",
+        title: "LinkedIn Carousel Formatter & Previewer",
+        description: "Audit document slides and multi-image carousel postings against native system crops, responsive frame scaling, and swipe controls.",
+        url: "/linkedin-carousel-formatter",
+        keywords: "linkedin carousel formatter previewer document slide layout crop margin responsive frame swipe"
+    },
+    {
+        id: "threads-app-post-visualizer",
+        region: "global",
+        badgeText: "MEDIA & UI",
+        badgeColor: "#db2777",
+        title: "Threads App Post Visualizer",
+        description: "Simulate media posts, threaded string flows, aspect ratios, and user interface details inside the native mobile layout viewport.",
+        url: "/threads-app-post-visualizer",
+        keywords: "threads app post visualizer meta text string layout media display aspect ratio frame"
+    },
+    {
+        id: "youtube-thumbnail-previewer",
+        region: "global",
+        badgeText: "MEDIA & UI",
+        badgeColor: "#db2777",
+        title: "YouTube Thumbnail Aspect Ratio Previewer",
+        description: "Analyze image dimensions across desktop grids, mobile feeds, sidebar layouts, and timeline element overlaps.",
+        url: "/youtube-thumbnail-previewer",
+        keywords: "youtube thumbnail previewer image layout aspect ratio timeline overlay mobile feed desktop grid"
+    },
+
+    // --- 2. ORIGINAL COMPLIANCE UTILITIES ---
+    {
+        id: "au-cents-per-km",
+        region: "au",
+        badgeText: "AU TAX",
+        badgeColor: "#d97706",
+        title: "AU Cents-Per-Km Tax Estimator",
+        description: "Model official ATO cents-per-kilometre vehicle expense deduction caps, tax tier rates, and maximum claimable work travel thresholds.",
+        url: "/au-cents-per-km-estimator",
+        keywords: "au cents per km tax estimator vehicle expense ato travel deduction"
+    },
+    {
+        id: "au-schads-allowance",
+        region: "au",
+        badgeText: "AU LABOUR",
+        badgeColor: "#2563eb",
+        title: "AU SCHADS Award Vehicle Allowance",
+        description: "Compute care-worker multi-variable rosters using Fair Work Commission MA000100 rules, integrating Clause 20.5 and Clause 25.5 travel parameters.",
+        url: "/au-schads-vehicle-allowance",
+        keywords: "au schads award vehicle allowance travel calculator fair work ma000100 clause 20.5 25.5 care worker"
+    },
+    {
+        id: "au-superannuation-charge",
+        region: "au",
+        badgeText: "AU TAX",
+        badgeColor: "#d97706",
+        title: "AU Superannuation Guarantee Charge",
+        description: "Calculate mandatory employer super contributions, trace statutory rate progressions, maximum base limits, and ATO late payment charge models.",
+        url: "/au-superannuation-charge-tracker",
+        keywords: "au superannuation guarantee charge tracker employer super contributions ato late payment"
+    },
+    {
+        id: "us-llc-penalty",
+        region: "us",
+        badgeText: "US TAX",
+        badgeColor: "#4f46e5",
+        title: "US LLC Late Tax Penalty Estimator",
+        description: "Assess federal and state regulatory fine matrices, monthly late fees, and statutory penalty calculations for delinquent corporate entity tax filings.",
+        url: "/us-llc-late-penalty-estimator",
+        keywords: "us llc late tax penalty estimator irs form 1065 1120 5472 non compliance fine corporate"
+    },
+    {
+        id: "us-section-179",
+        region: "us",
+        badgeText: "US TAX",
+        badgeColor: "#4f46e5",
+        title: "US Section 179 Vehicle Deduction Engine",
+        description: "Calculate heavy SUV and truck tax caps ($32,000 threshold limits), 6,000+ lbs GVWR rules, and accelerated MACRS bonus depreciation metrics under IRS codes.",
+        url: "/us-section-179-truck-calculator",
+        keywords: "us section 179 vehicle depreciation calculator heavy suv commercial truck deduction bonus depreciation"
+    },
+    {
+        id: "uk-form-4a",
+        region: "uk",
+        badgeText: "UK LEGAL",
+        badgeColor: "#0d9488",
+        title: "UK Form 4A Rent Increase Tracker",
+        description: "Verify statutory Section 13 rent increase terms, minimum notification guidelines for periodic tenancies, and tribunal review parameters.",
+        url: "/uk-form-4a-rent-tracker",
+        keywords: "uk form 4a rent increase notice tracker section 13 periodic housing tribunal"
+    },
+    {
+        id: "uk-sdlt-bracket",
+        region: "uk",
+        badgeText: "UK TAX",
+        badgeColor: "#0d9488",
+        title: "UK Stamp Duty Bracket Estimator",
+        description: "Calculate progressive HMRC SDLT thresholds, second property surcharges, non-resident tariffs, and first-time buyer allowances.",
+        url: "/uk-sdlt-bracket-estimator",
+        keywords: "uk stamp duty land tax sdlt bracket estimator hmrc residential second home surcharges"
+    },
+    {
+        id: "uk-section-8",
+        region: "uk",
+        badgeText: "UK LEGAL",
+        badgeColor: "#0d9488",
+        title: "UK Section 8 Notice Calculator",
+        description: "Determine legal notice periods and statutory Ground 8 rent arrears thresholds under current UK housing and tenancy acts.",
+        url: "/uk-section-8-calculator",
+        keywords: "uk section 8 eviction notice period calculator ground 8 rent arrears housing act"
+    },
+    {
+        id: "instagram-reels",
+        region: "global",
+        badgeText: "MEDIA & UI",
+        badgeColor: "#db2777",
+        title: "Instagram Reels Aspect Ratio Previewer",
+        description: "Verify asset layout safe zones for Instagram Reels, analyzing title margins, overlay buttons, and caption positioning constraints.",
+        url: "/instagram-reels-preview",
+        keywords: "instagram reels aspect ratio previewer safe zone title margins caption overlay preview"
+    },
+    {
+        id: "youtube-shorts",
+        region: "global",
+        badgeText: "MEDIA & UI",
+        badgeColor: "#db2777",
+        title: "YouTube Shorts UI Safe Zone Analyzer",
+        description: "Check vertical 9:16 video aspect ratios against structural system UI overlays, device frame layouts, and edge bleed limits.",
+        url: "/shorts-ui-safe-zone",
+        keywords: "youtube shorts ui safe zone analyzer vertical video 9 16 layout overlay player metrics"
+    },
+    {
+        id: "tiktok-ad-safe-zone",
+        region: "global",
+        badgeText: "MEDIA & UI",
+        badgeColor: "#db2777",
+        title: "TikTok Video Ad Safe Zone Overlay",
+        description: "Ensure global compliance for commercial TikTok ads by previewing native interactive overlay masks and engagement buttons.",
+        url: "/tiktok-ad-safe-zone",
+        keywords: "tiktok video ad safe zone overlay vertical creative ad specs visual clear template"
+    },
+    {
+        id: "shopify-metafields",
+        region: "global",
+        badgeText: "DEVELOPER",
+        badgeColor: "#059669",
+        title: "Shopify Metafields Schema & Validation Parser",
+        description: "Developer tool to parse, syntax-check, and structuralize custom JSON schema fields for Shopify development.",
+        url: "/shopify-metafields-parser",
+        keywords: "shopify metafields schema validation parser developer json schema liquid templates"
+    }
+];
