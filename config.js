@@ -144,6 +144,11 @@ window.CMS_CONFIG = {
     // --- MEDIA & CREATOR SUITE ---
     { name: "Instagram Reels Preview", url: "/instagram-reels-preview", tag: "MEDIA" },
     { name: "YouTube Shorts UI Zone", url: "/shorts-ui-safe-zone", tag: "MEDIA" },
+    { name: "Linkedin Carousel Formatter", url: "/linkedin-carousel-formatter", tag: "MEDIA" },
+    { name: "Youtube Thumbnail Previewer", url: "/youtube-thumbnail-previewer", tag: "MEDIA" },
+    { name: "Threads App Post Visualizer", url: "/threads-app-post-visualizer", tag: "MEDIA" },
+    { name: "Facebook Ad Safe Zone", url: "/facebook-ad-safe-zone", tag: "MEDIA" },
+    { name: "BlueSky Post Previewer", url: "/bluesky-post-previewer", tag: "MEDIA" },
     { name: "TikTok Ad Safe Zone", url: "/tiktok-ad-safe-zone", tag: "MEDIA" },
 
     // --- E-COMMERCE SUITE ---
