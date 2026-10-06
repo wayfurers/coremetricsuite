@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Threads App Post &amp; Image Ratio Visualizer (Meta Feed Preview Studio)</title>
+    <meta name="description" content="Test your Meta Threads app posts and image aspect ratios instantly. Preview 1:1 square and 4:5 portrait layouts with accurate UI overlays and safe zones.">
+    <meta name="keywords" content="threads app post preview, threads image ratio visualizer, threads safe zone template, threads post dimensions, meta threads aspect ratio checker, threads photo size guide, threads carousel layout preview">
+    <link rel="canonical" href="https://coremetricsuite.com/threads-app-post-visualizer/">
+
+    <!-- Open Graph / Social Metadata -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Threads App Post &amp; Image Ratio Visualizer (Meta Feed Preview Studio)">
+    <meta property="og:description" content="Test your Meta Threads app posts and image aspect ratios instantly. Preview 1:1 square and 4:5 portrait layouts with accurate UI overlays and safe zones.">
+    <meta property="og:url" content="https://coremetricsuite.com/threads-app-post-visualizer/">
+    
+    <!-- Global Framework Dependencies -->
+    <link rel="stylesheet" href="/css/global.css">
+    <script src="/config.js" defer></script>
+    <script src="/global.min.js" defer></script>
+
+    <!-- FAQ JSON-LD Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What are the recommended image aspect ratios for Meta Threads posts?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Threads supports multiple aspect ratios, but 1:1 square (1080x1080 pixels) and 4:5 portrait (1080x1350 pixels) perform best in the mobile feed. 4:5 portrait maximizes vertical screen estate and captures higher engagement."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does client-side rendering protect privacy when uploading images?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "All uploaded graphics, canvas compositions, and dimension checks are executed 100% locally inside your web browser using HTML5 Canvas. No media files or creative assets are ever transmitted or stored on remote servers."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Where do UI elements like reply and repost icons appear on Threads?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "On the Threads mobile app feed, user profile avatars appear at the top-left of the post block, while engagement buttons (like, reply, repost, share/send) sit neatly directly beneath the media container or alongside the threaded reply line."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I preview carousel posts and multi-image galleries?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, you can upload single images or mock up your primary hero visual to check text placement, corner radius clipping, and ensure important details remain clear of interface padding."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the maximum character length for Threads posts?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Meta Threads allows up to 500 characters per post. When pairing text with portrait images, keeping your primary hook concise prevents text truncation before users tap 'more'."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-main: #0f1117;
+            --bg-card: #181b24;
+            --bg-input: #222634;
+            --border-color: #2e3446;
+            --accent-purple: #833ab4;
+            --accent-cyan: #00f2fe;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: var(--bg-main); color: var(--text-primary); font-family: var(--font-sans); line-height: 1.6; }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            grid-template-areas: 
+                "upload preview"
+                "panel preview";
+            gap: 2rem;
+        }
+
+        .upload-card-wrapper {
+            grid-area: upload;
+        }
+
+        .panel {
+            grid-area: panel;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            height: fit-content;
+        }
+
+        .panel-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            background: var(--accent-cyan);
+            color: #000;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        .drop-zone {
+            border: 2px dashed var(--border-color);
+            padding: 1.25rem;
+            text-align: center;
+            border-radius: 8px;
+            background-color: var(--bg-input);
+            cursor: pointer;
+            transition: border-color 0.2s, background-color 0.2s;
+            margin-bottom: 0.75rem;
+        }
+
+        .drop-zone:hover { border-color: var(--accent-cyan); background-color: rgba(0, 242, 254, 0.05); }
+        .drop-title { font-weight: 600; color: #fff; font-size: 0.95rem; }
+        .drop-sub { font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px; }
+
+        .btn-demo {
+            width: 100%;
+            padding: 0.65rem;
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            color: var(--accent-cyan);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 1.25rem;
+            transition: background-color 0.2s;
+        }
+
+        .btn-demo:hover { background-color: #2a2f42; }
+
+        .toggle-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: var(--bg-input);
+            padding: 0.75rem 0.85rem;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 1rem;
+        }
+
+        .toggle-label { font-size: 0.85rem; font-weight: 500; color: var(--text-primary); }
+
+        .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #374151; transition: .3s; border-radius: 24px;
+        }
+        .slider:before {
+            position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px;
+            background-color: white; transition: .3s; border-radius: 50%;
+        }
+        input:checked + .slider { background-color: var(--accent-purple); }
+        input:checked + .slider:before { transform: translateX(20px); }
+
+        .form-group { margin-bottom: 1.25rem; }
+        label { display: block; font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 0.4rem; }
+        input[type="text"], textarea, select {
+            width: 100%; padding: 0.65rem 0.85rem; background-color: var(--bg-input);
+            border: 1px solid var(--border-color); border-radius: 6px; color: #fff;
+            font-size: 0.9rem; outline: none; font-family: inherit;
+        }
+        input[type="text"]:focus, textarea:focus, select:focus { border-color: var(--accent-cyan); }
+
+        .btn-action {
+            width: 100%; padding: 0.85rem; background: linear-gradient(135deg, #405de6, #833ab4, #fd1d1d);
+            color: #fff; font-weight: 600; border: none; border-radius: 6px; cursor: pointer; font-size: 0.95rem;
+            box-shadow: 0 4px 12px rgba(131, 58, 180, 0.3);
+            transition: transform 0.1s, opacity 0.2s;
+            margin-bottom: 1rem;
+        }
+        .btn-action:hover { opacity: 0.95; }
+        .btn-action:active { transform: scale(0.99); }
+
+        /* Social Share Button Module */
+        .social-share-container {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        .share-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
+            display: block;
+            text-align: center;
+        }
+        .share-buttons-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+        }
+        .btn-share {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            padding: 0.5rem 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: opacity 0.2s, transform 0.1s;
+        }
+        .btn-share:hover { opacity: 0.88; }
+        .btn-share:active { transform: scale(0.97); }
+        .btn-share-x { background-color: #000000; border: 1px solid #333; }
+        .btn-share-fb { background-color: #1877f2; }
+        .btn-share-li { background-color: #0a66c2; }
+        .btn-share-wa { background-color: #25d366; color: #000; }
+        .btn-share-pin { background-color: #e60023; }
+        .btn-share-copy { background-color: #374151; color: #fff; grid-column: span 3; margin-top: 0.25rem; }
+
+        .preview-stage { 
+            grid-area: preview;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+        }
+        .canvas-wrapper {
+            position: relative; width: 340px; height: 540px; border-radius: 16px;
+            overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.6); background-color: #12141c;
+            border: 2px solid var(--border-color);
+        }
+        canvas { width: 100%; height: 100%; display: block; }
+        .canvas-caption { margin-top: 1rem; font-size: 0.85rem; color: var(--text-secondary); text-align: center; }
+
+        .content-area { max-width: 1200px; margin: 3rem auto; padding: 0 1.5rem; }
+        .content-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 2.5rem; }
+        .content-card h1 { font-size: 2rem; margin-bottom: 1rem; color: #fff; }
+        .content-card h2 { font-size: 1.4rem; margin: 1.8rem 0 1rem; color: #fff; }
+        .content-card p { color: var(--text-secondary); margin-bottom: 1.2rem; }
+        .content-card ul, .content-card ol { color: var(--text-secondary); margin: 0 0 1.2rem 1.5rem; }
+        .content-card li { margin-bottom: 0.5rem; }
+
+        .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 1.5rem 0; }
+        .spec-table { width: 100%; border-collapse: collapse; text-align: left; min-width: 600px; }
+        .spec-table th, .spec-table td { padding: 0.85rem 1rem; border: 1px solid var(--border-color); }
+        .spec-table th { background-color: var(--bg-input); color: #fff; font-size: 0.9rem; }
+        .spec-table td { color: var(--text-secondary); font-size: 0.875rem; }
+
+        /* Accordion FAQ Styling */
+        .faq-block { margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem; }
+        .faq-accordion {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 0.85rem;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .faq-accordion[open] { border-color: var(--accent-cyan); }
+        .faq-summary {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            padding: 1rem 1.2rem;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+        .faq-summary::-webkit-details-marker { display: none; }
+        .faq-summary::after {
+            content: "+";
+            font-size: 1.2rem;
+            color: var(--accent-cyan);
+            transition: transform 0.2s;
+        }
+        .faq-accordion[open] .faq-summary::after {
+            content: "−";
+            color: var(--accent-purple);
+        }
+        .faq-answer {
+            padding: 0 1.2rem 1.2rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 0.4rem;
+            padding-top: 0.8rem;
+        }
+
+        .cms-ad-slot-1, .cms-ad-slot-2 {
+            width: 100%; max-width: 970px; min-height: 90px; margin: 1.5rem auto;
+            background: rgba(255,255,255,0.02); border-radius: 8px; display: block;
+        }
+
+        /* Mobile Responsive Overrides: File upload first, then canvas preview */
+        @media screen and (max-width: 900px) {
+            html, body { width: 100%!important; max-width: 100vw!important; overflow-x: hidden!important; margin: 0!important; padding: 0!important; }
+            main.container { display: flex!important; flex-direction: column!important; width: 100%!important; max-width: 100%!important; padding: 0 12px!important; margin: 8px auto!important; gap: 16px!important; box-sizing: border-box!important; }
+            .upload-card-wrapper { order: 1!important; width: 100%!important; }
+            main.container > section.preview-stage { order: 2!important; width: 100%!important; display: flex!important; flex-direction: column!important; align-items: center!important; margin: 0 auto!important; box-sizing: border-box!important; }
+            main.container > section.panel { order: 3!important; width: 100%!important; max-width: 100%!important; box-sizing: border-box!important; }
+            .canvas-wrapper { width: 85vw!important; height: 135vw!important; max-width: 320px!important; max-height: 508px!important; margin: 0 auto!important; box-sizing: border-box!important; }
+            input, textarea, select { font-size: 16px!important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Container -->
+    <div id="global-header"></div>
+
+    <!-- Ad Slot 1 Container -->
+    <div class="cms-ad-slot-1" id="cms-ad-slot-top"></div>
+
+    <!-- Main Tool Container -->
+    <main class="container">
+        <!-- Module 1: File Upload Section (Rendered 1st on mobile) -->
+        <div class="upload-card-wrapper">
+            <div class="panel">
+                <div class="panel-title">
+                    <span>Upload Post Image</span>
+                    <span class="badge">STEP 1</span>
+                </div>
+                <div class="drop-zone" id="dropZone">
+                    <p class="drop-title">Click or Drag Image File</p>
+                    <p class="drop-sub">PNG, JPG, WEBP (1080x1350 recommended)</p>
+                    <input type="file" id="fileInput" accept="image/*" style="display:none;">
+                </div>
+                <button class="btn-demo" id="loadDemoBtn" type="button" style="margin-bottom:0;">⚡ Load Demo Sample Data</button>
+            </div>
+        </div>
+
+        <!-- Module 2: Live Canvas Stage (Rendered 2nd on mobile) -->
+        <section class="preview-stage">
+            <div class="canvas-wrapper">
+                <canvas id="previewCanvas" width="1080" height="1350"></canvas>
+            </div>
+            <p class="canvas-caption">
+                Interactive Threads feed preview. Check aspect ratios &amp; UI boundaries in real time.
+            </p>
+        </section>
+
+        <!-- Module 3: Tool Controls Panel (Rendered 3rd on mobile) -->
+        <section class="panel">
+            <div class="panel-title">
+                <span>Threads Visualizer Controls</span>
+                <span class="badge">FEED SPECS</span>
+            </div>
+
+            <div class="form-group">
+                <label for="aspectRatioSelect">Target Image Aspect Ratio</label>
+                <select id="aspectRatioSelect">
+                    <option value="4:5">4:5 Portrait (1080 x 1350 px) - Recommended</option>
+                    <option value="1:1">1:1 Square (1080 x 1080 px)</option>
+                    <option value="16:9">16:9 Landscape (1080 x 608 px)</option>
+                </select>
+            </div>
+
+            <div class="toggle-group">
+                <span class="toggle-label">Show Threads UI Overlay</span>
+                <label class="switch">
+                    <input type="checkbox" id="overlayToggle" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="toggle-group">
+                <span class="toggle-label">Show Thread Reply Line</span>
+                <label class="switch">
+                    <input type="checkbox" id="replyLineToggle" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="accountName">Threads Handle / Profile Name</label>
+                <input type="text" id="accountName" value="yourusername">
+            </div>
+
+            <div class="form-group">
+                <label for="adCaption">Post Text Content</label>
+                <textarea id="adCaption" rows="3">Building in public! Testing new vertical design assets for Meta Threads feed engagement. 🧵✨ #buildinpublic #design</textarea>
+            </div>
+
+            <button class="btn-action" id="downloadBtn" type="button">Export 1080x1350 PNG Preview</button>
+
+            <!-- Social Media Share Section -->
+            <div class="social-share-container">
+                <span class="share-label">Share This Tool</span>
+                <div class="share-buttons-grid">
+                    <a id="shareX" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-x">𝕏 Post</a>
+                    <a id="shareFB" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-fb">Facebook</a>
+                    <a id="shareWA" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-wa">WhatsApp</a>
+                    <a id="shareLI" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-li">LinkedIn</a>
+                    <a id="sharePIN" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-pin">Pinterest</a>
+                    <button id="copyShareLink" type="button" class="btn-share btn-share-copy">🔗 Copy Tool Link</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- SEO & Educational Guide Section -->
+    <article class="content-area">
+        <div class="content-card">
+            <h1>Threads App Post &amp; Image Ratio Visualizer Guide</h1>
+            <p>
+                Meta Threads has evolved into a premier destination for text-based conversations, thought leadership, and visual storytelling. However, getting your graphics cropped correctly across mobile feeds can be challenging. Unlike standard photo sharing platforms, Threads dynamically arranges post copy above image attachments alongside threaded reply reply-lines and interactive action buttons.
+            </p>
+            <p>
+                This browser-based <strong>threads-app-post-visualizer</strong> utility lets creators, community managers, and brand strategists test image aspect ratios instantly. Preview your 1:1 squares or 4:5 portraits against native Threads UI overlays before publishing to maximize visual impact and engagement.
+            </p>
+
+            <h2>Meta Threads Aspect Ratio Specifications</h2>
+            <p>
+                Choosing the right dimension ensures your imagery is never awkwardly cropped or compressed by Meta's feed rendering engine:
+            </p>
+
+            <div class="table-responsive">
+                <table class="spec-table">
+                    <thead>
+                        <tr>
+                            <th>Aspect Ratio</th>
+                            <th>Recommended Resolution</th>
+                            <th>Best Used For</th>
+                            <th>Feed Impact</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>4:5 Portrait</strong></td>
+                            <td>1080 × 1350 px</td>
+                            <td>Infographics, tall photography, step-by-step guides</td>
+                            <td><strong style="color: #00ff80;">Maximum Screen Real Estate</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>1:1 Square</strong></td>
+                            <td>1080 × 1080 px</td>
+                            <td>Classic product shots, brand logos, quotes</td>
+                            <td><strong style="color: #00ff80;">Balanced &amp; Versatile</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>16:9 Landscape</strong></td>
+                            <td>1080 × 608 px</td>
+                            <td>Screenshots, panoramic views, landscape banners</td>
+                            <td><strong style="color: #ff944d;">Moderate (Letterboxed)</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Ad Slot 2 Container -->
+            <div class="cms-ad-slot-2"></div>
+
+            <h2>Why Image Aspect Ratios Matter on Threads</h2>
+            <p>
+                Mobile users scroll rapidly through their social feeds. Posts that leverage taller aspect ratios capture significantly more vertical screen space, reducing distractions from adjacent posts and driving higher click-through and reply rates.
+            </p>
+            <ul>
+                <li><strong>Avoiding Unwanted Cropping:</strong> Uploading odd aspect ratios outside Meta's native container specs can result in automatic edge cropping or unwanted borders.</li>
+                <li><strong>Text Legibility in Infographics:</strong> When sharing text-heavy graphics or carousels, keeping typography centered ensures text is legible even on smaller mobile screens.</li>
+                <li><strong>Consistent Branding:</strong> Aligning your visual asset creation with tested templates prevents layout trial-and-error during live campaign rollouts.</li>
+            </ul>
+
+            <h2>Best Practices for Threads Content Creators</h2>
+            <p>
+                To get the most out of your Threads strategy, combine compelling copywriting with optimized visual media:
+            </p>
+            <ol>
+                <li><strong>Hook in the First Line:</strong> Threads truncates longer text blocks after ~3 lines. Put your core hook right at the beginning.</li>
+                <li><strong>Leverage 4:5 Tall Images:</strong> Whenever possible, design your graphics in 1080x1350 pixels to dominate mobile screen space.</li>
+                <li><strong>Test Before Publishing:</strong> Use our live client-side visualizer to check your text length and image framing before posting live.</li>
+            </ol>
+
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-block">
+                <details class="faq-accordion" open>
+                    <summary class="faq-summary">What are the recommended image aspect ratios for Meta Threads posts?</summary>
+                    <div class="faq-answer">
+                        Threads supports multiple aspect ratios, but 1:1 square (1080x1080 pixels) and 4:5 portrait (1080x1350 pixels) perform best in the mobile feed. 4:5 portrait maximizes vertical screen estate and captures higher engagement.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">How does client-side rendering protect privacy when uploading images?</summary>
+                    <div class="faq-answer">
+                        All uploaded graphics, canvas compositions, and dimension checks are executed 100% locally inside your web browser using HTML5 Canvas. No media files or creative assets are ever transmitted or stored on remote servers.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">Where do UI elements like reply and repost icons appear on Threads?</summary>
+                    <div class="faq-answer">
+                        On the Threads mobile app feed, user profile avatars appear at the top-left of the post block, while engagement buttons (like, reply, repost, share/send) sit neatly directly beneath the media container or alongside the threaded reply line.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">Can I preview carousel posts and multi-image galleries?</summary>
+                    <div class="faq-answer">
+                        Yes, you can upload single images or mock up your primary hero visual to check text placement, corner radius clipping, and ensure important details remain clear of interface padding.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">What is the maximum character length for Threads posts?</summary>
+                    <div class="faq-answer">
+                        Meta Threads allows up to 500 characters per post. When pairing text with portrait images, keeping your primary hook concise prevents text truncation before users tap 'more'.
+                    </div>
+                </details>
+            </div>
+        </div>
+    </article>
+
+    <!-- Footer Container -->
+    <div id="global-footer"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var canvas = document.getElementById('previewCanvas');
+            if (!canvas) return;
+            var ctx = canvas.getContext('2d');
+            
+            var fileInput = document.getElementById('fileInput');
+            var dropZone = document.getElementById('dropZone');
+            var loadDemoBtn = document.getElementById('loadDemoBtn');
+            var aspectRatioSelect = document.getElementById('aspectRatioSelect');
+            var overlayToggle = document.getElementById('overlayToggle');
+            var replyLineToggle = document.getElementById('replyLineToggle');
+            var accountNameInput = document.getElementById('accountName');
+            var adCaptionInput = document.getElementById('adCaption');
+            var downloadBtn = document.getElementById('downloadBtn');
+
+            var currentImage = null;
+
+            /* Setup Social Share Links */
+            var currentUrl = encodeURIComponent(window.location.href);
+            var shareTitle = encodeURIComponent("Check out this free Threads App Post & Image Ratio Visualizer!");
+            
+            document.getElementById('shareX').href = 'https://twitter.com/intent/tweet?url=' + currentUrl + '&text=' + shareTitle;
+            document.getElementById('shareFB').href = 'https://www.facebook.com/sharer/sharer.php?u=' + currentUrl;
+            document.getElementById('shareWA').href = 'https://api.whatsapp.com/send?text=' + shareTitle + '%20' + currentUrl;
+            document.getElementById('shareLI').href = 'https://www.linkedin.com/sharing/share-offsite/?url=' + currentUrl;
+            document.getElementById('sharePIN').href = 'https://pinterest.com/pin/create/button/?url=' + currentUrl + '&description=' + shareTitle;
+
+            var copyBtn = document.getElementById('copyShareLink');
+            copyBtn.addEventListener('click', function() {
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'Threads App Post Visualizer',
+                        text: 'Test your Meta Threads posts and image aspect ratios.',
+                        url: window.location.href
+                    }).catch(function() {});
+                } else if (navigator.clipboard) {
+                    navigator.clipboard.writeText(window.location.href).then(function() {
+                        var origText = copyBtn.textContent;
+                        copyBtn.textContent = '✓ Link Copied!';
+                        setTimeout(function() { copyBtn.textContent = origText; }, 2000);
+                    });
+                }
+            });
+
+            dropZone.addEventListener('click', function() { fileInput.click(); });
+
+            dropZone.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                dropZone.style.borderColor = 'var(--accent-cyan)';
+            });
+
+            dropZone.addEventListener('dragleave', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                dropZone.style.borderColor = 'var(--border-color)';
+            });
+
+            dropZone.addEventListener('drop', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                dropZone.style.borderColor = 'var(--border-color)';
+                if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+                    processFile(e.dataTransfer.files[0]);
+                }
+            });
+
+            fileInput.addEventListener('change', function(e) {
+                if (e.target.files && e.target.files[0]) {
+                    processFile(e.target.files[0]);
+                }
+            });
+
+            aspectRatioSelect.addEventListener('change', function() {
+                var val = aspectRatioSelect.value;
+                if (val === '4:5') {
+                    canvas.width = 1080;
+                    canvas.height = 1350;
+                } else if (val === '1:1') {
+                    canvas.width = 1080;
+                    canvas.height = 1080;
+                } else if (val === '16:9') {
+                    canvas.width = 1080;
+                    canvas.height = 608;
+                }
+                draw();
+            });
+
+            loadDemoBtn.addEventListener('click', function() {
+                var demoCanvas = document.createElement('canvas');
+                demoCanvas.width = 1080;
+                demoCanvas.height = 1350;
+                var dCtx = demoCanvas.getContext('2d');
+
+                var grad = dCtx.createLinearGradient(0, 0, 1080, 1350);
+                grad.addColorStop(0, '#1f1c2c');
+                grad.addColorStop(1, '#928dab');
+                dCtx.fillStyle = grad;
+                dCtx.fillRect(0, 0, 1080, 1350);
+
+                dCtx.fillStyle = '#ffffff';
+                dCtx.font = 'bold 64px sans-serif';
+                dCtx.textAlign = 'center';
+                dCtx.fillText('THREADS POST DEMO', 540, 640);
+                
+                dCtx.fillStyle = '#00f2fe';
+                dCtx.font = '40px sans-serif';
+                dCtx.fillText('1080 x 1350 Portrait Feed Asset', 540, 730);
+
+                var img = new Image();
+                img.src = demoCanvas.toDataURL();
+                img.onload = function() {
+                    currentImage = img;
+                    draw();
+                };
+            });
+
+            function processFile(file) {
+                var fileURL = URL.createObjectURL(file);
+                var img = new Image();
+                img.src = fileURL;
+                img.onload = function() {
+                    currentImage = img;
+                    draw();
+                };
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                // Background / Feed Container
+                ctx.fillStyle = '#10121a';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                var showOverlay = overlayToggle.checked;
+                var showReplyLine = replyLineToggle.checked;
+
+                // Draw Header UI (Avatar & Handle)
+                var avatarX = 60;
+                var avatarY = 80;
+                var avatarRadius = 45;
+
+                // Avatar circle
+                ctx.fillStyle = '#833ab4';
+                ctx.beginPath();
+                ctx.arc(avatarX, avatarY, avatarRadius, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 36px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                var handleText = accountNameInput.value ? accountNameInput.value.charAt(0).toUpperCase() : 'Y';
+                ctx.fillText(handleText, avatarX, avatarY);
+
+                // Handle & Timestamp
+                ctx.textAlign = 'left';
+                ctx.textBaseline = 'alphabetic';
+                ctx.font = 'bold 32px sans-serif';
+                ctx.fillStyle = '#ffffff';
+                ctx.fillText(accountNameInput.value || 'yourusername', avatarX + 70, avatarY - 8);
+
+                ctx.font = '24px sans-serif';
+                ctx.fillStyle = '#9ca3af';
+                ctx.fillText('2h', canvas.width - 80, avatarY - 8);
+
+                // Post Caption Text
+                ctx.font = '28px sans-serif';
+                ctx.fillStyle = '#f3f4f6';
+                var textX = avatarX + 70;
+                var textY = avatarY + 50;
+                
+                var caption = adCaptionInput.value || '';
+                var maxW = canvas.width - textX - 60;
+                
+                // Simple multiline wrap for canvas text
+                var words = caption.split(' ');
+                var line = '';
+                var lines = [];
+                for (var n = 0; n < words.length; n++) {
+                    var testLine = line + words[n] + ' ';
+                    var metrics = ctx.measureText(testLine);
+                    if (metrics.width > maxW && n > 0) {
+                        lines.push(line);
+                        line = words[n] + ' ';
+                    } else {
+                        line = testLine;
+                    }
+                }
+                lines.push(line);
+
+                for (var i = 0; i < Math.min(lines.length, 4); i++) {
+                    ctx.fillText(lines[i], textX, textY + (i * 38));
+                }
+
+                var textHeightOffset = textY + (Math.min(lines.length, 4) * 38) + 20;
+
+                // Optional Thread Reply Line connecting down
+                if (showReplyLine) {
+                    ctx.strokeStyle = '#2e3446';
+                    ctx.lineWidth = 4;
+                    ctx.beginPath();
+                    ctx.moveTo(avatarX, avatarY + avatarRadius + 10);
+                    ctx.lineTo(avatarX, textHeightOffset + 120);
+                    ctx.stroke();
+
+                    // Small reply avatar indicator at bottom of line
+                    ctx.fillStyle = '#222634';
+                    ctx.beginPath();
+                    ctx.arc(avatarX, textHeightOffset + 140, 18, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.strokeStyle = '#2e3446';
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+                }
+
+                // Image Media Box
+                var imgBoxX = textX;
+                var imgBoxY = textHeightOffset;
+                var imgBoxW = canvas.width - imgBoxX - 60;
+                var imgBoxH = canvas.height - imgBoxY - 140;
+
+                if (currentImage) {
+                    ctx.save();
+                    if (ctx.roundRect) {
+                        ctx.beginPath();
+                        ctx.roundRect(imgBoxX, imgBoxY, imgBoxW, imgBoxH, 20);
+                        ctx.clip();
+                    }
+                    ctx.drawImage(currentImage, imgBoxX, imgBoxY, imgBoxW, imgBoxH);
+                    ctx.restore();
+
+                    // Border around image box
+                    ctx.strokeStyle = '#2e3446';
+                    ctx.lineWidth = 2;
+                    if (ctx.roundRect) {
+                        ctx.beginPath();
+                        ctx.roundRect(imgBoxX, imgBoxY, imgBoxW, imgBoxH, 20);
+                        ctx.stroke();
+                    } else {
+                        ctx.strokeRect(imgBoxX, imgBoxY, imgBoxW, imgBoxH);
+                    }
+                } else {
+                    ctx.fillStyle = '#181b24';
+                    if (ctx.roundRect) {
+                        ctx.beginPath();
+                        ctx.roundRect(imgBoxX, imgBoxY, imgBoxW, imgBoxH, 20);
+                        ctx.fill();
+                    } else {
+                        ctx.fillRect(imgBoxX, imgBoxY, imgBoxW, imgBoxH);
+                    }
+                    ctx.fillStyle = '#6b7280';
+                    ctx.font = 'bold 28px sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('Upload Post Image', imgBoxX + (imgBoxW / 2), imgBoxY + (imgBoxH / 2));
+                    ctx.textAlign = 'left';
+                }
+
+                // Threads Action Bar (Heart, Reply, Repost, Send)
+                if (showOverlay) {
+                    var actionY = canvas.height - 70;
+                    ctx.font = '24px sans-serif';
+                    ctx.fillStyle = '#9ca3af';
+                    
+                    var actions = ['💬 24', '🔁 12', '❤️ 348', '↗'];
+                    var startX = imgBoxX;
+                    var spacing = 110;
+                    for (var a = 0; a < actions.length; a++) {
+                        ctx.fillText(actions[a], startX + (a * spacing), actionY);
+                    }
+                }
+            }
+
+            var controls = [aspectRatioSelect, overlayToggle, replyLineToggle, accountNameInput, adCaptionInput];
+            for (var j = 0; j < controls.length; j++) {
+                controls[j].addEventListener('input', function() {
+                    draw();
+                });
+            }
+
+            draw();
+
+            downloadBtn.addEventListener('click', function() {
+                var link = document.createElement('a');
+                link.download = 'threads-post-preview.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        });
+    </script>
+
+    <!-- Global CoreMetricSuite Cross-Linking Index Hub -->
+    <div style="margin-top: 40px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #f8fafc; font-family: system-ui, -apple-system, sans-serif;">
+        <h3 style="margin: 0 0 15px 0; font-size: 18px; color: #0f172a; font-weight: 600;">🛠️ CoreMetricSuite Utility Directory</h3>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇦🇺 Australia Tax &amp; Labor</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-au-cents" href="../au-cents-per-km-estimator/" style="color: #2563eb; text-decoration: underline;">Cents-Per-Km Tax Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-au-schads" href="../au-schads-vehicle-allowance/" style="color: #2563eb; text-decoration: underline;">SCHADS Vehicle Allowance</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-au-super" href="../au-superannuation-charge-tracker/" style="color: #2563eb; text-decoration: underline;">Superannuation Tracker</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇺🇸 US Corporate Tax</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-us-llc" href="../us-llc-late-penalty-estimator/" style="color: #2563eb; text-decoration: underline;">LLC Late Tax Penalty</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-us-179" href="../us-section-179-truck-calculator/" style="color: #2563eb; text-decoration: underline;">Section 179 Vehicle Deduction</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇬🇧 UK Property Management</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-rent" href="../uk-form-4a-rent-tracker/" style="color: #2563eb; text-decoration: underline;">Form 4A Rent Tracker</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-sdlt" href="../uk-sdlt-bracket-estimator/" style="color: #2563eb; text-decoration: underline;">Stamp Duty Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-sec8" href="../uk-section-8-calculator/" style="color: #2563eb; text-decoration: underline;">Section 8 Calculator</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🎬 Digital Media Layouts</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-media-ig" href="../instagram-reels-preview/" style="color: #2563eb; text-decoration: underline;">Instagram Reels Grid</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-threads" href="../threads-app-post-visualizer/" style="color: #2563eb; text-decoration: underline;">Threads App Visualizer</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-tiktok" href="../tiktok-ad-safe-zone/" style="color: #2563eb; text-decoration: underline;">TikTok Ad Checker</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-shopify" href="../shopify-metafields-parser/" style="color: #2563eb; text-decoration: underline;">Shopify Metafields Parser</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script defer>
+        (function() {
+            const path = window.location.pathname.toLowerCase();
+            const toolsMap = {
+                'au-cents-per-km-estimator': 'hub-au-cents',
+                'au-schads-vehicle-allowance': 'hub-au-schads',
+                'au-superannuation-charge-tracker': 'hub-au-super',
+                'us-llc-late-penalty-estimator': 'hub-us-llc',
+                'us-section-179-truck-calculator': 'hub-us-179',
+                'uk-form-4a-rent-tracker': 'hub-uk-rent',
+                'uk-sdlt-bracket-estimator': 'hub-uk-sdlt',
+                'uk-section-8-calculator': 'hub-uk-sec8',
+                'instagram-reels-preview': 'hub-media-ig',
+                'threads-app-post-visualizer': 'hub-media-threads',
+                'tiktok-ad-safe-zone': 'hub-media-tiktok',
+                'shopify-metafields-parser': 'hub-media-shopify'
+            };
+
+            for (const [folderName, elementId] of Object.entries(toolsMap)) {
+                if (path.includes(folderName)) {
+                    const targetEl = document.getElementById(elementId);
+                    if (targetEl) {
+                        targetEl.outerHTML = `<span style="font-weight: 600; color: #0f172a;">${targetEl.textContent} (Current)</span>`;
+                    }
+                    break;
+                }
+            }
+        })();
+    </script>
+</body>
+</html>
