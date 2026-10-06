@@ -1,0 +1,30 @@
+name: Generate XML Sitemap
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  sitemap_job:
+    runs-on: ubuntu-latest
+    name: Generate Sitemap Job
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Auto Generate Sitemap From HTML Files
+        uses: cicirello/generate-sitemap@v1
+        with:
+          base-url-path: https://coremetricsuite.com/
+          drop-html-extension: true
+
+      - name: Commit and Push Sitemap to Branch
+        run: |
+          git config --global user.name 'Sitemap Bot'
+          git config --global user.email 'bot@github.com'
+          git add sitemap.xml
+          git commit -am "Automated Sitemap Update [skip ci]" || echo "No changes to commit"
+          git push
