@@ -290,13 +290,32 @@
             background-color: var(--cms-surface-alt, #181b24);
             margin: 1.5rem 0 !important;
         }
+        /* --- Desktop Layout Grid Anchors to Fix CLS --- */
+.cms-directory-grid {
+    width: 100%;
+    /* Reserves structural layout footprint on desktop views before JS scripts execute */
+    min-height: 750px; 
+}
 
-        @media (max-width: 640px) {
-            #cms-ad-slot-top, #cms-ad-slot-1, .cms-medianet-box, #cms-ad-slot-2 {
-                min-height: 100px !important;
-                height: auto !important;
-            }
-        }
+.cms-skeleton-card {
+    width: 100%;
+    min-height: 220px;
+    background-color: transparent;
+    border: 1px solid transparent;
+}
+
+/* Ensure mobile overrides layout heights back to auto-scaling fluids */
+/* Ensure mobile overrides layout heights back to auto-scaling fluids */
+@media (max-width: 640px) {
+    .cms-directory-grid {
+        min-height: auto !important;
+    }
+    
+    #cms-ad-slot-top, #cms-ad-slot-1, .cms-medianet-box, #cms-ad-slot-2 {
+        min-height: 100px !important;
+        height: auto !important;
+    }
+}
     </style>
 </head>
 <body>
@@ -321,10 +340,23 @@
             </div>
         </section>
 
-        <!-- Dynamic Grid Mount Node -->
-        <section class="cms-directory-grid" id="directoryGrid">
-            <!-- Data is injected natively by vanilla js engine -->
-        </section>
+
+            <!-- Dynamic Grid Mount Node -->
+<section class="cms-directory-grid" id="directoryGrid">
+    <!-- 🆕 PLACE THESE SKELETON CARDS HERE (Lines 325-330) -->
+    <div class="cms-skeleton-card"></div>
+    <div class="cms-skeleton-card"></div>
+    <div class="cms-skeleton-card"></div>
+    <div class="cms-skeleton-card"></div>
+    <div class="cms-skeleton-card"></div>
+    <div class="cms-skeleton-card"></div>
+    <div class="cms-skeleton-card"></div>
+    <div class="cms-skeleton-card"></div>
+    <div class="cms-skeleton-card"></div>
+    <div class="cms-skeleton-card"></div>
+    <div class="cms-skeleton-card"></div>
+    <div class="cms-skeleton-card"></div>
+</section>
 
         <!-- No Results Fallback Mount Node -->
         <div id="noResults" class="cms-no-results">
