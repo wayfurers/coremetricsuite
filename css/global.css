@@ -390,13 +390,12 @@ a:hover {
 }
 
 /* ---------- 2.5 RUGGED CLS DEFENSE FOR AD SLOTS ---------- */
-/* ---------- 2.5 RUGGED CLS DEFENSE FOR AD SLOTS ---------- */
-/* Optimized Top Leaderboard Slot (Prevents hideous 250px blank white space) */
+/* Optimized Top Leaderboard Slot */
 #cms-ad-slot-1 {
   box-sizing: border-box;
   display: block;
   min-height: 90px;
-  background-color: var(--cms-surface-alt);
+  background-color: rgba(255, 255, 255, 0.02);
   border-radius: 6px;
   margin: 15px auto;
   overflow: hidden;
@@ -409,21 +408,21 @@ a:hover {
   top: 84px; 
   min-height: 600px; 
   box-sizing: border-box; 
-  background-color: var(--cms-surface-alt);
-  border: 1px dashed var(--cms-border);
+  background-color: rgba(255, 255, 255, 0.02);
+  border: 1px dashed rgba(255, 255, 255, 0.08);
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
+  contain: layout;
 }
 .cms-sticky-panel::before {
   content: "Sponsored Links";
-  color: var(--cms-text-muted);
+  color: rgba(255, 255, 255, 0.15);
   font-size: 11px;
   font-family: system-ui, sans-serif;
   letter-spacing: 1px;
   text-transform: uppercase;
-  opacity: 0.4;
 }
 
 /* ---------- 2.6 MAIN LAYOUT GRID ---------- */
@@ -455,47 +454,6 @@ a:hover {
   box-sizing: border-box;
   min-width: 0;
   contain: layout paint;
-}
-
-
-/* ---------- 2.6 MAIN LAYOUT GRID ---------- */
-.cms-layout-wrapper {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 30px;
-  width: 100%;
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 20px 15px;
-  box-sizing: border-box;
-  contain: layout;
-}
-
-.cms-content-column {
-  flex: 0 0 calc(70% - 15px);
-  max-width: calc(70% - 15px);
-  width: calc(70% - 15px);
-  box-sizing: border-box;
-  min-width: 0;
-  contain: layout paint;
-}
-
-.cms-sidebar-column {
-  flex: 0 0 calc(30% - 15px);
-  max-width: calc(30% - 15px);
-  width: calc(30% - 15px);
-  box-sizing: border-box;
-  min-width: 0;
-  contain: layout paint;
-}
-
-.cms-sticky-panel {
-  position: -webkit-sticky;
-  position: sticky;
-  top: 84px;
-  min-height: 250px;
-  box-sizing: border-box;
-  contain: layout;
 }
 
 /* ---------- 2.7 MAIN / CARD CONTAINERS ---------- */
@@ -933,7 +891,7 @@ label {
 
   .cms-sticky-panel {
     position: static !important;
-    min-height: auto !important;
+    min-height: 250px !important;
     margin-top: 25px;
   }
 
