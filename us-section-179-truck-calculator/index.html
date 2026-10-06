@@ -1,24 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Put this in every tool folder's index.html file -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Section 179 Vehicle & Heavy Truck Deduction Calculator</title>
-    <meta name="description" content="Calculate first-year IRS Section 179 vehicle tax deductions, heavy SUV write-off caps, and 100% bonus depreciation savings instantly.">
-    <meta name="keywords" content="section 179 truck calculator, gvwr over 6000 lbs deduction, Section 179 heavy vehicle tax write off, bonus depreciation truck tax deduction, section 179 2560000 limit">
-    <link rel="canonical" href="https://coremetricsuite.com" />
+    <meta name="description" content="Calculate first-year IRS Section 179 vehicle tax deductions, heavy SUV write-off caps ($32,000 limit), 100% bonus depreciation, and Section 280F luxury auto limits instantly.">
+    <meta name="keywords" content="section 179 truck calculator, gvwr over 6000 lbs deduction, Section 179 heavy vehicle tax write off, bonus depreciation truck tax deduction, section 179 2560000 limit, heavy suv 32000 tax cap">
+    <link rel="canonical" href="https://coremetricsuite.com/us-section-179-truck-calculator/" />
 
     <!-- Architecture Links -->
     <link rel="stylesheet" href="/css/global.css">
-<script src="/config.js" defer></script>
-<script src="/global.min.js" defer></script>
+    <script src="/config.js" defer></script>
+    <script src="/global.min.js" defer></script>
 
     <!-- Open Graph / Social Metadata -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="Section 179 Vehicle & Heavy Truck Deduction Calculator">
     <meta property="og:description" content="Calculate first-year IRS Section 179 vehicle tax deductions, heavy SUV write-off caps, and 100% bonus depreciation savings instantly.">
-    <meta property="og:url" content="https://coremetricsuite.com">
+    <meta property="og:url" content="https://coremetricsuite.com/us-section-179-truck-calculator/">
 
     <!-- JSON-LD Schema: FAQPage Structured Data -->
     <script type="application/ld+json">
@@ -78,6 +77,7 @@
             --border-color: #2e3446;
             --accent-purple: #8b5cf6;
             --accent-cyan: #00f2fe;
+            --accent-green: #10b981;
             --text-primary: #f3f4f6;
             --text-secondary: #9ca3af;
             --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -85,30 +85,38 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background-color: var(--bg-main); color: var(--text-primary); font-family: var(--font-sans); line-height: 1.6; }
+        body { 
+            background-color: var(--bg-main); 
+            color: var(--text-primary); 
+            font-family: var(--font-sans); 
+            line-height: 1.6; 
+            width: 100%;
+            overflow-x: hidden;
+        }
         
+        /* Mobile-First Fluid Grid Container */
         .cms-tool-container {
+            width: 100%;
             max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1.5rem;
+            margin: 1rem auto;
+            padding: 0 1rem;
             display: grid;
             grid-template-columns: 440px 1fr;
-            gap: 2rem;
+            gap: 1.5rem;
         }
-
-        @media (max-width: 960px) { .cms-tool-container { grid-template-columns: 1fr; } }
 
         .panel {
             background-color: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 1.5rem;
+            padding: 1.25rem;
+            width: 100%;
         }
 
         .panel-title {
             font-size: 1.1rem;
             font-weight: 600;
-            margin-bottom: 1.25rem;
+            margin-bottom: 1rem;
             padding-bottom: 0.75rem;
             border-bottom: 1px solid var(--border-color);
             display: flex;
@@ -127,43 +135,86 @@
 
         .btn-demo {
             width: 100%;
-            padding: 0.6rem;
+            min-height: 48px;
+            padding: 0.75rem;
             background-color: var(--bg-input);
             border: 1px solid var(--border-color);
             color: var(--accent-purple);
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
             font-weight: 600;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             margin-bottom: 1.25rem;
             transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .btn-demo:hover { background-color: #2a3042; }
 
         .form-group { margin-bottom: 1.25rem; }
         label { display: block; font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 0.4rem; }
+        
         input[type="number"], select {
-            width: 100%; padding: 0.65rem 0.85rem; background-color: var(--bg-input);
-            border: 1px solid var(--border-color); border-radius: 6px; color: #fff;
-            font-size: 0.9rem; outline: none; font-family: inherit;
+            width: 100%; 
+            min-height: 48px;
+            padding: 0.75rem 0.85rem; 
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color); 
+            border-radius: 8px; 
+            color: #fff;
+            font-size: 1rem; 
+            outline: none; 
+            font-family: inherit;
         }
 
         .btn-action {
-            width: 100%; padding: 0.85rem; background: linear-gradient(135deg, var(--accent-purple), #7c3aed);
-            color: #fff; font-weight: 700; border: none; border-radius: 6px; cursor: pointer; font-size: 0.95rem;
+            width: 100%; 
+            min-height: 48px;
+            padding: 0.85rem; 
+            background: linear-gradient(135deg, var(--accent-purple), #7c3aed);
+            color: #fff; 
+            font-weight: 700; 
+            border: none; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            font-size: 1rem;
             transition: opacity 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .btn-action:hover { opacity: 0.9; }
 
-        .preview-stage { display: flex; flex-direction: column; }
+        .btn-download {
+            width: 100%;
+            min-height: 48px;
+            margin-top: 1rem;
+            padding: 0.75rem 1rem;
+            background: linear-gradient(135deg, #059669, var(--accent-green));
+            color: #ffffff;
+            font-weight: 700;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: opacity 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .btn-download:hover { opacity: 0.9; }
+
+        .preview-stage { display: flex; flex-direction: column; width: 100%; }
         .result-box {
             background-color: var(--bg-input);
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            padding: 1.5rem;
+            padding: 1.25rem;
             font-size: 0.95rem;
             color: #e5e7eb;
-            min-height: 380px;
+            min-height: 320px;
             display: flex;
             flex-direction: column;
             gap: 1rem;
@@ -183,7 +234,7 @@
             margin-bottom: 0.3rem;
         }
         .result-metric .value {
-            font-size: 1.25rem;
+            font-size: 1.35rem;
             font-weight: 700;
             color: #fff;
             font-family: var(--font-mono);
@@ -199,7 +250,7 @@
         .timeline-row {
             display: flex;
             justify-content: space-between;
-            padding: 0.35rem 0;
+            padding: 0.4rem 0;
             color: var(--text-secondary);
             border-bottom: 1px dashed rgba(255,255,255,0.05);
         }
@@ -209,17 +260,18 @@
             font-weight: 600;
         }
 
-        .canvas-caption { margin-top: 1rem; font-size: 0.85rem; color: var(--text-secondary); text-align: right; }
+        .canvas-caption { margin-top: 0.75rem; font-size: 0.8rem; color: var(--text-secondary); text-align: right; }
 
-        .content-area { max-width: 1200px; margin: 3rem auto; padding: 0 1.5rem; }
-        .content-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 2.5rem; }
-        .content-card h1 { font-size: 2rem; margin-bottom: 1rem; color: #fff; }
-        .content-card h2 { font-size: 1.4rem; margin: 1.8rem 0 1rem; color: #fff; }
-        .content-card p { color: var(--text-secondary); margin-bottom: 1.2rem; }
-        .content-card ul, .content-card ol { color: var(--text-secondary); margin: 0 0 1.2rem 1.5rem; }
+        .content-area { width: 100%; max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
+        .content-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; }
+        .content-card h1 { font-size: 1.75rem; margin-bottom: 1rem; color: #fff; }
+        .content-card h2 { font-size: 1.3rem; margin: 1.5rem 0 0.8rem; color: #fff; }
+        .content-card p { color: var(--text-secondary); margin-bottom: 1rem; }
+        .content-card ul, .content-card ol { color: var(--text-secondary); margin: 0 0 1rem 1.25rem; }
         .content-card li { margin-bottom: 0.5rem; }
 
-        .spec-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; text-align: left; }
+        .table-responsive { width: 100%; overflow-x: auto; margin: 1.5rem 0; }
+        .spec-table { width: 100%; border-collapse: collapse; text-align: left; min-width: 600px; }
         .spec-table th, .spec-table td { padding: 0.85rem 1rem; border: 1px solid var(--border-color); }
         .spec-table th { background-color: var(--bg-input); color: #fff; }
         .spec-table td { color: var(--text-secondary); }
@@ -236,10 +288,10 @@
         }
         .faq-accordion[open] { border-color: var(--accent-purple); }
         .faq-summary {
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 600;
             color: #fff;
-            padding: 1rem 1.2rem;
+            padding: 1rem;
             cursor: pointer;
             list-style: none;
             display: flex;
@@ -259,30 +311,46 @@
             color: var(--accent-purple);
         }
         .faq-answer {
-            padding: 0 1.2rem 1.2rem;
+            padding: 0 1rem 1rem;
             color: var(--text-secondary);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             border-top: 1px solid rgba(255,255,255,0.05);
             margin-top: 0.4rem;
             padding-top: 0.8rem;
         }
 
         .cms-ad-slot-1, .cms-ad-slot-2 {
-            width: 100%; max-width: 970px; min-height: 90px; margin: 1.5rem auto;
+            width: 100%; max-width: 970px; min-height: 90px; margin: 1rem auto;
             background: rgba(255,255,255,0.02); border-radius: 8px;
         }
+
+        /* Mobile Viewport Layout Tweaks */
+        @media (max-width: 768px) {
+            .cms-tool-container {
+                grid-template-columns: 1fr;
+                gap: 1.25rem;
+                margin: 0.5rem auto;
+            }
+            /* Stack Inputs at top, Results immediately below */
+            .panel#truckSec179Form { order: 1; }
+            .preview-stage { order: 2; }
+            .content-card { padding: 1.25rem; }
+            .content-card h1 { font-size: 1.4rem; }
+        }
     </style>
-<style>#cms-ad-slot-top,#cms-ad-slot-1,.cms-medianet-box{display:block!important;height:250px!important;min-height:250px!important;max-height:250px!important;overflow:hidden!important;background-color:var(--cms-surface-alt)}</style></head>
+    <style>#cms-ad-slot-top,#cms-ad-slot-1,.cms-medianet-box{display:block!important;height:250px!important;min-height:250px!important;max-height:250px!important;overflow:hidden!important;background-color:var(--cms-surface-alt)}</style>
+</head>
 <body>
 
     <!-- Site Header Integration Hook -->
-    <div id="global-header"></div>
+    <div id="site-header"></div>
 
-    <!-- Ad Slot 1 Container (Directly Above Main Title Banner) -->
-    <div class="cms-ad-slot-1"></div>
+    <!-- Ad Slot 1 Container -->
+    <div id="cms-ad-slot-1" class="cms-ad-slot-1"></div>
 
     <!-- Main Interactive Tool Container -->
-    <section class="cms-tool-container">
+    <main class="cms-tool-container">
+        <!-- Input Form Panel -->
         <form class="panel" id="truckSec179Form" onsubmit="return false;">
             <div class="panel-title">
                 <span>Section 179 Vehicle Controls</span>
@@ -292,9 +360,9 @@
             <button class="btn-demo" id="loadDemoBtn" type="button">⚡ Load Demo Heavy Truck Sample</button>
 
             <div class="form-group">
-                <label for="vehicleType">Vehicle Classification & GVWR</label>
+                <label for="vehicleType">Vehicle Classification &amp; GVWR</label>
                 <select id="vehicleType">
-                    <option value="heavy_truck">Heavy Truck / Cargo Van / Work Vehicle (> 6,000 lbs GVWR, No SUV Cap)</option>
+                    <option value="heavy_truck">Heavy Truck / Cargo Van / Work Vehicle (&gt; 6,000 lbs GVWR, No SUV Cap)</option>
                     <option value="heavy_suv">Heavy SUV / Passenger Crossover (6,001 - 14,000 lbs GVWR, Capped at $32k)</option>
                     <option value="light_vehicle">Light Passenger Car / Truck / SUV (&le; 6,000 lbs GVWR)</option>
                 </select>
@@ -328,11 +396,11 @@
             <button class="btn-action" id="calculateBtn" type="button">Calculate First-Year Tax Deductions</button>
         </form>
 
-        <!-- Result Summary Dashboard -->
+        <!-- Result Summary Dashboard Panel -->
         <section class="preview-stage">
             <div class="panel" style="flex: 1; display: flex; flex-direction: column;">
                 <div class="panel-title">
-                    <span>Tax Deduction & Cash Savings Breakdown</span>
+                    <span>Tax Deduction &amp; Cash Savings Breakdown</span>
                 </div>
                 <div class="result-box" id="resultBoard">
                     <div class="result-metric">
@@ -344,28 +412,33 @@
                         <div class="value" id="Estimated First-Year Cash Tax Savings">$0.00</div>
                     </div>
                     <div class="result-metric">
-                        <h4>Depreciation & Expensing Breakdown</h4>
+                        <h4>Depreciation &amp; Expensing Breakdown</h4>
                         <div class="timeline-breakdown" id="Depreciation & Expensing Breakdown">
                             <!-- Detailed breakdown populated via JS -->
                         </div>
                     </div>
                 </div>
+
+                <button class="btn-download" id="downloadReportBtn" type="button">
+                    📄 Download Watermarked Report (PNG)
+                </button>
+
                 <p class="canvas-caption">
                     Calculated in compliance with IRS IRC §179 ($2,560,000 cap), $32,000 SUV limit, 100% bonus depreciation, and Section 280F luxury auto limits.
                 </p>
             </div>
         </section>
-    </section>
+    </main>
 
     <!-- SEO & Educational Content Section -->
     <article class="content-area">
         <section class="content-card">
-            <h1>Section 179 Vehicle & Heavy Truck Deduction Calculator</h1>
+            <h1>Section 179 Vehicle &amp; Heavy Truck Deduction Calculator</h1>
             <p>
                 Under Section 179 of the Internal Revenue Code (IRC), business owners can write off up to 100% of the purchase price of qualifying work vehicles, heavy trucks, and commercial equipment acquired and placed into service during the tax year, rather than depreciating them over multiple years.
             </p>
             <p>
-                This browser-based <strong>us-section-179-truck-calculator</strong> allows business owners, contractors, and fleet managers to evaluate statutory IRS tax deductions, heavy SUV $32,000 caps, 100% bonus depreciation rates, and net cash tax savings instantly and privately without transmitting financial records.
+                This browser-based <strong>us-section-179-truck-calculator</strong> allows business owners, self-employed contractors, fleet managers, and CPAs to evaluate statutory IRS tax deductions, heavy SUV $32,000 caps, 100% bonus depreciation rates, MACRS recovery periods, and net cash tax savings instantly and privately without transmitting financial records.
             </p>
 
             <h2>Current IRS Vehicle Tax Deduction Thresholds Matrix</h2>
@@ -373,45 +446,48 @@
                 The tax treatment of a business vehicle depends on its Gross Vehicle Weight Rating (GVWR), vehicle construction type, and percentage of business usage:
             </p>
 
-            <table class="spec-table">
-                <thead>
-                    <tr>
-                        <th>Vehicle Classification</th>
-                        <th>GVWR Weight Threshold</th>
-                        <th>Section 179 Expensing Limit</th>
-                        <th>Bonus Depreciation & MACRS</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Heavy Truck / Cargo Van / Work Vehicle</strong></td>
-                        <td>Over 6,000 lbs GVWR</td>
-                        <td>Up to full annual Section 179 limit ($2,560,000 cap)</td>
-                        <td>100% Bonus Depreciation eligible on remaining basis</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Heavy SUV / Passenger Crossover</strong></td>
-                        <td>6,001 - 14,000 lbs GVWR</td>
-                        <td>Statutory Heavy SUV Cap ($32,000)</td>
-                        <td>100% Bonus Depreciation applies to remaining basis</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Light Passenger Vehicle</strong></td>
-                        <td>6,000 lbs GVWR or less</td>
-                        <td>Subject to IRS Luxury Auto Limits ($20,300 max Year 1)</td>
-                        <td>Includes $8,000 bonus depreciation allowance</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="spec-table">
+                    <thead>
+                        <tr>
+                            <th>Vehicle Classification</th>
+                            <th>GVWR Weight Threshold</th>
+                            <th>Section 179 Expensing Limit</th>
+                            <th>Bonus Depreciation &amp; MACRS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Heavy Truck / Cargo Van / Work Vehicle</strong></td>
+                            <td>Over 6,000 lbs GVWR</td>
+                            <td>Up to full annual Section 179 limit ($2,560,000 cap)</td>
+                            <td>100% Bonus Depreciation eligible on remaining basis</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Heavy SUV / Passenger Crossover</strong></td>
+                            <td>6,001 - 14,000 lbs GVWR</td>
+                            <td>Statutory Heavy SUV Cap ($32,000)</td>
+                            <td>100% Bonus Depreciation applies to remaining basis</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Light Passenger Vehicle</strong></td>
+                            <td>6,000 lbs GVWR or less</td>
+                            <td>Subject to IRS Luxury Auto Limits ($20,300 max Year 1)</td>
+                            <td>Includes $8,000 bonus depreciation allowance</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
-            <!-- Ad Slot 2 Container (Directly Below Specification Table) -->
-            <div class="cms-ad-slot-2"></div>
+            <!-- Ad Slot 2 Container -->
+            <div id="cms-ad-slot-2" class="cms-ad-slot-2"></div>
 
             <h2>Important Statutory Qualification Guidelines</h2>
             <ul>
                 <li><strong>Macro Section 179 Limit ($2,560,000):</strong> The overall Section 179 expensing cap allows businesses to write off up to $2,560,000 of qualifying purchases, with a dollar-for-dollar phase-out threshold starting at $4,090,000 in total equipment acquisitions.</li>
                 <li><strong>Heavy SUV Cap ($32,000):</strong> Vehicles categorized as passenger SUVs between 6,001 and 14,000 lbs GVWR face a specific Section 179 deduction limit of $32,000. However, any cost basis exceeding $32,000 is eligible for 100% Bonus Depreciation.</li>
                 <li><strong>More Than 50% Business Use Requirement:</strong> To qualify for Section 179 or Bonus Depreciation, the vehicle must be used more than 50% for qualified business purposes. If business use drops to 50% or lower, both Section 179 and Bonus Depreciation drop to $0.00, forcing a fallback to pro-rated straight-line MACRS depreciation.</li>
+                <li><strong>Section 280F Luxury Auto Limits:</strong> Vehicles under 6,000 lbs GVWR are capped strictly by Year 1 passenger automobile caps ($20,300 inclusive of bonus depreciation).</li>
             </ul>
 
             <h2>Frequently Asked Questions</h2>
@@ -455,9 +531,9 @@
     </article>
 
     <!-- Site Footer Integration Hook -->
-    <div id="global-footer"></div>
+    <div id="site-footer"></div>
 
-    <!-- Math Calculation Engine JavaScript -->
+    <!-- Math Calculation Engine & Watermarking JavaScript -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var vehicleTypeSelect = document.getElementById('vehicleType');
@@ -468,6 +544,7 @@
 
             var calculateBtn = document.getElementById('calculateBtn');
             var loadDemoBtn = document.getElementById('loadDemoBtn');
+            var downloadReportBtn = document.getElementById('downloadReportBtn');
 
             var resTotalDeduction = document.getElementById('Total First-Year Tax Deduction');
             var resCashSavings = document.getElementById('Estimated First-Year Cash Tax Savings');
@@ -486,6 +563,12 @@
             calculateBtn.addEventListener('click', function() {
                 calculateSection179();
             });
+
+            if (downloadReportBtn) {
+                downloadReportBtn.addEventListener('click', function() {
+                    generateReportCanvas();
+                });
+            }
 
             function calculateSection179() {
                 var cost = parseFloat(vehicleCostInput.value) || 0;
@@ -522,8 +605,8 @@
 
                     var timelineHtml = '';
                     timelineHtml += createTimelineRow('Qualified Business Basis (' + (bizPct * 100).toFixed(0) + '%)', '$' + basis.toLocaleString('en-US', { minimumFractionDigits: 2 }), true);
-                    timelineHtml += createTimelineRow('Section 179 Expensing (Business Use &le; 50%)', '$0.00', false);
-                    timelineHtml += createTimelineRow('Bonus Depreciation (Business Use &le; 50%)', '$0.00', false);
+                    timelineHtml += createTimelineRow('Section 179 Expensing (Business Use \u2264 50%)', '$0.00', false);
+                    timelineHtml += createTimelineRow('Bonus Depreciation (Business Use \u2264 50%)', '$0.00', false);
                     timelineHtml += createTimelineRow('Standard Straight-Line / MACRS Year 1 Deduction', '$' + macrsDeduction.toLocaleString('en-US', { minimumFractionDigits: 2 }), true);
                     timelineHtml += createTimelineRow('Total First-Year Write-Off', '$' + totalDeduction.toLocaleString('en-US', { minimumFractionDigits: 2 }), true);
 
@@ -581,88 +664,193 @@
                     '</div>';
             }
 
+            // Client-Side Watermarked Image Report Generator
+            function generateReportCanvas() {
+                var canvas = document.createElement('canvas');
+                canvas.width = 800;
+                canvas.height = 650;
+                var ctx = canvas.getContext('2d');
+
+                // Background
+                ctx.fillStyle = '#181b24';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Header Banner
+                ctx.fillStyle = '#8b5cf6';
+                ctx.fillRect(0, 0, canvas.width, 10);
+
+                // Title
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 24px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+                ctx.fillText('Section 179 Tax Deduction Report', 40, 50);
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = '14px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+                ctx.fillText('Generated on: ' + new Date().toLocaleDateString(), 40, 75);
+
+                // Divider Line
+                ctx.strokeStyle = '#2e3446';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(40, 95);
+                ctx.lineTo(760, 95);
+                ctx.stroke();
+
+                // Form Values Summary Section
+                ctx.fillStyle = '#8b5cf6';
+                ctx.font = 'bold 16px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+                ctx.fillText('INPUT PARAMETERS', 40, 130);
+
+                ctx.fillStyle = '#e5e7eb';
+                ctx.font = '15px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+                ctx.fillText('Vehicle Cost: ' + '$' + parseFloat(vehicleCostInput.value || 0).toLocaleString(), 40, 160);
+                ctx.fillText('Business Usage: ' + businessUsePctInput.value + '%', 40, 185);
+                ctx.fillText('Bonus Depreciation Rate: ' + bonusDepPctSelect.value + '%', 40, 210);
+                ctx.fillText('Marginal Tax Rate: ' + taxBracketPctInput.value + '%', 40, 235);
+
+                // Highlighted Metric Cards
+                ctx.fillStyle = '#222634';
+                ctx.fillRect(40, 275, 340, 90);
+                ctx.fillRect(420, 275, 340, 90);
+
+                ctx.strokeStyle = '#2e3446';
+                ctx.strokeRect(40, 275, 340, 90);
+                ctx.strokeRect(420, 275, 340, 90);
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = '12px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+                ctx.fillText('TOTAL FIRST-YEAR DEDUCTION', 55, 298);
+                ctx.fillText('ESTIMATED CASH TAX SAVINGS', 435, 298);
+
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 22px monospace';
+                ctx.fillText(resTotalDeduction.textContent, 55, 338);
+
+                ctx.fillStyle = '#00f2fe';
+                ctx.fillText(resCashSavings.textContent, 435, 338);
+
+                // Breakdown Details Section
+                ctx.fillStyle = '#8b5cf6';
+                ctx.font = 'bold 16px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+                ctx.fillText('CALCULATED BREAKDOWN', 40, 405);
+
+                var rows = resTimelineList.querySelectorAll('.timeline-row');
+                var startY = 435;
+                rows.forEach(function(row) {
+                    var spans = row.querySelectorAll('span');
+                    if (spans.length >= 2) {
+                        ctx.fillStyle = row.classList.contains('active') ? '#00f2fe' : '#9ca3af';
+                        ctx.font = '14px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+                        ctx.fillText(spans[0].textContent, 40, startY);
+                        ctx.fillText(spans[1].textContent, 550, startY);
+                        startY += 28;
+                    }
+                });
+
+                // Watermark & Footer
+                ctx.fillStyle = '#222634';
+                ctx.fillRect(0, 580, canvas.width, 70);
+
+                ctx.strokeStyle = '#2e3446';
+                ctx.beginPath();
+                ctx.moveTo(0, 580);
+                ctx.lineTo(800, 580);
+                ctx.stroke();
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = 'bold 14px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('Generated by CoreMetricSuite (coremetricsuite.com)', canvas.width / 2, 620);
+                ctx.textAlign = 'left';
+
+                // Trigger Direct Download
+                var imageURI = canvas.toDataURL('image/png');
+                var link = document.createElement('a');
+                link.download = 'Section-179-Tax-Deduction-Report.png';
+                link.href = imageURI;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+
             // Execute initial calculation
             calculateSection179();
         });
     </script>
+
     <!-- Global CoreMetricSuite Cross-Linking Index Hub -->
-<div style="margin-top: 40px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #f8fafc; font-family: system-ui, -apple-system, sans-serif;">
-    <h3 style="margin: 0 0 15px 0; font-size: 18px; color: #0f172a; font-weight: 600;">🛠️ CoreMetricSuite Utility Directory</h3>
-    
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
-        <!-- Group 1 -->
-        <div>
-            <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇦🇺 Australia Tax & Labor</h4>
-            <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
-                <li style="margin-bottom: 4px;"><a id="hub-au-cents" href="../au-cents-per-km-estimator/" style="color: #2563eb; text-decoration: underline;">Cents-Per-Km Tax Estimator</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-au-schads" href="../au-schads-vehicle-allowance/" style="color: #2563eb; text-decoration: underline;">SCHADS Vehicle Allowance</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-au-super" href="../au-superannuation-charge-tracker/" style="color: #2563eb; text-decoration: underline;">Superannuation Tracker</a></li>
-            </ul>
-        </div>
+    <div style="margin-top: 40px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #f8fafc; font-family: system-ui, -apple-system, sans-serif;">
+        <h3 style="margin: 0 0 15px 0; font-size: 18px; color: #0f172a; font-weight: 600;">🛠️ CoreMetricSuite Utility Directory</h3>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇦🇺 Australia Tax &amp; Labor</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-au-cents" href="../au-cents-per-km-estimator/" style="color: #2563eb; text-decoration: underline;">Cents-Per-Km Tax Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-au-schads" href="../au-schads-vehicle-allowance/" style="color: #2563eb; text-decoration: underline;">SCHADS Vehicle Allowance</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-au-super" href="../au-superannuation-charge-tracker/" style="color: #2563eb; text-decoration: underline;">Superannuation Tracker</a></li>
+                </ul>
+            </div>
 
-        <!-- Group 2 -->
-        <div>
-            <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇺🇸 US Corporate Tax</h4>
-            <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
-                <li style="margin-bottom: 4px;"><a id="hub-us-llc" href="../us-llc-late-penalty-estimator/" style="color: #2563eb; text-decoration: underline;">LLC Late Tax Penalty</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-us-179" href="../us-section-179-truck-calculator/" style="color: #2563eb; text-decoration: underline;">Section 179 Vehicle Deduction</a></li>
-            </ul>
-        </div>
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇺🇸 US Corporate Tax</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-us-llc" href="../us-llc-late-penalty-estimator/" style="color: #2563eb; text-decoration: underline;">LLC Late Tax Penalty</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-us-179" href="../us-section-179-truck-calculator/" style="color: #2563eb; text-decoration: underline;">Section 179 Vehicle Deduction</a></li>
+                </ul>
+            </div>
 
-        <!-- Group 3 -->
-        <div>
-            <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇬🇧 UK Property Management</h4>
-            <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
-                <li style="margin-bottom: 4px;"><a id="hub-uk-rent" href="../uk-form-4a-rent-tracker/" style="color: #2563eb; text-decoration: underline;">Form 4A Rent Tracker</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-uk-sdlt" href="../uk-sdlt-bracket-estimator/" style="color: #2563eb; text-decoration: underline;">Stamp Duty Estimator</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-uk-sec8" href="../uk-section-8-calculator/" style="color: #2563eb; text-decoration: underline;">Section 8 Calculator</a></li>
-            </ul>
-        </div>
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇬BW UK Property Management</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-rent" href="../uk-form-4a-rent-tracker/" style="color: #2563eb; text-decoration: underline;">Form 4A Rent Tracker</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-sdlt" href="../uk-sdlt-bracket-estimator/" style="color: #2563eb; text-decoration: underline;">Stamp Duty Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-sec8" href="../uk-section-8-calculator/" style="color: #2563eb; text-decoration: underline;">Section 8 Calculator</a></li>
+                </ul>
+            </div>
 
-        <!-- Group 4 -->
-        <div>
-            <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🎬 Digital Media Layouts</h4>
-            <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
-                <li style="margin-bottom: 4px;"><a id="hub-media-ig" href="../instagram-reels-preview/" style="color: #2563eb; text-decoration: underline;">Instagram Reels Grid</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-media-shorts" href="../shorts-ui-safe-zone/" style="color: #2563eb; text-decoration: underline;">YouTube Shorts Safe Zone</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-media-tiktok" href="../tiktok-ad-safe-zone/" style="color: #2563eb; text-decoration: underline;">TikTok Ad Checker</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-media-shopify" href="../shopify-metafields-parser/" style="color: #2563eb; text-decoration: underline;">Shopify Metafields Parser</a></li>
-            </ul>
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🎬 Digital Media Layouts</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-media-ig" href="../instagram-reels-preview/" style="color: #2563eb; text-decoration: underline;">Instagram Reels Grid</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-shorts" href="../shorts-ui-safe-zone/" style="color: #2563eb; text-decoration: underline;">YouTube Shorts Safe Zone</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-tiktok" href="../tiktok-ad-safe-zone/" style="color: #2563eb; text-decoration: underline;">TikTok Ad Checker</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-shopify" href="../shopify-metafields-parser/" style="color: #2563eb; text-decoration: underline;">Shopify Metafields Parser</a></li>
+                </ul>
+            </div>
         </div>
     </div>
-</div>
 
-<script defer>
-    (function() {
-        // Scans the active browser path to determine which self-link to intercept
-        const path = window.location.pathname.toLowerCase();
-        
-        const toolsMap = {
-            'au-cents-per-km-estimator': 'hub-au-cents',
-            'au-schads-vehicle-allowance': 'hub-au-schads',
-            'au-superannuation-charge-tracker': 'hub-au-super',
-            'us-llc-late-penalty-estimator': 'hub-us-llc',
-            'us-section-179-truck-calculator': 'hub-us-179',
-            'uk-form-4a-rent-tracker': 'hub-uk-rent',
-            'uk-sdlt-bracket-estimator': 'hub-uk-sdlt',
-            'uk-section-8-calculator': 'hub-uk-sec8',
-            'instagram-reels-preview': 'hub-media-ig',
-            'shorts-ui-safe-zone': 'hub-media-shorts',
-            'tiktok-ad-safe-zone': 'hub-media-tiktok',
-            'shopify-metafields-parser': 'hub-media-shopify'
-        };
+    <script defer>
+        (function() {
+            const path = window.location.pathname.toLowerCase();
+            
+            const toolsMap = {
+                'au-cents-per-km-estimator': 'hub-au-cents',
+                'au-schads-vehicle-allowance': 'hub-au-schads',
+                'au-superannuation-charge-tracker': 'hub-au-super',
+                'us-llc-late-penalty-estimator': 'hub-us-llc',
+                'us-section-179-truck-calculator': 'hub-us-179',
+                'uk-form-4a-rent-tracker': 'hub-uk-rent',
+                'uk-sdlt-bracket-estimator': 'hub-uk-sdlt',
+                'uk-section-8-calculator': 'hub-uk-sec8',
+                'instagram-reels-preview': 'hub-media-ig',
+                'shorts-ui-safe-zone': 'hub-media-shorts',
+                'tiktok-ad-safe-zone': 'hub-media-tiktok',
+                'shopify-metafields-parser': 'hub-media-shopify'
+            };
 
-        for (const [folderName, elementId] of Object.entries(toolsMap)) {
-            if (path.includes(folderName)) {
-                const targetEl = document.getElementById(elementId);
-                if (targetEl) {
-                    // Replaces the hyperlinked state with unclickable bold text styling
-                    targetEl.outerHTML = `<span style="font-weight: 600; color: #0f172a;">${targetEl.textContent} (Current)</span>`;
+            for (const [folderName, elementId] of Object.entries(toolsMap)) {
+                if (path.includes(folderName)) {
+                    const targetEl = document.getElementById(elementId);
+                    if (targetEl) {
+                        targetEl.outerHTML = `<span style="font-weight: 600; color: #0f172a;">${targetEl.textContent} (Current)</span>`;
+                    }
+                    break;
                 }
-                break;
             }
-        }
-    })();
-</script>
-<style type="text/css">@media screen and (max-width:900px){html,body{width:100%!important;max-width:100vw!important;overflow-x:hidden!important;margin:0!important;padding:0!important}main.container{display:flex!important;flex-direction:column!important;width:100%!important;max-width:100%!important;padding:0 12px!important;margin:8px auto!important;gap:16px!important;box-sizing:border-box!important}main.container>section.preview-stage{order:-1!important;width:100%!important;display:flex!important;flex-direction:column!important;align-items:center!important;margin:0 auto!important;box-sizing:border-box!important}main.container>section.panel{order:2!important;width:100%!important;max-width:100%!important;box-sizing:border-box!important}.canvas-wrapper{width:75vw!important;height:133.33vw!important;max-width:290px!important;max-height:515px!important;margin:0 auto!important;box-sizing:border-box!important}#cms-ad-slot-top,#cms-ad-slot-1,.cms-medianet-box,.cms-ad-slot-1,.cms-ad-slot-2{width:100%!important;max-width:100%!important;height:auto!important;min-height:90px!important;display:block!important}.spec-table,.content-card div[style*="display: grid"]{grid-template-columns:1fr!important;width:100%!important}input,textarea,select{font-size:16px!important}}</style></body>
+        })();
+    </script>
+    <style type="text/css">@media screen and (max-width:900px){html,body{width:100%!important;max-width:100vw!important;overflow-x:hidden!important;margin:0!important;padding:0!important}main.container{display:flex!important;flex-direction:column!important;width:100%!important;max-width:100%!important;padding:0 12px!important;margin:8px auto!important;gap:16px!important;box-sizing:border-box!important}main.container>section.preview-stage{order:-1!important;width:100%!important;display:flex!important;flex-direction:column!important;align-items:center!important;margin:0 auto!important;box-sizing:border-box!important}main.container>section.panel{order:2!important;width:100%!important;max-width:100%!important;box-sizing:border-box!important}.canvas-wrapper{width:75vw!important;height:133.33vw!important;max-width:290px!important;max-height:515px!important;margin:0 auto!important;box-sizing:border-box!important}#cms-ad-slot-top,#cms-ad-slot-1,.cms-medianet-box,.cms-ad-slot-1,.cms-ad-slot-2{width:100%!important;max-width:100%!important;height:auto!important;min-height:90px!important;display:block!important}.spec-table,.content-card div[style*="display: grid"]{grid-template-columns:1fr!important;width:100%!important}input,textarea,select{font-size:16px!important}}</style>
+</body>
 </html>
