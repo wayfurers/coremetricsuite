@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Put this in every tool folder's index.html file -->
+    <!-- Core Technical & Mobile-First Metadata -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>uk-form-4a-rent-tracker (UK Section 13 Rent Increase Notice Calculator)</title>
-    <meta name="description" content="Track UK Section 13 rent increase notices and notice periods instantly. Calculate statutory rent changes and deadlines safely inside your browser.">
-    <meta name="keywords" content="uk form 4a rent tracker, section 13 rent increase calculator, uk tenancy rent notice period, statutory rent increase notice uk, tenant rent review calculator">
+    <title>UK Section 13 Rent Increase Notice Calculator & Form 4A Tracker</title>
+    <meta name="description" content="Calculate statutory UK Section 13 rent increase notice periods, percentage adjustments, and minimum effective notice dates under Housing Act 1988 guidelines. Download watermarked compliance PNG reports locally.">
+    <meta name="keywords" content="uk form 4a rent tracker, section 13 rent increase calculator, uk tenancy rent notice period, statutory rent increase notice uk, tenant rent review calculator, housing act 1988 section 13, section 13 notice period calculator, form 4a rent increase generator">
     <link rel="canonical" href="https://coremetricsuite.com/uk-form-4a-rent-tracker/">
-
-    <!-- Open Graph / Social Metadata -->
+    
+    <!-- Canonical & Social Graph Alignment -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="uk-form-4a-rent-tracker (UK Section 13 Rent Increase Notice Calculator)">
-    <meta property="og:description" content="Track UK Section 13 rent increase notices and notice periods instantly. Calculate statutory rent changes and deadlines safely inside your browser.">
+    <meta property="og:title" content="UK Section 13 Rent Increase Notice Calculator & Form 4A Tracker">
+    <meta property="og:description" content="Calculate statutory UK Section 13 rent increase notice periods, percentage adjustments, and minimum effective notice dates under Housing Act 1988 guidelines.">
     <meta property="og:url" content="https://coremetricsuite.com/uk-form-4a-rent-tracker/">
     
     <!-- Global Framework Dependencies -->
     <link rel="stylesheet" href="/css/global.css">
-<script src="/config.js" defer></script>
-<script src="/global.min.js" defer></script>
+    <script src="/config.js" defer></script>
+    <script src="/global.min.js" defer></script>
 
     <!-- FAQ JSON-LD Schema Markup -->
     <script type="application/ld+json">
@@ -78,6 +78,7 @@
             --border-color: #2e3446;
             --accent-purple: #8b5cf6;
             --accent-cyan: #00f2fe;
+            --accent-green: #10b981;
             --text-primary: #f3f4f6;
             --text-secondary: #9ca3af;
             --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -88,28 +89,30 @@
         body { background-color: var(--bg-main); color: var(--text-primary); font-family: var(--font-sans); line-height: 1.6; }
         
         .container {
+            width: 100%;
             max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1.5rem;
+            margin: 1rem auto;
+            padding: 0 1rem;
             display: grid;
             grid-template-columns: 420px 1fr;
-            gap: 2rem;
+            gap: 1.5rem;
+            box-sizing: border-box;
         }
-
-        @media (max-width: 960px) { .container { grid-template-columns: 1fr; } }
 
         .panel {
             background-color: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 1.5rem;
+            padding: 1.25rem;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .panel-title {
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             font-weight: 600;
-            margin-bottom: 1.25rem;
-            padding-bottom: 0.75rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.6rem;
             border-bottom: 1px solid var(--border-color);
             display: flex;
             justify-content: space-between;
@@ -127,46 +130,90 @@
 
         .btn-demo {
             width: 100%;
-            padding: 0.6rem;
+            min-height: 48px;
+            padding: 0.6rem 1rem;
             background-color: var(--bg-input);
             border: 1px solid var(--border-color);
             color: var(--accent-purple);
             border-radius: 6px;
             cursor: pointer;
             font-weight: 600;
-            font-size: 0.85rem;
-            margin-bottom: 1.25rem;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
             transition: background 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .btn-demo:hover { background-color: #2a3042; }
 
-        .form-group { margin-bottom: 1.25rem; }
+        .form-group { margin-bottom: 1rem; }
         label { display: block; font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 0.4rem; }
+        
         input[type="text"], input[type="number"], input[type="date"], select {
-            width: 100%; padding: 0.65rem 0.85rem; background-color: var(--bg-input);
-            border: 1px solid var(--border-color); border-radius: 6px; color: #fff;
-            font-size: 0.9rem; outline: none; font-family: inherit;
+            width: 100%;
+            min-height: 48px;
+            padding: 0.65rem 0.85rem;
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: #fff;
+            font-size: 16px; /* Prevents auto-zoom on mobile iOS */
+            outline: none;
+            font-family: inherit;
+            box-sizing: border-box;
         }
 
         .btn-action {
-            width: 100%; padding: 0.85rem; background: linear-gradient(135deg, var(--accent-purple), #7c3aed);
-            color: #fff; font-weight: 700; border: none; border-radius: 6px; cursor: pointer; font-size: 0.95rem;
+            width: 100%;
+            min-height: 48px;
+            padding: 0.85rem;
+            background: linear-gradient(135deg, var(--accent-purple), #7c3aed);
+            color: #fff;
+            font-weight: 700;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.95rem;
             transition: opacity 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .btn-action:hover { opacity: 0.9; }
 
-        .preview-stage { display: flex; flex-direction: column; }
+        .btn-download {
+            width: 100%;
+            min-height: 48px;
+            margin-top: 1rem;
+            padding: 0.85rem;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #fff;
+            font-weight: 700;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: opacity 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .btn-download:hover { opacity: 0.9; }
+
+        .preview-stage { display: flex; flex-direction: column; width: 100%; }
         .result-box {
             background-color: var(--bg-input);
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            padding: 1.5rem;
+            padding: 1.25rem;
             font-size: 0.95rem;
             color: #e5e7eb;
-            min-height: 380px;
             display: flex;
             flex-direction: column;
             gap: 1rem;
+            flex: 1;
         }
         .result-metric {
             background: rgba(255,255,255,0.03);
@@ -182,48 +229,50 @@
             margin-bottom: 0.3rem;
         }
         .result-metric .value {
-            font-size: 1.4rem;
+            font-size: 1.35rem;
             font-weight: 700;
             color: #fff;
             font-family: var(--font-mono);
+            word-break: break-word;
         }
-        .canvas-caption { margin-top: 1rem; font-size: 0.85rem; color: var(--text-secondary); text-align: right; }
+        .canvas-caption { margin-top: 0.75rem; font-size: 0.85rem; color: var(--text-secondary); text-align: right; }
 
-        .content-area { max-width: 1200px; margin: 3rem auto; padding: 0 1.5rem; }
-        .content-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 2.5rem; }
-        .content-card h1 { font-size: 2rem; margin-bottom: 1rem; color: #fff; }
-        .content-card h2 { font-size: 1.4rem; margin: 1.8rem 0 1rem; color: #fff; }
-        .content-card p { color: var(--text-secondary); margin-bottom: 1.2rem; }
-        .content-card ul, .content-card ol { color: var(--text-secondary); margin: 0 0 1.2rem 1.5rem; }
-        .content-card li { margin-bottom: 0.5rem; }
+        .content-area { width: 100%; max-width: 1200px; margin: 2rem auto; padding: 0 1rem; box-sizing: border-box; }
+        .content-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; }
+        .content-card h1 { font-size: 1.75rem; margin-bottom: 1rem; color: #fff; line-height: 1.3; }
+        .content-card h2 { font-size: 1.3rem; margin: 1.5rem 0 0.8rem; color: #fff; }
+        .content-card p { color: var(--text-secondary); margin-bottom: 1rem; }
+        .content-card ul, .content-card ol { color: var(--text-secondary); margin: 0 0 1rem 1.25rem; }
+        .content-card li { margin-bottom: 0.4rem; }
 
-        .spec-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; text-align: left; }
-        .spec-table th, .spec-table td { padding: 0.85rem 1rem; border: 1px solid var(--border-color); }
+        .table-wrapper { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 1rem 0; }
+        .spec-table { width: 100%; border-collapse: collapse; min-width: 500px; text-align: left; }
+        .spec-table th, .spec-table td { padding: 0.75rem 0.85rem; border: 1px solid var(--border-color); font-size: 0.88rem; }
         .spec-table th { background-color: var(--bg-input); color: #fff; }
         .spec-table td { color: var(--text-secondary); }
 
-        /* Accordion FAQ Styling */
         .faq-block { margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem; }
         .faq-accordion {
             background-color: var(--bg-input);
             border: 1px solid var(--border-color);
             border-radius: 8px;
-            margin-bottom: 0.85rem;
+            margin-bottom: 0.75rem;
             overflow: hidden;
             transition: border-color 0.2s;
         }
         .faq-accordion[open] { border-color: var(--accent-purple); }
         .faq-summary {
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 600;
             color: #fff;
-            padding: 1rem 1.2rem;
+            padding: 0.85rem 1rem;
             cursor: pointer;
             list-style: none;
             display: flex;
             justify-content: space-between;
             align-items: center;
             user-select: none;
+            min-height: 48px;
         }
         .faq-summary::-webkit-details-marker { display: none; }
         .faq-summary::after {
@@ -232,35 +281,53 @@
             color: var(--accent-purple);
             transition: transform 0.2s;
         }
-        .faq-accordion[open] .faq-summary::after {
-            content: "−";
-            color: var(--accent-purple);
-        }
+        .faq-accordion[open] .faq-summary::after { content: "−"; }
         .faq-answer {
-            padding: 0 1.2rem 1.2rem;
+            padding: 0 1rem 1rem;
             color: var(--text-secondary);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             border-top: 1px solid rgba(255,255,255,0.05);
             margin-top: 0.4rem;
             padding-top: 0.8rem;
         }
 
-        .cms-ad-slot-1, .cms-ad-slot-2 {
-            width: 100%; max-width: 970px; min-height: 90px; margin: 1.5rem auto;
-            background: rgba(255,255,255,0.02); border-radius: 8px;
+        /* Ad Slots Preserved Standard Design */
+        .cms-ad-slot-1, .cms-ad-slot-2, #cms-ad-slot-1, #cms-ad-slot-2 {
+            width: 100%; max-width: 970px; min-height: 90px; margin: 1rem auto;
+            background: rgba(255,255,255,0.02); border-radius: 8px; display: block !important;
+        }
+
+        /* Mobile-First Layout Re-architecture (Cap <= 768px) */
+        @media (max-width: 768px) {
+            .container {
+                display: flex;
+                flex-direction: column;
+                padding: 0 0.75rem;
+                margin: 0.5rem auto;
+                gap: 1rem;
+            }
+            /* Stack Calculator Inputs First on Mobile Screen */
+            .container > .panel { order: 1; }
+            /* Results Board Displays Immediately Below Inputs */
+            .container > .preview-stage { order: 2; }
+            .content-card { padding: 1rem; }
+            .content-card h1 { font-size: 1.4rem; }
+            .content-card h2 { font-size: 1.15rem; }
         }
     </style>
-<style>#cms-ad-slot-top,#cms-ad-slot-1,.cms-medianet-box{display:block!important;height:250px!important;min-height:250px!important;max-height:250px!important;overflow:hidden!important;background-color:var(--cms-surface-alt)}</style></head>
+</head>
 <body>
 
-    <!-- Header Container -->
+    <!-- Header Injection Target Node -->
+    <div id="site-header"></div>
     <div id="global-header"></div>
 
-    <!-- Ad Slot 1 Container (Above Main Workspace Title) -->
-    <div class="cms-ad-slot-1"></div>
+    <!-- Ad Slot 1 Node (Above Main Workspace) -->
+    <div id="cms-ad-slot-1" class="cms-ad-slot-1"></div>
 
-    <!-- Main Tool Container -->
+    <!-- Main Workspace Container -->
     <main class="container">
+        <!-- Input Form Section (Displays First on Mobile & Top Left on Desktop) -->
         <section class="panel">
             <div class="panel-title">
                 <span>Section 13 Notice Controls</span>
@@ -271,12 +338,12 @@
 
             <div class="form-group">
                 <label for="currentRent">Current Monthly Rent (£)</label>
-                <input type="number" id="currentRent" value="1200" min="1" step="1">
+                <input type="number" id="currentRent" value="1200" min="1" step="1" inputmode="decimal">
             </div>
 
             <div class="form-group">
                 <label for="proposedRent">Proposed New Rent (£)</label>
-                <input type="number" id="proposedRent" value="1350" min="1" step="1">
+                <input type="number" id="proposedRent" value="1350" min="1" step="1" inputmode="decimal">
             </div>
 
             <div class="form-group">
@@ -296,9 +363,9 @@
             <button class="btn-action" id="calculateBtn" type="button">Calculate Notice & Rent Change</button>
         </section>
 
-        <!-- Result Stage Wrapper -->
+        <!-- Results Dashboard Section (Displays Immediately Below Inputs on Mobile) -->
         <section class="preview-stage">
-            <div class="panel" style="flex: 1; display: flex; flex-direction: column;">
+            <div class="panel" style="display: flex; flex-direction: column; height: 100%;">
                 <div class="panel-title">
                     <span>Calculation Result Board</span>
                 </div>
@@ -316,78 +383,86 @@
                         <div class="value" id="resEffectiveDate">Calculated Date Here</div>
                     </div>
                 </div>
+
+                <!-- Watermarked Client-Side PNG Download Engine Button -->
+                <button class="btn-download" id="downloadReportBtn" type="button">
+                    🖼️ Download Premium PNG Report
+                </button>
+
                 <p class="canvas-caption">
-                    Client-side calculations based on UK Housing Act 1988 guidelines.
+                    Client-side calculations based on UK Housing Act 1988 statutory guidelines.
                 </p>
             </div>
         </section>
     </main>
 
+    <!-- Ad Slot 2 Node -->
+    <div id="cms-ad-slot-2" class="cms-ad-slot-2"></div>
+
     <!-- SEO & Educational Guide Section -->
     <article class="content-area">
         <section class="content-card">
-            <h1>UK Section 13 Rent Increase & Form Tracker Guide</h1>
+            <h1>UK Section 13 Rent Increase & Form 4A Notice Calculator Guide</h1>
             <p>
-                Navigating rent reviews in England requires strict adherence to statutory rules governed by Section 13 of the Housing Act 1988. When landlords intend to increase rent on a periodic (rolling) tenancy without a rent review clause, they must serve a formal Section 13 notice using the correct format. Failing to provide sufficient notice time or miscalculating the effective date can render the rent increase invalid.
+                Executing statutory rent reviews across residential tenancies in England requires compliance with Section 13 of the Housing Act 1988. When landlords, private owners, or letting managers seek to adjust rent levels on rolling periodic tenancies (such as month-to-month or week-to-week contractual or statutory periodic tenancies), serving Form 4A (Landlord's notice proposing a new rent for an assured periodic tenancy) is mandatory. Failing to deliver proper statutory lead times, serving incorrect dates, or proposing retroactive increases renders the notice legally invalid.
             </p>
             <p>
-                This browser-based <strong>uk-form-4a-rent-tracker</strong> utility empowers landlords, letting agents, and tenants to instantly compute statutory notice periods, calculate percentage and monetary rent adjustments, and determine exact effective implementation dates entirely client-side without transmitting personal or financial data to external servers.
+                Our <strong>uk-form-4a-rent-tracker</strong> is an enterprise-grade client-side calculation tool engineered to eliminate manual calculation errors. It empowers property managers, landlords, and legal advisers to instantly verify required notice windows, compute precise monthly and annual rental variances, determine strict statutory effective dates, and export watermarked compliance records.
             </p>
 
-            <h2>Section 13 Notice Period Specifications Matrix</h2>
+            <h2>Section 13 Statutory Notice Rules & Timeline Specification Matrix</h2>
             <p>
-                The required minimum notice length depends entirely on the rental period frequency of the tenancy agreement. The specification matrix below outlines standard statutory timelines:
+                The minimum statutory notice duration depends entirely on the underlying tenancy payment schedule. The specification matrix below summarizes statutory guidelines established under UK landlord-tenant legislation:
             </p>
 
-            <table class="spec-table">
-                <thead>
-                    <tr>
-                        <th>Tenancy Frequency</th>
-                        <th>Minimum Notice Length</th>
-                        <th>Statutory Basis</th>
-                        <th>Effective Date Rule</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Monthly Periodic</strong></td>
-                        <td>1 Month / Rental Period</td>
-                        <td>Housing Act 1988 s.13</td>
-                        <td>Must take effect on or after the first day of a new rental period.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Weekly Periodic</strong></td>
-                        <td>1 Month (or 4 Weeks)</td>
-                        <td>Housing Act 1988 s.13</td>
-                        <td>Must align with the start of a new weekly rental period cycle.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Yearly Periodic</strong></td>
-                        <td>6 Months</td>
-                        <td>Housing Act 1988 s.13</td>
-                        <td>Must allow a full 6-month notice lead time before taking effect.</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Fixed-Term Tenancies</strong></td>
-                        <td>Not Applicable</td>
-                        <td>Housing Act 1988 s.13</td>
-                        <td>Section 13 cannot be used during a fixed term unless a valid break/review clause applies.</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="table-wrapper">
+                <table class="spec-table">
+                    <thead>
+                        <tr>
+                            <th>Tenancy Frequency</th>
+                            <th>Minimum Statutory Notice</th>
+                            <th>Legal Authority</th>
+                            <th>Effective Date Rules & Requirements</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Monthly Periodic</strong></td>
+                            <td>1 Month / Full Rental Period</td>
+                            <td>Housing Act 1988 s.13(2)</td>
+                            <td>Must take effect on the first day of a new rental period, not mid-cycle.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Weekly / Fortnightly</strong></td>
+                            <td>4 Weeks (Minimum 28 Days)</td>
+                            <td>Housing Act 1988 s.13(2)</td>
+                            <td>Must coincide with the starting day of a weekly tenancy payment period.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Yearly Periodic</strong></td>
+                            <td>6 Months Notice Lead Time</td>
+                            <td>Housing Act 1988 s.13(2)</td>
+                            <td>Requires 6 full calendar months of advance warning prior to adjustment.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Fixed-Term Tenancies</strong></td>
+                            <td>Not Permitted via Section 13</td>
+                            <td>Housing Act 1988 s.13(1)</td>
+                            <td>Section 13 cannot override fixed terms unless explicit review clauses exist.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
-            <!-- Ad Slot 2 Container (Immediately Below Data Table) -->
-            <div class="cms-ad-slot-2"></div>
-
-            <h2>Operational Breakdown & Workflow Integration</h2>
+            <h2>Comprehensive Section 13 Notice Execution Workflow</h2>
             <p>
-                Integrating this tracker into your property management or tenant communication workflow ensures compliance and transparency:
+                To maintain statutory validity when issuing a Form 4A notice to tenants, follow these critical legal steps:
             </p>
             <ul>
-                <li><strong>Input Tenancy Data:</strong> Enter your current monthly rent, proposed new rent, and the exact date the notice is served to the tenant.</li>
-                <li><strong>Select Tenancy Frequency:</strong> Choose between monthly, weekly, or yearly periodic tenancy cycles to automatically calibrate statutory notice durations.</li>
-                <li><strong>Analyze Results Board:</strong> Instantly inspect the percentage variance, monetary increase, and earliest valid effective date for the rent revision.</li>
-                <li><strong>Local Browser Security:</strong> Rest assured that all computations execute instantly inside local browser script memory with zero data logging.</li>
+                <li><strong>Confirm Tenancy Status:</strong> Ensure the tenancy is an Assured Shorthold Tenancy (AST) or Assured Tenancy that has transitioned into a periodic rolling phase.</li>
+                <li><strong>Respect Frequency Caps:</strong> Rent increases via Section 13 can generally only be initiated once every 12 months.</li>
+                <li><strong>Factor Service & Delivery Lead Times:</strong> If serving by post, allow a minimum of 2 working days for postal delivery before counting the statutory notice window.</li>
+                <li><strong>Tenant Rights & Tribunal Referrals:</strong> Tenants retain the statutory right to challenge unreasonable rent increases by submitting Form Rents 1 to the First-tier Tribunal (Property Chamber) before the proposed start date.</li>
             </ul>
 
             <h2>Frequently Asked Questions</h2>
@@ -430,9 +505,11 @@
         </section>
     </article>
 
-    <!-- Footer Container -->
+    <!-- Footer Injection Target Node -->
+    <div id="site-footer"></div>
     <div id="global-footer"></div>
 
+    <!-- Core Interactive Script & Download Logic Engine -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var currentRentInput = document.getElementById('currentRent');
@@ -441,27 +518,34 @@
             var tenancyPeriodSelect = document.getElementById('tenancyPeriod');
             var calculateBtn = document.getElementById('calculateBtn');
             var loadDemoBtn = document.getElementById('loadDemoBtn');
+            var downloadReportBtn = document.getElementById('downloadReportBtn');
 
             var resPercentage = document.getElementById('resPercentage');
             var resNoticePeriod = document.getElementById('resNoticePeriod');
             var resEffectiveDate = document.getElementById('resEffectiveDate');
 
-            // Set default date to today if empty
+            // Default to current date if unset
             var today = new Date();
             var todayFormatted = today.toISOString().split('T')[0];
-            noticeDateInput.value = todayFormatted;
-
-            loadDemoBtn.addEventListener('click', function() {
-                currentRentInput.value = '1250';
-                proposedRentInput.value = '1400';
+            if (noticeDateInput && !noticeDateInput.value) {
                 noticeDateInput.value = todayFormatted;
-                tenancyPeriodSelect.value = 'monthly';
-                calculateNotice();
-            });
+            }
 
-            calculateBtn.addEventListener('click', function() {
-                calculateNotice();
-            });
+            if (loadDemoBtn) {
+                loadDemoBtn.addEventListener('click', function() {
+                    currentRentInput.value = '1250';
+                    proposedRentInput.value = '1400';
+                    noticeDateInput.value = todayFormatted;
+                    tenancyPeriodSelect.value = 'monthly';
+                    calculateNotice();
+                });
+            }
+
+            if (calculateBtn) {
+                calculateBtn.addEventListener('click', function() {
+                    calculateNotice();
+                });
+            }
 
             function calculateNotice() {
                 var cur = parseFloat(currentRentInput.value) || 0;
@@ -504,87 +588,218 @@
                 });
             }
 
+            // High-Resolution Watermarked PNG Canvas Generator
+            if (downloadReportBtn) {
+                downloadReportBtn.addEventListener('click', function() {
+                    var cur = currentRentInput.value || '0';
+                    var prop = proposedRentInput.value || '0';
+                    var noticeDate = noticeDateInput.value || 'N/A';
+                    var period = tenancyPeriodSelect.options[tenancyPeriodSelect.selectedIndex].text;
+                    var pctVal = resPercentage.textContent || 'N/A';
+                    var noticePeriodVal = resNoticePeriod.textContent || 'N/A';
+                    var effectiveDateVal = resEffectiveDate.textContent || 'N/A';
+                    var timestamp = new Date().toLocaleDateString('en-GB');
+
+                    // Setup Canvas
+                    var canvas = document.createElement('canvas');
+                    canvas.width = 1200;
+                    canvas.height = 1200;
+                    var ctx = canvas.getContext('2d');
+
+                    // Dark Theme Background Gradient
+                    var bgGrad = ctx.createLinearGradient(0, 0, 0, canvas.height);
+                    bgGrad.addColorStop(0, '#0f1117');
+                    bgGrad.addColorStop(1, '#181b24');
+                    ctx.fillStyle = bgGrad;
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                    // Outer Card Border
+                    ctx.strokeStyle = '#2e3446';
+                    ctx.lineWidth = 4;
+                    ctx.strokeRect(40, 40, canvas.width - 80, canvas.height - 80);
+
+                    // Header Gradient Title
+                    var titleGrad = ctx.createLinearGradient(80, 100, 800, 100);
+                    titleGrad.addColorStop(0, '#8b5cf6');
+                    titleGrad.addColorStop(1, '#00f2fe');
+                    ctx.fillStyle = titleGrad;
+                    ctx.font = 'bold 38px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+                    ctx.fillText('UK SECTION 13 RENT NOTICE REPORT', 80, 110);
+
+                    // Subheader
+                    ctx.fillStyle = '#9ca3af';
+                    ctx.font = '22px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+                    ctx.fillText('Statutory Calculation Summary | Housing Act 1988 Guidelines', 80, 150);
+
+                    // Horizontal Separator
+                    ctx.strokeStyle = '#2e3446';
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.moveTo(80, 180);
+                    ctx.lineTo(1120, 180);
+                    ctx.stroke();
+
+                    // Section Helper Function
+                    function drawCard(x, y, w, h, title, val1Label, val1Val, val2Label, val2Val) {
+                        ctx.fillStyle = '#222634';
+                        ctx.beginPath();
+                        ctx.roundRect(x, y, w, h, 12);
+                        ctx.fill();
+                        ctx.strokeStyle = '#2e3446';
+                        ctx.lineWidth = 2;
+                        ctx.stroke();
+
+                        ctx.fillStyle = '#8b5cf6';
+                        ctx.font = 'bold 22px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+                        ctx.fillText(title, x + 30, y + 45);
+
+                        // Row 1
+                        ctx.fillStyle = '#9ca3af';
+                        ctx.font = '20px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+                        ctx.fillText(val1Label, x + 30, y + 95);
+
+                        ctx.fillStyle = '#ffffff';
+                        ctx.font = 'bold 24px SFMono-Regular, Consolas, monospace';
+                        ctx.fillText(val1Val, x + 30, y + 130);
+
+                        if (val2Label) {
+                            // Row 2
+                            ctx.fillStyle = '#9ca3af';
+                            ctx.font = '20px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+                            ctx.fillText(val2Label, x + 30, y + 180);
+
+                            ctx.fillStyle = '#ffffff';
+                            ctx.font = 'bold 24px SFMono-Regular, Consolas, monospace';
+                            ctx.fillText(val2Val, x + 30, y + 215);
+                        }
+                    }
+
+                    // Draw Input Box
+                    drawCard(80, 220, 1040, 260, 'INPUT TENANCY DETAILS', 
+                        'Current Monthly Rent vs. Proposed Rent:', '£' + cur + '  ➜  £' + prop + ' / month',
+                        'Notice Served Date & Tenancy Type:', noticeDate + '  (' + period + ')'
+                    );
+
+                    // Draw Calculated Results Box
+                    drawCard(80, 520, 1040, 380, 'STATUTORY NOTICE RESULTS',
+                        'Rent Variance & Percentage Change:', pctVal,
+                        'Minimum Required Notice Window:', noticePeriodVal
+                    );
+
+                    // Additional Calculated Result inside Results Box
+                    ctx.fillStyle = '#9ca3af';
+                    ctx.font = '20px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+                    ctx.fillText('Earliest Valid Effective Rent Date:', 110, 785);
+
+                    ctx.fillStyle = '#00f2fe';
+                    ctx.font = 'bold 28px SFMono-Regular, Consolas, monospace';
+                    ctx.fillText(effectiveDateVal, 110, 825);
+
+                    // Timestamp Label
+                    ctx.fillStyle = '#9ca3af';
+                    ctx.font = '18px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+                    ctx.fillText('Generated Date: ' + timestamp, 80, 960);
+
+                    // Watermark Banner Bottom
+                    ctx.fillStyle = 'rgba(139, 92, 246, 0.15)';
+                    ctx.fillRect(80, 1000, 1040, 80);
+                    ctx.strokeStyle = '#8b5cf6';
+                    ctx.lineWidth = 1;
+                    ctx.strokeRect(80, 1000, 1040, 80);
+
+                    ctx.fillStyle = '#ffffff';
+                    ctx.font = 'bold 22px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('Generated by CoreMetricSuite (coremetricsuite.com)', 600, 1048);
+                    ctx.textAlign = 'left';
+
+                    // Trigger Download
+                    var link = document.createElement('a');
+                    link.download = 'Section_13_Rent_Notice_Report_' + noticeDate + '.png';
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+                });
+            }
+
             calculateNotice();
         });
     </script>
+
     <!-- Global CoreMetricSuite Cross-Linking Index Hub -->
-<div style="margin-top: 40px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #f8fafc; font-family: system-ui, -apple-system, sans-serif;">
-    <h3 style="margin: 0 0 15px 0; font-size: 18px; color: #0f172a; font-weight: 600;">🛠️ CoreMetricSuite Utility Directory</h3>
-    
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
-        <!-- Group 1 -->
-        <div>
-            <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇦🇺 Australia Tax & Labor</h4>
-            <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
-                <li style="margin-bottom: 4px;"><a id="hub-au-cents" href="../au-cents-per-km-estimator/" style="color: #2563eb; text-decoration: underline;">Cents-Per-Km Tax Estimator</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-au-schads" href="../au-schads-vehicle-allowance/" style="color: #2563eb; text-decoration: underline;">SCHADS Vehicle Allowance</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-au-super" href="../au-superannuation-charge-tracker/" style="color: #2563eb; text-decoration: underline;">Superannuation Tracker</a></li>
-            </ul>
-        </div>
+    <div style="margin-top: 40px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #f8fafc; font-family: system-ui, -apple-system, sans-serif;">
+        <h3 style="margin: 0 0 15px 0; font-size: 18px; color: #0f172a; font-weight: 600;">🛠️️ CoreMetricSuite Utility Directory</h3>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
+            <!-- Group 1 -->
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇦🇺 Australia Tax & Labor</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-au-cents" href="../au-cents-per-km-estimator/" style="color: #2563eb; text-decoration: underline;">Cents-Per-Km Tax Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-au-schads" href="../au-schads-vehicle-allowance/" style="color: #2563eb; text-decoration: underline;">SCHADS Vehicle Allowance</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-au-super" href="../au-superannuation-charge-tracker/" style="color: #2563eb; text-decoration: underline;">Superannuation Tracker</a></li>
+                </ul>
+            </div>
 
-        <!-- Group 2 -->
-        <div>
-            <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇺🇸 US Corporate Tax</h4>
-            <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
-                <li style="margin-bottom: 4px;"><a id="hub-us-llc" href="../us-llc-late-penalty-estimator/" style="color: #2563eb; text-decoration: underline;">LLC Late Tax Penalty</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-us-179" href="../us-section-179-truck-calculator/" style="color: #2563eb; text-decoration: underline;">Section 179 Vehicle Deduction</a></li>
-            </ul>
-        </div>
+            <!-- Group 2 -->
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇺🇸 US Corporate Tax</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-us-llc" href="../us-llc-late-penalty-estimator/" style="color: #2563eb; text-decoration: underline;">LLC Late Tax Penalty</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-us-179" href="../us-section-179-truck-calculator/" style="color: #2563eb; text-decoration: underline;">Section 179 Vehicle Deduction</a></li>
+                </ul>
+            </div>
 
-        <!-- Group 3 -->
-        <div>
-            <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇬🇧 UK Property Management</h4>
-            <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
-                <li style="margin-bottom: 4px;"><a id="hub-uk-rent" href="../uk-form-4a-rent-tracker/" style="color: #2563eb; text-decoration: underline;">Form 4A Rent Tracker</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-uk-sdlt" href="../uk-sdlt-bracket-estimator/" style="color: #2563eb; text-decoration: underline;">Stamp Duty Estimator</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-uk-sec8" href="../uk-section-8-calculator/" style="color: #2563eb; text-decoration: underline;">Section 8 Calculator</a></li>
-            </ul>
-        </div>
+            <!-- Group 3 -->
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇬🇧 UK Property Management</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-rent" href="../uk-form-4a-rent-tracker/" style="color: #2563eb; text-decoration: underline;">Form 4A Rent Tracker</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-sdlt" href="../uk-sdlt-bracket-estimator/" style="color: #2563eb; text-decoration: underline;">Stamp Duty Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-sec8" href="../uk-section-8-calculator/" style="color: #2563eb; text-decoration: underline;">Section 8 Calculator</a></li>
+                </ul>
+            </div>
 
-        <!-- Group 4 -->
-        <div>
-            <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🎬 Digital Media Layouts</h4>
-            <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
-                <li style="margin-bottom: 4px;"><a id="hub-media-ig" href="../instagram-reels-preview/" style="color: #2563eb; text-decoration: underline;">Instagram Reels Grid</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-media-shorts" href="../shorts-ui-safe-zone/" style="color: #2563eb; text-decoration: underline;">YouTube Shorts Safe Zone</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-media-tiktok" href="../tiktok-ad-safe-zone/" style="color: #2563eb; text-decoration: underline;">TikTok Ad Checker</a></li>
-                <li style="margin-bottom: 4px;"><a id="hub-media-shopify" href="../shopify-metafields-parser/" style="color: #2563eb; text-decoration: underline;">Shopify Metafields Parser</a></li>
-            </ul>
+            <!-- Group 4 -->
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🎬 Digital Media Layouts</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-media-ig" href="../instagram-reels-preview/" style="color: #2563eb; text-decoration: underline;">Instagram Reels Grid</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-shorts" href="../shorts-ui-safe-zone/" style="color: #2563eb; text-decoration: underline;">YouTube Shorts Safe Zone</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-tiktok" href="../tiktok-ad-safe-zone/" style="color: #2563eb; text-decoration: underline;">TikTok Ad Checker</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-shopify" href="../shopify-metafields-parser/" style="color: #2563eb; text-decoration: underline;">Shopify Metafields Parser</a></li>
+                </ul>
+            </div>
         </div>
     </div>
-</div>
 
-<script defer>
-    (function() {
-        // Scans the active browser path to determine which self-link to intercept
-        const path = window.location.pathname.toLowerCase();
-        
-        const toolsMap = {
-            'au-cents-per-km-estimator': 'hub-au-cents',
-            'au-schads-vehicle-allowance': 'hub-au-schads',
-            'au-superannuation-charge-tracker': 'hub-au-super',
-            'us-llc-late-penalty-estimator': 'hub-us-llc',
-            'us-section-179-truck-calculator': 'hub-us-179',
-            'uk-form-4a-rent-tracker': 'hub-uk-rent',
-            'uk-sdlt-bracket-estimator': 'hub-uk-sdlt',
-            'uk-section-8-calculator': 'hub-uk-sec8',
-            'instagram-reels-preview': 'hub-media-ig',
-            'shorts-ui-safe-zone': 'hub-media-shorts',
-            'tiktok-ad-safe-zone': 'hub-media-tiktok',
-            'shopify-metafields-parser': 'hub-media-shopify'
-        };
+    <script defer>
+        (function() {
+            const path = window.location.pathname.toLowerCase();
+            const toolsMap = {
+                'au-cents-per-km-estimator': 'hub-au-cents',
+                'au-schads-vehicle-allowance': 'hub-au-schads',
+                'au-superannuation-charge-tracker': 'hub-au-super',
+                'us-llc-late-penalty-estimator': 'hub-us-llc',
+                'us-section-179-truck-calculator': 'hub-us-179',
+                'uk-form-4a-rent-tracker': 'hub-uk-rent',
+                'uk-sdlt-bracket-estimator': 'hub-uk-sdlt',
+                'uk-section-8-calculator': 'hub-uk-sec8',
+                'instagram-reels-preview': 'hub-media-ig',
+                'shorts-ui-safe-zone': 'hub-media-shorts',
+                'tiktok-ad-safe-zone': 'hub-media-tiktok',
+                'shopify-metafields-parser': 'hub-media-shopify'
+            };
 
-        for (const [folderName, elementId] of Object.entries(toolsMap)) {
-            if (path.includes(folderName)) {
-                const targetEl = document.getElementById(elementId);
-                if (targetEl) {
-                    // Replaces the hyperlinked state with unclickable bold text styling
-                    targetEl.outerHTML = `<span style="font-weight: 600; color: #0f172a;">${targetEl.textContent} (Current)</span>`;
+            for (const [folderName, elementId] of Object.entries(toolsMap)) {
+                if (path.includes(folderName)) {
+                    const targetEl = document.getElementById(elementId);
+                    if (targetEl) {
+                        targetEl.outerHTML = `<span style="font-weight: 600; color: #0f172a;">${targetEl.textContent} (Current)</span>`;
+                    }
+                    break;
                 }
-                break;
             }
-        }
-    })();
-</script>
-<style type="text/css">@media screen and (max-width:900px){html,body{width:100%!important;max-width:100vw!important;overflow-x:hidden!important;margin:0!important;padding:0!important}main.container{display:flex!important;flex-direction:column!important;width:100%!important;max-width:100%!important;padding:0 12px!important;margin:8px auto!important;gap:16px!important;box-sizing:border-box!important}main.container>section.preview-stage{order:-1!important;width:100%!important;display:flex!important;flex-direction:column!important;align-items:center!important;margin:0 auto!important;box-sizing:border-box!important}main.container>section.panel{order:2!important;width:100%!important;max-width:100%!important;box-sizing:border-box!important}.canvas-wrapper{width:75vw!important;height:133.33vw!important;max-width:290px!important;max-height:515px!important;margin:0 auto!important;box-sizing:border-box!important}#cms-ad-slot-top,#cms-ad-slot-1,.cms-medianet-box,.cms-ad-slot-1,.cms-ad-slot-2{width:100%!important;max-width:100%!important;height:auto!important;min-height:90px!important;display:block!important}.spec-table,.content-card div[style*="display: grid"]{grid-template-columns:1fr!important;width:100%!important}input,textarea,select{font-size:16px!important}}</style></body>
+        })();
+    </script>
+</body>
 </html>
