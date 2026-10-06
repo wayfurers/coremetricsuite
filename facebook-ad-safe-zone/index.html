@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook 9:16 In-Feed Ad Visual Mask &amp; Safe Zone Checker (Reels &amp; Stories Mockup Studio)</title>
+    <meta name="description" content="Test your 9:16 Facebook vertical ad framing instantly. Ensure your text, logos, and CTAs never get blocked by Meta Reels and Stories UI buttons or overlays.">
+    <meta name="keywords" content="facebook 9:16 ad safe zone, facebook reels ad mockup, meta vertical ad template, stories safe area checker, facebook ad visual mask generator, 1080x1920 ad tester">
+    <link rel="canonical" href="https://coremetricsuite.com/facebook-ad-safe-zone/">
+
+    <!-- Open Graph / Social Metadata -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Facebook 9:16 In-Feed Ad Visual Mask &amp; Safe Zone Checker">
+    <meta property="og:description" content="Test your 9:16 Facebook vertical ad framing instantly. Ensure your text, logos, and CTAs never get blocked by Meta UI elements.">
+    <meta property="og:url" content="https://coremetricsuite.com/facebook-ad-safe-zone/">
+    
+    <!-- Global Framework Dependencies -->
+    <link rel="stylesheet" href="/css/global.css">
+    <script src="/config.js" defer></script>
+    <script src="/global.min.js" defer></script>
+
+    <!-- FAQ JSON-LD Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What are the exact Facebook 9:16 safe zone dimensions for 1080x1920 video ads?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For 1080x1920 vertical Facebook Reels and Stories ads, keep essential text, logos, and hooks clear of the top 270px (profile info and header) and bottom 670px (captions, audio title, and CTA button). Additionally, maintain a 65px left and right margin to protect against edge cropping."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does client-side frame checking protect my advertising creatives?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "All uploaded video frames, mockup images, canvas rendering, and safe zone calculations are processed 100% locally inside your web browser using HTML5 Canvas. No media files or campaign assets are ever uploaded to any remote server."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I use a safe zone template PNG in Premiere Pro or CapCut?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Click the 'Export 1080x1920 PNG Mask' button to download a transparent reference overlay template. Place this image on the topmost track of your video timeline while positioning text and subtitles, then remove or disable the track before final ad export."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why are my Facebook Reels ad captions getting covered by the UI?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Meta's native interface overlays player controls, primary text, advertiser usernames, and call-to-action buttons across the bottom 35% of the screen. Hardcoded subtitles placed too low will clash with these elements, lowering user engagement."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What file formats and aspect ratios are supported by this mockup tool?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The utility supports standard image files (PNG, JPG) and vertical video containers (MP4, MOV) up to Meta's standard limits. A 9:16 vertical resolution (1080x1920 pixels) yields the most accurate preview results."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-main: #0f1117;
+            --bg-card: #181b24;
+            --bg-input: #222634;
+            --border-color: #2e3446;
+            --accent-blue: #1877f2;
+            --accent-cyan: #00f2fe;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: var(--bg-main); color: var(--text-primary); font-family: var(--font-sans); line-height: 1.6; }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            grid-template-areas: 
+                "upload preview"
+                "panel preview";
+            gap: 2rem;
+        }
+
+        .upload-card-wrapper {
+            grid-area: upload;
+        }
+
+        .panel {
+            grid-area: panel;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            height: fit-content;
+        }
+
+        .panel-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            background: var(--accent-blue);
+            color: #fff;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        .drop-zone {
+            border: 2px dashed var(--border-color);
+            padding: 1.25rem;
+            text-align: center;
+            border-radius: 8px;
+            background-color: var(--bg-input);
+            cursor: pointer;
+            transition: border-color 0.2s, background-color 0.2s;
+            margin-bottom: 0.75rem;
+        }
+
+        .drop-zone:hover { border-color: var(--accent-blue); background-color: rgba(24, 119, 242, 0.05); }
+        .drop-title { font-weight: 600; color: #fff; font-size: 0.95rem; }
+        .drop-sub { font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px; }
+
+        .btn-demo {
+            width: 100%;
+            padding: 0.65rem;
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            color: var(--accent-cyan);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 1.25rem;
+            transition: background-color 0.2s;
+        }
+
+        .btn-demo:hover { background-color: #2a2f42; }
+
+        .toggle-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: var(--bg-input);
+            padding: 0.75rem 0.85rem;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 1rem;
+        }
+
+        .toggle-label { font-size: 0.85rem; font-weight: 500; color: var(--text-primary); }
+
+        .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #374151; transition: .3s; border-radius: 24px;
+        }
+        .slider:before {
+            position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px;
+            background-color: white; transition: .3s; border-radius: 50%;
+        }
+        input:checked + .slider { background-color: var(--accent-blue); }
+        input:checked + .slider:before { transform: translateX(20px); }
+
+        .form-group { margin-bottom: 1.25rem; }
+        label { display: block; font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 0.4rem; }
+        input[type="text"], textarea, select {
+            width: 100%; padding: 0.65rem 0.85rem; background-color: var(--bg-input);
+            border: 1px solid var(--border-color); border-radius: 6px; color: #fff;
+            font-size: 0.9rem; outline: none; font-family: inherit;
+        }
+        input[type="text"]:focus, textarea:focus, select:focus { border-color: var(--accent-blue); }
+
+        .btn-action {
+            width: 100%; padding: 0.85rem; background: linear-gradient(135deg, var(--accent-blue), #1055b3);
+            color: #fff; font-weight: 600; border: none; border-radius: 6px; cursor: pointer; font-size: 0.95rem;
+            box-shadow: 0 4px 12px rgba(24, 119, 242, 0.3);
+            transition: transform 0.1s, opacity 0.2s;
+            margin-bottom: 1rem;
+        }
+        .btn-action:hover { opacity: 0.95; }
+        .btn-action:active { transform: scale(0.99); }
+
+        /* Social Share Button Module */
+        .social-share-container {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        .share-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
+            display: block;
+            text-align: center;
+        }
+        .share-buttons-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+        }
+        .btn-share {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            padding: 0.5rem 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: opacity 0.2s, transform 0.1s;
+        }
+        .btn-share:hover { opacity: 0.88; }
+        .btn-share:active { transform: scale(0.97); }
+        .btn-share-x { background-color: #000000; border: 1px solid #333; }
+        .btn-share-fb { background-color: #1877f2; }
+        .btn-share-li { background-color: #0a66c2; }
+        .btn-share-wa { background-color: #25d366; color: #000; }
+        .btn-share-pin { background-color: #e60023; }
+        .btn-share-copy { background-color: #374151; color: #fff; grid-column: span 3; margin-top: 0.25rem; }
+
+        .preview-stage { 
+            grid-area: preview;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+        }
+        .canvas-wrapper {
+            position: relative; width: 320px; height: 568px; border-radius: 16px;
+            overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.6); background-color: #000;
+            border: 2px solid var(--border-color);
+        }
+        canvas { width: 100%; height: 100%; display: block; }
+        .canvas-caption { margin-top: 1rem; font-size: 0.85rem; color: var(--text-secondary); text-align: center; }
+
+        .content-area { max-width: 1200px; margin: 3rem auto; padding: 0 1.5rem; }
+        .content-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 2.5rem; }
+        .content-card h1 { font-size: 2rem; margin-bottom: 1rem; color: #fff; }
+        .content-card h2 { font-size: 1.4rem; margin: 1.8rem 0 1rem; color: #fff; }
+        .content-card p { color: var(--text-secondary); margin-bottom: 1.2rem; }
+        .content-card ul, .content-card ol { color: var(--text-secondary); margin: 0 0 1.2rem 1.5rem; }
+        .content-card li { margin-bottom: 0.5rem; }
+
+        .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 1.5rem 0; }
+        .spec-table { width: 100%; border-collapse: collapse; text-align: left; min-width: 600px; }
+        .spec-table th, .spec-table td { padding: 0.85rem 1rem; border: 1px solid var(--border-color); }
+        .spec-table th { background-color: var(--bg-input); color: #fff; font-size: 0.9rem; }
+        .spec-table td { color: var(--text-secondary); font-size: 0.875rem; }
+
+        /* Accordion FAQ Styling */
+        .faq-block { margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem; }
+        .faq-accordion {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 0.85rem;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .faq-accordion[open] { border-color: var(--accent-blue); }
+        .faq-summary {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            padding: 1rem 1.2rem;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+        .faq-summary::-webkit-details-marker { display: none; }
+        .faq-summary::after {
+            content: "+";
+            font-size: 1.2rem;
+            color: var(--accent-blue);
+            transition: transform 0.2s;
+        }
+        .faq-accordion[open] .faq-summary::after {
+            content: "−";
+            color: var(--accent-blue);
+        }
+        .faq-answer {
+            padding: 0 1.2rem 1.2rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 0.4rem;
+            padding-top: 0.8rem;
+        }
+
+        .cms-ad-slot-1, .cms-ad-slot-2 {
+            width: 100%; max-width: 970px; min-height: 90px; margin: 1.5rem auto;
+            background: rgba(255,255,255,0.02); border-radius: 8px; display: block;
+        }
+
+        /* Mobile Responsive Overrides: File upload first, then canvas preview */
+        @media screen and (max-width: 900px) {
+            html, body { width: 100%!important; max-width: 100vw!important; overflow-x: hidden!important; margin: 0!important; padding: 0!important; }
+            main.container { display: flex!important; flex-direction: column!important; width: 100%!important; max-width: 100%!important; padding: 0 12px!important; margin: 8px auto!important; gap: 16px!important; box-sizing: border-box!important; }
+            .upload-card-wrapper { order: 1!important; width: 100%!important; }
+            main.container > section.preview-stage { order: 2!important; width: 100%!important; display: flex!important; flex-direction: column!important; align-items: center!important; margin: 0 auto!important; box-sizing: border-box!important; }
+            main.container > section.panel { order: 3!important; width: 100%!important; max-width: 100%!important; box-sizing: border-box!important; }
+            .canvas-wrapper { width: 75vw!important; height: 133.33vw!important; max-width: 290px!important; max-height: 515px!important; margin: 0 auto!important; box-sizing: border-box!important; }
+            input, textarea, select { font-size: 16px!important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Container -->
+    <div id="global-header"></div>
+
+    <!-- Ad Slot 1 Container -->
+    <div class="cms-ad-slot-1" id="cms-ad-slot-top"></div>
+
+    <!-- Main Tool Container -->
+    <main class="container">
+        <!-- Module 1: File Upload Section (Rendered 1st on mobile) -->
+        <div class="upload-card-wrapper">
+            <div class="panel">
+                <div class="panel-title">
+                    <span>Upload Ad Creative</span>
+                    <span class="badge">STEP 1</span>
+                </div>
+                <div class="drop-zone" id="dropZone">
+                    <p class="drop-title">Click or Drag Video / Image Ad Asset</p>
+                    <p class="drop-sub">MP4, MOV, PNG, JPG (1080x1920 recommended)</p>
+                    <input type="file" id="fileInput" accept="image/*,video/*" style="display:none;">
+                </div>
+                <button class="btn-demo" id="loadDemoBtn" type="button" style="margin-bottom:0;">⚡ Load Demo Ad Creative</button>
+            </div>
+        </div>
+
+        <!-- Module 2: Live Canvas Stage (Rendered 2nd on mobile) -->
+        <section class="preview-stage">
+            <div class="canvas-wrapper">
+                <canvas id="previewCanvas" width="1080" height="1920"></canvas>
+            </div>
+            <p class="canvas-caption">
+                Interactive Meta UI Simulator. Safe center zone guarantees zero text or CTA clipping.
+            </p>
+        </section>
+
+        <!-- Module 3: Tool Controls Panel (Rendered 3rd on mobile) -->
+        <section class="panel">
+            <div class="panel-title">
+                <span>Facebook Ad Controls</span>
+                <span class="badge">9:16 SPECS</span>
+            </div>
+
+            <div class="toggle-group">
+                <span class="toggle-label">Sponsored &amp; CTA Bar</span>
+                <label class="switch">
+                    <input type="checkbox" id="adModeToggle" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="toggle-group">
+                <span class="toggle-label">Show Safe Zone Grid Mask</span>
+                <label class="switch">
+                    <input type="checkbox" id="overlayToggle" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="accountName">Advertiser Page Name</label>
+                <input type="text" id="accountName" value="Your Brand Official">
+            </div>
+
+            <div class="form-group">
+                <label for="adCaption">Ad Primary Text / Caption</label>
+                <textarea id="adCaption" rows="3">Scale your ROAS with high-converting vertical video creatives! 🚀 #FacebookAds #Marketing</textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="ctaButton">Call to Action (CTA) Button</label>
+                <select id="ctaButton">
+                    <option value="Shop Now">Shop Now</option>
+                    <option value="Learn More">Learn More</option>
+                    <option value="Sign Up">Sign Up</option>
+                    <option value="Download">Download</option>
+                </select>
+            </div>
+
+            <button class="btn-action" id="downloadBtn" type="button">Export 1080x1920 PNG Mask</button>
+
+            <!-- Social Media Share Section -->
+            <div class="social-share-container">
+                <span class="share-label">Share This Tool</span>
+                <div class="share-buttons-grid">
+                    <a id="shareX" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-x">𝕏 Post</a>
+                    <a id="shareFB" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-fb">Facebook</a>
+                    <a id="shareWA" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-wa">WhatsApp</a>
+                    <a id="shareLI" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-li">LinkedIn</a>
+                    <a id="sharePIN" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-pin">Pinterest</a>
+                    <button id="copyShareLink" type="button" class="btn-share btn-share-copy">🔗 Copy Tool Link</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- SEO & Educational Guide Section -->
+    <article class="content-area">
+        <div class="content-card">
+            <h1>Facebook 9:16 In-Feed Ad Visual Mask &amp; Safe Zone Guide</h1>
+            <p>
+                When launching vertical video or image advertisements across Facebook Reels and Stories, ensuring that critical hooks, brand logos, primary text captions, and Call-to-Action (CTA) buttons remain completely unobstructed is essential for campaign performance. Meta places heavy native user interface (UI) layers directly over full-screen 9:16 placements—including the advertiser profile badge, timestamp, audio details, and the prominent bottom interactive action bar.
+            </p>
+            <p>
+                This browser-based <strong>facebook-ad-safe-zone</strong> utility provides media buyers, performance marketers, and creative designers with an instant sandbox to test 1080x1920 pixel vertical ad layouts against official Meta placement boundaries before pushing campaigns live in Ads Manager.
+            </p>
+
+            <h2>Meta Vertical Ad Safe Area Dimensions Breakdown</h2>
+            <p>
+                To prevent key visual components from getting hidden behind native buttons or cropped by mobile screen aspect ratios, structure your creative compositions around these exact pixel clearances:
+            </p>
+
+            <div class="table-responsive">
+                <table class="spec-table">
+                    <thead>
+                        <tr>
+                            <th>UI Boundary Region</th>
+                            <th>Pixel Offset (1080p)</th>
+                            <th>Risk Level</th>
+                            <th>Interface Component Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Top Header Margin</strong></td>
+                            <td>0 px – 270 px</td>
+                            <td><strong style="color: #ff4d4d;">High Risk</strong></td>
+                            <td>Reserved for advertiser profile icon, page name, close button, and story progress bars.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Bottom CTA Margin</strong></td>
+                            <td>1250 px – 1920 px</td>
+                            <td><strong style="color: #ff4d4d;">High Risk</strong></td>
+                            <td>Contains the "Sponsored" label, primary text caption snippet, audio info, and dynamic CTA button.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Side Margins (Left/Right)</strong></td>
+                            <td>0 px – 65 px</td>
+                            <td><strong style="color: #ff944d;">Medium Risk</strong></td>
+                            <td>Buffer zones protecting against device edge bezel cropping and swipe gesture triggers.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Central Safe Content Box</strong></td>
+                            <td>950 × 980 px</td>
+                            <td><strong style="color: #00ff80;">Optimal</strong></td>
+                            <td>The prime focal zone where hooks, product demonstrations, and text overlays are 100% visible.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Ad Slot 2 Container -->
+            <div class="cms-ad-slot-2"></div>
+
+            <h2>Why Safe Zones Directly Impact Ad ROAS &amp; CTR</h2>
+            <p>
+                Users scroll through Facebook Reels and Stories at high velocity. If your primary hook or product benefit text is obscured by the bottom CTA container or top profile handle, consumer comprehension drops immediately, causing ad fatigue and lower click-through rates (CTR).
+            </p>
+            <ul>
+                <li><strong>Uninterrupted Messaging:</strong> Hardcoded subtitles or overlay callouts must sit well above the 670px lower threshold to prevent clashing with native Meta captions.</li>
+                <li><strong>Brand Recall:</strong> Placing logos within the top 270px safety buffer ensures brand identity is never blocked by profile headers.</li>
+                <li><strong>Cross-Placement Efficiency:</strong> Designing within a unified 9:16 master template allows your creative asset to serve Facebook Reels, Instagram Reels, and Stories without clipping errors.</li>
+            </ul>
+
+            <h2>Workflow Integration for Video Editors (Premiere Pro, CapCut, DaVinci)</h2>
+            <p>
+                Adding this visual mask check to your video production pipeline takes only a few straightforward steps:
+            </p>
+            <ol>
+                <li><strong>Generate Mask Template:</strong> Click the "Export 1080x1920 PNG Mask" button in our tool to download a transparent reference template.</li>
+                <li><strong>Import to Timeline:</strong> Drop the PNG overlay onto the uppermost track of your video editing software (Adobe Premiere Pro, CapCut, DaVinci Resolve).</li>
+                <li><strong>Align Creative Elements:</strong> Adjust your text templates, subtitles, and product graphics so they fit cleanly inside the unshaded central box.</li>
+                <li><strong>Export &amp; Launch:</strong> Delete or hide the guideline layer before rendering your final MP4 video file for Facebook Ads Manager.</li>
+            </ol>
+
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-block">
+                <details class="faq-accordion" open>
+                    <summary class="faq-summary">What are the exact Facebook 9:16 safe zone dimensions for 1080x1920 video ads?</summary>
+                    <div class="faq-answer">
+                        For 1080x1920 vertical Facebook Reels and Stories ads, keep essential text, logos, and hooks clear of the top 270px (profile info and header) and bottom 670px (captions, audio title, and CTA button). Additionally, maintain a 65px left and right margin to protect against edge cropping.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">How does client-side frame checking protect my advertising creatives?</summary>
+                    <div class="faq-answer">
+                        All uploaded video frames, mockup images, canvas rendering, and safe zone calculations are processed 100% locally inside your web browser using HTML5 Canvas. No media files or campaign assets are ever uploaded to any remote server.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">How do I use a safe zone template PNG in Premiere Pro or CapCut?</summary>
+                    <div class="faq-answer">
+                        Click the 'Export 1080x1920 PNG Mask' button to download a transparent reference overlay template. Place this image on the topmost track of your video timeline while positioning text and subtitles, then remove or disable the track before final ad export.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">Why are my Facebook Reels ad captions getting covered by the UI?</summary>
+                    <div class="faq-answer">
+                        Meta's native interface overlays player controls, primary text, advertiser usernames, and call-to-action buttons across the bottom 35% of the screen. Hardcoded subtitles placed too low will clash with these elements, lowering user engagement.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">What file formats and aspect ratios are supported by this mockup tool?</summary>
+                    <div class="faq-answer">
+                        The utility supports standard image files (PNG, JPG) and vertical video containers (MP4, MOV) up to Meta's standard limits. A 9:16 vertical resolution (1080x1920 pixels) yields the most accurate preview results.
+                    </div>
+                </details>
+            </div>
+        </div>
+    </article>
+
+    <!-- Footer Container -->
+    <div id="global-footer"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var canvas = document.getElementById('previewCanvas');
+            if (!canvas) return;
+            var ctx = canvas.getContext('2d');
+            
+            var fileInput = document.getElementById('fileInput');
+            var dropZone = document.getElementById('dropZone');
+            var loadDemoBtn = document.getElementById('loadDemoBtn');
+            var adModeToggle = document.getElementById('adModeToggle');
+            var overlayToggle = document.getElementById('overlayToggle');
+            var accountNameInput = document.getElementById('accountName');
+            var adCaptionInput = document.getElementById('adCaption');
+            var ctaButtonSelect = document.getElementById('ctaButton');
+            var downloadBtn = document.getElementById('downloadBtn');
+
+            var currentMedia = null;
+            var isVideo = false;
+
+            /* Setup Social Share Links */
+            var currentUrl = encodeURIComponent(window.location.href);
+            var shareTitle = encodeURIComponent("Check out this free Facebook 9:16 In-Feed Ad Visual Mask & Safe Zone Checker!");
+            
+            document.getElementById('shareX').href = 'https://twitter.com/intent/tweet?url=' + currentUrl + '&text=' + shareTitle;
+            document.getElementById('shareFB').href = 'https://www.facebook.com/sharer/sharer.php?u=' + currentUrl;
+            document.getElementById('shareWA').href = 'https://api.whatsapp.com/send?text=' + shareTitle + '%20' + currentUrl;
+            document.getElementById('shareLI').href = 'https://www.linkedin.com/sharing/share-offsite/?url=' + currentUrl;
+            document.getElementById('sharePIN').href = 'https://pinterest.com/pin/create/button/?url=' + currentUrl + '&description=' + shareTitle;
+
+            var copyBtn = document.getElementById('copyShareLink');
+            copyBtn.addEventListener('click', function() {
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'Facebook 9:16 Ad Safe Zone Checker',
+                        text: 'Test your vertical Facebook ad framing instantly.',
+                        url: window.location.href
+                    }).catch(function() {});
+                } else if (navigator.clipboard) {
+                    navigator.clipboard.writeText(window.location.href).then(function() {
+                        var origText = copyBtn.textContent;
+                        copyBtn.textContent = '✓ Link Copied!';
+                        setTimeout(function() { copyBtn.textContent = origText; }, 2000);
+                    });
+                }
+            });
+
+            dropZone.addEventListener('click', function() { fileInput.click(); });
+
+            dropZone.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                dropZone.style.borderColor = 'var(--accent-blue)';
+            });
+
+            dropZone.addEventListener('dragleave', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                dropZone.style.borderColor = 'var(--border-color)';
+            });
+
+            dropZone.addEventListener('drop', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                dropZone.style.borderColor = 'var(--border-color)';
+                if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+                    processFile(e.dataTransfer.files[0]);
+                }
+            });
+
+            fileInput.addEventListener('change', function(e) {
+                if (e.target.files && e.target.files[0]) {
+                    processFile(e.target.files[0]);
+                }
+            });
+
+            loadDemoBtn.addEventListener('click', function() {
+                var demoCanvas = document.createElement('canvas');
+                demoCanvas.width = 1080;
+                demoCanvas.height = 1920;
+                var dCtx = demoCanvas.getContext('2d');
+
+                var grad = dCtx.createLinearGradient(0, 0, 1080, 1920);
+                grad.addColorStop(0, '#0f172a');
+                grad.addColorStop(0.5, '#1e3a8a');
+                grad.addColorStop(1, '#172554');
+                dCtx.fillStyle = grad;
+                dCtx.fillRect(0, 0, 1080, 1920);
+
+                dCtx.fillStyle = '#ffffff';
+                dCtx.font = 'bold 60px sans-serif';
+                dCtx.textAlign = 'center';
+                dCtx.fillText('FACEBOOK 9:16 AD CREATIVE', 540, 850);
+                
+                dCtx.fillStyle = '#60a5fa';
+                dCtx.font = '38px sans-serif';
+                dCtx.fillText('1080 x 1920 Safe Zone Mockup', 540, 930);
+
+                var img = new Image();
+                img.src = demoCanvas.toDataURL();
+                img.onload = function() {
+                    currentMedia = img;
+                    isVideo = false;
+                    draw();
+                };
+            });
+
+            function processFile(file) {
+                var fileURL = URL.createObjectURL(file);
+                if (file.type.indexOf('video/') === 0) {
+                    var video = document.createElement('video');
+                    video.src = fileURL;
+                    video.autoplay = true;
+                    video.loop = true;
+                    video.muted = true;
+                    video.playsInline = true;
+                    video.onloadeddata = function() {
+                        currentMedia = video;
+                        isVideo = true;
+                        video.play();
+                    };
+                } else {
+                    var img = new Image();
+                    img.src = fileURL;
+                    img.onload = function() {
+                        currentMedia = img;
+                        isVideo = false;
+                        draw();
+                    };
+                }
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                if (currentMedia) {
+                    ctx.drawImage(currentMedia, 0, 0, canvas.width, canvas.height);
+                } else {
+                    ctx.fillStyle = '#12131a';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    ctx.fillStyle = '#4b5563';
+                    ctx.font = 'bold 36px sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('Upload 1080x1920 Ad Media', canvas.width / 2, canvas.height / 2);
+                }
+
+                var showAdBar = adModeToggle.checked;
+                var showOverlay = overlayToggle.checked;
+
+                var topM = 270;
+                var bottomM = 670;
+                var rightM = 65;
+                var leftM = 65;
+
+                if (showOverlay) {
+                    ctx.fillStyle = 'rgba(24, 119, 242, 0.22)';
+                    ctx.fillRect(0, 0, canvas.width, topM);
+                    ctx.fillRect(0, canvas.height - bottomM, canvas.width, bottomM);
+                    ctx.fillRect(canvas.width - rightM, topM, rightM, canvas.height - topM - bottomM);
+                    ctx.fillRect(0, topM, leftM, canvas.height - topM - bottomM);
+
+                    ctx.strokeStyle = '#60a5fa';
+                    ctx.lineWidth = 4;
+                    ctx.setLineDash([12, 8]);
+                    ctx.strokeRect(leftM, topM, canvas.width - leftM - rightM, canvas.height - topM - bottomM);
+                    ctx.setLineDash([]);
+                }
+
+                // Facebook Reels Top Header Mockup
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.4)';
+                ctx.fillRect(40, 60, 60, 60); // Profile Avatar Placeholder
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 28px sans-serif';
+                ctx.textAlign = 'left';
+                ctx.fillText(accountNameInput.value, 120, 95);
+                ctx.font = '20px sans-serif';
+                ctx.fillStyle = '#9ca3af';
+                ctx.fillText('Sponsored · 🌐', 120, 125);
+
+                // Facebook Reels Bottom Ad Caption & CTA Bar Mockup
+                if (showAdBar) {
+                    var bottomX = 50;
+                    var bottomY = canvas.height - bottomM + 80;
+
+                    ctx.textAlign = 'left';
+                    ctx.fillStyle = '#ffffff';
+                    ctx.font = '26px sans-serif';
+                    var captionText = adCaptionInput.value.length > 65 ? adCaptionInput.value.substring(0, 65) + '...' : adCaptionInput.value;
+                    ctx.fillText(captionText, bottomX, bottomY);
+
+                    // CTA Button Bar
+                    var ctaY = canvas.height - 180;
+                    ctx.fillStyle = '#1877f2';
+                    if (ctx.roundRect) {
+                        ctx.beginPath();
+                        ctx.roundRect(bottomX, ctaY, canvas.width - 100, 75, 12);
+                        ctx.fill();
+                    } else {
+                        ctx.fillRect(bottomX, ctaY, canvas.width - 100, 75);
+                    }
+
+                    ctx.fillStyle = '#ffffff';
+                    ctx.font = 'bold 30px sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(ctaButtonSelect.value, canvas.width / 2, ctaY + 47);
+                }
+            }
+
+            function renderLoop() {
+                if (isVideo && currentMedia) {
+                    draw();
+                }
+                requestAnimationFrame(renderLoop);
+            }
+            requestAnimationFrame(renderLoop);
+
+            var controls = [adModeToggle, overlayToggle, accountNameInput, adCaptionInput, ctaButtonSelect];
+            for (var j = 0; j < controls.length; j++) {
+                controls[j].addEventListener('input', function() {
+                    if (!isVideo) draw();
+                });
+            }
+
+            draw();
+
+            downloadBtn.addEventListener('click', function() {
+                var link = document.createElement('a');
+                link.download = 'facebook-916-ad-safe-zone-mask.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        });
+    </script>
+
+    <!-- Global CoreMetricSuite Cross-Linking Index Hub -->
+    <div style="margin-top: 40px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #f8fafc; font-family: system-ui, -apple-system, sans-serif;">
+        <h3 style="margin: 0 0 15px 0; font-size: 18px; color: #0f172a; font-weight: 600;">🛠️ CoreMetricSuite Utility Directory</h3>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇦🇺 Australia Tax &amp; Labor</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-au-cents" href="../au-cents-per-km-estimator/" style="color: #2563eb; text-decoration: underline;">Cents-Per-Km Tax Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-au-schads" href="../au-schads-vehicle-allowance/" style="color: #2563eb; text-decoration: underline;">SCHADS Vehicle Allowance</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-au-super" href="../au-superannuation-charge-tracker/" style="color: #2563eb; text-decoration: underline;">Superannuation Tracker</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇺🇸 US Corporate Tax</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-us-llc" href="../us-llc-late-penalty-estimator/" style="color: #2563eb; text-decoration: underline;">LLC Late Tax Penalty</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-us-179" href="../us-section-179-truck-calculator/" style="color: #2563eb; text-decoration: underline;">Section 179 Vehicle Deduction</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇬🇧 UK Property Management</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-rent" href="../uk-form-4a-rent-tracker/" style="color: #2563eb; text-decoration: underline;">Form 4A Rent Tracker</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-sdlt" href="../uk-sdlt-bracket-estimator/" style="color: #2563eb; text-decoration: underline;">Stamp Duty Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-sec8" href="../uk-section-8-calculator/" style="color: #2563eb; text-decoration: underline;">Section 8 Calculator</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🎬 Digital Media Layouts</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-media-ig" href="../instagram-reels-preview/" style="color: #2563eb; text-decoration: underline;">Instagram Reels Grid</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-fb" href="../facebook-ad-safe-zone/" style="color: #2563eb; text-decoration: underline;">Facebook 9:16 Ad Mask</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-shorts" href="../shorts-ui-safe-zone/" style="color: #2563eb; text-decoration: underline;">YouTube Shorts Safe Zone</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-tiktok" href="../tiktok-ad-safe-zone/" style="color: #2563eb; text-decoration: underline;">TikTok Ad Checker</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script defer>
+        (function() {
+            const path = window.location.pathname.toLowerCase();
+            const toolsMap = {
+                'au-cents-per-km-estimator': 'hub-au-cents',
+                'au-schads-vehicle-allowance': 'hub-au-schads',
+                'au-superannuation-charge-tracker': 'hub-au-super',
+                'us-llc-late-penalty-estimator': 'hub-us-llc',
+                'us-section-179-truck-calculator': 'hub-us-179',
+                'uk-form-4a-rent-tracker': 'hub-uk-rent',
+                'uk-sdlt-bracket-estimator': 'hub-uk-sdlt',
+                'uk-section-8-calculator': 'hub-uk-sec8',
+                'instagram-reels-preview': 'hub-media-ig',
+                'facebook-ad-safe-zone': 'hub-media-fb',
+                'shorts-ui-safe-zone': 'hub-media-shorts',
+                'tiktok-ad-safe-zone': 'hub-media-tiktok'
+            };
+
+            for (const [folderName, elementId] of Object.entries(toolsMap)) {
+                if (path.includes(folderName)) {
+                    const targetEl = document.getElementById(elementId);
+                    if (targetEl) {
+                        targetEl.outerHTML = `<span style="font-weight: 600; color: #0f172a;">${targetEl.textContent} (Current)</span>`;
+                    }
+                    break;
+                }
+            }
+        })();
+    </script>
+</body>
+</html>
