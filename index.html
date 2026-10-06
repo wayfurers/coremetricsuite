@@ -9,9 +9,9 @@
     <link rel="canonical" href="https://coremetricsuite.com" />
 
     <!-- Core Architecture Engine Links -->
-<link rel="stylesheet" href="/css/global.css">
-<script src="/config.js?v=1.0.0"></script>
-<script src="/global.min.js?v=1.0.0" defer></script>
+    <link rel="stylesheet" href="/css/global.css">
+    <script src="/config.js?v=1.0.0"></script>
+    <script src="/global.min.js?v=1.0.0" defer></script>
 
     <!-- Open Graph / Social Metadata -->
     <meta property="og:type" content="website">
@@ -44,6 +44,7 @@
     </script>
 
     <style>
+        /* Existing CSS stays completely identical */
         html, body {
             width: 100%;
             max-width: 100vw;
@@ -53,7 +54,6 @@
             -webkit-text-size-adjust: 100%;
         }
 
-        /* Directory Control Layout Adjustments */
         .cms-main-wrapper {
             max-width: var(--max-content-width, 1280px);
             margin: 0 auto;
@@ -116,7 +116,6 @@
             margin-bottom: 3rem;
         }
 
-        /* Tool Card Redesign Alignment */
         .cms-tool-card {
             background-color: var(--bg-primary, #ffffff);
             border: 1px solid var(--border-color, #e2e8f0);
@@ -240,7 +239,6 @@
             margin-bottom: 0;
         }
 
-        /* Responsive Breakpoints & Mobile SEO Optimizations */
         @media (max-width: 1024px) {
             .cms-directory-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         }
@@ -283,7 +281,6 @@
             }
         }
 
-        /* CLS Mitigation for Ad Containers */
         #cms-ad-slot-top, #cms-ad-slot-1, .cms-medianet-box, #cms-ad-slot-2 {
             display: block !important;
             width: 100% !important;
@@ -304,22 +301,16 @@
 </head>
 <body>
 
-    <!-- Native Automated Header Mount Node -->
     <div id="site-header"></div>
-
-    <!-- Silent Hidden Monetization Ad Slot 1 -->
     <div id="cms-ad-slot-1"></div>
 
-    <!-- Main Dynamic Content Wrapper -->
     <main class="cms-main-wrapper">
         
-        <!-- Hero Section -->
         <section class="cms-hero-block">
             <h1>Free Compliance, Tax & Layout Calculators</h1>
             <p>Direct browser-side utilities for multi-jurisdictional tax parameters, labor award allowances, tenancy laws, and social media safe zones. No sign-ups required. 100% private.</p>
         </section>
 
-        <!-- Dynamic Filter Controls Row -->
         <section class="cms-directory-controls">
             <div class="cms-filter-buttons" id="filterContainer">
                 <button class="cms-filter-btn active" data-filter="all" type="button">All Utilities</button>
@@ -330,162 +321,20 @@
             </div>
         </section>
 
-        <!-- Directory Calculations Cards Grid -->
+        <!-- Dynamic Grid Mount Node -->
         <section class="cms-directory-grid" id="directoryGrid">
-            
-            <!-- Card 1 -->
-            <article class="cms-tool-card" data-region="au" data-keywords="au cents per km tax estimator vehicle expense ato travel deduction">
-                <div class="cms-card-content">
-                    <span class="cms-badge-hdr" style="color: #d97706;">AU TAX</span>
-                    <h2 class="cms-toast-title" style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary, #0f172a); margin-bottom: 0.35rem;">AU Cents-Per-Km Tax Estimator</h2>
-                    <p style="font-size: 0.875rem; line-height: 1.5; color: var(--text-secondary, #475569);">Model official ATO cents-per-kilometre vehicle expense deduction caps, tax tier rates, and maximum claimable work travel thresholds.</p>
-                </div>
-                <div class="cms-card-footer">
-                    <a href="/au-cents-per-km-estimator" class="cms-btn-launch-utility">Launch Utility</a>
-                </div>
-            </article>
-
-            <!-- Card 2 -->
-            <article class="cms-tool-card" data-region="au" data-keywords="au schads award vehicle allowance travel calculator fair work ma000100 clause 20.5 25.5 care worker">
-                <div class="cms-card-content">
-                    <span class="cms-badge-hdr" style="color: #2563eb;">AU LABOUR</span>
-                    <h2 class="cms-toast-title" style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary, #0f172a); margin-bottom: 0.35rem;">AU SCHADS Award Vehicle Allowance</h2>
-                    <p style="font-size: 0.875rem; line-height: 1.5; color: var(--text-secondary, #475569);">Compute care-worker multi-variable rosters using Fair Work Commission MA000100 rules, integrating Clause 20.5 and Clause 25.5 travel parameters.</p>
-                </div>
-                <div class="cms-card-footer">
-                    <a href="/au-schads-vehicle-allowance" class="cms-btn-launch-utility">Launch Utility</a>
-                </div>
-            </article>
-
-            <!-- Card 3 -->
-            <article class="cms-tool-card" data-region="au" data-keywords="au superannuation guarantee charge tracker employer super contributions ato late payment">
-                <div class="cms-card-content">
-                    <span class="cms-badge-hdr" style="color: #d97706;">AU TAX</span>
-                    <h2 class="cms-toast-title" style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary, #0f172a); margin-bottom: 0.35rem;">AU Superannuation Guarantee Charge</h2>
-                    <p style="font-size: 0.875rem; line-height: 1.5; color: var(--text-secondary, #475569);">Calculate mandatory employer super contributions, trace statutory rate progressions, maximum base limits, and ATO late payment charge models.</p>
-                </div>
-                <div class="cms-card-footer">
-                    <a href="/au-superannuation-charge-tracker" class="cms-btn-launch-utility">Launch Utility</a>
-                </div>
-            </article>
-
-            <!-- Card 4 -->
-            <article class="cms-tool-card" data-region="us" data-keywords="us llc late tax penalty estimator irs form 1065 1120 5472 non compliance fine corporate">
-                <div class="cms-card-content">
-                    <span class="cms-badge-hdr" style="color: #4f46e5;">US TAX</span>
-                    <h2 class="cms-toast-title" style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary, #0f172a); margin-bottom: 0.35rem;">US LLC Late Tax Penalty Estimator</h2>
-                    <p style="font-size: 0.875rem; line-height: 1.5; color: var(--text-secondary, #475569);">Assess federal and state regulatory fine matrices, monthly late fees, and statutory penalty calculations for delinquent corporate entity tax filings.</p>
-                </div>
-                <div class="cms-card-footer">
-                    <a href="/us-llc-late-penalty-estimator" class="cms-btn-launch-utility">Launch Utility</a>
-                </div>
-            </article>
-
-            <!-- Card 5 -->
-            <article class="cms-tool-card" data-region="us" data-keywords="us section 179 vehicle depreciation calculator heavy suv commercial truck deduction bonus depreciation">
-                <div class="cms-card-content">
-                    <span class="cms-badge-hdr" style="color: #4f46e5;">US TAX</span>
-                    <h2 class="cms-toast-title" style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary, #0f172a); margin-bottom: 0.35rem;">US Section 179 Vehicle Deduction Engine</h2>
-                    <p style="font-size: 0.875rem; line-height: 1.5; color: var(--text-secondary, #475569);">Calculate heavy SUV and truck tax caps ($32,000 threshold limits), 6,000+ lbs GVWR rules, and accelerated MACRS bonus depreciation metrics under IRS codes.</p>
-                </div>
-                <div class="cms-card-footer">
-                    <a href="/us-section-179-truck-calculator" class="cms-btn-launch-utility">Launch Utility</a>
-                </div>
-            </article>
-
-            <!-- Card 6 -->
-            <article class="cms-tool-card" data-region="uk" data-keywords="uk form 4a rent increase notice tracker section 13 periodic housing tribunal">
-                <div class="cms-card-content">
-                    <span class="cms-badge-hdr" style="color: #0d9488;">UK LEGAL</span>
-                    <h2 class="cms-toast-title" style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary, #0f172a); margin-bottom: 0.35rem;">UK Form 4A Rent Increase Tracker</h2>
-                    <p style="font-size: 0.875rem; line-height: 1.5; color: var(--text-secondary, #475569);">Verify statutory Section 13 rent increase terms, minimum notification guidelines for periodic tenancies, and tribunal review parameters.</p>
-                </div>
-                <div class="cms-card-footer">
-                    <a href="/uk-form-4a-rent-tracker" class="cms-btn-launch-utility">Launch Utility</a>
-                </div>
-            </article>
-
-            <!-- Card 7 -->
-            <article class="cms-tool-card" data-region="uk" data-keywords="uk stamp duty land tax sdlt bracket estimator hmrc residential second home surcharges">
-                <div class="cms-card-content">
-                    <span class="cms-badge-hdr" style="color: #0d9488;">UK TAX</span>
-                    <h2 class="cms-toast-title" style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary, #0f172a); margin-bottom: 0.35rem;">UK Stamp Duty Bracket Estimator</h2>
-                    <p style="font-size: 0.875rem; line-height: 1.5; color: var(--text-secondary, #475569);">Calculate progressive HMRC SDLT thresholds, second property surcharges, non-resident tariffs, and first-time buyer allowances.</p>
-                </div>
-                <div class="cms-card-footer">
-                    <a href="/uk-sdlt-bracket-estimator" class="cms-btn-launch-utility">Launch Utility</a>
-                </div>
-            </article>
-
-            <!-- Card 8 -->
-            <article class="cms-tool-card" data-region="uk" data-keywords="uk section 8 eviction notice period calculator ground 8 rent arrears housing act">
-                <div class="cms-card-content">
-                    <span class="cms-badge-hdr" style="color: #0d9488;">UK LEGAL</span>
-                    <h2 class="cms-toast-title" style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary, #0f172a); margin-bottom: 0.35rem;">UK Section 8 Notice Calculator</h2>
-                    <p style="font-size: 0.875rem; line-height: 1.5; color: var(--text-secondary, #475569);">Determine legal notice periods and statutory Ground 8 rent arrears thresholds under current UK housing and tenancy acts.</p>
-                </div>
-                <div class="cms-card-footer">
-                    <a href="/uk-section-8-calculator" class="cms-btn-launch-utility">Launch Utility</a>
-                </div>
-            </article>
-
-            <!-- Card 9 -->
-            <article class="cms-tool-card" data-region="global" data-keywords="instagram reels aspect ratio previewer safe zone title margins caption overlay preview">
-                <div class="cms-card-content">
-                    <span class="cms-badge-hdr" style="color: #db2777;">MEDIA & UI</span>
-                    <h2 class="cms-toast-title" style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary, #0f172a); margin-bottom: 0.35rem;">Instagram Reels Aspect Ratio Previewer</h2>
-                    <p style="font-size: 0.875rem; line-height: 1.5; color: var(--text-secondary, #475569);">Verify asset layout safe zones for Instagram Reels, analyzing title margins, overlay buttons, and caption positioning constraints.</p>
-                </div>
-                <div class="cms-card-footer">
-                    <a href="/instagram-reels-preview" class="cms-btn-launch-utility">Launch Utility</a>
-                </div>
-            </article>
-
-            <!-- Card 10 -->
-            <article class="cms-tool-card" data-region="global" data-keywords="youtube shorts ui safe zone analyzer vertical video 9 16 layout overlay player metrics">
-                <div class="cms-card-content">
-                    <span class="cms-badge-hdr" style="color: #db2777;">MEDIA & UI</span>
-                    <h2 class="cms-toast-title" style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary, #0f172a); margin-bottom: 0.35rem;">YouTube Shorts UI Safe Zone Analyzer</h2>
-                    <p style="font-size: 0.875rem; line-height: 1.5; color: var(--text-secondary, #475569);">Check vertical 9:16 video aspect ratios against structural system UI overlays, device frame layouts, and edge bleed limits.</p>
-                </div>
-                <div class="cms-card-footer">
-                    <a href="/shorts-ui-safe-zone" class="cms-btn-launch-utility">Launch Utility</a>
-                </div>
-            </article>
-
-            <!-- Card 11 -->
-            <article class="cms-tool-card" data-region="global" data-keywords="tiktok video ad safe zone overlay vertical creative ad specs visual clear template">
-                <div class="cms-card-content">
-                    <span class="cms-badge-hdr" style="color: #db2777;">MEDIA & UI</span>
-                    <h2 class="cms-toast-title" style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary, #0f172a); margin-bottom: 0.35rem;">TikTok Video Ad Safe Zone Overlay</h2>
-                    <p style="font-size: 0.875rem; line-height: 1.5; color: var(--text-secondary, #475569);">Ensure global compliance for commercial TikTok ads by previewing native interactive overlay masks and engagement buttons.</p>
-                </div>
-                <div class="cms-card-footer">
-                    <a href="/tiktok-ad-safe-zone" class="cms-btn-launch-utility">Launch Utility</a>
-                </div>
-            </article>
-
-            <!-- Card 12 -->
-            <article class="cms-tool-card" data-region="global" data-keywords="shopify metafields schema validation parser developer json schema liquid templates">
-                <div class="cms-card-content">
-                    <span class="cms-badge-hdr" style="color: #059669;">DEVELOPER</span>
-                    <h2 class="cms-toast-title" style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary, #0f172a); margin-bottom: 0.35rem;">Shopify Metafields Schema & Validation Parser</h2>
-                    <p style="font-size: 0.875rem; line-height: 1.5; color: var(--text-secondary, #475569);">Developer tool to parse, syntax-check, and structuralize custom JSON schema fields for Shopify development.</p>
-                </div>
-                <div class="cms-card-footer">
-                    <a href="/shopify-metafields-parser" class="cms-btn-launch-utility">Launch Utility</a>
-                </div>
-            </article>
-
-            <!-- No Results Template -->
-            <div id="noResults" class="cms-no-results">
-                <h2 style="font-size: 1.25rem; font-weight: 700; color: var(--text-primary, #0f172a); margin-bottom: 0.5rem;">No matching calculation engines found</h2>
-                <p>Try filtering by another category or checking back soon for new utilities.</p>
-            </div>
-
+            <!-- Data is injected natively by vanilla js engine -->
         </section>
 
-        <!-- Descriptive SEO Content Block -->
+        <!-- No Results Fallback Mount Node -->
+        <div id="noResults" class="cms-no-results">
+            <h2 style="font-size: 1.25rem; font-weight: 700; color: var(--text-primary, #0f172a); margin-bottom: 0.5rem;">No matching calculation engines found</h2>
+            <p>Try filtering by another category or checking back soon for new utilities.</p>
+        </div>
+
+        <!-- Pagination Mount Node -->
+        <div id="cms-pagination-wrapper" class="cms-pagination-container"></div>
+
         <section class="cms-footer-text-block">
             <h2>Statutory Calculation &amp; Verification Suite</h2>
             <p>CoreMetricSuite offers real-time, browser-processed solutions for compliance estimates, commercial tax brackets, and digital asset rendering verification frameworks. All operations execute strictly within local sandbox parameters.</p>
@@ -494,51 +343,11 @@
 
     </main>
 
-    <!-- Silent Hidden Monetization Ad Slot 2 -->
     <div id="cms-ad-slot-2"></div>
-
-    <!-- Native Automated Footer Mount Node -->
     <div id="site-footer"></div>
 
-    <!-- Core App Filter & Directory Engine -->
-    <script defer>
-        document.addEventListener('DOMContentLoaded', function() {
-            var filterButtons = document.querySelectorAll('.cms-filter-btn');
-            var cards = document.querySelectorAll('.cms-tool-card');
-            var noResults = document.getElementById('noResults');
-            var currentRegion = 'all';
-
-            function filterTools() {
-                var visibleCount = 0;
-                cards.forEach(function(card) {
-                    var cardRegion = card.getAttribute('data-region');
-                    var matchesRegion = (currentRegion === 'all' || cardRegion === currentRegion);
-
-                    if (matchesRegion) {
-                        card.style.display = 'flex';
-                        visibleCount++;
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
-
-                if (noResults) {
-                    noResults.style.display = visibleCount === 0 ? 'block' : 'none';
-                }
-            }
-
-            filterButtons.forEach(function(btn) {
-                btn.addEventListener('click', function() {
-                    filterButtons.forEach(function(b) { b.classList.remove('active'); });
-                    btn.classList.add('active');
-                    var filterVal = btn.getAttribute('data-filter');
-                    if (filterVal) {
-                        currentRegion = filterVal;
-                    }
-                    filterTools();
-                });
-            });
-        });
-    </script>
+    <!-- Deferred SEO Data Payload and Grid Engine -->
+    <script src="/tools-data.js?v=1.1.0" defer></script>
+    <script src="/homepage-automation.js?v=1.1.0" defer></script>
 </body>
 </html>
