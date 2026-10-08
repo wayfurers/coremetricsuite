@@ -205,7 +205,7 @@ const toolsData = [
     // --- E-COMMERCE SUITE ---
     {
         id: "shopify-metafields",
-        region: "global",
+        region: "developer",
         badgeText: "DEVELOPER",
         badgeColor: "#059669",
         title: "Shopify Metafields Schema & Validation Parser",
