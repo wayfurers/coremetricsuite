@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patreon Net Tier Payout Dashboard (2026 Earnings & Fee Calculator)</title>
+    <meta name="description" content="Calculate net creator take-home pay on Patreon after platform fees, credit card processing, currency conversion, and payout fees. Free 2026 Patreon tier earnings calculator.">
+    <meta name="keywords" content="patreon fee calculator, patreon net payout dashboard, patreon earnings calculator, patreon platform fee 2026, patreon payment processing fee, patreon micropayments calculator, patreon take home pay">
+    <link rel="canonical" href="https://coremetricsuite.com/patreon-net-tier-payout-dashboard/">
+
+    <!-- Open Graph / Social Metadata -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Patreon Net Tier Payout Dashboard (2026)">
+    <meta property="og:description" content="Audit your actual Patreon take-home earnings. Itemize 10% platform fees, Stripe/PayPal processing surcharges, currency conversions, and payout method costs.">
+    <meta property="og:url" content="https://coremetricsuite.com/patreon-net-tier-payout-dashboard/">
+    
+    <!-- Global Framework Dependencies -->
+    <link rel="stylesheet" href="/css/global.css">
+    <script src="/config.js" defer></script>
+    <script src="/global.min.js" defer></script>
+
+    <!-- FAQ JSON-LD Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How much does Patreon take from creator earnings in 2026?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For standard accounts, Patreon charges a flat 10% platform fee on all gross pledges. In addition to platform fees, creators pay payment processing fees (typically 2.9% + $0.30 for standard US cards), currency conversion fees (2.5% on cross-currency pledges), and a nominal payout transfer fee ($0.25 for US direct deposit)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why are processing fees on $1 or $2 Patreon tiers so high?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Payment processors charge a fixed fee per transaction (e.g., $0.30 per charge) alongside a percentage rate. On a $1.00 pledge, the $0.30 flat fee represents 30% of the pledge. Combined with the 2.9% variable fee and 10% platform fee, a creator loses over 42% of a $1 pledge in total fees."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does Patreon charge for cross-currency and international patrons?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "When a patron pledges in a local currency (such as EUR, GBP, or CAD) that differs from the creator's payout currency (e.g., USD), Patreon applies a 2.5% currency conversion fee on the converted total. International payment processing may also carry higher card rates (3.9% + $0.30)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does offering annual billing on Patreon increase creator payout?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Annual subscriptions charge a patron once per year rather than 12 monthly charges. While creators often grant an annual discount (e.g., 10% to 16%), processing the flat $0.30 fee only once per year instead of 12 times drastically lowers effective processing fees, boosting overall net retention."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What payout method incurs the lowest transaction fees on Patreon?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For US-based creators, Automated Clearing House (ACH) Direct Deposit is the most cost-effective at $0.25 flat per payout transfer. PayPal charges $0.25 per transfer for US creators, while international payouts via Payoneer cost $1.00 per transfer plus potential local bank landing fees."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-main: #0f1117;
+            --bg-card: #181b24;
+            --bg-input: #222634;
+            --border-color: #2e3446;
+            --accent-blue: #1877f2;
+            --accent-cyan: #00f2fe;
+            --accent-pink: #ff0050;
+            --accent-green: #10b981;
+            --accent-amber: #f59e0b;
+            --accent-purple: #a855f7;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: var(--bg-main); color: var(--text-primary); font-family: var(--font-sans); line-height: 1.6; }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            grid-template-areas: 
+                "upload preview"
+                "panel preview";
+            gap: 2rem;
+        }
+
+        .upload-card-wrapper {
+            grid-area: upload;
+        }
+
+        .panel {
+            grid-area: panel;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            height: fit-content;
+        }
+
+        .panel-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple));
+            color: #fff;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        .drop-zone {
+            border: 2px dashed var(--border-color);
+            padding: 1.25rem;
+            text-align: center;
+            border-radius: 8px;
+            background-color: var(--bg-input);
+            cursor: pointer;
+            transition: border-color 0.2s, background-color 0.2s;
+            margin-bottom: 0.75rem;
+        }
+
+        .drop-zone:hover { border-color: var(--accent-pink); background-color: rgba(255, 0, 80, 0.05); }
+        .drop-title { font-weight: 600; color: #fff; font-size: 0.95rem; }
+        .drop-sub { font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px; }
+
+        .preset-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .btn-demo {
+            width: 100%;
+            padding: 0.6rem 0.5rem;
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            color: var(--accent-cyan);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.78rem;
+            transition: background-color 0.2s, border-color 0.2s;
+            text-align: center;
+        }
+
+        .btn-demo:hover { background-color: #2a2f42; border-color: var(--accent-cyan); }
+
+        .toggle-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: var(--bg-input);
+            padding: 0.75rem 0.85rem;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 0.75rem;
+        }
+
+        .toggle-label { font-size: 0.85rem; font-weight: 500; color: var(--text-primary); }
+
+        .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #374151; transition: .3s; border-radius: 24px;
+        }
+        .slider:before {
+            position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px;
+            background-color: white; transition: .3s; border-radius: 50%;
+        }
+        input:checked + .slider { background-color: var(--accent-pink); }
+        input:checked + .slider:before { transform: translateX(20px); }
+
+        .form-group { margin-bottom: 1.25rem; }
+        .range-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem; }
+        .range-value { font-size: 0.85rem; font-weight: 700; color: var(--accent-cyan); }
+        label { display: block; font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 0.4rem; }
+        input[type="text"], input[type="number"], textarea, select {
+            width: 100%; padding: 0.65rem 0.85rem; background-color: var(--bg-input);
+            border: 1px solid var(--border-color); border-radius: 6px; color: #fff;
+            font-size: 0.9rem; outline: none; font-family: inherit;
+        }
+        input[type="range"] {
+            width: 100%; height: 6px; background: var(--bg-input); border-radius: 3px;
+            outline: none; -webkit-appearance: none; accent-color: var(--accent-pink);
+        }
+        input[type="text"]:focus, input[type="number"]:focus, textarea:focus, select:focus { border-color: var(--accent-pink); }
+
+        .btn-action {
+            width: 100%; padding: 0.85rem; background: linear-gradient(135deg, var(--accent-pink), #be123c);
+            color: #fff; font-weight: 600; border: none; border-radius: 6px; cursor: pointer; font-size: 0.95rem;
+            box-shadow: 0 4px 12px rgba(255, 0, 80, 0.3);
+            transition: transform 0.1s, opacity 0.2s;
+            margin-bottom: 1rem;
+        }
+        .btn-action:hover { opacity: 0.95; }
+        .btn-action:active { transform: scale(0.99); }
+
+        /* Social Share Button Module */
+        .social-share-container {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        .share-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
+            display: block;
+            text-align: center;
+        }
+        .share-buttons-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+        }
+        .btn-share {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            padding: 0.5rem 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: opacity 0.2s, transform 0.1s;
+        }
+        .btn-share:hover { opacity: 0.88; }
+        .btn-share:active { transform: scale(0.97); }
+        .btn-share-x { background-color: #000000; border: 1px solid #333; }
+        .btn-share-fb { background-color: #1877f2; }
+        .btn-share-li { background-color: #0a66c2; }
+        .btn-share-wa { background-color: #25d366; color: #000; }
+        .btn-share-pin { background-color: #e60023; }
+        .btn-share-copy { background-color: #374151; color: #fff; grid-column: span 3; margin-top: 0.25rem; }
+
+        .preview-stage { 
+            grid-area: preview;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+        }
+        .canvas-wrapper {
+            position: relative; width: 320px; height: 568px; border-radius: 16px;
+            overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.6); background-color: #000;
+            border: 2px solid var(--border-color);
+        }
+        canvas { width: 100%; height: 100%; display: block; }
+        .canvas-caption { margin-top: 1rem; font-size: 0.85rem; color: var(--text-secondary); text-align: center; }
+
+        /* Metric Highlights Grid below Canvas */
+        .metric-summary-grid {
+            width: 100%;
+            max-width: 320px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+        .metric-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.85rem;
+            text-align: center;
+        }
+        .metric-card-title { font-size: 0.725rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; }
+        .metric-card-value { font-size: 1.05rem; font-weight: 700; color: #fff; }
+        .metric-card-value.highlight { color: var(--accent-green); }
+
+        .content-area { max-width: 1200px; margin: 3rem auto; padding: 0 1.5rem; }
+        .content-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 2.5rem; }
+        .content-card h1 { font-size: 2rem; margin-bottom: 1rem; color: #fff; }
+        .content-card h2 { font-size: 1.4rem; margin: 1.8rem 0 1rem; color: #fff; }
+        .content-card p { color: var(--text-secondary); margin-bottom: 1.2rem; }
+        .content-card ul, .content-card ol { color: var(--text-secondary); margin: 0 0 1.2rem 1.5rem; }
+        .content-card li { margin-bottom: 0.5rem; }
+
+        .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 1.5rem 0; }
+        .spec-table { width: 100%; border-collapse: collapse; text-align: left; min-width: 600px; }
+        .spec-table th, .spec-table td { padding: 0.85rem 1rem; border: 1px solid var(--border-color); }
+        .spec-table th { background-color: var(--bg-input); color: #fff; font-size: 0.9rem; }
+        .spec-table td { color: var(--text-secondary); font-size: 0.875rem; }
+
+        /* Accordion FAQ Styling */
+        .faq-block { margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem; }
+        .faq-accordion {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 0.85rem;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .faq-accordion[open] { border-color: var(--accent-pink); }
+        .faq-summary {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            padding: 1rem 1.2rem;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+        .faq-summary::-webkit-details-marker { display: none; }
+        .faq-summary::after {
+            content: "+";
+            font-size: 1.2rem;
+            color: var(--accent-pink);
+            transition: transform 0.2s;
+        }
+        .faq-accordion[open] .faq-summary::after {
+            content: "−";
+            color: var(--accent-pink);
+        }
+        .faq-answer {
+            padding: 0 1.2rem 1.2rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 0.4rem;
+            padding-top: 0.8rem;
+        }
+
+        .cms-ad-slot-1, .cms-ad-slot-2 {
+            width: 100%; max-width: 970px; min-height: 90px; margin: 1.5rem auto;
+            background: rgba(255,255,255,0.02); border-radius: 8px; display: block;
+        }
+
+        .alert-banner {
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            font-size: 0.825rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            display: none;
+        }
+        .alert-banner.info {
+            background-color: rgba(255, 0, 80, 0.15);
+            border: 1px solid var(--accent-pink);
+            color: #ff6699;
+        }
+
+        /* Mobile Responsive Overrides */
+        @media screen and (max-width: 900px) {
+            html, body { width: 100%!important; max-width: 100vw!important; overflow-x: hidden!important; margin: 0!important; padding: 0!important; }
+            main.container { display: flex!important; flex-direction: column!important; width: 100%!important; max-width: 100%!important; padding: 0 12px!important; margin: 8px auto!important; gap: 16px!important; box-sizing: border-box!important; }
+            .upload-card-wrapper { order: 1!important; width: 100%!important; }
+            main.container > section.preview-stage { order: 2!important; width: 100%!important; display: flex!important; flex-direction: column!important; align-items: center!important; margin: 0 auto!important; box-sizing: border-box!important; }
+            main.container > section.panel { order: 3!important; width: 100%!important; max-width: 100%!important; box-sizing: border-box!important; }
+            .canvas-wrapper { width: 75vw!important; height: 133.33vw!important; max-width: 290px!important; max-height: 515px!important; margin: 0 auto!important; box-sizing: border-box!important; }
+            input, textarea, select { font-size: 16px!important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Container -->
+    <div id="global-header"></div>
+
+    <!-- Ad Slot 1 Container -->
+    <div class="cms-ad-slot-1" id="cms-ad-slot-top"></div>
+
+    <!-- Main Tool Container -->
+    <main class="container">
+        <!-- Module 1: Core Tier & Patron Metrics (Rendered 1st on mobile) -->
+        <div class="upload-card-wrapper">
+            <div class="panel">
+                <div class="panel-title">
+                    <span>Tier Scope &amp; Patrons</span>
+                    <span class="badge">STEP 1</span>
+                </div>
+                
+                <div class="drop-zone" id="dropZone">
+                    <p class="drop-title">⚡ Creator Profile Presets</p>
+                    <p class="drop-sub">Select a 2026 Patreon creator scenario</p>
+                </div>
+
+                <div class="preset-grid">
+                    <button class="btn-demo" id="presetIndie" type="button">🎨 Solo Artist ($5 Tier)</button>
+                    <button class="btn-demo" id="presetPodcast" type="button">🎙️ Podcast ($10 Tier)</button>
+                    <button class="btn-demo" id="presetVideo" type="button">🎬 Video Channel ($25)</button>
+                    <button class="btn-demo" id="presetMicro" type="button">☕ $2 Micro Tier Army</button>
+                </div>
+
+                <div class="form-group">
+                    <label for="platformPlan">Patreon Platform Plan</label>
+                    <select id="platformPlan">
+                        <option value="standard" selected>Standard / Current Plan (10% Flat Fee)</option>
+                        <option value="pro">Legacy Pro Plan (8% Fee)</option>
+                        <option value="premium">Legacy Premium Plan (12% Fee)</option>
+                        <option value="founder">Founder / Legacy Lite Plan (5% Fee)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <div class="range-header">
+                        <label for="numPatrons">Total Active Patrons</label>
+                        <span class="range-value" id="numPatronsDisplay">100 Patrons</span>
+                    </div>
+                    <input type="range" id="numPatronsRange" min="5" max="2500" step="5" value="100">
+                    <input type="number" id="numPatrons" value="100" min="1" max="50000" style="margin-top: 6px;">
+                </div>
+
+                <div class="form-group">
+                    <div class="range-header">
+                        <label for="avgPledge">Average Monthly Pledge per Patron ($)</label>
+                        <span class="range-value" id="avgPledgeDisplay">$10.00 / mo</span>
+                    </div>
+                    <input type="range" id="avgPledgeRange" min="1" max="250" step="1" value="10">
+                    <input type="number" id="avgPledge" value="10" min="1" max="1000" step="0.5" style="margin-top: 6px;">
+                </div>
+
+                <div class="form-group">
+                    <label for="processorRate">Payment Processor &amp; Card Type</label>
+                    <select id="processorRate">
+                        <option value="us_card" selected>US Credit/Debit Cards (2.9% + $0.30)</option>
+                        <option value="intl_card">Non-US Cards (3.9% + $0.30)</option>
+                        <option value="paypal_us">PayPal US / Venmo (3.4% + $0.30)</option>
+                        <option value="paypal_intl">PayPal Non-US (4.5% + $0.30)</option>
+                    </select>
+                </div>
+
+                <div class="alert-banner info" id="microAlert" style="display: none;">
+                    ⚠️ High Micro-Transaction Penalty: On pledges under $3, fixed $0.30 fees consume 15% to 30%+ of gross income!
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 2: Live Canvas Stage & Metrics Display (Rendered 2nd on mobile) -->
+        <section class="preview-stage">
+            <div class="canvas-wrapper">
+                <canvas id="previewCanvas" width="1080" height="1920"></canvas>
+            </div>
+            <p class="canvas-caption">
+                Interactive Patreon Net Payout &amp; Fee Visualizer. Updates live with 2026 rates.
+            </p>
+
+            <div class="metric-summary-grid">
+                <div class="metric-card">
+                    <div class="metric-card-title">Est. Net Take-Home Pay</div>
+                    <div class="metric-card-value highlight" id="cardNetTakeHome">$840.75</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-card-title">Monthly Gross Pledges</div>
+                    <div class="metric-card-value" id="cardGrossRevenue">$1,000.00</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-card-title">Patreon Platform Fee</div>
+                    <div class="metric-card-value" id="cardPlatformFee">$100.00</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-card-title">Effective Fee Rate</div>
+                    <div class="metric-card-value highlight" id="cardEffectiveFee">15.9%</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Module 3: Advanced Fees, Currency & Payout Method Panel (Rendered 3rd on mobile) -->
+        <section class="panel">
+            <div class="panel-title">
+                <span>Advanced Fees &amp; Payout Terms</span>
+                <span class="badge">2026 RATES SPECS</span>
+            </div>
+
+            <div class="form-group">
+                <label for="intlPercent">Cross-Currency Patron Share (%)</label>
+                <select id="intlPercent">
+                    <option value="0" selected>0% (All patrons pay in your home currency - $0 Fee)</option>
+                    <option value="15">15% Non-Native Currency (2.5% Conversion Fee)</option>
+                    <option value="30">30% Non-Native Currency (2.5% Conversion Fee)</option>
+                    <option value="50">50% Global Audience (2.5% Conversion Fee)</option>
+                    <option value="80">80% International Audience (2.5% Conversion Fee)</option>
+                </select>
+            </div>
+
+            <div class="toggle-group">
+                <span class="toggle-label">Annual Billing Option (15% Subscribers - Saves $0.30 Fees)</span>
+                <label class="switch">
+                    <input type="checkbox" id="annualBillingToggle" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="payoutMethod">Payout Transfer Method</label>
+                <select id="payoutMethod">
+                    <option value="ach" selected>US Direct Deposit / ACH ($0.25 flat per payout)</option>
+                    <option value="paypal">PayPal US ($0.25 flat per payout)</option>
+                    <option value="payoneer">Payoneer / International Transfer ($1.00 per payout)</option>
+                    <option value="sepa">UK Direct / SEPA Transfer ($0.50 flat per payout)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="churnRate">Estimated Monthly Patron Churn Rate</label>
+                <select id="churnRate">
+                    <option value="3">3% Low Churn (High Retention / Niche)</option>
+                    <option value="5" selected>5% Standard Average Churn</option>
+                    <option value="8">8% Moderate Churn</option>
+                    <option value="12">12% High Churn Rate</option>
+                </select>
+            </div>
+
+            <button class="btn-action" id="downloadBtn" type="button">Export Detailed Patreon Fee Sheet (PNG)</button>
+
+            <!-- Social Media Share Section -->
+            <div class="social-share-container">
+                <span class="share-label">Share This Payout Dashboard</span>
+                <div class="share-buttons-grid">
+                    <a id="shareX" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-x">𝕏 Post</a>
+                    <a id="shareFB" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-fb">Facebook</a>
+                    <a id="shareWA" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-wa">WhatsApp</a>
+                    <a id="shareLI" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-li">LinkedIn</a>
+                    <a id="sharePIN" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-pin">Pinterest</a>
+                    <button id="copyShareLink" type="button" class="btn-share btn-share-copy">🔗 Copy Tool Link</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- SEO & Educational Guide Section -->
+    <article class="content-area">
+        <div class="content-card">
+            <h1>Patreon Net Tier Payout Dashboard (2026 Earnings &amp; Fee Audit Guide)</h1>
+            <p>
+                As creators, podcasters, game developers, video producers, and artists scale membership communities on Patreon, understanding the exact gap between <strong>gross pledged revenue</strong> and <strong>net bank payouts</strong> is essential for financial planning. While Patreon markets a straightforward headline fee structure, actual take-home pay is reduced by multiple stacked transaction layers: platform fees, merchant credit card processing charges, fixed per-patron transaction micro-fees, cross-currency conversion surcharges, decline/chargeback buffers, and final withdrawal payout fees.
+            </p>
+            <p>
+                This interactive <strong>patreon-net-tier-payout-dashboard</strong> provides a comprehensive financial projection tool updated for 2026 statutory rates and payment processor structures. Whether you are launching your first $3 tier or managing thousands of subscribers across complex multi-currency memberships, this audit tool itemizes every deduction line-item so you can set optimal tier pricing, select cost-effective payout methods, and preserve creator profit margins.
+            </p>
+
+            <h2>The Core Patreon Payout Formula: Deconstructing Gross vs. Net Revenue</h2>
+            <p>
+                A common pitfall for independent creators is assuming that Patreon's 10% platform fee represents the entire platform cost. In reality, total deductions often range from <strong>13% to over 40%</strong> of gross earnings, depending heavily on average pledge size.
+            </p>
+            <p>
+                The mathematical model governing net Patreon payouts is defined as:
+            </p>
+            <blockquote style="background-color: var(--bg-input); padding: 1rem 1.25rem; border-left: 4px solid var(--accent-pink); border-radius: 4px; margin: 1rem 0; font-weight: 600; color: #fff;">
+                Net Payout ($) = Gross Monthly Pledges − [ (Gross Pledges × Platform Rate) + (Gross Pledges × Variable Processing %) + (Total Patrons × Fixed Per-Pledge Fee) + (Cross-Currency Volume × 2.5%) + Flat Payout Transfer Fee ]
+            </blockquote>
+
+            <h2>Patreon Platform Tiers &amp; Pricing Models</h2>
+            <p>
+                Patreon's platform fee depends on your account creation date and tier setup. Current standard accounts operate under a single unified platform model, while grandfathered creators retain legacy rates:
+            </p>
+
+            <div class="table-responsive">
+                <table class="spec-table">
+                    <thead>
+                        <tr>
+                            <th>Platform Plan Model</th>
+                            <th>Platform Fee %</th>
+                            <th>Target Creator Segment</th>
+                            <th>Included Core Capabilities</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Standard / Unified Plan (2026 Current)</strong></td>
+                            <td><strong style="color: var(--accent-pink);">10.0% Flat</strong></td>
+                            <td>All creators joining or migrating post-2025</td>
+                            <td>Unlimited membership tiers, video hosting, community posts, digital shop sales, automated Discord integration, and patron analytics.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Legacy Pro Plan</strong></td>
+                            <td><strong style="color: var(--accent-cyan);">8.0% Flat</strong></td>
+                            <td>Grandfathered accounts (Pre-2025)</td>
+                            <td>Custom tier building, special offer promotional tools, analytics dashboard, and priority creator support.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Legacy Premium Plan</strong></td>
+                            <td><strong style="color: var(--accent-purple);">12.0% Flat</strong></td>
+                            <td>Grandfathered high-volume creators</td>
+                            <td>Dedicated partner account manager, merch-for-membership fulfillment integration, and team sub-account seats.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Founder / Legacy Lite Plan</strong></td>
+                            <td><strong style="color: var(--accent-green);">5.0% Flat</strong></td>
+                            <td>Early-stage grandfathered accounts</td>
+                            <td>Basic single-tier membership, simple post creation, and core payment collection without advanced analytics or shop features.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Ad Slot 2 Container -->
+            <div class="cms-ad-slot-2"></div>
+
+            <h2>The Fixed $0.30 Transaction Penalty on Micro-Pledges</h2>
+            <p>
+                The primary reason effective fees fluctuate dramatically is the payment processing structure. Merchant processors like Stripe and PayPal charge a variable percentage (2.9%) plus a fixed $0.30 charge on every processed pledge.
+            </p>
+            <p>
+                Because $0.30 is a fixed dollar amount regardless of pledge size, it heavily penalizes lower tiers. The table below illustrates the total fee drag across standard monthly pledge tiers for 100 patrons under the standard 10% plan:
+            </p>
+
+            <div class="table-responsive">
+                <table class="spec-table">
+                    <thead>
+                        <tr>
+                            <th>Monthly Tier Price</th>
+                            <th>Monthly Gross (100 Patrons)</th>
+                            <th>Patreon Fee (10%)</th>
+                            <th>Processing Fees (2.9% + $0.30)</th>
+                            <th>Est. Net Take-Home</th>
+                            <th>Effective Total Fee %</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>$1.00 Tier</strong></td>
+                            <td>$100.00</td>
+                            <td>$10.00</td>
+                            <td>$32.90</td>
+                            <td><strong style="color: var(--accent-amber);">$56.85</strong></td>
+                            <td><strong style="color: var(--accent-pink);">43.15% Fee Drag</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>$2.00 Tier</strong></td>
+                            <td>$200.00</td>
+                            <td>$20.00</td>
+                            <td>$35.80</td>
+                            <td><strong style="color: var(--accent-amber);">$143.95</strong></td>
+                            <td><strong style="color: var(--accent-pink);">28.02% Fee Drag</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>$3.00 Tier</strong></td>
+                            <td>$300.00</td>
+                            <td>$30.00</td>
+                            <td>$38.70</td>
+                            <td><strong>$231.05</strong></td>
+                            <td><strong>22.98% Fee Drag</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>$5.00 Tier</strong></td>
+                            <td>$500.00</td>
+                            <td>$50.00</td>
+                            <td>$44.50</td>
+                            <td><strong style="color: var(--accent-green);">$405.25</strong></td>
+                            <td><strong style="color: var(--accent-green);">18.95% Fee Drag</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>$10.00 Tier</strong></td>
+                            <td>$1,000.00</td>
+                            <td>$100.00</td>
+                            <td>$59.00</td>
+                            <td><strong style="color: var(--accent-green);">$840.75</strong></td>
+                            <td><strong style="color: var(--accent-green);">15.925% Fee Drag</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>$25.00 Tier</strong></td>
+                            <td>$2,500.00</td>
+                            <td>$250.00</td>
+                            <td>$102.50</td>
+                            <td><strong style="color: var(--accent-green);">$2,147.25</strong></td>
+                            <td><strong style="color: var(--accent-green);">14.11% Fee Drag</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2>Strategies to Optimize Your Patreon Net Revenue</h2>
+            <p>
+                To minimize fee leakage and keep a higher proportion of member contributions, implement these four monetization strategies:
+            </p>
+            <ul>
+                <li><strong>Eliminate $1 and $2 Entry Tiers:</strong> Shift your minimum tier to $3 or $5. As demonstrated in the fee matrix, $1 tiers lose over 43% to processing overhead, yielding negligible net return for the creator work required.</li>
+                <li><strong>Enable Annual Subscriptions:</strong> Annual billing charges members once per year rather than monthly. Even if you offer a 10% annual discount, reducing 12 individual $0.30 fixed processing fees to a single $0.30 fee yields a net overall increase in retained capital.</li>
+                <li><strong>Choose Low-Cost Payout Transfer Methods:</strong> Avoid frequent small payouts. Direct ACH deposit for US creators costs a flat $0.25 per payout. Accumulate funds and schedule monthly payouts rather than triggering daily transfers.</li>
+                <li><strong>Account for Cross-Currency Conversion:</strong> Patreon charges 2.5% on cross-currency pledges. If you have a large international audience, display pricing in major currencies and adjust baseline rates to absorb foreign exchange volatility.</li>
+            </ul>
+
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-block">
+                <details class="faq-accordion" open>
+                    <summary class="faq-summary">How much does Patreon take from creator earnings in 2026?</summary>
+                    <div class="faq-answer">
+                        For standard accounts, Patreon charges a flat 10% platform fee on all gross pledges. In addition to platform fees, creators pay payment processing fees (typically 2.9% + $0.30 for standard US cards), currency conversion fees (2.5% on cross-currency pledges), and a nominal payout transfer fee ($0.25 for US direct deposit).
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">Why are processing fees on $1 or $2 Patreon tiers so high?</summary>
+                    <div class="faq-answer">
+                        Payment processors charge a fixed fee per transaction (e.g., $0.30 per charge) alongside a percentage rate. On a $1.00 pledge, the $0.30 flat fee represents 30% of the pledge. Combined with the 2.9% variable fee and 10% platform fee, a creator loses over 42% of a $1 pledge in total fees.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">How does Patreon charge for cross-currency and international patrons?</summary>
+                    <div class="faq-answer">
+                        When a patron pledges in a local currency (such as EUR, GBP, or CAD) that differs from the creator's payout currency (e.g., USD), Patreon applies a 2.5% currency conversion fee on the converted total. International payment processing may also carry higher card rates (3.9% + $0.30).
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">Does offering annual billing on Patreon increase creator payout?</summary>
+                    <div class="faq-answer">
+                        Yes. Annual subscriptions charge a patron once per year rather than 12 monthly charges. While creators often grant an annual discount (e.g., 10% to 16%), processing the flat $0.30 fee only once per year instead of 12 times drastically lowers effective processing fees, boosting overall net retention.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">What payout method incurs the lowest transaction fees on Patreon?</summary>
+                    <div class="faq-answer">
+                        For US-based creators, Automated Clearing House (ACH) Direct Deposit is the most cost-effective at $0.25 flat per payout transfer. PayPal charges $0.25 per transfer for US creators, while international payouts via Payoneer cost $1.00 per transfer plus potential local bank landing fees.
+                    </div>
+                </details>
+            </div>
+        </div>
+    </article>
+
+    <!-- Footer Container -->
+    <div id="global-footer"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var canvas = document.getElementById('previewCanvas');
+            if (!canvas) return;
+            var ctx = canvas.getContext('2d');
+
+            // Controls & Inputs
+            var platformPlan = document.getElementById('platformPlan');
+            var numPatronsRange = document.getElementById('numPatronsRange');
+            var numPatronsInput = document.getElementById('numPatrons');
+            var numPatronsDisplay = document.getElementById('numPatronsDisplay');
+            var avgPledgeRange = document.getElementById('avgPledgeRange');
+            var avgPledgeInput = document.getElementById('avgPledge');
+            var avgPledgeDisplay = document.getElementById('avgPledgeDisplay');
+            var processorRate = document.getElementById('processorRate');
+            var intlPercent = document.getElementById('intlPercent');
+            var annualBillingToggle = document.getElementById('annualBillingToggle');
+            var payoutMethod = document.getElementById('payoutMethod');
+            var churnRate = document.getElementById('churnRate');
+            var downloadBtn = document.getElementById('downloadBtn');
+            var microAlert = document.getElementById('microAlert');
+
+            // Card DOM Displays
+            var cardNetTakeHome = document.getElementById('cardNetTakeHome');
+            var cardGrossRevenue = document.getElementById('cardGrossRevenue');
+            var cardPlatformFee = document.getElementById('cardPlatformFee');
+            var cardEffectiveFee = document.getElementById('cardEffectiveFee');
+
+            // Presets
+            var presetIndie = document.getElementById('presetIndie');
+            var presetPodcast = document.getElementById('presetPodcast');
+            var presetVideo = document.getElementById('presetVideo');
+            var presetMicro = document.getElementById('presetMicro');
+
+            /* Setup Social Share Links */
+            var currentUrl = encodeURIComponent(window.location.href);
+            var shareTitle = encodeURIComponent("Check out this free Patreon Net Tier Payout Dashboard & Fee Calculator!");
+            
+            document.getElementById('shareX').href = 'https://twitter.com/intent/tweet?url=' + currentUrl + '&text=' + shareTitle;
+            document.getElementById('shareFB').href = 'https://www.facebook.com/sharer/sharer.php?u=' + currentUrl;
+            document.getElementById('shareWA').href = 'https://api.whatsapp.com/send?text=' + shareTitle + '%20' + currentUrl;
+            document.getElementById('shareLI').href = 'https://www.linkedin.com/sharing/share-offsite/?url=' + currentUrl;
+            document.getElementById('sharePIN').href = 'https://pinterest.com/pin/create/button/?url=' + currentUrl + '&description=' + shareTitle;
+
+            var copyBtn = document.getElementById('copyShareLink');
+            copyBtn.addEventListener('click', function() {
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'Patreon Net Tier Payout Dashboard',
+                        text: 'Calculate Patreon creator net earnings after platform fees and payment processing.',
+                        url: window.location.href
+                    }).catch(function() {});
+                } else if (navigator.clipboard) {
+                    navigator.clipboard.writeText(window.location.href).then(function() {
+                        var origText = copyBtn.textContent;
+                        copyBtn.textContent = '✓ Link Copied!';
+                        setTimeout(function() { copyBtn.textContent = origText; }, 2000);
+                    });
+                }
+            });
+
+            // Preset Handlers
+            presetIndie.addEventListener('click', function() {
+                platformPlan.value = 'standard';
+                numPatronsRange.value = 50;
+                numPatronsInput.value = 50;
+                avgPledgeRange.value = 5;
+                avgPledgeInput.value = 5;
+                processorRate.value = 'us_card';
+                intlPercent.value = '0';
+                annualBillingToggle.checked = false;
+                payoutMethod.value = 'ach';
+                churnRate.value = '5';
+                calculateAndDraw();
+            });
+
+            presetPodcast.addEventListener('click', function() {
+                platformPlan.value = 'pro';
+                numPatronsRange.value = 250;
+                numPatronsInput.value = 250;
+                avgPledgeRange.value = 10;
+                avgPledgeInput.value = 10;
+                processorRate.value = 'us_card';
+                intlPercent.value = '15';
+                annualBillingToggle.checked = true;
+                payoutMethod.value = 'ach';
+                churnRate.value = '3';
+                calculateAndDraw();
+            });
+
+            presetVideo.addEventListener('click', function() {
+                platformPlan.value = 'standard';
+                numPatronsRange.value = 800;
+                numPatronsInput.value = 800;
+                avgPledgeRange.value = 25;
+                avgPledgeInput.value = 25;
+                processorRate.value = 'us_card';
+                intlPercent.value = '30';
+                annualBillingToggle.checked = true;
+                payoutMethod.value = 'ach';
+                churnRate.value = '5';
+                calculateAndDraw();
+            });
+
+            presetMicro.addEventListener('click', function() {
+                platformPlan.value = 'standard';
+                numPatronsRange.value = 1000;
+                numPatronsInput.value = 1000;
+                avgPledgeRange.value = 2;
+                avgPledgeInput.value = 2;
+                processorRate.value = 'us_card';
+                intlPercent.value = '0';
+                annualBillingToggle.checked = false;
+                payoutMethod.value = 'ach';
+                churnRate.value = '8';
+                calculateAndDraw();
+            });
+
+            // Event Listeners
+            numPatronsRange.addEventListener('input', function() {
+                numPatronsInput.value = numPatronsRange.value;
+                calculateAndDraw();
+            });
+
+            numPatronsInput.addEventListener('input', function() {
+                numPatronsRange.value = numPatronsInput.value;
+                calculateAndDraw();
+            });
+
+            avgPledgeRange.addEventListener('input', function() {
+                avgPledgeInput.value = avgPledgeRange.value;
+                calculateAndDraw();
+            });
+
+            avgPledgeInput.addEventListener('input', function() {
+                avgPledgeRange.value = avgPledgeInput.value;
+                calculateAndDraw();
+            });
+
+            platformPlan.addEventListener('change', calculateAndDraw);
+            processorRate.addEventListener('change', calculateAndDraw);
+            intlPercent.addEventListener('change', calculateAndDraw);
+            annualBillingToggle.addEventListener('change', calculateAndDraw);
+            payoutMethod.addEventListener('change', calculateAndDraw);
+            churnRate.addEventListener('change', calculateAndDraw);
+
+            function formatCurrency(num) {
+                return '$' + new Intl.NumberFormat('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(num);
+            }
+
+            function calculateAndDraw() {
+                var patrons = parseInt(numPatronsInput.value) || 1;
+                var pledge = parseFloat(avgPledgeInput.value) || 1;
+
+                numPatronsDisplay.textContent = patrons + (patrons === 1 ? ' Patron' : ' Patrons');
+                avgPledgeDisplay.textContent = '$' + pledge.toFixed(2) + ' / mo';
+
+                // Alert for low tier penalties
+                if (pledge < 3) {
+                    microAlert.style.display = 'block';
+                } else {
+                    microAlert.style.display = 'none';
+                }
+
+                var grossRevenue = patrons * pledge;
+
+                // Platform Plan Rate
+                var platformRate = 0.10; // Standard
+                if (platformPlan.value === 'pro') platformRate = 0.08;
+                else if (platformPlan.value === 'premium') platformRate = 0.12;
+                else if (platformPlan.value === 'founder') platformRate = 0.05;
+
+                var platformFee = grossRevenue * platformRate;
+
+                // Payment Processor Rate
+                var varProcRate = 0.029;
+                var fixedProcFee = 0.30;
+
+                if (processorRate.value === 'intl_card') {
+                    varProcRate = 0.039;
+                    fixedProcFee = 0.30;
+                } else if (processorRate.value === 'paypal_us') {
+                    varProcRate = 0.034;
+                    fixedProcFee = 0.30;
+                } else if (processorRate.value === 'paypal_intl') {
+                    varProcRate = 0.045;
+                    fixedProcFee = 0.30;
+                }
+
+                // Annual Billing Savings Impact (assume 15% annual patrons, paying flat fee 1x/year = $0.025/mo per patron)
+                var fixedFeePerPatron = fixedProcFee;
+                if (annualBillingToggle.checked) {
+                    fixedFeePerPatron = (0.85 * fixedProcFee) + (0.15 * (fixedProcFee / 12));
+                }
+
+                var processingFee = (grossRevenue * varProcRate) + (patrons * fixedFeePerPatron);
+
+                // Currency Conversion Surcharge (2.5% fee on non-native portion)
+                var crossCurrencyRatio = parseFloat(intlPercent.value) / 100;
+                var conversionFee = grossRevenue * crossCurrencyRatio * 0.025;
+
+                // Payout Method Fee
+                var payoutFee = 0.25; // ACH / PayPal US default
+                if (payoutMethod.value === 'payoneer') payoutFee = 1.00;
+                else if (payoutMethod.value === 'sepa') payoutFee = 0.50;
+
+                var totalDeductions = platformFee + processingFee + conversionFee + payoutFee;
+                var netTakeHome = grossRevenue - totalDeductions;
+                if (netTakeHome < 0) netTakeHome = 0;
+
+                var effectiveFeePercent = grossRevenue > 0 ? (totalDeductions / grossRevenue) * 100 : 0;
+
+                // Update Cards
+                cardNetTakeHome.textContent = formatCurrency(netTakeHome);
+                cardGrossRevenue.textContent = formatCurrency(grossRevenue);
+                cardPlatformFee.textContent = formatCurrency(platformFee);
+                cardEffectiveFee.textContent = effectiveFeePercent.toFixed(1) + '%';
+
+                // Draw to Canvas
+                drawCanvas({
+                    patrons: patrons,
+                    pledge: pledge,
+                    grossRevenue: grossRevenue,
+                    platformName: platformPlan.options[platformPlan.selectedIndex].text.split('(')[0].trim(),
+                    platformFee: platformFee,
+                    processingFee: processingFee,
+                    conversionFee: conversionFee,
+                    payoutFee: payoutFee,
+                    totalDeductions: totalDeductions,
+                    netTakeHome: netTakeHome,
+                    effectiveFeePercent: effectiveFeePercent,
+                    hasAnnualBilling: annualBillingToggle.checked,
+                    processorName: processorRate.options[processorRate.selectedIndex].text.split('(')[0].trim(),
+                    payoutName: payoutMethod.options[payoutMethod.selectedIndex].text.split('(')[0].trim(),
+                    churnPercent: churnRate.value
+                });
+            }
+
+            function drawCanvas(data) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                // Background Gradient
+                var bgGrad = ctx.createLinearGradient(0, 0, 1080, 1920);
+                bgGrad.addColorStop(0, '#0f1117');
+                bgGrad.addColorStop(0.5, '#181b24');
+                bgGrad.addColorStop(1, '#0b0d12');
+                ctx.fillStyle = bgGrad;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Top Header Graphic Bar
+                var headerGrad = ctx.createLinearGradient(0, 0, 1080, 0);
+                headerGrad.addColorStop(0, '#ff0050');
+                headerGrad.addColorStop(0.5, '#a855f7');
+                headerGrad.addColorStop(1, '#00f2fe');
+                ctx.fillStyle = headerGrad;
+                ctx.fillRect(0, 0, 1080, 16);
+
+                // Title Banner
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 48px -apple-system, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('PATREON NET PAYOUT DASHBOARD', 540, 110);
+
+                ctx.fillStyle = '#ff0050';
+                ctx.font = '600 30px -apple-system, sans-serif';
+                ctx.fillText('2026 CREATOR TIER & FEE AUDIT SHEET', 540, 160);
+
+                // Divider Line
+                ctx.strokeStyle = '#2e3446';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(80, 200);
+                ctx.lineTo(1000, 200);
+                ctx.stroke();
+
+                // Card 1: Total Net Take-Home Big Badge
+                ctx.fillStyle = '#181b24';
+                ctx.strokeStyle = '#ff0050';
+                ctx.lineWidth = 4;
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(80, 240, 920, 320, 24);
+                    ctx.fill();
+                    ctx.stroke();
+                } else {
+                    ctx.fillRect(80, 240, 920, 320);
+                }
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = 'bold 28px -apple-system, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('PROJECTED NET TAKE-HOME PAYOUT', 540, 300);
+
+                ctx.fillStyle = '#10b981';
+                ctx.font = 'bold 80px -apple-system, sans-serif';
+                ctx.fillText(formatCurrency(data.netTakeHome), 540, 400);
+
+                ctx.fillStyle = '#f3f4f6';
+                ctx.font = '30px -apple-system, sans-serif';
+                ctx.fillText('Effective Total Fee Rate: ' + data.effectiveFeePercent.toFixed(1) + '% (' + data.patrons + ' Patrons)', 540, 470);
+
+                // Metric Grid Cards (Card 2 & Card 3)
+                // Left Sub-Card: Gross Monthly Revenue
+                ctx.fillStyle = '#222634';
+                ctx.strokeStyle = '#2e3446';
+                ctx.lineWidth = 2;
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(80, 600, 440, 260, 20);
+                    ctx.fill();
+                    ctx.stroke();
+                } else {
+                    ctx.fillRect(80, 600, 440, 260);
+                }
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = 'bold 24px -apple-system, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('GROSS MONTHLY PLEDGES', 300, 650);
+
+                ctx.fillStyle = '#00f2fe';
+                ctx.font = 'bold 52px -apple-system, sans-serif';
+                ctx.fillText(formatCurrency(data.grossRevenue), 300, 735);
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = '22px -apple-system, sans-serif';
+                ctx.fillText('Avg. $' + data.pledge.toFixed(2) + ' / patron tier', 300, 795);
+
+                // Right Sub-Card: Total Platform & Card Fees
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(560, 600, 440, 260, 20);
+                    ctx.fill();
+                    ctx.stroke();
+                } else {
+                    ctx.fillRect(560, 600, 440, 260);
+                }
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = 'bold 24px -apple-system, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('TOTAL FEES DEDUCTED', 780, 650);
+
+                ctx.fillStyle = '#ff0050';
+                ctx.font = 'bold 52px -apple-system, sans-serif';
+                ctx.fillText(formatCurrency(data.totalDeductions), 780, 735);
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = '22px -apple-system, sans-serif';
+                ctx.fillText('Platform + Cards + Conversion', 780, 795);
+
+                // Itemized Breakdown Visual Progress Card
+                ctx.fillStyle = '#181b24';
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(80, 900, 920, 280, 20);
+                    ctx.fill();
+                    ctx.stroke();
+                } else {
+                    ctx.fillRect(80, 900, 920, 280);
+                }
+
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 28px -apple-system, sans-serif';
+                ctx.textAlign = 'left';
+                ctx.fillText('Monthly Revenue Retention Breakdown', 120, 950);
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = '22px -apple-system, sans-serif';
+                ctx.fillText('Platform Fee: ' + formatCurrency(data.platformFee) + ' | Processing: ' + formatCurrency(data.processingFee), 120, 995);
+                ctx.textAlign = 'right';
+                ctx.fillText('Net Kept: ' + formatCurrency(data.netTakeHome), 960, 995);
+
+                // Progress Track
+                ctx.fillStyle = '#222634';
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(120, 1025, 840, 36, 18);
+                    ctx.fill();
+                } else {
+                    ctx.fillRect(120, 1025, 840, 36);
+                }
+
+                // Progress Fill (Net Take Home Ratio)
+                var keepRatio = data.grossRevenue > 0 ? (data.netTakeHome / data.grossRevenue) : 0;
+                var fillWidth = Math.max(36, 840 * keepRatio);
+                var barGrad = ctx.createLinearGradient(120, 0, 960, 0);
+                barGrad.addColorStop(0, '#10b981');
+                barGrad.addColorStop(1, '#00f2fe');
+                ctx.fillStyle = barGrad;
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(120, 1025, fillWidth, 36, 18);
+                    ctx.fill();
+                } else {
+                    ctx.fillRect(120, 1025, fillWidth, 36);
+                }
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = '22px -apple-system, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('Projected Annual Net Income: ' + formatCurrency(data.netTakeHome * 12) + ' / year', 540, 1115);
+
+                // Scope Audit Parameters Section
+                ctx.fillStyle = '#181b24';
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(80, 1220, 920, 520, 20);
+                    ctx.fill();
+                    ctx.stroke();
+                } else {
+                    ctx.fillRect(80, 1220, 920, 520);
+                }
+
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 30px -apple-system, sans-serif';
+                ctx.textAlign = 'left';
+                ctx.fillText('Account Setup & Fee Audit Specifications', 120, 1280);
+
+                ctx.font = '26px -apple-system, sans-serif';
+                ctx.fillStyle = '#9ca3af';
+                
+                ctx.fillText('• Patreon Plan Tier:', 120, 1340);
+                ctx.fillStyle = '#ffffff';
+                ctx.fillText(data.platformName, 460, 1340);
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.fillText('• Payment Processor:', 120, 1400);
+                ctx.fillStyle = '#ffffff';
+                ctx.fillText(data.processorName, 460, 1400);
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.fillText('• Payout Method Transfer:', 120, 1460);
+                ctx.fillStyle = '#00f2fe';
+                ctx.fillText(data.payoutName + ' (' + formatCurrency(data.payoutFee) + ')', 460, 1460);
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.fillText('• Optimization Features:', 120, 1520);
+                ctx.fillStyle = '#10b981';
+                ctx.font = 'bold 28px -apple-system, sans-serif';
+                ctx.fillText(data.hasAnnualBilling ? 'Annual Billing Discount Active' : 'Monthly Recurring Only', 460, 1520);
+
+                ctx.fillStyle = '#374151';
+                ctx.fillRect(120, 1570, 840, 2);
+
+                ctx.fillStyle = '#6b7280';
+                ctx.font = '22px -apple-system, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('Calculations include platform fee, processing rates, $0.30 fixed fees & conversion.', 540, 1630);
+                ctx.fillText('Estimates based on published 2026 Patreon creator benchmarks. Taxes not included.', 540, 1670);
+
+                // Branding Footer
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = 'bold 26px -apple-system, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('CoreMetricSuite · Patreon Monetization & Fee Analytics', 540, 1820);
+            }
+
+            // Initial calculation & render
+            calculateAndDraw();
+
+            // Download PNG Report
+            downloadBtn.addEventListener('click', function() {
+                var link = document.createElement('a');
+                link.download = 'patreon-net-tier-payout-report.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        });
+    </script>
+
+    <!-- Global CoreMetricSuite Cross-Linking Index Hub -->
+    <div style="margin-top: 40px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #f8fafc; font-family: system-ui, -apple-system, sans-serif;">
+        <h3 style="margin: 0 0 15px 0; font-size: 18px; color: #0f172a; font-weight: 600;">🛠️ CoreMetricSuite Utility Directory</h3>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇦🇺 Australia Tax &amp; Labor</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-au-cents" href="../au-cents-per-km-estimator/" style="color: #2563eb; text-decoration: underline;">Cents-Per-Km Tax Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-au-schads" href="../au-schads-vehicle-allowance/" style="color: #2563eb; text-decoration: underline;">SCHADS Vehicle Allowance</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-au-super" href="../au-superannuation-charge-tracker/" style="color: #2563eb; text-decoration: underline;">Superannuation Tracker</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇺🇸 US Corporate Tax</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-us-llc" href="../us-llc-late-penalty-estimator/" style="color: #2563eb; text-decoration: underline;">LLC Late Tax Penalty</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-us-179" href="../us-section-179-truck-calculator/" style="color: #2563eb; text-decoration: underline;">Section 179 Vehicle Deduction</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇬🇧 UK Property Management</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-rent" href="../uk-form-4a-rent-tracker/" style="color: #2563eb; text-decoration: underline;">Form 4A Rent Tracker</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-sdlt" href="../uk-sdlt-bracket-estimator/" style="color: #2563eb; text-decoration: underline;">Stamp Duty Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-sec8" href="../uk-section-8-calculator/" style="color: #2563eb; text-decoration: underline;">Section 8 Calculator</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🎬 Digital Media Layouts &amp; Monetization</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-patreon-dashboard" href="../patreon-net-tier-payout-dashboard/" style="color: #2563eb; text-decoration: underline;">Patreon Net Tier Payout Dashboard</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-ugc-rate" href="../ugc-freelance-rate-usage-rights-worksheet/" style="color: #2563eb; text-decoration: underline;">UGC Rate &amp; Usage Rights Worksheet</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-tiktok-rpm" href="../tiktok-creator-rewards-rpm-estimator/" style="color: #2563eb; text-decoration: underline;">TikTok Creator Rewards RPM</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-ig" href="../instagram-reels-preview/" style="color: #2563eb; text-decoration: underline;">Instagram Reels Grid</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script defer>
+        (function() {
+            const path = window.location.pathname.toLowerCase();
+            const toolsMap = {
+                'au-cents-per-km-estimator': 'hub-au-cents',
+                'au-schads-vehicle-allowance': 'hub-au-schads',
+                'au-superannuation-charge-tracker': 'hub-au-super',
+                'us-llc-late-penalty-estimator': 'hub-us-llc',
+                'us-section-179-truck-calculator': 'hub-us-179',
+                'uk-form-4a-rent-tracker': 'hub-uk-rent',
+                'uk-sdlt-bracket-estimator': 'hub-uk-sdlt',
+                'uk-section-8-calculator': 'hub-uk-sec8',
+                'patreon-net-tier-payout-dashboard': 'hub-patreon-dashboard',
+                'ugc-freelance-rate-usage-rights-worksheet': 'hub-ugc-rate',
+                'tiktok-creator-rewards-rpm-estimator': 'hub-media-tiktok-rpm',
+                'instagram-reels-preview': 'hub-media-ig'
+            };
+
+            for (const [folderName, elementId] of Object.entries(toolsMap)) {
+                if (path.includes(folderName)) {
+                    const targetEl = document.getElementById(elementId);
+                    if (targetEl) {
+                        targetEl.outerHTML = `<span style="font-weight: 600; color: #0f172a;">${targetEl.textContent} (Current)</span>`;
+                    }
+                    break;
+                }
+            }
+        })();
+    </script>
+</body>
+</html>
