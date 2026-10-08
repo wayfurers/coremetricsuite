@@ -202,6 +202,36 @@ const toolsData = [
   url: "/srt-subtitle-cleaner",
   keywords: "srt subtitle cleaner caption format timing text file editor video production"
 },
+    {
+  id: "tiktok-creator-rewards-rpm-estimator",
+  region: "global",
+  badgeText: "MEDIA & UI",
+  badgeColor: "#db2777",
+  title: "TikTok Creator Rewards RPM Estimator",
+  description: "Estimate potential earnings from the TikTok Creator Rewards Program based on RPM metrics, views, and region factors.",
+  url: "/tiktok-creator-rewards-rpm-estimator",
+  keywords: "tiktok creator rewards program rpm estimator calculator earnings video views payout metrics"
+},
+{
+  id: "ugc-freelance-rate-usage-rights-worksheet",
+  region: "global",
+  badgeText: "MEDIA & UI",
+  badgeColor: "#db2777",
+  title: "UGC Freelance Rate & Usage Rights Worksheet",
+  description: "Calculate fair pricing rates for user-generated content including licensing, usage rights, and content creation base fees.",
+  url: "/ugc-freelance-rate-usage-rights-worksheet",
+  keywords: "ugc freelance rate usage rights worksheet content creator contract pricing fee calculator"
+},
+{
+  id: "patreon-net-tier-payout-dashboard",
+  region: "global",
+  badgeText: "MEDIA & UI",
+  badgeColor: "#db2777",
+  title: "Patreon Net Tier Payout Dashboard",
+  description: "Analyze monthly membership income across pricing tiers, factoring in platform processing fees and net payout distributions.",
+  url: "/patreon-net-tier-payout-dashboard",
+  keywords: "patreon net tier payout dashboard creator membership earnings calculator subscription platform fee"
+},
     // --- E-COMMERCE SUITE ---
     {
         id: "shopify-metafields",
@@ -212,5 +242,15 @@ const toolsData = [
         description: "Developer tool to parse, syntax-check, and structuralize custom JSON schema fields for Shopify development.",
         url: "/shopify-metafields-parser",
         keywords: "shopify metafields schema validation parser developer json schema liquid templates"
-    }
+    },
+    {
+  id: "stan-store-vs-shopify-calculator",
+  region: "developer",
+  badgeText: "DEVELOPER",
+  badgeColor: "#059669",
+  title: "Stan Store vs Shopify Calculator",
+  description: "Compare fee structures, monthly costs, and revenue splits between Stan Store and Shopify to determine the optimal platform configuration.",
+  url: "/stan-store-vs-shopify-calculator",
+  keywords: "stan store vs shopify calculator comparison e-commerce store platform fees developer conversion"
+},
 ];
