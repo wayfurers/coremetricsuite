@@ -163,6 +163,47 @@ const toolsData = [
         keywords: "tiktok video ad safe zone overlay vertical creative ad specs visual clear template"
     },
     {
+  id: "capcut-blur-canvas-generator",
+  region: "global",
+  badgeText: "MEDIA & UI",
+  badgeColor: "#db2777",
+  title: "Capcut Blur Canvas Generator",
+  description: "Generate blurred background canvases for video layouts and creative editing compositions.",
+  url: "/capcut-blur-canvas-generator",
+  keywords: "capcut blur canvas generator video editing background layout vertical composition"
+},
+{
+  id: "html-link-in-bio-exporter",
+  region: "global",
+  badgeText: "MEDIA & UI",
+  badgeColor: "#db2777",
+  title: "HTML Link In Bio Exporter",
+  description: "Export clean and responsive HTML templates custom-tailored for social media link-in-bio profiles.",
+  url: "/html-link-in-bio-exporter",
+  keywords: "html link in bio exporter landing page profile responsive template builder"
+},
+{
+  id: "linkedin-text-formatter",
+  region: "global",
+  badgeText: "MEDIA & UI",
+  badgeColor: "#db2777",
+  title: "LinkedIn Text Formatter",
+  description: "Format and style LinkedIn posts with bold, italic, and clean spacing to increase engagement.",
+  url: "/linkedin-text-formatter",
+  keywords: "linkedin text formatter bold italic fonts unicode styling post engagement"
+},
+{
+  id: "srt-subtitle-cleaner",
+  region: "global",
+  badgeText: "MEDIA & UI",
+  badgeColor: "#db2777",
+  title: "Srt Subtitle Cleaner",
+  description: "Clean up, reformat, and fix timing sync issues within SRT subtitle files for video production.",
+  url: "/srt-subtitle-cleaner",
+  keywords: "srt subtitle cleaner caption format timing text file editor video production"
+},
+    // --- E-COMMERCE SUITE ---
+    {
         id: "shopify-metafields",
         region: "global",
         badgeText: "DEVELOPER",
