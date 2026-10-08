@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimalist HTML Link-In-Bio Page Code Exporter | Free Linktree Alternative</title>
+    <meta name="description" content="Generate a clean, lightning-fast minimalist link-in-bio page using pure HTML and CSS. Export a standalone index.html file to host for free on GitHub Pages or Vercel.">
+    <meta name="keywords" content="minimalist link in bio html css exporter, linktree alternative code generator, bio link generator html, static HTML profile pages, custom link in bio builder free">
+    <link rel="canonical" href="https://coremetricsuite.com/html-link-in-bio-exporter/">
+
+    <!-- Open Graph / Social Metadata -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Minimalist HTML Link-In-Bio Page Code Exporter">
+    <meta property="og:description" content="Build your custom link-in-bio landing page and export a self-contained, high-performance HTML file ready for free static hosting.">
+    <meta property="og:url" content="https://coremetricsuite.com/html-link-in-bio-exporter/">
+    
+    <!-- Global Framework Dependencies -->
+    <link rel="stylesheet" href="/css/global.css">
+    <script src="/config.js" defer></script>
+    <script src="/global.min.js" defer></script>
+
+    <!-- FAQ JSON-LD Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How do I host my exported HTML link-in-bio page for free?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Once you download your standalone index.html file, you can host it permanently for free using platforms like GitHub Pages, Vercel, Netlify, or Cloudflare Pages. Simply upload the file to a repository or drop it into their web interface."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is this HTML link-in-bio exporter a good Linktree alternative?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Unlike premium bio link aggregators that charge monthly fees and track your visitors, this tool generates a 100% free, static HTML file. You own the code, there are no subscriptions, and the resulting page loads instantly with perfect Core Web Vitals scores."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I edit the HTML and CSS code after downloading?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Absolutely. The exported index.html file includes fully readable, inline CSS. You can open it in any text editor (like VS Code or Notepad) to adjust colors, fonts, hover animations, or add custom JavaScript tracking like Google Analytics."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does this tool require a database or backend processing?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. All profile generation, live previews, and code compilations execute locally within your web browser using client-side JavaScript. No user data is sent to our servers."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are the exported static profile pages mobile responsive?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, the generated HTML utilizes modern CSS Flexbox and media queries to ensure your bio links scale perfectly across desktop monitors, tablets, and smartphone mobile screens."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-main: #0f1117;
+            --bg-card: #181b24;
+            --bg-input: #222634;
+            --border-color: #2e3446;
+            --accent-blue: #1877f2;
+            --accent-cyan: #00f2fe;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --danger-red: #ef4444;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: var(--bg-main); color: var(--text-primary); font-family: var(--font-sans); line-height: 1.6; }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            grid-template-areas: 
+                "profile preview"
+                "links preview";
+            gap: 2rem;
+        }
+
+        .panel {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            height: fit-content;
+        }
+        
+        .profile-panel { grid-area: profile; }
+        .links-panel { grid-area: links; }
+
+        .panel-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            background: var(--accent-blue);
+            color: #fff;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        .form-group { margin-bottom: 1.25rem; }
+        label { display: block; font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 0.4rem; }
+        input[type="text"], input[type="url"], textarea, select {
+            width: 100%; padding: 0.65rem 0.85rem; background-color: var(--bg-input);
+            border: 1px solid var(--border-color); border-radius: 6px; color: #fff;
+            font-size: 0.9rem; outline: none; font-family: inherit; transition: border-color 0.2s;
+        }
+        input:focus, textarea:focus, select:focus { border-color: var(--accent-blue); }
+
+        .link-item {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+        
+        .link-item-header {
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;
+        }
+        .link-item-title { font-size: 0.85rem; font-weight: 600; color: var(--text-primary); }
+        .btn-remove-link {
+            background: transparent; border: none; color: var(--danger-red); cursor: pointer;
+            font-size: 0.8rem; font-weight: 600;
+        }
+        .btn-remove-link:hover { text-decoration: underline; }
+
+        .btn-add {
+            width: 100%; padding: 0.65rem; background-color: transparent;
+            border: 1px dashed var(--accent-blue); color: var(--accent-blue);
+            border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.85rem;
+            margin-bottom: 1.25rem; transition: background-color 0.2s;
+        }
+        .btn-add:hover { background-color: rgba(24, 119, 242, 0.1); }
+
+        .btn-action {
+            width: 100%; padding: 0.85rem; background: linear-gradient(135deg, var(--accent-blue), #1055b3);
+            color: #fff; font-weight: 600; border: none; border-radius: 6px; cursor: pointer; font-size: 0.95rem;
+            box-shadow: 0 4px 12px rgba(24, 119, 242, 0.3); transition: transform 0.1s, opacity 0.2s;
+        }
+        .btn-action:hover { opacity: 0.95; }
+        .btn-action:active { transform: scale(0.99); }
+
+        /* Mobile Device Preview Stage */
+        .preview-stage { 
+            grid-area: preview; display: flex; flex-direction: column; align-items: center; 
+        }
+        .mobile-mockup {
+            width: 340px; height: 680px; background-color: #000; border-radius: 36px;
+            padding: 12px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+            border: 2px solid var(--border-color); position: relative;
+        }
+        .mobile-notch {
+            position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
+            width: 120px; height: 25px; background-color: #000; border-bottom-left-radius: 16px;
+            border-bottom-right-radius: 16px; z-index: 10;
+        }
+        .iframe-container {
+            width: 100%; height: 100%; background-color: #fff; border-radius: 24px; overflow: hidden;
+        }
+        iframe { width: 100%; height: 100%; border: none; display: block; }
+        .canvas-caption { margin-top: 1rem; font-size: 0.85rem; color: var(--text-secondary); text-align: center; }
+
+        /* Social Share Section */
+        .social-share-container {
+            background-color: var(--bg-input); border: 1px solid var(--border-color); border-radius: 8px;
+            padding: 1rem; margin-top: 1.5rem;
+        }
+        .share-label {
+            font-size: 0.8rem; font-weight: 600; color: var(--text-secondary);
+            text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem; display: block; text-align: center;
+        }
+        .share-buttons-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
+        .btn-share {
+            display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem; padding: 0.5rem 0.25rem;
+            font-size: 0.75rem; font-weight: 600; color: #fff; border: none; border-radius: 4px;
+            cursor: pointer; text-decoration: none; transition: opacity 0.2s, transform 0.1s;
+        }
+        .btn-share:hover { opacity: 0.88; }
+        .btn-share:active { transform: scale(0.97); }
+        .btn-share-x { background-color: #000; border: 1px solid #333; }
+        .btn-share-fb { background-color: #1877f2; }
+        .btn-share-li { background-color: #0a66c2; }
+        .btn-share-wa { background-color: #25d366; color: #000; }
+        .btn-share-pin { background-color: #e60023; }
+        .btn-share-copy { background-color: #374151; color: #fff; grid-column: span 3; margin-top: 0.25rem; }
+
+        /* Typography & Content Article */
+        .content-area { max-width: 1200px; margin: 3rem auto; padding: 0 1.5rem; }
+        .content-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 2.5rem; }
+        .content-card h1 { font-size: 2rem; margin-bottom: 1rem; color: #fff; }
+        .content-card h2 { font-size: 1.4rem; margin: 1.8rem 0 1rem; color: #fff; }
+        .content-card p { color: var(--text-secondary); margin-bottom: 1.2rem; }
+        .content-card ul, .content-card ol { color: var(--text-secondary); margin: 0 0 1.2rem 1.5rem; }
+        .content-card li { margin-bottom: 0.5rem; }
+
+        .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 1.5rem 0; }
+        .spec-table { width: 100%; border-collapse: collapse; text-align: left; min-width: 600px; }
+        .spec-table th, .spec-table td { padding: 0.85rem 1rem; border: 1px solid var(--border-color); }
+        .spec-table th { background-color: var(--bg-input); color: #fff; font-size: 0.9rem; }
+        .spec-table td { color: var(--text-secondary); font-size: 0.875rem; }
+
+        /* Accordion FAQ Styling */
+        .faq-block { margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem; }
+        .faq-accordion {
+            background-color: var(--bg-input); border: 1px solid var(--border-color); border-radius: 8px;
+            margin-bottom: 0.85rem; overflow: hidden; transition: border-color 0.2s;
+        }
+        .faq-accordion[open] { border-color: var(--accent-blue); }
+        .faq-summary {
+            font-size: 1rem; font-weight: 600; color: #fff; padding: 1rem 1.2rem; cursor: pointer;
+            list-style: none; display: flex; justify-content: space-between; align-items: center; user-select: none;
+        }
+        .faq-summary::-webkit-details-marker { display: none; }
+        .faq-summary::after { content: "+"; font-size: 1.2rem; color: var(--accent-blue); transition: transform 0.2s; }
+        .faq-accordion[open] .faq-summary::after { content: "−"; color: var(--accent-blue); }
+        .faq-answer {
+            padding: 0 1.2rem 1.2rem; color: var(--text-secondary); font-size: 0.95rem;
+            border-top: 1px solid rgba(255,255,255,0.05); margin-top: 0.4rem; padding-top: 0.8rem;
+        }
+
+        .cms-ad-slot-1, .cms-ad-slot-2 {
+            width: 100%; max-width: 970px; min-height: 90px; margin: 1.5rem auto;
+            background: rgba(255,255,255,0.02); border-radius: 8px; display: block;
+        }
+
+        /* Mobile Responsive Overrides */
+        @media screen and (max-width: 900px) {
+            html, body { width: 100%!important; max-width: 100vw!important; overflow-x: hidden!important; margin: 0!important; padding: 0!important; }
+            main.container { display: flex!important; flex-direction: column!important; width: 100%!important; max-width: 100%!important; padding: 0 12px!important; margin: 8px auto!important; gap: 16px!important; box-sizing: border-box!important; }
+            .profile-panel { order: 1!important; width: 100%!important; }
+            main.container > section.preview-stage { order: 2!important; width: 100%!important; display: flex!important; flex-direction: column!important; align-items: center!important; margin: 0 auto!important; box-sizing: border-box!important; }
+            .links-panel { order: 3!important; width: 100%!important; max-width: 100%!important; box-sizing: border-box!important; }
+            .mobile-mockup { width: 90vw!important; height: 160vw!important; max-width: 340px!important; max-height: 680px!important; margin: 0 auto!important; }
+            input, textarea, select { font-size: 16px!important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Container -->
+    <div id="global-header"></div>
+
+    <!-- Ad Slot 1 Container -->
+    <div class="cms-ad-slot-1" id="cms-ad-slot-top"></div>
+
+    <!-- Main Tool Container -->
+    <main class="container">
+        
+        <!-- Module 1: Profile Setup -->
+        <section class="panel profile-panel">
+            <div class="panel-title">
+                <span>Profile Configuration</span>
+                <span class="badge">STEP 1</span>
+            </div>
+            
+            <div class="form-group">
+                <label for="profileName">Profile Name / Brand</label>
+                <input type="text" id="profileName" value="@CreativeStudio">
+            </div>
+
+            <div class="form-group">
+                <label for="profileBio">Bio Subtext</label>
+                <textarea id="profileBio" rows="2">Digital Creator & Frontend Developer. Building high-performance web utilities.</textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="profileImage">Avatar Image URL (Optional)</label>
+                <input type="url" id="profileImage" placeholder="https://example.com/avatar.jpg">
+            </div>
+
+            <div class="form-group">
+                <label for="themeSelect">Design Theme</label>
+                <select id="themeSelect">
+                    <option value="minimal-light">Minimal Light (Default)</option>
+                    <option value="obsidian-dark">Obsidian Dark</option>
+                    <option value="sunset-gradient">Sunset Gradient</option>
+                    <option value="ocean-breeze">Ocean Breeze Gradient</option>
+                </select>
+            </div>
+        </section>
+
+        <!-- Module 2: Live Mobile Preview -->
+        <section class="preview-stage">
+            <div class="mobile-mockup">
+                <div class="mobile-notch"></div>
+                <div class="iframe-container">
+                    <iframe id="livePreviewFrame" title="Link in Bio Live Preview"></iframe>
+                </div>
+            </div>
+            <p class="canvas-caption">Interactive Client-Side Preview. Layout scales dynamically.</p>
+        </section>
+
+        <!-- Module 3: Links Manager & Exporter -->
+        <section class="panel links-panel">
+            <div class="panel-title">
+                <span>Manage Links &amp; Export</span>
+                <span class="badge">STEP 2</span>
+            </div>
+
+            <div id="linksContainer">
+                <!-- Initial Link Item -->
+                <div class="link-item">
+                    <div class="link-item-header">
+                        <span class="link-item-title">Link #1</span>
+                        <button type="button" class="btn-remove-link" onclick="removeLink(this)">Delete</button>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0.5rem;">
+                        <input type="text" class="link-label" value="My Creative Portfolio" placeholder="Link Button Text">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <input type="url" class="link-url" value="https://example.com/portfolio" placeholder="https://...">
+                    </div>
+                </div>
+                
+                <div class="link-item">
+                    <div class="link-item-header">
+                        <span class="link-item-title">Link #2</span>
+                        <button type="button" class="btn-remove-link" onclick="removeLink(this)">Delete</button>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0.5rem;">
+                        <input type="text" class="link-label" value="Read My Blog Articles" placeholder="Link Button Text">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <input type="url" class="link-url" value="https://example.com/blog" placeholder="https://...">
+                    </div>
+                </div>
+            </div>
+
+            <button type="button" class="btn-add" id="addLinkBtn">+ Add New Link Card</button>
+
+            <button class="btn-action" id="exportBtn" type="button">📥 Export Static HTML (index.html)</button>
+
+            <!-- Social Media Share Section -->
+            <div class="social-share-container">
+                <span class="share-label">Share This Tool</span>
+                <div class="share-buttons-grid">
+                    <a id="shareX" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-x">𝕏 Post</a>
+                    <a id="shareFB" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-fb">Facebook</a>
+                    <a id="shareWA" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-wa">WhatsApp</a>
+                    <a id="shareLI" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-li">LinkedIn</a>
+                    <a id="sharePIN" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-pin">Pinterest</a>
+                    <button id="copyShareLink" type="button" class="btn-share btn-share-copy">🔗 Copy Tool Link</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- SEO & Educational Guide Section -->
+    <article class="content-area">
+        <div class="content-card">
+            <h1>Minimalist HTML Link-In-Bio Page Code Exporter Guide</h1>
+            <p>
+                In the modern creator economy, consolidating your digital footprint into a single, highly-accessible landing page is standard practice. However, relying on premium commercial link aggregators often means paying monthly subscription fees, suffering through slow page load times, and forfeiting control over your own user data. 
+            </p>
+            <p>
+                Our <strong>Minimalist HTML Link-In-Bio Page Code Exporter</strong> offers a free, high-performance alternative. By generating a standalone, lightweight <code>index.html</code> file embedded with inline CSS, you can bypass third-party platforms entirely. Build your custom mobile-responsive layout client-side, export the raw code, and host it natively on your own domain.
+            </p>
+
+            <h2>Why Export Static HTML for Your Bio Link?</h2>
+            <p>
+                A static HTML file requires no server-side processing, PHP, or database queries. Because the browser reads the file directly, load speeds are virtually instantaneous. Fast load times are critical for user retention; when visitors click a link from an Instagram or TikTok bio, they expect the page to resolve immediately. Furthermore, a single-file static webpage presents zero security vulnerabilities.
+            </p>
+
+            <div class="table-responsive">
+                <table class="spec-table">
+                    <thead>
+                        <tr>
+                            <th>Feature Category</th>
+                            <th>Self-Hosted Static HTML</th>
+                            <th>Premium Link Aggregators (e.g. Linktree)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Cost</strong></td>
+                            <td>100% Free (Forever)</td>
+                            <td>$5 to $25+ per month for pro features</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Custom Domains</strong></td>
+                            <td>Full control, easy setup via DNS</td>
+                            <td>Requires paid premium tier</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Page Load Speed</strong></td>
+                            <td>Instantaneous (&lt;0.5 seconds)</td>
+                            <td>Slowed by external tracking scripts</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Data Ownership</strong></td>
+                            <td>You own the code and user analytics</td>
+                            <td>Platform controls data and tracks visitors</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Ad Slot 2 Container -->
+            <div class="cms-ad-slot-2"></div>
+
+            <h2>Best Free Hosting Platforms for Static Link-In-Bio Pages</h2>
+            <p>
+                Once you generate and download your custom <code>index.html</code> file using this exporter, you need a place to host it. Because the file is completely static, you can deploy it across robust, enterprise-grade Content Delivery Networks (CDNs) at zero cost:
+            </p>
+            <ul>
+                <li><strong>GitHub Pages:</strong> The industry standard for static sites. Create a free repository, upload your exported HTML file, and GitHub will instantly serve your site globally.</li>
+                <li><strong>Vercel & Netlify:</strong> Tailor-made for frontend developers, these platforms offer drag-and-drop deployment. Simply drag your <code>index.html</code> file into their interface to receive a live production URL.</li>
+                <li><strong>Cloudflare Pages:</strong> Provides unparalleled DDoS protection, global edge caching, and a generous free tier for static file routing.</li>
+            </ul>
+
+            <h2>Customizing Your Exported CSS Layout</h2>
+            <p>
+                The resulting file is fully self-contained, meaning the structural markup and visual styling (colors, fonts, borders) exist together within the same document. You can open the downloaded HTML file in a code editor like VS Code to further tweak the styling.
+            </p>
+            <p>
+                For example, developers can easily adjust CSS variables within the <code>:root</code> selector to enforce strict brand compliance, add advanced CSS hover animations, or inject external scripts such as Google Analytics and Meta Pixel tracking tags directly into the header block.
+            </p>
+
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-block">
+                <details class="faq-accordion" open>
+                    <summary class="faq-summary">How do I host my exported HTML link-in-bio page for free?</summary>
+                    <div class="faq-answer">
+                        Once you download your standalone index.html file, you can host it permanently for free using platforms like GitHub Pages, Vercel, Netlify, or Cloudflare Pages. Simply upload the file to a repository or drop it into their web interface.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">Is this HTML link-in-bio exporter a good Linktree alternative?</summary>
+                    <div class="faq-answer">
+                        Yes. Unlike premium bio link aggregators that charge monthly fees and track your visitors, this tool generates a 100% free, static HTML file. You own the code, there are no subscriptions, and the resulting page loads instantly with perfect Core Web Vitals scores.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">Can I edit the HTML and CSS code after downloading?</summary>
+                    <div class="faq-answer">
+                        Absolutely. The exported index.html file includes fully readable, inline CSS. You can open it in any text editor (like VS Code or Notepad) to adjust colors, fonts, hover animations, or add custom JavaScript tracking like Google Analytics.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">Does this tool require a database or backend processing?</summary>
+                    <div class="faq-answer">
+                        No. All profile generation, live previews, and code compilations execute locally within your web browser using client-side JavaScript. No user data is sent to our servers.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">Are the exported static profile pages mobile responsive?</summary>
+                    <div class="faq-answer">
+                        Yes, the generated HTML utilizes modern CSS Flexbox and media queries to ensure your bio links scale perfectly across desktop monitors, tablets, and smartphone mobile screens.
+                    </div>
+                </details>
+            </div>
+        </div>
+    </article>
+
+    <!-- Footer Container -->
+    <div id="global-footer"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            const profileNameInput = document.getElementById('profileName');
+            const profileBioInput = document.getElementById('profileBio');
+            const profileImageInput = document.getElementById('profileImage');
+            const themeSelect = document.getElementById('themeSelect');
+            const linksContainer = document.getElementById('linksContainer');
+            const addLinkBtn = document.getElementById('addLinkBtn');
+            const exportBtn = document.getElementById('exportBtn');
+            const livePreviewFrame = document.getElementById('livePreviewFrame');
+
+            // Theme Definitions
+            const themes = {
+                'minimal-light': {
+                    bg: '#f8fafc',
+                    text: '#0f172a',
+                    cardBg: '#ffffff',
+                    cardBorder: '#e2e8f0',
+                    cardHover: '#f1f5f9'
+                },
+                'obsidian-dark': {
+                    bg: '#09090b',
+                    text: '#fafafa',
+                    cardBg: '#18181b',
+                    cardBorder: '#27272a',
+                    cardHover: '#27272a'
+                },
+                'sunset-gradient': {
+                    bg: 'linear-gradient(135deg, #ff7e5f, #feb47b)',
+                    text: '#ffffff',
+                    cardBg: 'rgba(255, 255, 255, 0.2)',
+                    cardBorder: 'rgba(255, 255, 255, 0.3)',
+                    cardHover: 'rgba(255, 255, 255, 0.3)'
+                },
+                'ocean-breeze': {
+                    bg: 'linear-gradient(135deg, #00c6ff, #0072ff)',
+                    text: '#ffffff',
+                    cardBg: 'rgba(255, 255, 255, 0.15)',
+                    cardBorder: 'rgba(255, 255, 255, 0.25)',
+                    cardHover: 'rgba(255, 255, 255, 0.25)'
+                }
+            };
+
+            // Setup Social Share Links
+            const currentUrl = encodeURIComponent(window.location.href);
+            const shareTitle = encodeURIComponent("Build a free custom link-in-bio page and export the static HTML code!");
+            
+            document.getElementById('shareX').href = 'https://twitter.com/intent/tweet?url=' + currentUrl + '&text=' + shareTitle;
+            document.getElementById('shareFB').href = 'https://www.facebook.com/sharer/sharer.php?u=' + currentUrl;
+            document.getElementById('shareWA').href = 'https://api.whatsapp.com/send?text=' + shareTitle + '%20' + currentUrl;
+            document.getElementById('shareLI').href = 'https://www.linkedin.com/sharing/share-offsite/?url=' + currentUrl;
+            document.getElementById('sharePIN').href = 'https://pinterest.com/pin/create/button/?url=' + currentUrl + '&description=' + shareTitle;
+
+            const copyBtn = document.getElementById('copyShareLink');
+            copyBtn.addEventListener('click', function() {
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'HTML Link-In-Bio Exporter',
+                        text: 'Build and export static HTML bio link profiles.',
+                        url: window.location.href
+                    }).catch(function() {});
+                } else if (navigator.clipboard) {
+                    navigator.clipboard.writeText(window.location.href).then(function() {
+                        const origText = copyBtn.textContent;
+                        copyBtn.textContent = '✓ Link Copied!';
+                        setTimeout(function() { copyBtn.textContent = origText; }, 2000);
+                    });
+                }
+            });
+
+            // Add Link Item Logic
+            let linkCount = 2;
+            addLinkBtn.addEventListener('click', function() {
+                linkCount++;
+                const itemHtml = `
+                    <div class="link-item-header">
+                        <span class="link-item-title">Link #${linkCount}</span>
+                        <button type="button" class="btn-remove-link" onclick="removeLink(this)">Delete</button>
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0.5rem;">
+                        <input type="text" class="link-label" value="New Link Destination" placeholder="Link Button Text">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <input type="url" class="link-url" value="https://example.com" placeholder="https://...">
+                    </div>
+                `;
+                const div = document.createElement('div');
+                div.className = 'link-item';
+                div.innerHTML = itemHtml;
+                linksContainer.appendChild(div);
+                attachLinkListeners();
+                updatePreview();
+            });
+
+            window.removeLink = function(btn) {
+                btn.closest('.link-item').remove();
+                updatePreview();
+            };
+
+            // Generator Engine Logic
+            function generateHTML() {
+                const name = profileNameInput.value.trim() || 'My Profile';
+                const bio = profileBioInput.value.trim();
+                const avatar = profileImageInput.value.trim();
+                const themeKey = themeSelect.value;
+                const activeTheme = themes[themeKey];
+                
+                const linkElements = Array.from(document.querySelectorAll('.link-item')).map(item => {
+                    const label = item.querySelector('.link-label').value.trim() || 'Untitled Link';
+                    const url = item.querySelector('.link-url').value.trim() || '#';
+                    return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="bio-link">${label}</a>`;
+                }).join('\n        ');
+
+                const avatarHTML = avatar ? `<img src="${avatar}" alt="${name} Profile Image" class="profile-avatar">` : `<div class="profile-avatar-placeholder">${name.charAt(0).toUpperCase()}</div>`;
+
+                const template = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${name} | Link in Bio</title>
+    <meta name="description" content="${bio}">
+    <style>
+        :root {
+            --bg-body: ${activeTheme.bg};
+            --text-color: ${activeTheme.text};
+            --card-bg: ${activeTheme.cardBg};
+            --card-border: ${activeTheme.cardBorder};
+            --card-hover: ${activeTheme.cardHover};
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            background: var(--bg-body); 
+            color: var(--text-color); 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 3rem 1.5rem;
+        }
+        .container { width: 100%; max-width: 600px; text-align: center; }
+        .profile-avatar { width: 96px; height: 96px; border-radius: 50%; object-fit: cover; margin: 0 auto 1rem; border: 2px solid var(--card-border); }
+        .profile-avatar-placeholder { 
+            width: 96px; height: 96px; border-radius: 50%; background: var(--card-bg); 
+            border: 2px solid var(--card-border); display: flex; align-items: center; 
+            justify-content: center; font-size: 2.5rem; font-weight: bold; margin: 0 auto 1rem; color: var(--text-color);
+        }
+        .profile-name { font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .profile-bio { font-size: 0.95rem; line-height: 1.5; margin-bottom: 2rem; opacity: 0.9; }
+        .links-wrapper { display: flex; flex-direction: column; gap: 1rem; }
+        .bio-link {
+            display: block; width: 100%; padding: 1rem 1.5rem; background: var(--card-bg);
+            border: 1px solid var(--card-border); border-radius: 8px; color: var(--text-color);
+            text-decoration: none; font-weight: 600; font-size: 1rem; transition: transform 0.2s, background 0.2s;
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+        }
+        .bio-link:hover { transform: translateY(-2px); background: var(--card-hover); }
+        footer { margin-top: 3rem; font-size: 0.8rem; opacity: 0.6; }
+        footer a { color: inherit; text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <main class="container">
+        ${avatarHTML}
+        <h1 class="profile-name">${name}</h1>
+        <p class="profile-bio">${bio}</p>
+        
+        <div class="links-wrapper">
+        ${linkElements}
+        </div>
+    </main>
+    <footer>
+        Built with <a href="https://coremetricsuite.com/html-link-in-bio-exporter/" target="_blank">CoreMetricSuite Exporter</a>
+    </footer>
+</body>
+</html>`;
+                return template;
+            }
+
+            function updatePreview() {
+                const htmlContent = generateHTML();
+                const doc = livePreviewFrame.contentDocument || livePreviewFrame.contentWindow.document;
+                doc.open();
+                doc.write(htmlContent);
+                doc.close();
+            }
+
+            function attachLinkListeners() {
+                const inputs = document.querySelectorAll('.link-label, .link-url');
+                inputs.forEach(input => {
+                    input.addEventListener('input', updatePreview);
+                });
+            }
+
+            // Bind Event Listeners
+            const controls = [profileNameInput, profileBioInput, profileImageInput, themeSelect];
+            controls.forEach(ctrl => ctrl.addEventListener('input', updatePreview));
+            attachLinkListeners();
+
+            // Initial Render
+            updatePreview();
+
+            // Export logic
+            exportBtn.addEventListener('click', function() {
+                const finalHTML = generateHTML();
+                const blob = new Blob([finalHTML], { type: 'text/html' });
+                const link = document.createElement('a');
+                link.download = 'index.html';
+                link.href = URL.createObjectURL(blob);
+                link.click();
+                URL.revokeObjectURL(link.href);
+            });
+        });
+    </script>
+
+    <!-- Global CoreMetricSuite Cross-Linking Index Hub -->
+    <div style="margin-top: 40px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #f8fafc; font-family: system-ui, -apple-system, sans-serif;">
+        <h3 style="margin: 0 0 15px 0; font-size: 18px; color: #0f172a; font-weight: 600;">🛠️ CoreMetricSuite Utility Directory</h3>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇦🇺 Australia Tax &amp; Labor</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-au-cents" href="../au-cents-per-km-estimator/" style="color: #2563eb; text-decoration: underline;">Cents-Per-Km Tax Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-au-schads" href="../au-schads-vehicle-allowance/" style="color: #2563eb; text-decoration: underline;">SCHADS Vehicle Allowance</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-au-super" href="../au-superannuation-charge-tracker/" style="color: #2563eb; text-decoration: underline;">Superannuation Tracker</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇺🇸 US Corporate Tax</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-us-llc" href="../us-llc-late-penalty-estimator/" style="color: #2563eb; text-decoration: underline;">LLC Late Tax Penalty</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-us-179" href="../us-section-179-truck-calculator/" style="color: #2563eb; text-decoration: underline;">Section 179 Vehicle Deduction</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇬🇧 UK Property Management</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-rent" href="../uk-form-4a-rent-tracker/" style="color: #2563eb; text-decoration: underline;">Form 4A Rent Tracker</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-sdlt" href="../uk-sdlt-bracket-estimator/" style="color: #2563eb; text-decoration: underline;">Stamp Duty Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-sec8" href="../uk-section-8-calculator/" style="color: #2563eb; text-decoration: underline;">Section 8 Calculator</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🎬 Digital Media Layouts</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-media-ig" href="../instagram-reels-preview/" style="color: #2563eb; text-decoration: underline;">Instagram Reels Grid</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-fb" href="../facebook-ad-safe-zone/" style="color: #2563eb; text-decoration: underline;">Facebook 9:16 Ad Mask</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-bio" href="../html-link-in-bio-exporter/" style="color: #2563eb; text-decoration: underline;">HTML Link in Bio Exporter</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-tiktok" href="../tiktok-ad-safe-zone/" style="color: #2563eb; text-decoration: underline;">TikTok Ad Checker</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script defer>
+        (function() {
+            const path = window.location.pathname.toLowerCase();
+            const toolsMap = {
+                'au-cents-per-km-estimator': 'hub-au-cents',
+                'au-schads-vehicle-allowance': 'hub-au-schads',
+                'au-superannuation-charge-tracker': 'hub-au-super',
+                'us-llc-late-penalty-estimator': 'hub-us-llc',
+                'us-section-179-truck-calculator': 'hub-us-179',
+                'uk-form-4a-rent-tracker': 'hub-uk-rent',
+                'uk-sdlt-bracket-estimator': 'hub-uk-sdlt',
+                'uk-section-8-calculator': 'hub-uk-sec8',
+                'instagram-reels-preview': 'hub-media-ig',
+                'facebook-ad-safe-zone': 'hub-media-fb',
+                'html-link-in-bio-exporter': 'hub-media-bio',
+                'tiktok-ad-safe-zone': 'hub-media-tiktok'
+            };
+
+            for (const [folderName, elementId] of Object.entries(toolsMap)) {
+                if (path.includes(folderName)) {
+                    const targetEl = document.getElementById(elementId);
+                    if (targetEl) {
+                        targetEl.outerHTML = `<span style="font-weight: 600; color: #0f172a;">${targetEl.textContent} (Current)</span>`;
+                    }
+                    break;
+                }
+            }
+        })();
+    </script>
+</body>
+</html>
