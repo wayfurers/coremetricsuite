@@ -24,19 +24,25 @@ document.addEventListener('DOMContentLoaded', () => {
      * template rendering, and pagination UI adjustments.
      */
     function renderView() {
-        // Step A: Filter tools array matching active region mapping matrix
+        // Step A: Filter tools array matching active region mapping matrix dynamically
         const filteredData = toolsData.filter(tool => {
             if (currentFilter === 'all') return true;
             
-            const filterMap = {
-                'au': ['AU TAX', 'AU LABOUR'],
-                'us': ['US TAX'],
-                'uk': ['UK TAX', 'UK LEGAL'],
-                'global': ['MEDIA & UI', 'MEDIA', 'DEVELOPER', 'ECOM']
-            };
+            // Normalize inputs to lowercase to prevent case-matching errors
+            const filterLower = currentFilter.toLowerCase();
+            const badgeLower = (tool.badgeText || '').toLowerCase().trim();
             
-            const targetTags = filterMap[currentFilter] || [];
-            return targetTags.includes(tool.badgeText.toUpperCase());
+            // 1. Handle regional filters dynamically by matching prefixes (au, us, uk)
+            if (['au', 'us', 'uk'].includes(filterLower)) {
+                return badgeLower.startsWith(filterLower);
+            }
+            
+            // 2. Handle the "Digital & Media" global tab securely
+            if (filterLower === 'global') {
+                return ['media & ui', 'media', 'developer', 'ecom'].includes(badgeLower);
+            }
+            
+            return false;
         });
 
         // Step B: Calculate Pagination Slices & Bounds
@@ -62,17 +68,17 @@ document.addEventListener('DOMContentLoaded', () => {
         currentSlice.forEach(tool => {
             const article = document.createElement('article');
             article.className = 'cms-tool-card';
-            article.setAttribute('data-region', tool.region);
-            article.setAttribute('data-keywords', tool.keywords);
+            article.setAttribute('data-region', tool.region || '');
+            article.setAttribute('data-keywords', tool.keywords || '');
             
             article.innerHTML = `
                 <div class="cms-card-content">
-                    <span class="cms-badge-hdr" style="color: ${tool.badgeColor};">${tool.badgeText}</span>
-                    <h2 class="cms-toast-title">${tool.title}</h2>
-                    <p>${tool.description}</p>
+                    <span class="cms-badge-hdr" style="color: ${tool.badgeColor || '#000'};">${tool.badgeText || ''}</span>
+                    <h2 class="cms-toast-title">${tool.title || ''}</h2>
+                    <p>${tool.description || ''}</p>
                 </div>
                 <div class="cms-card-footer">
-                    <a href="${tool.url}" class="cms-btn-launch-utility">Launch Utility</a>
+                    <a href="${tool.url || '#'}" class="cms-btn-launch-utility">Launch Utility</a>
                 </div>
             `;
             gridContainer.appendChild(article);
