@@ -149,7 +149,11 @@ window.CMS_CONFIG = {
     { name: "Threads App Post Visualizer", url: "/threads-app-post-visualizer", tag: "MEDIA" },
     { name: "Facebook Ad Safe Zone", url: "/facebook-ad-safe-zone", tag: "MEDIA" },
     { name: "BlueSky Post Previewer", url: "/bluesky-post-previewer", tag: "MEDIA" },
-    { name: "TikTok Ad Safe Zone", url: "/tiktok-ad-safe-zone", tag: "MEDIA" },
+    { name: "TikTok Ad Safe Zone", url: "/tiktok-ad-safe-zone", tag: "MEDIA" },     
+    { name: "Capcut Blur Canvas Generator", url: "/capcut-blur-canvas-generator", tag: "MEDIA" },
+    { name: "HTML Link In Bio Exporter", url: "/html-link-in-bio-exporter", tag: "MEDIA" },
+    { name: "Linkedin Text Formatter", url: "/linkedin-text-formatter", tag: "MEDIA" },
+    { name: "Srt Subtitle Cleaner", url: "/srt-subtitle-cleaner", tag: "MEDIA" },
 
     // --- E-COMMERCE SUITE ---
     { name: "Shopify Metafields Parser", url: "/shopify-metafields-parser", tag: "ECOM" }
