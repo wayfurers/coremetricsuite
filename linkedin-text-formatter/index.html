@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unicode LinkedIn Bold &amp; Italic Text Formatting Generator</title>
+    <meta name="description" content="Free Unicode LinkedIn text formatter and bold generator. Instantly convert plain text into bold, italic, script, and strikethrough styles for posts and profiles.">
+    <meta name="keywords" content="linkedin text formatter, unicode bold generator, linkedin font generator, italicize linkedin posts, bold text for linkedin, social media text decorator">
+    <link rel="canonical" href="https://coremetricsuite.com/linkedin-text-formatter/">
+
+    <!-- Open Graph / Social Metadata -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Unicode LinkedIn Bold &amp; Italic Text Formatting Generator">
+    <meta property="og:description" content="Instantly convert plain text into bold, italic, and specialty Unicode styles that render natively across LinkedIn posts, comments, and bios.">
+    <meta property="og:url" content="https://coremetricsuite.com/linkedin-text-formatter/">
+    
+    <!-- Global Framework Dependencies -->
+    <link rel="stylesheet" href="/css/global.css">
+    <script src="/config.js" defer></script>
+    <script src="/global.min.js" defer></script>
+
+    <!-- FAQ JSON-LD Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How do you make text bold or italic on LinkedIn posts?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "LinkedIn does not have native formatting buttons in its standard post editor. To make text bold or italic, type or paste your draft into our Unicode text generator, choose your preferred style, and copy the instantly transformed output to paste directly into your LinkedIn post, comment, or profile bio."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does Unicode text formatting work on LinkedIn?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Unicode text generators map standard alphabet letters to mathematical alphanumeric symbols (such as Sans-Serif Bold or Italic blocks). Because these symbols are recognized as standard text characters rather than HTML tags or images, they survive copy-and-paste and display correctly across desktop and mobile LinkedIn feeds."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does formatted Unicode text affect LinkedIn SEO or searchability?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Because Unicode styled characters use specialized code blocks rather than standard ASCII letters, words formatted in bold or italics are not indexed by LinkedIn's standard internal search engine. It is recommended to use formatting selectively for hooks and section headers while keeping core keywords in plain text."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Will my formatted text display correctly on all devices?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The vast majority of modern iOS, Android, Windows, and macOS devices support standard mathematical Unicode blocks. However, older operating systems or specific screen readers may interpret these characters character-by-character rather than as normal readable words."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What are the best practices for formatting LinkedIn posts?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Use bold text sparingly for your opening hook or key metrics (such as data points and statistics) to grab attention before the 'see more' truncation cutoff. Use italics for quotes, book titles, or reflective asides to create visual depth without visual clutter."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-main: #0f1117;
+            --bg-card: #181b24;
+            --bg-input: #222634;
+            --border-color: #2e3446;
+            --accent-blue: #0a66c2;
+            --accent-cyan: #00f2fe;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: var(--bg-main); color: var(--text-primary); font-family: var(--font-sans); line-height: 1.6; }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 420px 1fr;
+            grid-template-areas: 
+                "input preview"
+                "panel preview";
+            gap: 2rem;
+        }
+
+        .input-card-wrapper {
+            grid-area: input;
+        }
+
+        .panel {
+            grid-area: panel;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            height: fit-content;
+        }
+
+        .panel-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            background: var(--accent-blue);
+            color: #fff;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        .form-group { margin-bottom: 1.25rem; }
+        label { display: block; font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 0.4rem; }
+        
+        textarea {
+            width: 100%; padding: 0.75rem; background-color: var(--bg-input);
+            border: 1px solid var(--border-color); border-radius: 8px; color: #fff;
+            font-size: 0.95rem; outline: none; font-family: inherit; resize: vertical;
+            min-height: 140px;
+        }
+        textarea:focus { border-color: var(--accent-blue); }
+
+        .toolbar-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .btn-tool {
+            padding: 0.6rem;
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.8rem;
+            transition: background-color 0.2s, border-color 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.3rem;
+        }
+        .btn-tool:hover { background-color: #2a2f42; border-color: var(--accent-blue); }
+
+        .btn-action {
+            width: 100%; padding: 0.85rem; background: linear-gradient(135deg, var(--accent-blue), #084c91);
+            color: #fff; font-weight: 600; border: none; border-radius: 6px; cursor: pointer; font-size: 0.95rem;
+            box-shadow: 0 4px 12px rgba(10, 102, 194, 0.3);
+            transition: transform 0.1s, opacity 0.2s;
+            margin-bottom: 1rem;
+        }
+        .btn-action:hover { opacity: 0.95; }
+        .btn-action:active { transform: scale(0.99); }
+
+        .preview-stage { 
+            grid-area: preview;
+            display: flex; 
+            flex-direction: column; 
+        }
+
+        .output-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .output-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .output-style-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .output-box {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            min-height: 70px;
+            font-size: 0.95rem;
+            color: #fff;
+            word-break: break-word;
+            white-space: pre-wrap;
+            position: relative;
+        }
+
+        .btn-copy-sm {
+            padding: 0.3rem 0.6rem;
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            color: var(--accent-cyan);
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .btn-copy-sm:hover { background-color: var(--accent-blue); color: #fff; }
+
+        /* Social Share Button Module */
+        .social-share-container {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        .share-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
+            display: block;
+            text-align: center;
+        }
+        .share-buttons-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+        }
+        .btn-share {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            padding: 0.5rem 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: opacity 0.2s, transform 0.1s;
+        }
+        .btn-share:hover { opacity: 0.88; }
+        .btn-share:active { transform: scale(0.97); }
+        .btn-share-x { background-color: #000000; border: 1px solid #333; }
+        .btn-share-fb { background-color: #1877f2; }
+        .btn-share-li { background-color: #0a66c2; }
+        .btn-share-wa { background-color: #25d366; color: #000; }
+        .btn-share-pin { background-color: #e60023; }
+        .btn-share-copy { background-color: #374151; color: #fff; grid-column: span 3; margin-top: 0.25rem; }
+
+        .content-area { max-width: 1200px; margin: 3rem auto; padding: 0 1.5rem; }
+        .content-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 2.5rem; }
+        .content-card h1 { font-size: 2rem; margin-bottom: 1rem; color: #fff; }
+        .content-card h2 { font-size: 1.4rem; margin: 1.8rem 0 1rem; color: #fff; }
+        .content-card p { color: var(--text-secondary); margin-bottom: 1.2rem; }
+        .content-card ul, .content-card ol { color: var(--text-secondary); margin: 0 0 1.2rem 1.5rem; }
+        .content-card li { margin-bottom: 0.5rem; }
+
+        .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 1.5rem 0; }
+        .spec-table { width: 100%; border-collapse: collapse; text-align: left; min-width: 600px; }
+        .spec-table th, .spec-table td { padding: 0.85rem 1rem; border: 1px solid var(--border-color); }
+        .spec-table th { background-color: var(--bg-input); color: #fff; font-size: 0.9rem; }
+        .spec-table td { color: var(--text-secondary); font-size: 0.875rem; }
+
+        /* Accordion FAQ Styling */
+        .faq-block { margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem; }
+        .faq-accordion {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 0.85rem;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .faq-accordion[open] { border-color: var(--accent-blue); }
+        .faq-summary {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            padding: 1rem 1.2rem;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+        .faq-summary::-webkit-details-marker { display: none; }
+        .faq-summary::after {
+            content: "+";
+            font-size: 1.2rem;
+            color: var(--accent-blue);
+            transition: transform 0.2s;
+        }
+        .faq-accordion[open] .faq-summary::after {
+            content: "−";
+            color: var(--accent-blue);
+        }
+        .faq-answer {
+            padding: 0 1.2rem 1.2rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 0.4rem;
+            padding-top: 0.8rem;
+        }
+
+        .cms-ad-slot-1, .cms-ad-slot-2 {
+            width: 100%; max-width: 970px; min-height: 90px; margin: 1.5rem auto;
+            background: rgba(255,255,255,0.02); border-radius: 8px; display: block;
+        }
+
+        /* Mobile Responsive Overrides: Input box first, then preview outputs */
+        @media screen and (max-width: 900px) {
+            html, body { width: 100%!important; max-width: 100vw!important; overflow-x: hidden!important; margin: 0!important; padding: 0!important; }
+            main.container { display: flex!important; flex-direction: column!important; width: 100%!important; max-width: 100%!important; padding: 0 12px!important; margin: 8px auto!important; gap: 16px!important; box-sizing: border-box!important; }
+            .input-card-wrapper { order: 1!important; width: 100%!important; }
+            main.container > section.preview-stage { order: 2!important; width: 100%!important; display: flex!important; flex-direction: column!important; box-sizing: border-box!important; }
+            main.container > section.panel { order: 3!important; width: 100%!important; max-width: 100%!important; box-sizing: border-box!important; }
+            input, textarea, select { font-size: 16px!important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Container -->
+    <div id="global-header"></div>
+
+    <!-- Ad Slot 1 Container -->
+    <div class="cms-ad-slot-1" id="cms-ad-slot-top"></div>
+
+    <!-- Main Tool Container -->
+    <main class="container">
+        <!-- Module 1: Text Input Section (Rendered 1st on mobile) -->
+        <div class="input-card-wrapper">
+            <div class="panel">
+                <div class="panel-title">
+                    <span>Source Text Input</span>
+                    <span class="badge">STEP 1</span>
+                </div>
+                <div class="form-group" style="margin-bottom:0.75rem;">
+                    <label for="sourceText">Type or paste your LinkedIn post draft...</label>
+                    <textarea id="sourceText" placeholder="Write your professional hook or post content here...">Scale your personal brand and engagement on LinkedIn with perfectly formatted bold and italic hooks! 🚀</textarea>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-secondary);">
+                    <span id="charCount">104 characters</span>
+                    <button type="button" id="clearBtn" style="background:none; border:none; color: var(--accent-cyan); cursor:pointer; font-weight:600;">Clear Text</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 2: Live Unicode Formatting Output Stage (Rendered 2nd on mobile) -->
+        <section class="preview-stage">
+            <div class="output-card">
+                <div class="output-header">
+                    <span class="output-style-name">mathbf (Bold Sans-Serif)</span>
+                    <button class="btn-copy-sm" data-target="outBoldSans">Copy Bold</button>
+                </div>
+                <div class="output-box" id="outBoldSans"></div>
+            </div>
+
+            <div class="output-card">
+                <div class="output-header">
+                    <span class="output-style-name">mathit (Italic Sans-Serif)</span>
+                    <button class="btn-copy-sm" data-target="outItalicSans">Copy Italic</button>
+                </div>
+                <div class="output-box" id="outItalicSans"></div>
+            </div>
+
+            <div class="output-card">
+                <div class="output-header">
+                    <span class="output-style-name">mathbf+mathit (Bold Italic)</span>
+                    <button class="btn-copy-sm" data-target="outBoldItalic">Copy Bold Italic</button>
+                </div>
+                <div class="output-box" id="outBoldItalic"></div>
+            </div>
+
+            <div class="output-card">
+                <div class="output-header">
+                    <span class="output-style-name">Script / Cursive</span>
+                    <button class="btn-copy-sm" data-target="outScript">Copy Script</button>
+                </div>
+                <div class="output-box" id="outScript"></div>
+            </div>
+
+            <div class="output-card">
+                <div class="output-header">
+                    <span class="output-style-name">Monospace (Code Style)</span>
+                    <button class="btn-copy-sm" data-target="outMono">Copy Monospace</button>
+                </div>
+                <div class="output-box" id="outMono"></div>
+            </div>
+
+            <div class="output-card">
+                <div class="output-header">
+                    <span class="output-style-name">Strikethrough</span>
+                    <button class="btn-copy-sm" data-target="outStrike">Copy Strikethrough</button>
+                </div>
+                <div class="output-box" id="outStrike"></div>
+            </div>
+        </section>
+
+        <!-- Module 3: Tool Quick Actions & Sharing Panel (Rendered 3rd on mobile) -->
+        <section class="panel">
+            <div class="panel-title">
+                <span>Quick Formatting Tools</span>
+                <span class="badge">SYMBOLS</span>
+            </div>
+
+            <div class="toolbar-grid">
+                <button class="btn-tool" type="button" data-insert="• "><span>•</span> Bullet Point</button>
+                <button class="btn-tool" type="button" data-insert="→ "><span>→</span> Arrow Symbol</button>
+                <button class="btn-tool" type="button" data-insert="💡 "><span>💡</span> Lightbulb</button>
+                <button class="btn-tool" type="button" data-insert="🚀 "><span>🚀</span> Rocket</button>
+            </div>
+
+            <button class="btn-action" id="copyAllBtn" type="button">Copy All Formatted Variations</button>
+
+            <!-- Social Media Share Section -->
+            <div class="social-share-container">
+                <span class="share-label">Share This Tool</span>
+                <div class="share-buttons-grid">
+                    <a id="shareX" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-x">𝕏 Post</a>
+                    <a id="shareFB" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-fb">Facebook</a>
+                    <a id="shareWA" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-wa">WhatsApp</a>
+                    <a id="shareLI" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-li">LinkedIn</a>
+                    <a id="sharePIN" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-pin">Pinterest</a>
+                    <button id="copyShareLink" type="button" class="btn-share btn-share-copy">🔗 Copy Tool Link</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- SEO & Educational Guide Section -->
+    <article class="content-area">
+        <div class="content-card">
+            <h1>Unicode LinkedIn Bold &amp; Italic Text Formatting Generator</h1>
+            <p>
+                LinkedIn's native post composer is intentionally minimalist, offering zero built-in toolbar buttons for <strong>bolding</strong>, <em>italicizing</em>, or adding custom font weights. When every professional publishes plain black text on a white feed card, standard updates easily blend together. To break visual monotony and capture reader attention within the first two scrolling seconds, creators rely on specialized <strong>Unicode text formatting generators</strong>.
+            </p>
+            <p>
+                This browser-based utility instantly maps your plain text input into standard mathematical Unicode alphabets. Because these characters operate as standard text glyphs rather than HTML styling codes or images, they pass cleanly through copy-and-paste protocols and render natively across LinkedIn posts, comments, headlines, and About sections.
+            </p>
+
+            <h2>How Unicode Text Conversion Works for LinkedIn</h2>
+            <p>
+                The characters on your computer keyboard belong to standard ASCII and basic Latin Unicode blocks. However, the Unicode standard also includes thousands of mathematical alphanumeric symbols originally designed for physics and calculus formulas (such as bold sans-serif vectors or italic matrices). 
+            </p>
+            <p>
+                Our client-side JavaScript engine takes each standard letter you type and applies a precise character code offset to convert it into its bold or italic Unicode counterpart in real time. Because no backend databases or external scripts are involved, your drafts remain 100% private and execute with zero latency.
+            </p>
+
+            <div class="table-responsive">
+                <table class="spec-table">
+                    <thead>
+                        <tr>
+                            <th>Formatting Style</th>
+                            <th>Unicode Character Block</th>
+                            <th>Best Used For On LinkedIn</th>
+                            <th>Visual Impact</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Sans-Serif Bold</strong></td>
+                            <td>Mathematical Alphanumeric Symbols</td>
+                            <td>Hook lines, key metrics, and vital statistics.</td>
+                            <td><strong style="color: #00ff80;">High Readability</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sans-Serif Italic</strong></td>
+                            <td>Mathematical Italic Blocks</td>
+                            <td>Quotes, book titles, and reflective asides.</td>
+                            <td><strong style="color: #60a5fa;">Moderate Tone Shift</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Bold Italic</strong></td>
+                            <td>Combined Mathematical Ranges</td>
+                            <td>Maximum emphasis on core takeaway declarations.</td>
+                            <td><strong style="color: #ff944d;">Strong Focal Weight</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Monospace</strong></td>
+                            <td>Typewriter / Code Blocks</td>
+                            <td>Sharing code snippets, metrics, or raw data tables.</td>
+                            <td><strong style="color: #e2e8f0;">Structured / Technical</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Ad Slot 2 Container -->
+            <div class="cms-ad-slot-2"></div>
+
+            <h2>Strategic Best Practices for LinkedIn Formatting</h2>
+            <p>
+                While styled text is a powerful tool for engagement, overuse can degrade readability and look unprofessional. Top creators follow strict structural rules to maximize content performance:
+            </p>
+            <ul>
+                <li><strong>Front-Load Your Hook:</strong> LinkedIn truncates posts after roughly 210 characters with a “...see more” button. Use bold text on your opening line to present a provocative question or surprising metric that compels readers to click.</li>
+                <li><strong>Reserve Bold for Key Data Points:</strong> Avoid bolding entire paragraphs. Highlight only the 2 or 3 critical phrases or numbers that summarize your thesis so skimmers can grasp your core message instantly.</li>
+                <li><strong>Understand SEO Trade-offs:</strong> Text transformed into Unicode math symbols is not indexed by LinkedIn's internal search algorithm. Keep core industry keywords and professional titles in plain text for optimal profile discoverability.</li>
+            </ul>
+
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-block">
+                <details class="faq-accordion" open>
+                    <summary class="faq-summary">How do you make text bold or italic on LinkedIn posts?</summary>
+                    <div class="faq-answer">
+                        LinkedIn does not have native formatting buttons in its standard post editor. To make text bold or italic, type or paste your draft into our Unicode text generator, choose your preferred style, and copy the instantly transformed output to paste directly into your LinkedIn post, comment, or profile bio.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">How does Unicode text formatting work on LinkedIn?</summary>
+                    <div class="faq-answer">
+                        Unicode text generators map standard alphabet letters to mathematical alphanumeric symbols (such as Sans-Serif Bold or Italic blocks). Because these symbols are recognized as standard text characters rather than HTML tags or images, they survive copy-and-paste and display correctly across desktop and mobile LinkedIn feeds.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">Does formatted Unicode text affect LinkedIn SEO or searchability?</summary>
+                    <div class="faq-answer">
+                        Yes. Because Unicode styled characters use specialized code blocks rather than standard ASCII letters, words formatted in bold or italics are not indexed by LinkedIn's standard internal search engine. It is recommended to use formatting selectively for hooks and section headers while keeping core keywords in plain text.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">Will my formatted text display correctly on all devices?</summary>
+                    <div class="faq-answer">
+                        The vast majority of modern iOS, Android, Windows, and macOS devices support standard mathematical Unicode blocks. However, older operating systems or specific screen readers may interpret these characters character-by-character rather than as normal readable words.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">What are the best practices for formatting LinkedIn posts?</summary>
+                    <div class="faq-answer">
+                        Use bold text sparingly for your opening hook or key metrics (such as data points and statistics) to grab attention before the 'see more' truncation cutoff. Use italics for quotes, book titles, or reflective asides to create visual depth without visual clutter.
+                    </div>
+                </details>
+            </div>
+        </div>
+    </article>
+
+    <!-- Footer Container -->
+    <div id="global-footer"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var sourceText = document.getElementById('sourceText');
+            var charCount = document.getElementById('charCount');
+            var clearBtn = document.getElementById('clearBtn');
+            var copyAllBtn = document.getElementById('copyAllBtn');
+
+            var outBoldSans = document.getElementById('outBoldSans');
+            var outItalicSans = document.getElementById('outItalicSans');
+            var outBoldItalic = document.getElementById('outBoldItalic');
+            var outScript = document.getElementById('outScript');
+            var outMono = document.getElementById('outMono');
+            var outStrike = document.getElementById('outStrike');
+
+            /* Setup Social Share Links */
+            var currentUrl = encodeURIComponent(window.location.href);
+            var shareTitle = encodeURIComponent("Check out this free Unicode LinkedIn Bold & Italic Text Formatting Generator!");
+            
+            document.getElementById('shareX').href = 'https://twitter.com/intent/tweet?url=' + currentUrl + '&text=' + shareTitle;
+            document.getElementById('shareFB').href = 'https://www.facebook.com/sharer/sharer.php?u=' + currentUrl;
+            document.getElementById('shareWA').href = 'https://api.whatsapp.com/send?text=' + shareTitle + '%20' + currentUrl;
+            document.getElementById('shareLI').href = 'https://www.linkedin.com/sharing/share-offsite/?url=' + currentUrl;
+            document.getElementById('sharePIN').href = 'https://pinterest.com/pin/create/button/?url=' + currentUrl + '&description=' + shareTitle;
+
+            var copyShareLink = document.getElementById('copyShareLink');
+            copyShareLink.addEventListener('click', function() {
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'LinkedIn Text Formatter',
+                        text: 'Instantly format text for LinkedIn posts.',
+                        url: window.location.href
+                    }).catch(function() {});
+                } else if (navigator.clipboard) {
+                    navigator.clipboard.writeText(window.location.href).then(function() {
+                        var orig = copyShareLink.textContent;
+                        copyShareLink.textContent = '✓ Link Copied!';
+                        setTimeout(function() { copyShareLink.textContent = orig; }, 2000);
+                    });
+                }
+            });
+
+            /* Unicode Mapping Maps */
+            function mapText(text, variant) {
+                var ranges = {
+                    boldSans: { lower: 0x1d5ba, upper: 0x1d5a0, digit: 0x1d7ec },
+                    italicSans: { lower: 0x1d622, upper: 0x1d608, digit: null },
+                    boldItalic: { lower: 0x1d68a, upper: 0x1d670, digit: null },
+                    script: { lower: 0x1d4ea, upper: 0x1d4d0, digit: null },
+                    mono: { lower: 0x1d656, upper: 0x1d63c, digit: 0x1d7f6 }
+                };
+
+                var cfg = ranges[variant];
+                if (!cfg) return text;
+
+                var result = '';
+                for (var i = 0; i < text.length; i++) {
+                    var code = text.charCodeAt(i);
+                    var charStr = text.charAt(i);
+
+                    // A-Z
+                    if (code >= 65 && code <= 90) {
+                        result += String.fromCodePoint(cfg.upper + (code - 65));
+                    }
+                    // a-z
+                    else if (code >= 97 && code <= 122) {
+                        result += String.fromCodePoint(cfg.lower + (code - 97));
+                    }
+                    // 0-9
+                    else if (code >= 48 && code <= 57 && cfg.digit !== null) {
+                        result += String.fromCodePoint(cfg.digit + (code - 48));
+                    } else {
+                        result += charStr;
+                    }
+                }
+                return result;
+            }
+
+            function applyStrikethrough(text) {
+                var result = '';
+                for (var i = 0; i < text.length; i++) {
+                    result += text.charAt(i) + '\u0336';
+                }
+                return result;
+            }
+
+            function updateOutputs() {
+                var val = sourceText.value;
+                charCount.textContent = val.length + ' characters';
+
+                outBoldSans.textContent = mapText(val, 'boldSans');
+                outItalicSans.textContent = mapText(val, 'italicSans');
+                outBoldItalic.textContent = mapText(val, 'boldItalic');
+                outScript.textContent = mapText(val, 'script');
+                outMono.textContent = mapText(val, 'mono');
+                outStrike.textContent = applyStrikethrough(val);
+
+                try {
+                    localStorage.setItem('cms_linkedin_draft', val);
+                } catch(e) {}
+            }
+
+            // Restore from localStorage if available
+            try {
+                var saved = localStorage.getItem('cms_linkedin_draft');
+                if (saved !== null) {
+                    sourceText.value = saved;
+                }
+            } catch(e) {}
+
+            sourceText.addEventListener('input', updateOutputs);
+            updateOutputs();
+
+            clearBtn.addEventListener('click', function() {
+                sourceText.value = '';
+                updateOutputs();
+                sourceText.focus();
+            });
+
+            // Toolbar symbol buttons insertion
+            var toolBtns = document.querySelectorAll('.btn-tool');
+            for (var i = 0; i < toolBtns.length; i++) {
+                toolBtns[i].addEventListener('click', function() {
+                    var symbol = this.getAttribute('data-insert');
+                    var start = sourceText.selectionStart;
+                    var end = sourceText.selectionEnd;
+                    var val = sourceText.value;
+                    sourceText.value = val.substring(0, start) + symbol + val.substring(end);
+                    sourceText.selectionStart = sourceText.selectionEnd = start + symbol.length;
+                    sourceText.focus();
+                    updateOutputs();
+                });
+            }
+
+            // Copy individual box handlers
+            var copyBtns = document.querySelectorAll('.btn-copy-sm');
+            for (var j = 0; j < copyBtns.length; j++) {
+                copyBtns[j].addEventListener('click', function() {
+                    var targetId = this.getAttribute('data-target');
+                    var targetBox = document.getElementById(targetId);
+                    if (targetBox && navigator.clipboard) {
+                        navigator.clipboard.writeText(targetBox.textContent).then(function() {
+                            var orig = this.textContent;
+                            this.textContent = '✓ Copied!';
+                            var btnRef = this;
+                            setTimeout(function() { btnRef.textContent = orig; }, 1800);
+                        }.bind(this));
+                    }
+                });
+            }
+
+            copyAllBtn.addEventListener('click', function() {
+                var combined = "B O L D :\n" + outBoldSans.textContent + "\n\nI T A L I C :\n" + outItalicSans.textContent + "\n\nS C R I P T :\n" + outScript.textContent;
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(combined).then(function() {
+                        var orig = copyAllBtn.textContent;
+                        copyAllBtn.textContent = '✓ All Variations Copied to Clipboard!';
+                        setTimeout(function() { copyAllBtn.textContent = orig; }, 2000);
+                    });
+                }
+            });
+        });
+    </script>
+
+    <!-- Global CoreMetricSuite Cross-Linking Index Hub -->
+    <div style="margin-top: 40px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #f8fafc; font-family: system-ui, -apple-system, sans-serif;">
+        <h3 style="margin: 0 0 15px 0; font-size: 18px; color: #0f172a; font-weight: 600;">🛠️ CoreMetricSuite Utility Directory</h3>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇦🇺 Australia Tax &amp; Labor</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a href="../au-cents-per-km-estimator/" style="color: #2563eb; text-decoration: underline;">Cents-Per-Km Tax Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a href="../au-schads-vehicle-allowance/" style="color: #2563eb; text-decoration: underline;">SCHADS Vehicle Allowance</a></li>
+                    <li style="margin-bottom: 4px;"><a href="../au-superannuation-charge-tracker/" style="color: #2563eb; text-decoration: underline;">Superannuation Tracker</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇺🇸 US Corporate Tax</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a href="../us-llc-late-penalty-estimator/" style="color: #2563eb; text-decoration: underline;">LLC Late Tax Penalty</a></li>
+                    <li style="margin-bottom: 4px;"><a href="../us-section-179-truck-calculator/" style="color: #2563eb; text-decoration: underline;">Section 179 Vehicle Deduction</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇬🇧 UK Property Management</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a href="../uk-form-4a-rent-tracker/" style="color: #2563eb; text-decoration: underline;">Form 4A Rent Tracker</a></li>
+                    <li style="margin-bottom: 4px;"><a href="../uk-sdlt-bracket-estimator/" style="color: #2563eb; text-decoration: underline;">Stamp Duty Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a href="../uk-section-8-calculator/" style="color: #2563eb; text-decoration: underline;">Section 8 Calculator</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🎬 Digital Media Layouts</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a href="../instagram-reels-preview/" style="color: #2563eb; text-decoration: underline;">Instagram Reels Grid</a></li>
+                    <li style="margin-bottom: 4px;"><a href="../facebook-ad-safe-zone/" style="color: #2563eb; text-decoration: underline;">Facebook 9:16 Ad Mask</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-current-tool" href="./" style="color: #0f172a; font-weight: 600; text-decoration: none;">LinkedIn Text Formatter (Current)</a></li>
+                    <li style="margin-bottom: 4px;"><a href="../tiktok-ad-safe-zone/" style="color: #2563eb; text-decoration: underline;">TikTok Ad Checker</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
