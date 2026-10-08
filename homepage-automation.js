@@ -32,7 +32,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 'au': ['AU TAX', 'AU LABOUR'],
                 'us': ['US TAX'],
                 'uk': ['UK TAX', 'UK LEGAL'],
-                'global': ['MEDIA & UI', 'MEDIA', 'DEVELOPER', 'ECOM']
+                'global': ['MEDIA & UI', 'MEDIA', 'DEVELOPER', 'ECOM'],
+                'developer': ['DEVELOPER']
             };
             
             const targetTags = filterMap[currentFilter] || [];
