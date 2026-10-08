@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stan Store vs. Shopify Transaction Cut Calculator (2026 Pricing)</title>
+    <meta name="description" content="Calculate exactly how much you'll pay in subscription and transaction fees on Stan Store versus Shopify. Compare 2026 pricing, payment gateways, and net take-home pay.">
+    <meta name="keywords" content="stan store vs shopify, stan store pricing 2026, shopify transaction fees, stan store transaction cut calculator, shopify pricing calculator, creator store fees">
+    <link rel="canonical" href="https://coremetricsuite.com/stan-store-vs-shopify-calculator/">
+
+    <!-- Open Graph / Social Metadata -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Stan Store vs. Shopify Transaction Cut Calculator">
+    <meta property="og:description" content="Compare the true cost of selling digital products. Calculate Stan Store's 0% platform fee vs Shopify's sliding scale transaction rates.">
+    <meta property="og:url" content="https://coremetricsuite.com/stan-store-vs-shopify-calculator/">
+    
+    <!-- Global Framework Dependencies -->
+    <link rel="stylesheet" href="/css/global.css">
+    <script src="/config.js" defer></script>
+    <script src="/global.min.js" defer></script>
+
+    <!-- FAQ JSON-LD Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Does Stan Store charge a transaction fee?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No, Stan Store charges a 0% platform transaction fee on both its $29 Creator and $99 Creator Pro plans. However, you are still responsible for standard payment processing fees (typically 2.9% + 30¢ via Stripe or PayPal) which apply to all eCommerce platforms."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What are Shopify's transaction fees in 2026?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "If you use Shopify Payments, online credit card rates are 2.9% + 30¢ on Basic ($39/mo), 2.7% + 30¢ on Grow ($105/mo), and 2.5% + 30¢ on Advanced ($399/mo). If you use a third-party gateway instead of Shopify Payments, Shopify adds a penalty fee of 2.0% (Basic), 1.0% (Grow), or 0.6% (Advanced)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Stan Store cheaper than Shopify?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For new creators, Stan Store's Creator plan ($29/month) is generally cheaper than Shopify Basic ($39/month). Both charge an effective 2.9% + 30¢ for standard card processing. Stan Store becomes much more cost-effective if you rely on a third-party payment processor, as Shopify heavily penalizes external gateways."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the third-party gateway penalty on Shopify?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "If you process payments through a gateway other than Shopify Payments (such as a standalone Stripe account or Authorize.net), Shopify adds an extra transaction fee on top of your gateway's processing rate. This penalty is 2% on the Basic plan, 1% on the Grow plan, and 0.6% on the Advanced plan."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "When should I upgrade my Shopify plan to save on transaction fees?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The break-even point to upgrade from Shopify Basic to Shopify Grow based purely on payment processing math is roughly $33,000 per month in revenue. At that volume, the 0.2% drop in transaction fees (from 2.9% to 2.7%) covers the $66 increase in the monthly subscription cost."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-main: #0f1117;
+            --bg-card: #181b24;
+            --bg-input: #222634;
+            --border-color: #2e3446;
+            --accent-blue: #1877f2;
+            --accent-cyan: #00f2fe;
+            --accent-green: #10b981;
+            --accent-purple: #8b5cf6;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: var(--bg-main); color: var(--text-primary); font-family: var(--font-sans); line-height: 1.6; }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 380px 1fr;
+            grid-template-areas: "panel preview";
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .panel {
+            grid-area: panel;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            position: sticky;
+            top: 2rem;
+        }
+
+        .panel-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            background: var(--accent-purple);
+            color: #fff;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        .form-group { margin-bottom: 1.25rem; }
+        label { display: block; font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 0.4rem; }
+        
+        .input-wrapper { position: relative; }
+        .input-prefix {
+            position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+            color: var(--text-secondary); font-weight: 600;
+        }
+        
+        input[type="number"], select {
+            width: 100%; padding: 0.65rem 0.85rem; background-color: var(--bg-input);
+            border: 1px solid var(--border-color); border-radius: 6px; color: #fff;
+            font-size: 0.95rem; outline: none; font-family: inherit; transition: border-color 0.2s;
+        }
+        input.has-prefix { padding-left: 1.8rem; }
+        input[type="number"]:focus, select:focus { border-color: var(--accent-purple); }
+
+        .range-wrap { margin-top: 0.5rem; }
+        input[type="range"] {
+            width: 100%; cursor: pointer; accent-color: var(--accent-purple);
+        }
+
+        .preview-stage { grid-area: preview; display: flex; flex-direction: column; gap: 1.5rem; }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .result-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .result-card.stan-card { border-top: 4px solid var(--accent-purple); }
+        .result-card.shopify-card { border-top: 4px solid var(--accent-green); }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        .card-title { font-size: 1.25rem; font-weight: 700; color: #fff; }
+        .plan-badge { font-size: 0.8rem; padding: 4px 8px; border-radius: 4px; background: rgba(255,255,255,0.1); }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .stat-row:last-of-type { border-bottom: none; }
+        
+        .stat-label { font-size: 0.9rem; color: var(--text-secondary); }
+        .stat-value { font-size: 1.05rem; font-weight: 600; color: #fff; }
+        
+        .net-takehome {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: var(--bg-input);
+            border-radius: 8px;
+            text-align: center;
+        }
+        .net-label { font-size: 0.85rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; }
+        .net-amount { font-size: 2rem; font-weight: 800; color: #fff; margin-top: 0.25rem; }
+        .stan-card .net-amount { color: #a78bfa; }
+        .shopify-card .net-amount { color: #34d399; }
+
+        .tier-selector {
+            display: flex;
+            background: var(--bg-input);
+            border-radius: 6px;
+            padding: 4px;
+            margin-bottom: 1.5rem;
+        }
+        .tier-btn {
+            flex: 1; text-align: center; padding: 0.5rem; font-size: 0.85rem; font-weight: 600;
+            color: var(--text-secondary); cursor: pointer; border-radius: 4px; transition: 0.2s;
+        }
+        .tier-btn.active.stan-tier { background: var(--accent-purple); color: #fff; }
+        .tier-btn.active.shop-tier { background: var(--accent-green); color: #fff; }
+
+        /* Social Share */
+        .social-share-container { margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); }
+        .share-buttons-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; margin-top: 0.75rem; }
+        .btn-share { padding: 0.6rem; font-size: 0.8rem; font-weight: 600; color: #fff; border: none; border-radius: 6px; cursor: pointer; text-align: center; text-decoration: none; }
+        .btn-share-x { background-color: #000; border: 1px solid #333; }
+        .btn-share-li { background-color: #0a66c2; }
+        .btn-share-copy { background-color: #374151; grid-column: span 2; }
+
+        .content-area { max-width: 1200px; margin: 3rem auto; padding: 0 1.5rem; }
+        .content-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 2.5rem; }
+        .content-card h1 { font-size: 2.2rem; margin-bottom: 1.2rem; color: #fff; line-height: 1.2; }
+        .content-card h2 { font-size: 1.5rem; margin: 2rem 0 1rem; color: #fff; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; }
+        .content-card p { color: var(--text-secondary); margin-bottom: 1.2rem; font-size: 1.05rem; }
+        .content-card ul, .content-card ol { color: var(--text-secondary); margin: 0 0 1.5rem 1.5rem; font-size: 1.05rem; }
+        .content-card li { margin-bottom: 0.6rem; }
+        .content-card strong { color: #fff; }
+
+        .table-responsive { width: 100%; overflow-x: auto; margin: 1.5rem 0; }
+        .spec-table { width: 100%; border-collapse: collapse; text-align: left; min-width: 600px; }
+        .spec-table th, .spec-table td { padding: 1rem; border: 1px solid var(--border-color); }
+        .spec-table th { background-color: var(--bg-input); color: #fff; font-size: 0.95rem; }
+        .spec-table td { color: var(--text-secondary); font-size: 0.9rem; }
+
+        .faq-block { margin-top: 2rem; border-top: 1px solid var(--border-color); padding-top: 1rem; }
+        .faq-accordion { background-color: var(--bg-input); border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 0.85rem; overflow: hidden; }
+        .faq-accordion[open] { border-color: var(--accent-purple); }
+        .faq-summary { font-size: 1rem; font-weight: 600; color: #fff; padding: 1rem 1.2rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; list-style: none; }
+        .faq-summary::-webkit-details-marker { display: none; }
+        .faq-summary::after { content: "+"; font-size: 1.2rem; color: var(--accent-purple); }
+        .faq-accordion[open] .faq-summary::after { content: "−"; }
+        .faq-answer { padding: 0 1.2rem 1.2rem; color: var(--text-secondary); font-size: 0.95rem; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 0.4rem; padding-top: 0.8rem; }
+
+        .cms-ad-slot-1, .cms-ad-slot-2 { width: 100%; max-width: 970px; min-height: 90px; margin: 1.5rem auto; background: rgba(255,255,255,0.02); border-radius: 8px; display: block; }
+
+        @media screen and (max-width: 900px) {
+            .container { grid-template-columns: 1fr; grid-template-areas: "panel" "preview"; }
+            .results-grid { grid-template-columns: 1fr; }
+            .panel { position: static; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="global-header"></div>
+    <div class="cms-ad-slot-1" id="cms-ad-slot-top"></div>
+
+    <main class="container">
+        <!-- Control Panel -->
+        <aside class="panel">
+            <div class="panel-title">
+                <span>Business Metrics</span>
+                <span class="badge">LIVE CALC</span>
+            </div>
+
+            <div class="form-group">
+                <label for="monthlyRevenue">Monthly Gross Revenue</label>
+                <div class="input-wrapper">
+                    <span class="input-prefix">$</span>
+                    <input type="number" id="monthlyRevenue" class="has-prefix" value="5000" min="0" step="100">
+                </div>
+                <div class="range-wrap">
+                    <input type="range" id="revSlider" min="0" max="100000" step="500" value="5000">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="avgOrderValue">Average Order Value (AOV)</label>
+                <div class="input-wrapper">
+                    <span class="input-prefix">$</span>
+                    <input type="number" id="avgOrderValue" class="has-prefix" value="50" min="1" step="1">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="paymentGateway">Payment Processing Setup</label>
+                <select id="paymentGateway">
+                    <option value="shopify_payments">Native (Shopify Payments / Stripe for Stan)</option>
+                    <option value="third_party">Third-Party Gateway (Applies Shopify Penalty)</option>
+                </select>
+                <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.4rem; line-height: 1.4;">
+                    Using gateways outside of Shopify Payments incurs an additional 0.6% - 2.0% Shopify penalty fee.
+                </p>
+            </div>
+
+            <div class="social-share-container">
+                <label style="text-align:center; display:block; text-transform:uppercase; letter-spacing:0.05em;">Share Tool</label>
+                <div class="share-buttons-grid">
+                    <a id="shareX" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-x">𝕏 Post</a>
+                    <a id="shareLI" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-li">LinkedIn</a>
+                    <button id="copyShareLink" type="button" class="btn-share btn-share-copy">🔗 Copy Link</button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Preview Stage / Results -->
+        <section class="preview-stage">
+            <div class="results-grid">
+                
+                <!-- Stan Store Card -->
+                <div class="result-card stan-card">
+                    <div class="card-header">
+                        <div class="card-title">Stan Store</div>
+                    </div>
+                    
+                    <div class="tier-selector">
+                        <div class="tier-btn stan-tier active" data-plan="creator">Creator</div>
+                        <div class="tier-btn stan-tier" data-plan="pro">Creator Pro</div>
+                    </div>
+
+                    <div class="stat-row">
+                        <span class="stat-label">Monthly Subscription</span>
+                        <span class="stat-value" id="stanSubCost">$29.00</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Platform Transaction Fee</span>
+                        <span class="stat-value">0%</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Stripe Processing Fees</span>
+                        <span class="stat-value" id="stanProcessingCost">$0.00</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Total Fees Paid</span>
+                        <span class="stat-value" id="stanTotalFees" style="color: #ef4444;">$0.00</span>
+                    </div>
+
+                    <div class="net-takehome">
+                        <div class="net-label">Your Net Take-Home</div>
+                        <div class="net-amount" id="stanTakeHome">$0.00</div>
+                    </div>
+                </div>
+
+                <!-- Shopify Card -->
+                <div class="result-card shopify-card">
+                    <div class="card-header">
+                        <div class="card-title">Shopify</div>
+                    </div>
+
+                    <div class="tier-selector">
+                        <div class="tier-btn shop-tier active" data-plan="basic">Basic</div>
+                        <div class="tier-btn shop-tier" data-plan="grow">Grow</div>
+                        <div class="tier-btn shop-tier" data-plan="advanced">Advanced</div>
+                    </div>
+
+                    <div class="stat-row">
+                        <span class="stat-label">Monthly Subscription</span>
+                        <span class="stat-value" id="shopSubCost">$39.00</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Platform Penalty Fee</span>
+                        <span class="stat-value" id="shopPenaltyLabel">0%</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Processing Fees</span>
+                        <span class="stat-value" id="shopProcessingCost">$0.00</span>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">Total Fees Paid</span>
+                        <span class="stat-value" id="shopTotalFees" style="color: #ef4444;">$0.00</span>
+                    </div>
+
+                    <div class="net-takehome">
+                        <div class="net-label">Your Net Take-Home</div>
+                        <div class="net-amount" id="shopTakeHome">$0.00</div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Content SEO Section -->
+    <article class="content-area">
+        <div class="content-card">
+            <h1>Stan Store vs. Shopify Transaction Cut &amp; Fee Calculator (2026 Updated)</h1>
+            <p>
+                When building a creator business, choosing the right eCommerce platform is critical to protecting your profit margins. While both Stan Store and Shopify provide excellent tools to sell digital products, courses, and memberships, their pricing structures and transaction fee models are radically different.
+            </p>
+            <p>
+                As of 2026, many creators are surprised to discover the hidden costs of third-party payment gateways, platform penalty percentages, and volume break-even points. This calculator breaks down the exact math so you can see your true net take-home pay based on your actual monthly revenue and average order value.
+            </p>
+
+            <h2>Understanding Stan Store Pricing &amp; 0% Transaction Fees</h2>
+            <p>
+                Stan Store has built a reputation for straightforward, transparent pricing. In 2026, the platform offers two primary tiers:
+            </p>
+            <ul>
+                <li><strong>Creator Plan ($29/month):</strong> Includes the core storefront, digital downloads, bookings, and basic lead capture.</li>
+                <li><strong>Creator Pro Plan ($99/month):</strong> Unlocks advanced marketing funnels, upsells, order bumps, affiliate management, and pixel tracking.</li>
+            </ul>
+            <p>
+                The biggest advantage of Stan Store is that it charges a <strong>0% platform transaction fee</strong>. However, "0% transaction fees" does not mean entirely free processing. You are still required to pay the standard credit card processing rates charged by Stripe or PayPal (typically 2.9% + 30¢ for standard US cards). Stan Store simply doesn't take an extra cut of your sales on top of what the payment processor requires.
+            </p>
+
+            <h2>Shopify Processing Rates &amp; The Third-Party Gateway Penalty</h2>
+            <p>
+                Shopify's pricing model is built around its native payment gateway, <strong>Shopify Payments</strong>. As of 2026, the standard monthly plans and their associated online credit card processing rates are:
+            </p>
+            <ul>
+                <li><strong>Basic Shopify ($39/month):</strong> 2.9% + 30¢ online rate.</li>
+                <li><strong>Shopify Grow ($105/month):</strong> 2.7% + 30¢ online rate.</li>
+                <li><strong>Advanced Shopify ($399/month):</strong> 2.5% + 30¢ online rate.</li>
+            </ul>
+            <p>
+                If you use Shopify Payments exclusively, Shopify does not charge any additional sales commission. However, if you choose to connect a third-party gateway (like an external Stripe account, Authorize.net, or independent high-risk processor), Shopify imposes a hefty <strong>third-party transaction fee penalty</strong>. This penalty is 2.0% on the Basic plan, 1.0% on Grow, and 0.6% on Advanced. This makes Stan Store significantly cheaper if you are forced to use an external processor.
+            </p>
+
+            <div class="table-responsive">
+                <table class="spec-table">
+                    <thead>
+                        <tr>
+                            <th>Platform &amp; Plan</th>
+                            <th>Monthly Subscription</th>
+                            <th>Native Processing Rate</th>
+                            <th>Third-Party Penalty Fee</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Stan Store (Creator)</td>
+                            <td>$29.00</td>
+                            <td>2.9% + 30¢ (Stripe)</td>
+                            <td>0%</td>
+                        </tr>
+                        <tr>
+                            <td>Stan Store (Creator Pro)</td>
+                            <td>$99.00</td>
+                            <td>2.9% + 30¢ (Stripe)</td>
+                            <td>0%</td>
+                        </tr>
+                        <tr>
+                            <td>Shopify Basic</td>
+                            <td>$39.00</td>
+                            <td>2.9% + 30¢</td>
+                            <td>+ 2.0%</td>
+                        </tr>
+                        <tr>
+                            <td>Shopify Grow</td>
+                            <td>$105.00</td>
+                            <td>2.7% + 30¢</td>
+                            <td>+ 1.0%</td>
+                        </tr>
+                        <tr>
+                            <td>Shopify Advanced</td>
+                            <td>$399.00</td>
+                            <td>2.5% + 30¢</td>
+                            <td>+ 0.6%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Ad Slot 2 -->
+            <div class="cms-ad-slot-2"></div>
+
+            <h2>Break-Even Math: When to Upgrade Your Shopify Plan</h2>
+            <p>
+                As your store scales, upgrading your Shopify plan can mathematically pay for itself through lower processing rates. For example, moving from Basic (2.9%) to Grow (2.7%) saves you 0.2% on every transaction. Because the Grow plan costs $66 more per month ($105 vs $39), the break-even volume on processing alone is roughly $33,000 per month. If you sell more than $33,000 monthly, the Grow plan is mathematically cheaper than Basic. 
+            </p>
+
+            <h2>Stan Store Creator vs. Shopify Basic: Which is Better for You?</h2>
+            <p>
+                If you are a solo creator selling digital downloads, coaching, and courses primarily via a link-in-bio on Instagram or TikTok, <strong>Stan Store</strong> is often the superior choice. Its $29 entry point is lower than Shopify's $39 Basic plan, and its mobile-first checkout converts exceptionally well for social traffic.
+            </p>
+            <p>
+                Conversely, if you are building a massive catalog of physical products, require advanced inventory tracking, complex shipping logistics, and multi-channel fulfillment, <strong>Shopify</strong> remains the industry standard. While slightly more expensive at baseline, its App ecosystem and physical product management capabilities are unmatched.
+            </p>
+
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-block">
+                <details class="faq-accordion" open>
+                    <summary class="faq-summary">Does Stan Store charge a transaction fee?</summary>
+                    <div class="faq-answer">
+                        No, Stan Store charges a 0% platform transaction fee on both its $29 Creator and $99 Creator Pro plans. However, you are still responsible for standard payment processing fees (typically 2.9% + 30¢ via Stripe or PayPal) which apply to all eCommerce platforms.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">What are Shopify's transaction fees in 2026?</summary>
+                    <div class="faq-answer">
+                        If you use Shopify Payments, online credit card rates are 2.9% + 30¢ on Basic ($39/mo), 2.7% + 30¢ on Grow ($105/mo), and 2.5% + 30¢ on Advanced ($399/mo). If you use a third-party gateway instead of Shopify Payments, Shopify adds a penalty fee of 2.0% (Basic), 1.0% (Grow), or 0.6% (Advanced).
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">Is Stan Store cheaper than Shopify?</summary>
+                    <div class="faq-answer">
+                        For new creators, Stan Store's Creator plan ($29/month) is generally cheaper than Shopify Basic ($39/month). Both charge an effective 2.9% + 30¢ for standard card processing via native solutions. Stan Store becomes much more cost-effective if you rely on a third-party payment processor, as Shopify heavily penalizes external gateways.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">What is the third-party gateway penalty on Shopify?</summary>
+                    <div class="faq-answer">
+                        If you process payments through a gateway other than Shopify Payments (such as a standalone Stripe account or Authorize.net), Shopify adds an extra transaction fee on top of your gateway's processing rate. This penalty is 2% on the Basic plan, 1% on the Grow plan, and 0.6% on the Advanced plan.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">When should I upgrade my Shopify plan to save on transaction fees?</summary>
+                    <div class="faq-answer">
+                        The break-even point to upgrade from Shopify Basic to Shopify Grow based purely on payment processing math is roughly $33,000 per month in revenue. At that volume, the 0.2% drop in transaction fees (from 2.9% to 2.7%) covers the $66 increase in the monthly subscription cost.
+                    </div>
+                </details>
+            </div>
+        </div>
+    </article>
+
+    <div id="global-footer"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inputs
+            const revInput = document.getElementById('monthlyRevenue');
+            const revSlider = document.getElementById('revSlider');
+            const aovInput = document.getElementById('avgOrderValue');
+            const gatewaySelect = document.getElementById('paymentGateway');
+            
+            // Plan Selectors
+            const stanBtns = document.querySelectorAll('.stan-tier');
+            const shopBtns = document.querySelectorAll('.shop-tier');
+            
+            // State
+            let activeStanPlan = 'creator'; // 'creator' or 'pro'
+            let activeShopPlan = 'basic'; // 'basic', 'grow', 'advanced'
+            
+            // Stan Output Targets
+            const stanSubCostEl = document.getElementById('stanSubCost');
+            const stanProcessingCostEl = document.getElementById('stanProcessingCost');
+            const stanTotalFeesEl = document.getElementById('stanTotalFees');
+            const stanTakeHomeEl = document.getElementById('stanTakeHome');
+            
+            // Shop Output Targets
+            const shopSubCostEl = document.getElementById('shopSubCost');
+            const shopPenaltyLabelEl = document.getElementById('shopPenaltyLabel');
+            const shopProcessingCostEl = document.getElementById('shopProcessingCost');
+            const shopTotalFeesEl = document.getElementById('shopTotalFees');
+            const shopTakeHomeEl = document.getElementById('shopTakeHome');
+
+            // Format Currency
+            const formatMoney = (val) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(val);
+
+            // Sync Slider & Input
+            revInput.addEventListener('input', (e) => {
+                revSlider.value = e.target.value;
+                calculate();
+            });
+            revSlider.addEventListener('input', (e) => {
+                revInput.value = e.target.value;
+                calculate();
+            });
+            
+            // Input Listeners
+            aovInput.addEventListener('input', calculate);
+            gatewaySelect.addEventListener('change', calculate);
+
+            // Button Toggles
+            stanBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    stanBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    activeStanPlan = btn.dataset.plan;
+                    calculate();
+                });
+            });
+
+            shopBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    shopBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    activeShopPlan = btn.dataset.plan;
+                    calculate();
+                });
+            });
+
+            function calculate() {
+                const rev = parseFloat(revInput.value) || 0;
+                let aov = parseFloat(aovInput.value) || 1;
+                if (aov <= 0) aov = 1;
+                const orders = rev / aov;
+                const isThirdParty = gatewaySelect.value === 'third_party';
+
+                // ----- STAN STORE MATH -----
+                const stanSub = activeStanPlan === 'creator' ? 29 : 99;
+                // Stan always uses Stripe 2.9% + 30c (standard baseline)
+                const stanStripeFee = (rev * 0.029) + (orders * 0.30);
+                const stanTotalFee = stanSub + stanStripeFee;
+                const stanTakeHome = rev - stanTotalFee;
+
+                stanSubCostEl.textContent = formatMoney(stanSub);
+                stanProcessingCostEl.textContent = formatMoney(stanStripeFee);
+                stanTotalFeesEl.textContent = formatMoney(stanTotalFee);
+                stanTakeHomeEl.textContent = formatMoney(stanTakeHome > 0 ? stanTakeHome : 0);
+
+                // ----- SHOPIFY MATH -----
+                let shopSub = 39;
+                let shopBaseRate = 0.029;
+                let shopPenaltyRate = 0;
+
+                if (activeShopPlan === 'basic') {
+                    shopSub = 39;
+                    shopBaseRate = 0.029;
+                    shopPenaltyRate = isThirdParty ? 0.020 : 0;
+                } else if (activeShopPlan === 'grow') {
+                    shopSub = 105;
+                    shopBaseRate = 0.027;
+                    shopPenaltyRate = isThirdParty ? 0.010 : 0;
+                } else if (activeShopPlan === 'advanced') {
+                    shopSub = 399;
+                    shopBaseRate = 0.025;
+                    shopPenaltyRate = isThirdParty ? 0.006 : 0;
+                }
+
+                // If third party, base processing is assumed 2.9% + 30c (Stripe/PayPal) PLUS Shopify's penalty
+                let activeProcessorRate = isThirdParty ? 0.029 : shopBaseRate;
+                let shopProcessorFee = (rev * activeProcessorRate) + (orders * 0.30);
+                let shopPenaltyFee = rev * shopPenaltyRate;
+                
+                let shopTotalFee = shopSub + shopProcessorFee + shopPenaltyFee;
+                let shopTakeHome = rev - shopTotalFee;
+
+                shopSubCostEl.textContent = formatMoney(shopSub);
+                shopPenaltyLabelEl.textContent = isThirdParty ? `+ ${(shopPenaltyRate * 100).toFixed(1)}% Penalty` : "0%";
+                shopProcessingCostEl.textContent = formatMoney(shopProcessorFee + shopPenaltyFee);
+                shopTotalFeesEl.textContent = formatMoney(shopTotalFee);
+                shopTakeHomeEl.textContent = formatMoney(shopTakeHome > 0 ? shopTakeHome : 0);
+            }
+
+            // Social Share
+            const currentUrl = encodeURIComponent(window.location.href);
+            const shareTitle = encodeURIComponent("Stan Store vs Shopify Calculator - See true fees & take-home pay!");
+            document.getElementById('shareX').href = 'https://twitter.com/intent/tweet?url=' + currentUrl + '&text=' + shareTitle;
+            document.getElementById('shareLI').href = 'https://www.linkedin.com/sharing/share-offsite/?url=' + currentUrl;
+            
+            const copyBtn = document.getElementById('copyShareLink');
+            copyBtn.addEventListener('click', function() {
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(window.location.href).then(function() {
+                        const origText = copyBtn.textContent;
+                        copyBtn.textContent = '✓ Copied!';
+                        setTimeout(() => copyBtn.textContent = origText, 2000);
+                    });
+                }
+            });
+
+            // Initial calc
+            calculate();
+        });
+    </script>
+</body>
+</html>
