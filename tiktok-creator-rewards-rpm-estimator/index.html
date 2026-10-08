@@ -1,0 +1,1304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TikTok Creator Rewards Program RPM Estimator &amp; Earnings Calculator (2026)</title>
+    <meta name="description" content="Calculate your TikTok Creator Rewards Program earnings, RPM rates, and qualified view payouts. Estimate payouts across finance, tech, gaming, and lifestyle niches with precision.">
+    <meta name="keywords" content="tiktok creator rewards rpm estimator, tiktok money calculator, tiktok pay per 1000 views, tiktok creator rewards payout, tiktok qualified views calculator, tiktok rpm by niche, creativity program beta calculator">
+    <link rel="canonical" href="https://coremetricsuite.com/tiktok-creator-rewards-rpm-estimator/">
+
+    <!-- Open Graph / Social Metadata -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="TikTok Creator Rewards Program RPM Estimator &amp; Earnings Calculator">
+    <meta property="og:description" content="Estimate your TikTok Creator Rewards Program payout based on video views, qualified view ratio, video length, niche RPM, and viewer region.">
+    <meta property="og:url" content="https://coremetricsuite.com/tiktok-creator-rewards-rpm-estimator/">
+    
+    <!-- Global Framework Dependencies -->
+    <link rel="stylesheet" href="/css/global.css">
+    <script src="/config.js" defer></script>
+    <script src="/global.min.js" defer></script>
+
+    <!-- FAQ JSON-LD Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How is RPM calculated in the TikTok Creator Rewards Program?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Your Creator Rewards payout is calculated using the formula: Total Earnings = (Qualified Views / 1,000) × RPM. RPM (Revenue Per Mille) represents your earnings per 1,000 qualified views and is determined by advertiser demand in your niche, viewer audience geography, video watch duration, search intent value, and originality score."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What counts as a qualified view on TikTok?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A qualified view must originate from the 'For You' feed (FYP), be watched for at least 5 seconds, come from a unique non-paid user account, and pass TikTok's anti-fraud algorithms. Furthermore, a video must reach a minimum threshold of 1,000 qualified views before it begins accumulating rewards."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why do videos under 1 minute earn $0 in Creator Rewards?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "TikTok's Creator Rewards Program explicitly requires videos to be at least 60 seconds long to qualify for revenue sharing. Short clips under one minute earn $0 from this program, regardless of view count, although creators can monetize short-form content through brand sponsorships or TikTok Shop."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which TikTok content niches have the highest RPM in 2026?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "High-value commercial niches like Personal Finance ($1.20 - $2.50+ RPM), Technology & AI ($0.90 - $1.80 RPM), Health & Wellness ($0.70 - $1.40 RPM), and Educational Documentaries ($0.60 - $1.20 RPM) yield the highest payouts due to strong advertiser competition for affluent audiences."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between TikTok Creator Fund and Creator Rewards Program?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The legacy TikTok Creator Fund (phased out in late 2023) operated on a fixed daily pool model, paying roughly $0.02 to $0.04 per 1,000 total views. The Creator Rewards Program pays dynamic RPM rates ranging from $0.40 to $2.50+ per 1,000 qualified views on videos over 1 minute, representing a 10x to 25x payout increase."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-main: #0f1117;
+            --bg-card: #181b24;
+            --bg-input: #222634;
+            --border-color: #2e3446;
+            --accent-blue: #1877f2;
+            --accent-cyan: #00f2fe;
+            --accent-pink: #ff0050;
+            --accent-green: #10b981;
+            --accent-amber: #f59e0b;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: var(--bg-main); color: var(--text-primary); font-family: var(--font-sans); line-height: 1.6; }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            grid-template-areas: 
+                "upload preview"
+                "panel preview";
+            gap: 2rem;
+        }
+
+        .upload-card-wrapper {
+            grid-area: upload;
+        }
+
+        .panel {
+            grid-area: panel;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            height: fit-content;
+        }
+
+        .panel-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            background: linear-gradient(135deg, var(--accent-pink), var(--accent-blue));
+            color: #fff;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        .drop-zone {
+            border: 2px dashed var(--border-color);
+            padding: 1.25rem;
+            text-align: center;
+            border-radius: 8px;
+            background-color: var(--bg-input);
+            cursor: pointer;
+            transition: border-color 0.2s, background-color 0.2s;
+            margin-bottom: 0.75rem;
+        }
+
+        .drop-zone:hover { border-color: var(--accent-cyan); background-color: rgba(0, 242, 254, 0.05); }
+        .drop-title { font-weight: 600; color: #fff; font-size: 0.95rem; }
+        .drop-sub { font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px; }
+
+        .preset-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .btn-demo {
+            width: 100%;
+            padding: 0.6rem 0.5rem;
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            color: var(--accent-cyan);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.78rem;
+            transition: background-color 0.2s, border-color 0.2s;
+            text-align: center;
+        }
+
+        .btn-demo:hover { background-color: #2a2f42; border-color: var(--accent-cyan); }
+
+        .toggle-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: var(--bg-input);
+            padding: 0.75rem 0.85rem;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 1rem;
+        }
+
+        .toggle-label { font-size: 0.85rem; font-weight: 500; color: var(--text-primary); }
+
+        .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #374151; transition: .3s; border-radius: 24px;
+        }
+        .slider:before {
+            position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px;
+            background-color: white; transition: .3s; border-radius: 50%;
+        }
+        input:checked + .slider { background-color: var(--accent-pink); }
+        input:checked + .slider:before { transform: translateX(20px); }
+
+        .form-group { margin-bottom: 1.25rem; }
+        .range-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem; }
+        .range-value { font-size: 0.85rem; font-weight: 700; color: var(--accent-cyan); }
+        label { display: block; font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 0.4rem; }
+        input[type="text"], input[type="number"], textarea, select {
+            width: 100%; padding: 0.65rem 0.85rem; background-color: var(--bg-input);
+            border: 1px solid var(--border-color); border-radius: 6px; color: #fff;
+            font-size: 0.9rem; outline: none; font-family: inherit;
+        }
+        input[type="range"] {
+            width: 100%; height: 6px; background: var(--bg-input); border-radius: 3px;
+            outline: none; -webkit-appearance: none; accent-color: var(--accent-pink);
+        }
+        input[type="text"]:focus, input[type="number"]:focus, textarea:focus, select:focus { border-color: var(--accent-pink); }
+
+        .btn-action {
+            width: 100%; padding: 0.85rem; background: linear-gradient(135deg, var(--accent-pink), #c0003c);
+            color: #fff; font-weight: 600; border: none; border-radius: 6px; cursor: pointer; font-size: 0.95rem;
+            box-shadow: 0 4px 12px rgba(255, 0, 80, 0.3);
+            transition: transform 0.1s, opacity 0.2s;
+            margin-bottom: 1rem;
+        }
+        .btn-action:hover { opacity: 0.95; }
+        .btn-action:active { transform: scale(0.99); }
+
+        /* Social Share Button Module */
+        .social-share-container {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        .share-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
+            display: block;
+            text-align: center;
+        }
+        .share-buttons-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+        }
+        .btn-share {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            padding: 0.5rem 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: opacity 0.2s, transform 0.1s;
+        }
+        .btn-share:hover { opacity: 0.88; }
+        .btn-share:active { transform: scale(0.97); }
+        .btn-share-x { background-color: #000000; border: 1px solid #333; }
+        .btn-share-fb { background-color: #1877f2; }
+        .btn-share-li { background-color: #0a66c2; }
+        .btn-share-wa { background-color: #25d366; color: #000; }
+        .btn-share-pin { background-color: #e60023; }
+        .btn-share-copy { background-color: #374151; color: #fff; grid-column: span 3; margin-top: 0.25rem; }
+
+        .preview-stage { 
+            grid-area: preview;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+        }
+        .canvas-wrapper {
+            position: relative; width: 320px; height: 568px; border-radius: 16px;
+            overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.6); background-color: #000;
+            border: 2px solid var(--border-color);
+        }
+        canvas { width: 100%; height: 100%; display: block; }
+        .canvas-caption { margin-top: 1rem; font-size: 0.85rem; color: var(--text-secondary); text-align: center; }
+
+        /* Metric Highlights Grid below Canvas */
+        .metric-summary-grid {
+            width: 100%;
+            max-width: 320px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+        .metric-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.85rem;
+            text-align: center;
+        }
+        .metric-card-title { font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; }
+        .metric-card-value { font-size: 1.1rem; font-weight: 700; color: #fff; }
+        .metric-card-value.highlight { color: var(--accent-green); }
+
+        .content-area { max-width: 1200px; margin: 3rem auto; padding: 0 1.5rem; }
+        .content-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 2.5rem; }
+        .content-card h1 { font-size: 2rem; margin-bottom: 1rem; color: #fff; }
+        .content-card h2 { font-size: 1.4rem; margin: 1.8rem 0 1rem; color: #fff; }
+        .content-card p { color: var(--text-secondary); margin-bottom: 1.2rem; }
+        .content-card ul, .content-card ol { color: var(--text-secondary); margin: 0 0 1.2rem 1.5rem; }
+        .content-card li { margin-bottom: 0.5rem; }
+
+        .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 1.5rem 0; }
+        .spec-table { width: 100%; border-collapse: collapse; text-align: left; min-width: 600px; }
+        .spec-table th, .spec-table td { padding: 0.85rem 1rem; border: 1px solid var(--border-color); }
+        .spec-table th { background-color: var(--bg-input); color: #fff; font-size: 0.9rem; }
+        .spec-table td { color: var(--text-secondary); font-size: 0.875rem; }
+
+        /* Accordion FAQ Styling */
+        .faq-block { margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem; }
+        .faq-accordion {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 0.85rem;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .faq-accordion[open] { border-color: var(--accent-pink); }
+        .faq-summary {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            padding: 1rem 1.2rem;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+        .faq-summary::-webkit-details-marker { display: none; }
+        .faq-summary::after {
+            content: "+";
+            font-size: 1.2rem;
+            color: var(--accent-pink);
+            transition: transform 0.2s;
+        }
+        .faq-accordion[open] .faq-summary::after {
+            content: "−";
+            color: var(--accent-pink);
+        }
+        .faq-answer {
+            padding: 0 1.2rem 1.2rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 0.4rem;
+            padding-top: 0.8rem;
+        }
+
+        .cms-ad-slot-1, .cms-ad-slot-2 {
+            width: 100%; max-width: 970px; min-height: 90px; margin: 1.5rem auto;
+            background: rgba(255,255,255,0.02); border-radius: 8px; display: block;
+        }
+
+        .alert-banner {
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            font-size: 0.825rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            display: none;
+        }
+        .alert-banner.warning {
+            background-color: rgba(245, 158, 11, 0.15);
+            border: 1px solid var(--accent-amber);
+            color: #fbbf24;
+        }
+
+        /* Mobile Responsive Overrides */
+        @media screen and (max-width: 900px) {
+            html, body { width: 100%!important; max-width: 100vw!important; overflow-x: hidden!important; margin: 0!important; padding: 0!important; }
+            main.container { display: flex!important; flex-direction: column!important; width: 100%!important; max-width: 100%!important; padding: 0 12px!important; margin: 8px auto!important; gap: 16px!important; box-sizing: border-box!important; }
+            .upload-card-wrapper { order: 1!important; width: 100%!important; }
+            main.container > section.preview-stage { order: 2!important; width: 100%!important; display: flex!important; flex-direction: column!important; align-items: center!important; margin: 0 auto!important; box-sizing: border-box!important; }
+            main.container > section.panel { order: 3!important; width: 100%!important; max-width: 100%!important; box-sizing: border-box!important; }
+            .canvas-wrapper { width: 75vw!important; height: 133.33vw!important; max-width: 290px!important; max-height: 515px!important; margin: 0 auto!important; box-sizing: border-box!important; }
+            input, textarea, select { font-size: 16px!important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Container -->
+    <div id="global-header"></div>
+
+    <!-- Ad Slot 1 Container -->
+    <div class="cms-ad-slot-1" id="cms-ad-slot-top"></div>
+
+    <!-- Main Tool Container -->
+    <main class="container">
+        <!-- Module 1: File / View Presets & Core Metric Inputs (Rendered 1st on mobile) -->
+        <div class="upload-card-wrapper">
+            <div class="panel">
+                <div class="panel-title">
+                    <span>Performance Metrics</span>
+                    <span class="badge">STEP 1</span>
+                </div>
+                
+                <div class="drop-zone" id="dropZone">
+                    <p class="drop-title">⚡ Quick Niche &amp; View Presets</p>
+                    <p class="drop-sub">Select a preset to load typical 2026 engagement metrics</p>
+                </div>
+
+                <div class="preset-grid">
+                    <button class="btn-demo" id="presetTech" type="button">🚀 Tech &amp; AI</button>
+                    <button class="btn-demo" id="presetFinance" type="button">💰 Finance</button>
+                    <button class="btn-demo" id="presetGaming" type="button">🎮 Gaming</button>
+                    <button class="btn-demo" id="presetLifestyle" type="button">📱 Lifestyle</button>
+                </div>
+
+                <div class="form-group">
+                    <div class="range-header">
+                        <label for="totalViews">Total Monthly Video Views</label>
+                        <span class="range-value" id="totalViewsDisplay">500,000</span>
+                    </div>
+                    <input type="range" id="totalViewsRange" min="10000" max="10000000" step="10000" value="500000">
+                    <input type="number" id="totalViews" value="500000" min="1000" style="margin-top: 6px;">
+                </div>
+
+                <div class="form-group">
+                    <div class="range-header">
+                        <label for="qualifiedPercent">Qualified Views Share (%)</label>
+                        <span class="range-value" id="qualifiedPercentDisplay">55%</span>
+                    </div>
+                    <input type="range" id="qualifiedPercent" min="10" max="100" step="1" value="55">
+                </div>
+
+                <div class="form-group">
+                    <label for="videoDuration">Video Length Category</label>
+                    <select id="videoDuration">
+                        <option value="under1">&lt; 1 Minute (0s - 59s) [Ineligible - $0 RPM]</option>
+                        <option value="1to3" selected>1 – 3 Minutes [Standard Reward Eligible]</option>
+                        <option value="3to5">3 – 5 Minutes [High Watch Time Bonus]</option>
+                        <option value="5to10">5 – 10+ Minutes [Max Retention Multiplier]</option>
+                    </select>
+                </div>
+
+                <div class="alert-banner warning" id="ineligibleAlert">
+                    ⚠️ Videos under 60 seconds earn $0 in TikTok Creator Rewards. Only videos ≥ 1 minute qualify.
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 2: Live Canvas Stage & Metrics Display (Rendered 2nd on mobile) -->
+        <section class="preview-stage">
+            <div class="canvas-wrapper">
+                <canvas id="previewCanvas" width="1080" height="1920"></canvas>
+            </div>
+            <p class="canvas-caption">
+                Interactive TikTok Creator Studio Dashboard Simulator. Rendered live based on 2026 payout metrics.
+            </p>
+
+            <div class="metric-summary-grid">
+                <div class="metric-card">
+                    <div class="metric-card-title">Est. Monthly Earnings</div>
+                    <div class="metric-card-value highlight" id="cardMonthlyEst">$210 - $495</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-card-title">Effective RPM</div>
+                    <div class="metric-card-value" id="cardRpmEst">$0.76 - $1.80</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-card-title">Qualified Views</div>
+                    <div class="metric-card-value" id="cardQualifiedViews">275,000</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-card-title">Annual Projection</div>
+                    <div class="metric-card-value highlight" id="cardAnnualEst">$4,230</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Module 3: Tool Controls & RPM Multipliers Panel (Rendered 3rd on mobile) -->
+        <section class="panel">
+            <div class="panel-title">
+                <span>Niche &amp; Audience Modifiers</span>
+                <span class="badge">2026 RPM SPECS</span>
+            </div>
+
+            <div class="form-group">
+                <label for="nicheSelect">Content Category / Niche</label>
+                <select id="nicheSelect">
+                    <option value="finance" data-low="1.20" data-high="2.50">Finance, Wealth &amp; Business ($1.20 - $2.50)</option>
+                    <option value="tech" data-low="0.90" data-high="1.80" selected>Tech, AI &amp; Software ($0.90 - $1.80)</option>
+                    <option value="health" data-low="0.70" data-high="1.40">Health, Fitness &amp; Medicine ($0.70 - $1.40)</option>
+                    <option value="education" data-low="0.60" data-high="1.20">History, Science &amp; Explainers ($0.60 - $1.20)</option>
+                    <option value="crime" data-low="0.50" data-high="1.10">True Crime &amp; Narrative Stories ($0.50 - $1.10)</option>
+                    <option value="psychology" data-low="0.50" data-high="1.00">Psychology &amp; Self-Improvement ($0.50 - $1.00)</option>
+                    <option value="lifestyle" data-low="0.40" data-high="0.85">Beauty, Travel &amp; Vlogs ($0.40 - $0.85)</option>
+                    <option value="gaming" data-low="0.25" data-high="0.60">Gaming, Anime &amp; Pop Culture ($0.25 - $0.60)</option>
+                    <option value="entertainment" data-low="0.15" data-high="0.45">Comedy, Memes &amp; Skits ($0.15 - $0.45)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="regionSelect">Audience Region Demographics</label>
+                <select id="regionSelect">
+                    <option value="1.15" selected>Tier 1: United States &amp; Canada (1.15x)</option>
+                    <option value="1.00">Tier 2: UK, Germany, France, Australia (1.00x)</option>
+                    <option value="0.85">Tier 3: Japan, South Korea (0.85x)</option>
+                    <option value="0.45">Tier 4: Brazil, Mexico, LATAM (0.45x)</option>
+                    <option value="0.70">Global / Mixed Audience Traffic (0.70x)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="retentionSelect">Viewer Retention &amp; Completion Rate</label>
+                <select id="retentionSelect">
+                    <option value="1.25" selected>High Retention (&gt;40% Watch 5s+ / High Search Value)</option>
+                    <option value="1.00">Average Retention (20% - 40% Watch 5s+)</option>
+                    <option value="0.75">Low Retention (&lt;20% Watch 5s+ / High Early Drop-off)</option>
+                </select>
+            </div>
+
+            <div class="toggle-group">
+                <span class="toggle-label">100% Original Content (No Duets/Reposts)</span>
+                <label class="switch">
+                    <input type="checkbox" id="originalityToggle" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="toggle-group">
+                <span class="toggle-label">High Search Value Topic (TikTok Search Bonus)</span>
+                <label class="switch">
+                    <input type="checkbox" id="searchToggle" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <button class="btn-action" id="downloadBtn" type="button">Export Detailed Earnings Report (PNG)</button>
+
+            <!-- Social Media Share Section -->
+            <div class="social-share-container">
+                <span class="share-label">Share This Estimator</span>
+                <div class="share-buttons-grid">
+                    <a id="shareX" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-x">𝕏 Post</a>
+                    <a id="shareFB" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-fb">Facebook</a>
+                    <a id="shareWA" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-wa">WhatsApp</a>
+                    <a id="shareLI" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-li">LinkedIn</a>
+                    <a id="sharePIN" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-pin">Pinterest</a>
+                    <button id="copyShareLink" type="button" class="btn-share btn-share-copy">🔗 Copy Tool Link</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- SEO & Educational Guide Section -->
+    <article class="content-area">
+        <div class="content-card">
+            <h1>TikTok Creator Rewards Program RPM Estimator &amp; Earnings Guide (2026)</h1>
+            <p>
+                Monetizing short-form and mid-length video content on TikTok has undergone a massive transformation. Following the complete phase-out of the legacy TikTok Creator Fund, the <strong>TikTok Creator Rewards Program</strong> (formerly introduced as the Creativity Program Beta) stands as the platform’s primary organic monetization engine. Unlike the original fund—which distributed a fixed daily pool resulting in micro-payouts of $0.02 to $0.04 per 1,000 views—the Creator Rewards Program pays creators based on a dynamic <strong>RPM (Revenue Per Mille)</strong> formula, regularly yielding payouts between $0.40 and $2.50+ per 1,000 qualified views.
+            </p>
+            <p>
+                This interactive <strong>tiktok-creator-rewards-rpm-estimator</strong> empowers digital content creators, media agencies, influencer managers, and video editors to model exact earning scenarios based on view volumes, viewer demographics, video duration thresholds, and niche advertiser demand.
+            </p>
+
+            <h2>How the TikTok Creator Rewards Payout Formula Works</h2>
+            <p>
+                Calculating your monthly payout from TikTok requires understanding two core variables: <strong>Qualified Views</strong> and your account's effective <strong>RPM</strong>. Payouts are not generated on total overall views, but exclusively on views that meet TikTok's strict algorithmic quality filters.
+            </p>
+            <p>
+                The mathematical formula governing Creator Rewards monthly earnings is expressed as:
+            </p>
+            <blockquote style="background-color: var(--bg-input); padding: 1rem 1.25rem; border-left: 4px solid var(--accent-pink); border-radius: 4px; margin: 1rem 0; font-weight: 600; color: #fff;">
+                Estimated Earnings ($) = ( Total Qualified Video Views ÷ 1,000 ) × Effective RPM ($)
+            </blockquote>
+
+            <h2>What Defines a "Qualified View" on TikTok?</h2>
+            <p>
+                A common point of confusion among creators is why a video with 1,000,000 total views might only accrue revenue on 500,000 to 600,000 qualified views. TikTok enforces stringent validation standards before a view is credited to your Creator Rewards balance:
+            </p>
+            <ul>
+                <li><strong>For You Feed (FYP) Origin:</strong> The view must originate naturally from a user's primary 'For You' feed. Direct profile views, search results, or link shares do not qualify for standard view rewards.</li>
+                <li><strong>5-Second Minimum Watch Duration:</strong> The viewer must remain on the video for at least 5 continuous seconds. Immediate skips or quick scrolls are filtered out.</li>
+                <li><strong>Unique Non-Paid Viewers:</strong> Views generated through paid promotion (TikTok Promote), bot networks, or repeated loops from the same user account within a 24-hour window are strictly disqualified.</li>
+                <li><strong>1,000 Qualified View Threshold:</strong> An individual video must reach a baseline threshold of 1,000 qualified views before it begins generating earnings.</li>
+            </ul>
+
+            <h2>Standard Reward vs. Additional Reward System Breakdown</h2>
+            <p>
+                TikTok's updated monetization framework splits creator earnings into two core tiers:
+            </p>
+
+            <div class="table-responsive">
+                <table class="spec-table">
+                    <thead>
+                        <tr>
+                            <th>Reward Component</th>
+                            <th>Primary Metric Focus</th>
+                            <th>Typical Payout Weight</th>
+                            <th>Optimization Strategy</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Standard Reward</strong></td>
+                            <td>Raw Qualified View Volume &amp; Audience Country</td>
+                            <td>60% – 75% of Total Earnings</td>
+                            <td>Focus on strong hooks, trending visual flow, and wide viral appeal in top-tier geographic regions.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Additional Reward Bonus</strong></td>
+                            <td>Search Value, Engagement &amp; Originality Score</td>
+                            <td>25% – 40% Bonus Revenue</td>
+                            <td>Target search-intent subjects (how-tos, explainers, tutorials) and maintain high completion rates past 30 seconds.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Length Bonus (3–10 min)</strong></td>
+                            <td>Sustained Retention on Multi-Minute Content</td>
+                            <td>15% – 35% RPM Multiplier</td>
+                            <td>Script structured narrative arcs that hold viewer attention beyond 3 minutes without artificial padding.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Ad Slot 2 Container -->
+            <div class="cms-ad-slot-2"></div>
+
+            <h2>2026 TikTok RPM Benchmarks by Content Niche</h2>
+            <p>
+                RPM rates fluctuate substantially based on advertiser demand within specific commercial categories. Advertisers pay significantly higher CPM rates to show ads alongside content that attracts viewers with high purchasing intent (e.g., financial software, SaaS tools, luxury goods).
+            </p>
+
+            <div class="table-responsive">
+                <table class="spec-table">
+                    <thead>
+                        <tr>
+                            <th>Content Category / Niche</th>
+                            <th>Average RPM Range (USD)</th>
+                            <th>Advertiser Demand Tier</th>
+                            <th>Search Intent Potential</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Personal Finance, Investing &amp; Business</strong></td>
+                            <td>$1.20 – $2.50+</td>
+                            <td><strong style="color: var(--accent-green);">Tier 1 (Highest)</strong></td>
+                            <td>Extremely High (Stock analysis, budgeting tips, business case studies)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Technology, Software &amp; AI Tools</strong></td>
+                            <td>$0.90 – $1.80</td>
+                            <td><strong style="color: var(--accent-green);">Tier 1 (Highest)</strong></td>
+                            <td>High (Software reviews, AI tutorials, hardware unboxings)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Health, Wellness &amp; Medical Explainers</strong></td>
+                            <td>$0.70 – $1.40</td>
+                            <td><strong style="color: var(--accent-cyan);">Tier 2 (Strong)</strong></td>
+                            <td>High (Workout breakdowns, nutrition guides, mental health awareness)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>History, Science &amp; Educational Documentaries</strong></td>
+                            <td>$0.60 – $1.20</td>
+                            <td><strong style="color: var(--accent-cyan);">Tier 2 (Strong)</strong></td>
+                            <td>Very High (Historical deep-dives, scientific mysteries, lore)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>True Crime &amp; Long-Form Storytelling</strong></td>
+                            <td>$0.50 – $1.10</td>
+                            <td><strong style="color: var(--accent-amber);">Tier 3 (Moderate)</strong></td>
+                            <td>Moderate (Case breakdowns, mystery investigations)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Lifestyle, Beauty &amp; Travel Vlogs</strong></td>
+                            <td>$0.40 – $0.85</td>
+                            <td><strong style="color: var(--accent-amber);">Tier 3 (Moderate)</strong></td>
+                            <td>Moderate (Travel itineraries, skincare routines, outfit guides)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Gaming, Esports &amp; Anime</strong></td>
+                            <td>$0.25 – $0.60</td>
+                            <td><strong style="color: #f87171;">Tier 4 (Lower)</strong></td>
+                            <td>High (Game walkthroughs, patch notes, build strategies)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Comedy, Memes &amp; Quick Skits</strong></td>
+                            <td>$0.15 – $0.45</td>
+                            <td><strong style="color: #f87171;">Tier 4 (Lower)</strong></td>
+                            <td>Low (Entertainment clips, casual humor)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2>Key Requirements to Join the Creator Rewards Program</h2>
+            <p>
+                Before an account can begin earning money through the Creator Rewards Program, creators must satisfy TikTok's baseline eligibility criteria:
+            </p>
+            <ol>
+                <li><strong>Follower Count:</strong> Maintain at least 10,000 active, organic followers on your TikTok personal account.</li>
+                <li><strong>Video Views:</strong> Accumulate at least 100,000 authentic video views within the trailing 30-day rolling window.</li>
+                <li><strong>Age &amp; Location:</strong> Be at least 18 years old and operate an account registered in an eligible country (United States, United Kingdom, Germany, France, Japan, South Korea, Brazil, or Mexico).</li>
+                <li><strong>Account Standing:</strong> Possess a Personal Account (not a Corporate/Business Account) in good standing, free of repeated copyright or community guideline violations.</li>
+                <li><strong>Video Standard:</strong> Post original content filmed or produced by yourself that is at least 1 minute (60 seconds) in duration.</li>
+            </ol>
+
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-block">
+                <details class="faq-accordion" open>
+                    <summary class="faq-summary">How is RPM calculated in the TikTok Creator Rewards Program?</summary>
+                    <div class="faq-answer">
+                        Your Creator Rewards payout is calculated using the formula: Total Earnings = (Qualified Views / 1,000) × RPM. RPM (Revenue Per Mille) represents your earnings per 1,000 qualified views and is determined by advertiser demand in your niche, viewer audience geography, video watch duration, search intent value, and originality score.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">What counts as a qualified view on TikTok?</summary>
+                    <div class="faq-answer">
+                        A qualified view must originate from the 'For You' feed (FYP), be watched for at least 5 seconds, come from a unique non-paid user account, and pass TikTok's anti-fraud algorithms. Furthermore, a video must reach a minimum threshold of 1,000 qualified views before it begins accumulating rewards.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">Why do videos under 1 minute earn $0 in Creator Rewards?</summary>
+                    <div class="faq-answer">
+                        TikTok's Creator Rewards Program explicitly requires videos to be at least 60 seconds long to qualify for revenue sharing. Short clips under one minute earn $0 from this program, regardless of view count, although creators can monetize short-form content through brand sponsorships or TikTok Shop.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">Which TikTok content niches have the highest RPM in 2026?</summary>
+                    <div class="faq-answer">
+                        High-value commercial niches like Personal Finance ($1.20 - $2.50+ RPM), Technology &amp; AI ($0.90 - $1.80 RPM), Health &amp; Wellness ($0.70 - $1.40 RPM), and Educational Documentaries ($0.60 - $1.20 RPM) yield the highest payouts due to strong advertiser competition for affluent audiences.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">What is the difference between TikTok Creator Fund and Creator Rewards Program?</summary>
+                    <div class="faq-answer">
+                        The legacy TikTok Creator Fund (phased out in late 2023) operated on a fixed daily pool model, paying roughly $0.02 to $0.04 per 1,000 total views. The Creator Rewards Program pays dynamic RPM rates ranging from $0.40 to $2.50+ per 1,000 qualified views on videos over 1 minute, representing a 10x to 25x payout increase.
+                    </div>
+                </details>
+            </div>
+        </div>
+    </article>
+
+    <!-- Footer Container -->
+    <div id="global-footer"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var canvas = document.getElementById('previewCanvas');
+            if (!canvas) return;
+            var ctx = canvas.getContext('2d');
+
+            // Controls & Inputs
+            var totalViewsRange = document.getElementById('totalViewsRange');
+            var totalViewsInput = document.getElementById('totalViews');
+            var totalViewsDisplay = document.getElementById('totalViewsDisplay');
+            var qualifiedPercentRange = document.getElementById('qualifiedPercent');
+            var qualifiedPercentDisplay = document.getElementById('qualifiedPercentDisplay');
+            var videoDurationSelect = document.getElementById('videoDuration');
+            var nicheSelect = document.getElementById('nicheSelect');
+            var regionSelect = document.getElementById('regionSelect');
+            var retentionSelect = document.getElementById('retentionSelect');
+            var originalityToggle = document.getElementById('originalityToggle');
+            var searchToggle = document.getElementById('searchToggle');
+            var ineligibleAlert = document.getElementById('ineligibleAlert');
+            var downloadBtn = document.getElementById('downloadBtn');
+
+            // Card DOM Displays
+            var cardMonthlyEst = document.getElementById('cardMonthlyEst');
+            var cardRpmEst = document.getElementById('cardRpmEst');
+            var cardQualifiedViews = document.getElementById('cardQualifiedViews');
+            var cardAnnualEst = document.getElementById('cardAnnualEst');
+
+            // Presets
+            var presetTech = document.getElementById('presetTech');
+            var presetFinance = document.getElementById('presetFinance');
+            var presetGaming = document.getElementById('presetGaming');
+            var presetLifestyle = document.getElementById('presetLifestyle');
+
+            /* Setup Social Share Links */
+            var currentUrl = encodeURIComponent(window.location.href);
+            var shareTitle = encodeURIComponent("Check out this free TikTok Creator Rewards Program RPM Estimator & Earnings Calculator!");
+            
+            document.getElementById('shareX').href = 'https://twitter.com/intent/tweet?url=' + currentUrl + '&text=' + shareTitle;
+            document.getElementById('shareFB').href = 'https://www.facebook.com/sharer/sharer.php?u=' + currentUrl;
+            document.getElementById('shareWA').href = 'https://api.whatsapp.com/send?text=' + shareTitle + '%20' + currentUrl;
+            document.getElementById('shareLI').href = 'https://www.linkedin.com/sharing/share-offsite/?url=' + currentUrl;
+            document.getElementById('sharePIN').href = 'https://pinterest.com/pin/create/button/?url=' + currentUrl + '&description=' + shareTitle;
+
+            var copyBtn = document.getElementById('copyShareLink');
+            copyBtn.addEventListener('click', function() {
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'TikTok Creator Rewards Program RPM Estimator',
+                        text: 'Estimate your TikTok Creator Rewards RPM and monthly earnings.',
+                        url: window.location.href
+                    }).catch(function() {});
+                } else if (navigator.clipboard) {
+                    navigator.clipboard.writeText(window.location.href).then(function() {
+                        var origText = copyBtn.textContent;
+                        copyBtn.textContent = '✓ Link Copied!';
+                        setTimeout(function() { copyBtn.textContent = origText; }, 2000);
+                    });
+                }
+            });
+
+            // Preset Handlers
+            presetTech.addEventListener('click', function() {
+                nicheSelect.value = 'tech';
+                totalViewsRange.value = 750000;
+                totalViewsInput.value = 750000;
+                qualifiedPercentRange.value = 60;
+                videoDurationSelect.value = '3to5';
+                regionSelect.value = '1.15';
+                retentionSelect.value = '1.25';
+                originalityToggle.checked = true;
+                searchToggle.checked = true;
+                calculateAndDraw();
+            });
+
+            presetFinance.addEventListener('click', function() {
+                nicheSelect.value = 'finance';
+                totalViewsRange.value = 400000;
+                totalViewsInput.value = 400000;
+                qualifiedPercentRange.value = 65;
+                videoDurationSelect.value = '3to5';
+                regionSelect.value = '1.15';
+                retentionSelect.value = '1.25';
+                originalityToggle.checked = true;
+                searchToggle.checked = true;
+                calculateAndDraw();
+            });
+
+            presetGaming.addEventListener('click', function() {
+                nicheSelect.value = 'gaming';
+                totalViewsRange.value = 1500000;
+                totalViewsInput.value = 1500000;
+                qualifiedPercentRange.value = 45;
+                videoDurationSelect.value = '1to3';
+                regionSelect.value = '1.00';
+                retentionSelect.value = '1.00';
+                originalityToggle.checked = true;
+                searchToggle.checked = false;
+                calculateAndDraw();
+            });
+
+            presetLifestyle.addEventListener('click', function() {
+                nicheSelect.value = 'lifestyle';
+                totalViewsRange.value = 600000;
+                totalViewsInput.value = 600000;
+                qualifiedPercentRange.value = 50;
+                videoDurationSelect.value = '1to3';
+                regionSelect.value = '1.00';
+                retentionSelect.value = '1.00';
+                originalityToggle.checked = true;
+                searchToggle.checked = false;
+                calculateAndDraw();
+            });
+
+            // Event Listeners for Controls
+            totalViewsRange.addEventListener('input', function() {
+                totalViewsInput.value = totalViewsRange.value;
+                calculateAndDraw();
+            });
+
+            totalViewsInput.addEventListener('input', function() {
+                totalViewsRange.value = totalViewsInput.value;
+                calculateAndDraw();
+            });
+
+            qualifiedPercentRange.addEventListener('input', calculateAndDraw);
+            videoDurationSelect.addEventListener('change', calculateAndDraw);
+            nicheSelect.addEventListener('change', calculateAndDraw);
+            regionSelect.addEventListener('change', calculateAndDraw);
+            retentionSelect.addEventListener('change', calculateAndDraw);
+            originalityToggle.addEventListener('change', calculateAndDraw);
+            searchToggle.addEventListener('change', calculateAndDraw);
+
+            function formatNumber(num) {
+                return new Intl.NumberFormat('en-US').format(Math.round(num));
+            }
+
+            function formatCurrency(num) {
+                return '$' + new Intl.NumberFormat('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(Math.round(num));
+            }
+
+            function formatDecimalCurrency(num) {
+                return '$' + num.toFixed(2);
+            }
+
+            function calculateAndDraw() {
+                var totalViews = parseFloat(totalViewsInput.value) || 0;
+                var qualifiedPercent = parseFloat(qualifiedPercentRange.value) || 0;
+                var videoDuration = videoDurationSelect.value;
+                
+                totalViewsDisplay.textContent = formatNumber(totalViews);
+                qualifiedPercentDisplay.textContent = qualifiedPercent + '%';
+
+                var selectedOption = nicheSelect.options[nicheSelect.selectedIndex];
+                var baseRpmLow = parseFloat(selectedOption.getAttribute('data-low')) || 0.40;
+                var baseRpmHigh = parseFloat(selectedOption.getAttribute('data-high')) || 0.85;
+
+                var regionMult = parseFloat(regionSelect.value) || 1.0;
+                var retentionMult = parseFloat(retentionSelect.value) || 1.0;
+                var isOriginal = originalityToggle.checked;
+                var isSearch = searchToggle.checked;
+
+                var durationMult = 1.0;
+                var isIneligible = false;
+
+                if (videoDuration === 'under1') {
+                    isIneligible = true;
+                    durationMult = 0;
+                } else if (videoDuration === '1to3') {
+                    durationMult = 1.0;
+                } else if (videoDuration === '3to5') {
+                    durationMult = 1.18;
+                } else if (videoDuration === '5to10') {
+                    durationMult = 1.35;
+                }
+
+                if (isIneligible) {
+                    ineligibleAlert.style.display = 'block';
+                } else {
+                    ineligibleAlert.style.display = 'none';
+                }
+
+                var bonusMult = 1.0;
+                if (!isOriginal) bonusMult *= 0.25; // Harsh penalty for non-original content
+                if (isSearch) bonusMult *= 1.15; // Search intent bonus
+
+                var effectiveRpmLow = baseRpmLow * regionMult * retentionMult * durationMult * bonusMult;
+                var effectiveRpmHigh = baseRpmHigh * regionMult * retentionMult * durationMult * bonusMult;
+
+                if (isIneligible) {
+                    effectiveRpmLow = 0;
+                    effectiveRpmHigh = 0;
+                }
+
+                var qualifiedViews = totalViews * (qualifiedPercent / 100);
+                var monthlyLow = (qualifiedViews / 1000) * effectiveRpmLow;
+                var monthlyHigh = (qualifiedViews / 1000) * effectiveRpmHigh;
+                var monthlyMid = (monthlyLow + monthlyHigh) / 2;
+                var annualMid = monthlyMid * 12;
+                var effectiveRpmMid = (effectiveRpmLow + effectiveRpmHigh) / 2;
+
+                // Update Cards
+                if (isIneligible) {
+                    cardMonthlyEst.textContent = '$0';
+                    cardRpmEst.textContent = '$0.00';
+                    cardAnnualEst.textContent = '$0';
+                } else {
+                    cardMonthlyEst.textContent = formatCurrency(monthlyLow) + ' - ' + formatCurrency(monthlyHigh);
+                    cardRpmEst.textContent = formatDecimalCurrency(effectiveRpmLow) + ' - ' + formatDecimalCurrency(effectiveRpmHigh);
+                    cardAnnualEst.textContent = formatCurrency(annualMid);
+                }
+                cardQualifiedViews.textContent = formatNumber(qualifiedViews);
+
+                // Draw to Canvas
+                drawCanvas({
+                    totalViews: totalViews,
+                    qualifiedViews: qualifiedViews,
+                    qualifiedPercent: qualifiedPercent,
+                    effectiveRpmLow: effectiveRpmLow,
+                    effectiveRpmHigh: effectiveRpmHigh,
+                    effectiveRpmMid: effectiveRpmMid,
+                    monthlyLow: monthlyLow,
+                    monthlyHigh: monthlyHigh,
+                    monthlyMid: monthlyMid,
+                    annualMid: annualMid,
+                    isIneligible: isIneligible,
+                    nicheName: selectedOption.text.split('(')[0].trim(),
+                    isOriginal: isOriginal,
+                    isSearch: isSearch
+                });
+            }
+
+            function drawCanvas(data) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                // Background Gradient
+                var bgGrad = ctx.createLinearGradient(0, 0, 1080, 1920);
+                bgGrad.addColorStop(0, '#0f1117');
+                bgGrad.addColorStop(0.5, '#181b24');
+                bgGrad.addColorStop(1, '#0b0d12');
+                ctx.fillStyle = bgGrad;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Top Header Graphic Bar
+                var headerGrad = ctx.createLinearGradient(0, 0, 1080, 0);
+                headerGrad.addColorStop(0, '#ff0050');
+                headerGrad.addColorStop(0.5, '#00f2fe');
+                headerGrad.addColorStop(1, '#1877f2');
+                ctx.fillStyle = headerGrad;
+                ctx.fillRect(0, 0, 1080, 16);
+
+                // Title Banner
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 52px -apple-system, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('TIKTOK CREATOR STUDIO', 540, 110);
+
+                ctx.fillStyle = '#00f2fe';
+                ctx.font = '600 32px -apple-system, sans-serif';
+                ctx.fillText('2026 CREATOR REWARDS RPM ESTIMATOR', 540, 160);
+
+                // Divider Line
+                ctx.strokeStyle = '#2e3446';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(80, 200);
+                ctx.lineTo(1000, 200);
+                ctx.stroke();
+
+                // Card 1: Estimated Monthly Revenue Big Badge
+                ctx.fillStyle = '#181b24';
+                ctx.strokeStyle = data.isIneligible ? '#f59e0b' : '#ff0050';
+                ctx.lineWidth = 4;
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(80, 240, 920, 320, 24);
+                    ctx.fill();
+                    ctx.stroke();
+                } else {
+                    ctx.fillRect(80, 240, 920, 320);
+                }
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = 'bold 30px -apple-system, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('ESTIMATED MONTHLY PAYOUT', 540, 300);
+
+                if (data.isIneligible) {
+                    ctx.fillStyle = '#f59e0b';
+                    ctx.font = 'bold 72px -apple-system, sans-serif';
+                    ctx.fillText('$0.00 / mo', 540, 400);
+                    ctx.fillStyle = '#fbbf24';
+                    ctx.font = '28px -apple-system, sans-serif';
+                    ctx.fillText('⚠️ Videos < 1 min are ineligible for rewards', 540, 470);
+                } else {
+                    ctx.fillStyle = '#10b981';
+                    ctx.font = 'bold 84px -apple-system, sans-serif';
+                    ctx.fillText(formatCurrency(data.monthlyLow) + ' - ' + formatCurrency(data.monthlyHigh), 540, 410);
+
+                    ctx.fillStyle = '#f3f4f6';
+                    ctx.font = '32px -apple-system, sans-serif';
+                    ctx.fillText('Midpoint Projection: ' + formatCurrency(data.monthlyMid) + ' / month', 540, 480);
+                }
+
+                // Metric Grid Cards (Card 2 & Card 3)
+                // Left Sub-Card: Effective RPM
+                ctx.fillStyle = '#222634';
+                ctx.strokeStyle = '#2e3446';
+                ctx.lineWidth = 2;
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(80, 600, 440, 260, 20);
+                    ctx.fill();
+                    ctx.stroke();
+                } else {
+                    ctx.fillRect(80, 600, 440, 260);
+                }
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = 'bold 26px -apple-system, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('EFFECTIVE RPM', 300, 650);
+
+                ctx.fillStyle = '#00f2fe';
+                ctx.font = 'bold 56px -apple-system, sans-serif';
+                ctx.fillText(formatDecimalCurrency(data.effectiveRpmLow) + ' - ' + formatDecimalCurrency(data.effectiveRpmHigh), 300, 740);
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = '24px -apple-system, sans-serif';
+                ctx.fillText('per 1,000 qualified views', 300, 800);
+
+                // Right Sub-Card: Qualified Views
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(560, 600, 440, 260, 20);
+                    ctx.fill();
+                    ctx.stroke();
+                } else {
+                    ctx.fillRect(560, 600, 440, 260);
+                }
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = 'bold 26px -apple-system, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('QUALIFIED VIEWS', 780, 650);
+
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 56px -apple-system, sans-serif';
+                ctx.fillText(formatNumber(data.qualifiedViews), 780, 740);
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = '24px -apple-system, sans-serif';
+                ctx.fillText(data.qualifiedPercent + '% of ' + formatNumber(data.totalViews) + ' total views', 780, 800);
+
+                // Visual Qualified View Ratio Progress Bar Card
+                ctx.fillStyle = '#181b24';
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(80, 900, 920, 280, 20);
+                    ctx.fill();
+                    ctx.stroke();
+                } else {
+                    ctx.fillRect(80, 900, 920, 280);
+                }
+
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 30px -apple-system, sans-serif';
+                ctx.textAlign = 'left';
+                ctx.fillText('View Validation Breakdown', 120, 950);
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = '24px -apple-system, sans-serif';
+                ctx.fillText('Qualified (FYP > 5s): ' + formatNumber(data.qualifiedViews), 120, 1000);
+                ctx.textAlign = 'right';
+                ctx.fillText('Non-Qualified / Direct: ' + formatNumber(data.totalViews - data.qualifiedViews), 960, 1000);
+
+                // Progress Track
+                ctx.fillStyle = '#222634';
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(120, 1030, 840, 36, 18);
+                    ctx.fill();
+                } else {
+                    ctx.fillRect(120, 1030, 840, 36);
+                }
+
+                // Progress Fill
+                var fillWidth = Math.max(36, 840 * (data.qualifiedPercent / 100));
+                ctx.fillStyle = ctx.createLinearGradient(120, 0, 960, 0);
+                var barGrad = ctx.createLinearGradient(120, 0, 960, 0);
+                barGrad.addColorStop(0, '#ff0050');
+                barGrad.addColorStop(1, '#00f2fe');
+                ctx.fillStyle = barGrad;
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(120, 1030, fillWidth, 36, 18);
+                    ctx.fill();
+                } else {
+                    ctx.fillRect(120, 1030, fillWidth, 36);
+                }
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = '22px -apple-system, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('Requires 5s+ watch duration on FYP feed from unique accounts', 540, 1120);
+
+                // Annual Projection & Parameters Section
+                ctx.fillStyle = '#181b24';
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(80, 1220, 920, 520, 20);
+                    ctx.fill();
+                    ctx.stroke();
+                } else {
+                    ctx.fillRect(80, 1220, 920, 520);
+                }
+
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 32px -apple-system, sans-serif';
+                ctx.textAlign = 'left';
+                ctx.fillText('Account Parameter Audit', 120, 1280);
+
+                ctx.font = '28px -apple-system, sans-serif';
+                ctx.fillStyle = '#9ca3af';
+                
+                ctx.fillText('• Content Category:', 120, 1340);
+                ctx.fillStyle = '#ffffff';
+                ctx.fillText(data.nicheName, 420, 1340);
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.fillText('• Originality Score:', 120, 1400);
+                ctx.fillStyle = data.isOriginal ? '#10b981' : '#f59e0b';
+                ctx.fillText(data.isOriginal ? '100% Original (Passed)' : 'Flagged / Reposted (-75%)', 420, 1400);
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.fillText('• Search Intent Value:', 120, 1460);
+                ctx.fillStyle = data.isSearch ? '#00f2fe' : '#9ca3af';
+                ctx.fillText(data.isSearch ? 'High Search Intent (+15% Bonus)' : 'Standard Social Feed', 420, 1460);
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.fillText('• Projected Annual Income:', 120, 1520);
+                ctx.fillStyle = '#10b981';
+                ctx.font = 'bold 36px -apple-system, sans-serif';
+                ctx.fillText(formatCurrency(data.annualMid) + ' / year', 500, 1520);
+
+                ctx.fillStyle = '#374151';
+                ctx.fillRect(120, 1570, 840, 2);
+
+                ctx.fillStyle = '#6b7280';
+                ctx.font = '22px -apple-system, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('Official TikTok Studio Program Criteria: 10k Followers + 100k 30-Day Views required.', 540, 1630);
+                ctx.fillText('Estimates based on 2026 published creator benchmarks. Actual payouts set by TikTok.', 540, 1670);
+
+                // Branding Footer
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = 'bold 26px -apple-system, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('CoreMetricSuite · TikTok Monetization Utilities', 540, 1820);
+            }
+
+            // Initial calculation & render
+            calculateAndDraw();
+
+            // Download PNG Report
+            downloadBtn.addEventListener('click', function() {
+                var link = document.createElement('a');
+                link.download = 'tiktok-creator-rewards-rpm-report.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        });
+    </script>
+
+    <!-- Global CoreMetricSuite Cross-Linking Index Hub -->
+    <div style="margin-top: 40px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #f8fafc; font-family: system-ui, -apple-system, sans-serif;">
+        <h3 style="margin: 0 0 15px 0; font-size: 18px; color: #0f172a; font-weight: 600;">🛠️ CoreMetricSuite Utility Directory</h3>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇦🇺 Australia Tax &amp; Labor</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-au-cents" href="../au-cents-per-km-estimator/" style="color: #2563eb; text-decoration: underline;">Cents-Per-Km Tax Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-au-schads" href="../au-schads-vehicle-allowance/" style="color: #2563eb; text-decoration: underline;">SCHADS Vehicle Allowance</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-au-super" href="../au-superannuation-charge-tracker/" style="color: #2563eb; text-decoration: underline;">Superannuation Tracker</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇺🇸 US Corporate Tax</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-us-llc" href="../us-llc-late-penalty-estimator/" style="color: #2563eb; text-decoration: underline;">LLC Late Tax Penalty</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-us-179" href="../us-section-179-truck-calculator/" style="color: #2563eb; text-decoration: underline;">Section 179 Vehicle Deduction</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇬🇧 UK Property Management</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-rent" href="../uk-form-4a-rent-tracker/" style="color: #2563eb; text-decoration: underline;">Form 4A Rent Tracker</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-sdlt" href="../uk-sdlt-bracket-estimator/" style="color: #2563eb; text-decoration: underline;">Stamp Duty Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-sec8" href="../uk-section-8-calculator/" style="color: #2563eb; text-decoration: underline;">Section 8 Calculator</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🎬 Digital Media Layouts &amp; Monetization</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-media-tiktok-rpm" href="../tiktok-creator-rewards-rpm-estimator/" style="color: #2563eb; text-decoration: underline;">TikTok Creator Rewards RPM</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-ig" href="../instagram-reels-preview/" style="color: #2563eb; text-decoration: underline;">Instagram Reels Grid</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-fb" href="../facebook-ad-safe-zone/" style="color: #2563eb; text-decoration: underline;">Facebook 9:16 Ad Mask</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-shorts" href="../shorts-ui-safe-zone/" style="color: #2563eb; text-decoration: underline;">YouTube Shorts Safe Zone</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script defer>
+        (function() {
+            const path = window.location.pathname.toLowerCase();
+            const toolsMap = {
+                'au-cents-per-km-estimator': 'hub-au-cents',
+                'au-schads-vehicle-allowance': 'hub-au-schads',
+                'au-superannuation-charge-tracker': 'hub-au-super',
+                'us-llc-late-penalty-estimator': 'hub-us-llc',
+                'us-section-179-truck-calculator': 'hub-us-179',
+                'uk-form-4a-rent-tracker': 'hub-uk-rent',
+                'uk-sdlt-bracket-estimator': 'hub-uk-sdlt',
+                'uk-section-8-calculator': 'hub-uk-sec8',
+                'tiktok-creator-rewards-rpm-estimator': 'hub-media-tiktok-rpm',
+                'instagram-reels-preview': 'hub-media-ig',
+                'facebook-ad-safe-zone': 'hub-media-fb',
+                'shorts-ui-safe-zone': 'hub-media-shorts'
+            };
+
+            for (const [folderName, elementId] of Object.entries(toolsMap)) {
+                if (path.includes(folderName)) {
+                    const targetEl = document.getElementById(elementId);
+                    if (targetEl) {
+                        targetEl.outerHTML = `<span style="font-weight: 600; color: #0f172a;">${targetEl.textContent} (Current)</span>`;
+                    }
+                    break;
+                }
+            }
+        })();
+    </script>
+</body>
+</html>
