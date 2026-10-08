@@ -17,19 +17,27 @@ jobs:
 
       - name: Run Bug-Proof Cache Buster
         run: |
+          # 1. Safely calculate individual content fingerprints
           if [ -f "config.js" ]; then
-            # 1. Calculate a unique 8-character fingerprint from config.js content
-            HASH=$(md5sum config.js | cut -c1-8)
-            echo "🔄 Generated cache-busting fingerprint for config.js: $HASH"
-            
-            # 2. Automatically find and patch every single vanilla HTML page safely
-            find . -name "*.html" -type f | while read -r file; do
-              perl -pi -e "s|src=\"\/?config\.js\?v=[^\"]*\"|src=\"/config.js?v=$HASH\"|g" "$file"
-              echo "Successfully cache-busted template layer: $file"
-            done
+            CONFIG_HASH=$(md5sum config.js | cut -c1-8)
+            echo "🔄 Target Hash config.js -> $CONFIG_HASH"
           else
-            echo "⚠️ Warning: config.js not found in root. Skipping cache busting loop."
+            CONFIG_HASH="1.0.0"
           fi
+
+          if [ -f "global.min.js" ]; then
+            GLOBAL_HASH=$(md5sum global.min.js | cut -c1-8)
+            echo "⚡ Target Hash global.min.js -> $GLOBAL_HASH"
+          else
+            GLOBAL_HASH="1.0.0"
+          fi
+
+          # 2. Seamlessly execute clean replacement sweeps across every single template file
+          find . -name "*.html" -type f | while read -r file; do
+            perl -pi -e "s|config\.js\?v=[^\"]*|config.js?v=$CONFIG_HASH|g" "$file"
+            perl -pi -e "s|global\.min\.js\?v=[^\"]*|global.min.js?v=$GLOBAL_HASH|g" "$file"
+            echo "Successfully updated script cache values in: $file"
+          done
 
       - name: Auto Generate Sitemap From HTML Files
         uses: cicirello/generate-sitemap@v1
