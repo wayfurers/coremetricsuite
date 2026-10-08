@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRT Subtitle Cleaner &amp; Text Extractor | Strip Timestamps &amp; Format Online</title>
+    <meta name="description" content="Clean SRT, VTT, and subtitle files instantly. Strip timestamps, remove cue numbers, eliminate SDH audio tags, and extract clean plain-text transcripts right in your browser.">
+    <meta name="keywords" content="srt subtitle cleaner, srt text extractor, remove timestamps from srt, clean srt online, srt to txt converter, remove sdh subtitles, subtitle formatter">
+    <link rel="canonical" href="https://coremetricsuite.com/srt-subtitle-cleaner/">
+
+    <!-- Open Graph / Social Metadata -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="SRT Subtitle Cleaner &amp; Text Extractor">
+    <meta property="og:description" content="Strip timestamps, cue numbers, and SDH noise from subtitle files instantly. 100% private, client-side browser processing.">
+    <meta property="og:url" content="https://coremetricsuite.com/srt-subtitle-cleaner/">
+    
+    <!-- Global Framework Dependencies -->
+    <link rel="stylesheet" href="/css/global.css">
+    <script src="/config.js" defer></script>
+    <script src="/global.min.js" defer></script>
+
+    <!-- FAQ JSON-LD Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How do I extract clean plain text from an SRT subtitle file?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Upload or paste your .srt subtitle content into the cleaner tool. The utility automatically strips away numerical sequence indexes, timecode arrow ranges (00:00:00,000 --> 00:00:00,000), and HTML markup, leaving a clean, readable transcript ready for copying or text download."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are my subtitle files or transcripts uploaded to any external server?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. All text parsing, timestamp stripping, regex filtering, and file conversions run 100% locally inside your web browser using client-side JavaScript. Your subtitle files never leave your device."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can this tool remove SDH sound effects and speaker labels?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. You can toggle options to automatically filter out bracketed sound effect descriptors like [MUSIC] or (APPLAUSE), remove speaker name labels (e.g., JOHN:), and strip extra spacing or line breaks."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What subtitle formats are supported by the cleaner?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The tool fully supports standard SubRip (.srt), WebVTT (.vtt), and plain text caption structures. You can process files of various sizes instantly without server waiting times."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I merge consecutive subtitle lines into flowing paragraphs?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Simply check the 'Merge into Paragraphs' option before processing. The engine will join split caption lines into cohesive sentences and paragraphs, making it ideal for creating blog posts, show notes, or study summaries."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-main: #0f1117;
+            --bg-card: #181b24;
+            --bg-input: #222634;
+            --border-color: #2e3446;
+            --accent-blue: #1877f2;
+            --accent-cyan: #00f2fe;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: var(--bg-main); color: var(--text-primary); font-family: var(--font-sans); line-height: 1.6; }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            grid-template-areas: 
+                "upload preview"
+                "panel preview";
+            gap: 2rem;
+        }
+
+        .upload-card-wrapper {
+            grid-area: upload;
+        }
+
+        .panel {
+            grid-area: panel;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            height: fit-content;
+        }
+
+        .panel-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            background: var(--accent-blue);
+            color: #fff;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        .drop-zone {
+            border: 2px dashed var(--border-color);
+            padding: 1.25rem;
+            text-align: center;
+            border-radius: 8px;
+            background-color: var(--bg-input);
+            cursor: pointer;
+            transition: border-color 0.2s, background-color 0.2s;
+            margin-bottom: 0.75rem;
+        }
+
+        .drop-zone:hover { border-color: var(--accent-blue); background-color: rgba(24, 119, 242, 0.05); }
+        .drop-title { font-weight: 600; color: #fff; font-size: 0.95rem; }
+        .drop-sub { font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px; }
+
+        .btn-demo {
+            width: 100%;
+            padding: 0.65rem;
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            color: var(--accent-cyan);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 0;
+            transition: background-color 0.2s;
+        }
+
+        .btn-demo:hover { background-color: #2a2f42; }
+
+        .toggle-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: var(--bg-input);
+            padding: 0.75rem 0.85rem;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 1rem;
+        }
+
+        .toggle-label { font-size: 0.85rem; font-weight: 500; color: var(--text-primary); }
+
+        .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #374151; transition: .3s; border-radius: 24px;
+        }
+        .slider:before {
+            position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px;
+            background-color: white; transition: .3s; border-radius: 50%;
+        }
+        input:checked + .slider { background-color: var(--accent-blue); }
+        input:checked + .slider:before { transform: translateX(20px); }
+
+        .form-group { margin-bottom: 1.25rem; }
+        label { display: block; font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 0.4rem; }
+        input[type="text"], textarea, select {
+            width: 100%; padding: 0.65rem 0.85rem; background-color: var(--bg-input);
+            border: 1px solid var(--border-color); border-radius: 6px; color: #fff;
+            font-size: 0.9rem; outline: none; font-family: inherit;
+        }
+        input[type="text"]:focus, textarea:focus, select:focus { border-color: var(--accent-blue); }
+
+        .btn-action {
+            width: 100%; padding: 0.85rem; background: linear-gradient(135deg, var(--accent-blue), #1055b3);
+            color: #fff; font-weight: 600; border: none; border-radius: 6px; cursor: pointer; font-size: 0.95rem;
+            box-shadow: 0 4px 12px rgba(24, 119, 242, 0.3);
+            transition: transform 0.1s, opacity 0.2s;
+            margin-bottom: 1rem;
+        }
+        .btn-action:hover { opacity: 0.95; }
+        .btn-action:active { transform: scale(0.99); }
+
+        .btn-secondary-action {
+            width: 100%; padding: 0.75rem; background-color: var(--bg-input);
+            color: var(--text-primary); font-weight: 600; border: 1px solid var(--border-color); border-radius: 6px; cursor: pointer; font-size: 0.9rem;
+            transition: background-color 0.2s;
+            margin-bottom: 1rem;
+        }
+        .btn-secondary-action:hover { background-color: #2a2f42; }
+
+        /* Social Share Button Module */
+        .social-share-container {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        .share-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
+            display: block;
+            text-align: center;
+        }
+        .share-buttons-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+        }
+        .btn-share {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            padding: 0.5rem 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: opacity 0.2s, transform 0.1s;
+        }
+        .btn-share:hover { opacity: 0.88; }
+        .btn-share:active { transform: scale(0.97); }
+        .btn-share-x { background-color: #000000; border: 1px solid #333; }
+        .btn-share-fb { background-color: #1877f2; }
+        .btn-share-li { background-color: #0a66c2; }
+        .btn-share-wa { background-color: #25d366; color: #000; }
+        .btn-share-pin { background-color: #e60023; }
+        .btn-share-copy { background-color: #374151; color: #fff; grid-column: span 3; margin-top: 0.25rem; }
+
+        .preview-stage { 
+            grid-area: preview;
+            display: flex; 
+            flex-direction: column; 
+            width: 100%;
+        }
+        .editor-workspace {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            width: 100%;
+            min-height: 520px;
+        }
+        .editor-pane {
+            display: flex;
+            flex-direction: column;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem;
+        }
+        .pane-header {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .editor-textarea {
+            flex: 1;
+            width: 100%;
+            min-height: 420px;
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: #fff;
+            padding: 1rem;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 0.875rem;
+            resize: vertical;
+            outline: none;
+            line-height: 1.5;
+        }
+        .editor-textarea:focus { border-color: var(--accent-blue); }
+        .canvas-caption { margin-top: 1rem; font-size: 0.85rem; color: var(--text-secondary); text-align: center; }
+
+        .content-area { max-width: 1200px; margin: 3rem auto; padding: 0 1.5rem; }
+        .content-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 2.5rem; }
+        .content-card h1 { font-size: 2rem; margin-bottom: 1rem; color: #fff; }
+        .content-card h2 { font-size: 1.4rem; margin: 1.8rem 0 1rem; color: #fff; }
+        .content-card p { color: var(--text-secondary); margin-bottom: 1.2rem; }
+        .content-card ul, .content-card ol { color: var(--text-secondary); margin: 0 0 1.2rem 1.5rem; }
+        .content-card li { margin-bottom: 0.5rem; }
+
+        .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 1.5rem 0; }
+        .spec-table { width: 100%; border-collapse: collapse; text-align: left; min-width: 600px; }
+        .spec-table th, .spec-table td { padding: 0.85rem 1rem; border: 1px solid var(--border-color); }
+        .spec-table th { background-color: var(--bg-input); color: #fff; font-size: 0.9rem; }
+        .spec-table td { color: var(--text-secondary); font-size: 0.875rem; }
+
+        /* Accordion FAQ Styling */
+        .faq-block { margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem; }
+        .faq-accordion {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 0.85rem;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .faq-accordion[open] { border-color: var(--accent-blue); }
+        .faq-summary {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            padding: 1rem 1.2rem;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+        .faq-summary::-webkit-details-marker { display: none; }
+        .faq-summary::after {
+            content: "+";
+            font-size: 1.2rem;
+            color: var(--accent-blue);
+            transition: transform 0.2s;
+        }
+        .faq-accordion[open] .faq-summary::after {
+            content: "−";
+            color: var(--accent-blue);
+        }
+        .faq-answer {
+            padding: 0 1.2rem 1.2rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 0.4rem;
+            padding-top: 0.8rem;
+        }
+
+        .cms-ad-slot-1, .cms-ad-slot-2 {
+            width: 100%; max-width: 970px; min-height: 90px; margin: 1.5rem auto;
+            background: rgba(255,255,255,0.02); border-radius: 8px; display: block;
+        }
+
+        /* Mobile Responsive Overrides: File upload first, then editor preview */
+        @media screen and (max-width: 900px) {
+            html, body { width: 100%!important; max-width: 100vw!important; overflow-x: hidden!important; margin: 0!important; padding: 0!important; }
+            main.container { display: flex!important; flex-direction: column!important; width: 100%!important; max-width: 100%!important; padding: 0 12px!important; margin: 8px auto!important; gap: 16px!important; box-sizing: border-box!important; }
+            .upload-card-wrapper { order: 1!important; width: 100%!important; }
+            main.container > section.preview-stage { order: 2!important; width: 100%!important; display: flex!important; flex-direction: column!important; align-items: center!important; margin: 0 auto!important; box-sizing: border-box!important; }
+            main.container > section.panel { order: 3!important; width: 100%!important; max-width: 100%!important; box-sizing: border-box!important; }
+            .editor-workspace { grid-template-columns: 1fr!important; }
+            .editor-textarea { min-height: 280px!important; }
+            input, textarea, select { font-size: 16px!important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Container -->
+    <div id="global-header"></div>
+
+    <!-- Ad Slot 1 Container -->
+    <div class="cms-ad-slot-1" id="cms-ad-slot-top"></div>
+
+    <!-- Main Tool Container -->
+    <main class="container">
+        <!-- Module 1: File Upload Section (Rendered 1st on mobile) -->
+        <div class="upload-card-wrapper">
+            <div class="panel">
+                <div class="panel-title">
+                    <span>Upload Subtitle File</span>
+                    <span class="badge">STEP 1</span>
+                </div>
+                <div class="drop-zone" id="dropZone">
+                    <p class="drop-title">Click or Drag .SRT or .VTT Subtitle File</p>
+                    <p class="drop-sub">Supports SubRip, WebVTT, and plain text files</p>
+                    <input type="file" id="fileInput" accept=".srt,.vtt,.txt" style="display:none;">
+                </div>
+                <button class="btn-demo" id="loadDemoBtn" type="button">⚡ Load Sample SRT Transcript</button>
+            </div>
+        </div>
+
+        <!-- Module 2: Live Editor Workspace (Rendered 2nd on mobile) -->
+        <section class="preview-stage">
+            <div class="editor-workspace">
+                <div class="editor-pane">
+                    <div class="pane-header">
+                        <span>Raw Subtitle Input</span>
+                        <span id="inputStats">0 lines</span>
+                    </div>
+                    <textarea id="rawInput" class="editor-textarea" placeholder="Paste raw SRT/VTT code here or upload a file..."></textarea>
+                </div>
+                <div class="editor-pane">
+                    <div class="pane-header">
+                        <span>Cleaned Plain-Text Output</span>
+                        <button id="copyOutputBtn" type="button" style="background:none; border:none; color:var(--accent-cyan); cursor:pointer; font-size:0.8rem; font-weight:600;">📋 Copy Text</button>
+                    </div>
+                    <textarea id="cleanOutput" class="editor-textarea" placeholder="Cleaned dialogue transcript will appear here..." readonly></textarea>
+                </div>
+            </div>
+            <p class="canvas-caption">
+                100% private browser processing. Timestamps, cue counters, and SDH noise are stripped instantly.
+            </p>
+        </section>
+
+        <!-- Module 3: Tool Controls Panel (Rendered 3rd on mobile) -->
+        <section class="panel">
+            <div class="panel-title">
+                <span>Cleaning Rules</span>
+                <span class="badge">CONFIG</span>
+            </div>
+
+            <div class="toggle-group">
+                <span class="toggle-label">Remove Timestamps &amp; Cue #</span>
+                <label class="switch">
+                    <input type="checkbox" id="removeTimestamps" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="toggle-group">
+                <span class="toggle-label">Strip SDH Audio Tags [MUSIC]</span>
+                <label class="switch">
+                    <input type="checkbox" id="removeSdh" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="toggle-group">
+                <span class="toggle-label">Merge Into Paragraphs</span>
+                <label class="switch">
+                    <input type="checkbox" id="mergeParagraphs">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="toggle-group">
+                <span class="toggle-label">Remove Speaker Labels (JOHN:)</span>
+                <label class="switch">
+                    <input type="checkbox" id="removeSpeakers">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <button class="btn-action" id="cleanBtn" type="button">✨ Clean &amp; Extract Text</button>
+            <button class="btn-secondary-action" id="downloadTxtBtn" type="button">💾 Download .TXT Transcript</button>
+
+            <!-- Social Media Share Section -->
+            <div class="social-share-container">
+                <span class="share-label">Share This Tool</span>
+                <div class="share-buttons-grid">
+                    <a id="shareX" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-x">𝕏 Post</a>
+                    <a id="shareFB" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-fb">Facebook</a>
+                    <a id="shareWA" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-wa">WhatsApp</a>
+                    <a id="shareLI" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-li">LinkedIn</a>
+                    <a id="sharePIN" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-pin">Pinterest</a>
+                    <button id="copyShareLink" type="button" class="btn-share btn-share-copy">🔗 Copy Tool Link</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- SEO & Educational Guide Section -->
+    <article class="content-area">
+        <div class="content-card">
+            <h1>SRT Subtitle Cleaner &amp; Text Extractor: Complete Guide</h1>
+            <p>
+                Working with video subtitle files (.srt, .vtt) often presents a formatting challenge. Because subtitle formats are built specifically for media players, they include numerical block identifiers, millisecond-precise timecode ranges, and hearing-impaired (SDH) sound annotations that make raw text unreadable. If you are trying to repurpose video transcripts into blog articles, study notes, meeting minutes, or archives, manual cleanup is tedious and time-consuming.
+            </p>
+            <p>
+                This browser-based <strong>srt subtitle cleaner</strong> and text extractor instantly strips away unwanted technical syntax, letting you convert timed subtitle blocks into clean, publication-ready plain text with a single click.
+            </p>
+
+            <h2>Subtitle Syntax vs. Clean Transcript Comparison</h2>
+            <p>
+                To understand how automated extraction streamlines your editorial workflow, examine the structural differences between raw SubRip markup and processed transcript output:
+            </p>
+
+            <div class="table-responsive">
+                <table class="spec-table">
+                    <thead>
+                        <tr>
+                            <th>Component Type</th>
+                            <th>Raw .SRT Subtitle Syntax</th>
+                            <th>Extracted Plain Text Output</th>
+                            <th>Processing Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Cue Sequence Number</strong></td>
+                            <td><code>1</code>, <code>2</code>, <code>3</code>...</td>
+                            <td>[Removed entirely]</td>
+                            <td>Stripped by parser regex.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Timecode Range</strong></td>
+                            <td><code>00:00:12,345 --> 00:00:15,678</code></td>
+                            <td>[Removed entirely]</td>
+                            <td>Timing arrows and timestamps eliminated.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>SDH Audio Notes</strong></td>
+                            <td><code>[MUSIC PLAYING]</code> or <code>(DOOR SLAMS)</code></td>
+                            <td>[Filtered out]</td>
+                            <td>Removed via sound effect toggle.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Spoken Dialogue</strong></td>
+                            <td><code>Welcome to our technical tutorial.</code></td>
+                            <td><code>Welcome to our technical tutorial.</code></td>
+                            <td>Retained and reformatted into paragraphs.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Ad Slot 2 Container -->
+            <div class="cms-ad-slot-2"></div>
+
+            <h2>Why Content Creators &amp; Editors Need an SRT Extractor</h2>
+            <p>
+                Content repurposing is a cornerstone of modern digital marketing and documentation. Extracting dialogue accurately saves hours of manual transcription work.
+            </p>
+            <ul>
+                <li><strong>Rapid Blog Writing:</strong> Turn video interview transcripts, webinars, and YouTube tutorials directly into SEO-optimized blog posts or show notes.</li>
+                <li><strong>Privacy &amp; Security:</strong> Because all text parsing runs 100% locally in your browser memory via JavaScript, confidential corporate meeting subtitles and client video files are never uploaded to remote servers.</li>
+                <li><strong>Clean Archives:</strong> Store readable plain-text transcripts alongside your raw video project files for effortless indexing and searching.</li>
+            </ul>
+
+            <h2>Step-by-Step Workflow Instructions</h2>
+            <p>
+                Using the subtitle cleaner requires no technical setup or account registration:
+            </p>
+            <ol>
+                <li><strong>Upload or Paste:</strong> Drag and drop your <code>.srt</code> or <code>.vtt</code> file into the drop zone, or paste your raw subtitle code directly into the left editor pane.</li>
+                <li><strong>Configure Cleaning Rules:</strong> Toggle options to strip timestamps, remove SDH audio descriptions, delete speaker labels, or join lines into flowing paragraphs.</li>
+                <li><strong>Process Text:</strong> Click the clean button to parse the dialogue instantly.</li>
+                <li><strong>Copy or Download:</strong> Copy your clean transcript to the clipboard or download it as a standard <code>.txt</code> file.</li>
+            </ol>
+
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-block">
+                <details class="faq-accordion" open>
+                    <summary class="faq-summary">How do I extract clean plain text from an SRT subtitle file?</summary>
+                    <div class="faq-answer">
+                        Upload or paste your .srt subtitle content into the cleaner tool. The utility automatically strips away numerical sequence indexes, timecode arrow ranges (00:00:00,000 --> 00:00:00,000), and HTML markup, leaving a clean, readable transcript ready for copying or text download.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">Are my subtitle files or transcripts uploaded to any external server?</summary>
+                    <div class="faq-answer">
+                        No. All text parsing, timestamp stripping, regex filtering, and file conversions run 100% locally inside your web browser using client-side JavaScript. Your subtitle files never leave your device.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">Can this tool remove SDH sound effects and speaker labels?</summary>
+                    <div class="faq-answer">
+                        Yes. You can toggle options to automatically filter out bracketed sound effect descriptors like [MUSIC] or (APPLAUSE), remove speaker name labels (e.g., JOHN:), and strip extra spacing or line breaks.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">What subtitle formats are supported by the cleaner?</summary>
+                    <div class="faq-answer">
+                        The tool fully supports standard SubRip (.srt), WebVTT (.vtt), and plain text caption structures. You can process files of various sizes instantly without server waiting times.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">How do I merge consecutive subtitle lines into flowing paragraphs?</summary>
+                    <div class="faq-answer">
+                        Simply check the 'Merge into Paragraphs' option before processing. The engine will join split caption lines into cohesive sentences and paragraphs, making it ideal for creating blog posts, show notes, or study summaries.
+                    </div>
+                </details>
+            </div>
+        </div>
+    </article>
+
+    <!-- Footer Container -->
+    <div id="global-footer"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var fileInput = document.getElementById('fileInput');
+            var dropZone = document.getElementById('dropZone');
+            var loadDemoBtn = document.getElementById('loadDemoBtn');
+            var rawInput = document.getElementById('rawInput');
+            var cleanOutput = document.getElementById('cleanOutput');
+            var inputStats = document.getElementById('inputStats');
+            
+            var removeTimestampsToggle = document.getElementById('removeTimestamps');
+            var removeSdhToggle = document.getElementById('removeSdh');
+            var mergeParagraphsToggle = document.getElementById('mergeParagraphs');
+            var removeSpeakersToggle = document.getElementById('removeSpeakers');
+            
+            var cleanBtn = document.getElementById('cleanBtn');
+            var downloadTxtBtn = document.getElementById('downloadTxtBtn');
+            var copyOutputBtn = document.getElementById('copyOutputBtn');
+
+            /* Setup Social Share Links */
+            var currentUrl = encodeURIComponent(window.location.href);
+            var shareTitle = encodeURIComponent("Check out this free SRT Subtitle Cleaner & Text Extractor tool!");
+            
+            document.getElementById('shareX').href = 'https://twitter.com/intent/tweet?url=' + currentUrl + '&text=' + shareTitle;
+            document.getElementById('shareFB').href = 'https://www.facebook.com/sharer/sharer.php?u=' + currentUrl;
+            document.getElementById('shareWA').href = 'https://api.whatsapp.com/send?text=' + shareTitle + '%20' + currentUrl;
+            document.getElementById('shareLI').href = 'https://www.linkedin.com/sharing/share-offsite/?url=' + currentUrl;
+            document.getElementById('sharePIN').href = 'https://pinterest.com/pin/create/button/?url=' + currentUrl + '&description=' + shareTitle;
+
+            var copyShareBtn = document.getElementById('copyShareLink');
+            copyShareBtn.addEventListener('click', function() {
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'SRT Subtitle Cleaner & Text Extractor',
+                        text: 'Clean SRT files and strip timestamps instantly.',
+                        url: window.location.href
+                    }).catch(function() {});
+                } else if (navigator.clipboard) {
+                    navigator.clipboard.writeText(window.location.href).then(function() {
+                        var origText = copyShareBtn.textContent;
+                        copyShareBtn.textContent = '✓ Link Copied!';
+                        setTimeout(function() { copyShareBtn.textContent = origText; }, 2000);
+                    });
+                }
+            });
+
+            dropZone.addEventListener('click', function() { fileInput.click(); });
+
+            dropZone.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                dropZone.style.borderColor = 'var(--accent-blue)';
+            });
+
+            dropZone.addEventListener('dragleave', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                dropZone.style.borderColor = 'var(--border-color)';
+            });
+
+            dropZone.addEventListener('drop', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                dropZone.style.borderColor = 'var(--border-color)';
+                if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+                    readFile(e.dataTransfer.files[0]);
+                }
+            });
+
+            fileInput.addEventListener('change', function(e) {
+                if (e.target.files && e.target.files[0]) {
+                    readFile(e.target.files[0]);
+                }
+            });
+
+            function readFile(file) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    rawInput.value = e.target.result;
+                    updateStats();
+                    processSubtitles();
+                };
+                reader.readAsText(file);
+            }
+
+            loadDemoBtn.addEventListener('click', function() {
+                rawInput.value = `1\n00:00:01,000 --> 00:00:04,500\n[MUSIC PLAYING]\nJOHN: Welcome to our advanced programmatic SEO tutorial.\n\n2\n00:00:05,000 --> 00:00:08,200\nToday we will learn how client-side calculation engines work.\n\n3\n00:00:09,000 --> 00:00:12,500\n(APPLAUSE)\nMake sure to subscribe and hit that notification bell!`;
+                updateStats();
+                processSubtitles();
+            });
+
+            rawInput.addEventListener('input', function() {
+                updateStats();
+                processSubtitles();
+            });
+
+            function updateStats() {
+                var lines = rawInput.value.split('\n').length;
+                inputStats.textContent = lines + ' lines';
+            }
+
+            function processSubtitles() {
+                var text = rawInput.value;
+                if (!text.trim()) {
+                    cleanOutput.value = '';
+                    return;
+                }
+
+                var lines = text.split(/\r?\n/);
+                var processedLines = [];
+
+                var removeTs = removeTimestampsToggle.checked;
+                var removeS = removeSdhToggle.checked;
+                var removeSp = removeSpeakersToggle.checked;
+
+                for (var i = 0; i < lines.length; i++) {
+                    var line = lines[i].trim();
+
+                    if (!line) continue;
+
+                    // Skip numeric cue indices if timestamp removal is active
+                    if (removeTs && /^\d+$/.test(line)) {
+                        // Check if next line is a timestamp to be safe
+                        if (i + 1 < lines.length && /(\d{2}:\d{2}:\d{2}[,.]\d{3})\s*-->\s*(\d{2}:\d{2}:\d{2}[,.]\d{3})/.test(lines[i+1])) {
+                            continue;
+                        }
+                    }
+
+                    // Skip timestamp lines
+                    if (removeTs && /(\d{2}:\d{2}:\d{2}[,.]\d{3})\s*-->\s*(\d{2}:\d{2}:\d{2}[,.]\d{3})/.test(line)) {
+                        continue;
+                    }
+
+                    // Skip WebVTT header
+                    if (/^WEBVTT/i.test(line) || /^Kind:/i.test(line) || /^Language:/i.test(line)) {
+                        continue;
+                    }
+
+                    // Remove SDH sound effects in brackets or parentheses if enabled
+                    if (removeS) {
+                        line = line.replace(/\[[^\]]*\]/g, '').replace(/\([^)]*\)/g, '').trim();
+                        if (!line) continue;
+                    }
+
+                    // Remove HTML / ASS formatting tags
+                    line = line.replace(/<[^>]*>/g, '').replace(/\{[^}]*\}/g, '').trim();
+
+                    // Remove speaker labels like JOHN: if enabled
+                    if (removeSp) {
+                        line = line.replace(/^[A-Z\s]+:\s*/, '');
+                    }
+
+                    if (line) {
+                        processedLines.push(line);
+                    }
+                }
+
+                var finalOutput = '';
+                if (mergeParagraphsToggle.checked) {
+                    finalOutput = processedLines.join(' ');
+                    // Clean up extra spacing
+                    finalOutput = finalOutput.replace(/\s+/g, ' ').trim();
+                } else {
+                    finalOutput = processedLines.join('\n');
+                }
+
+                cleanOutput.value = finalOutput;
+            }
+
+            var controls = [removeTimestampsToggle, removeSdhToggle, mergeParagraphsToggle, removeSpeakersToggle];
+            for (var j = 0; j < controls.length; j++) {
+                controls[j].addEventListener('change', processSubtitles);
+            }
+
+            cleanBtn.addEventListener('click', processSubtitles);
+
+            copyOutputBtn.addEventListener('click', function() {
+                if (!cleanOutput.value) return;
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(cleanOutput.value).then(function() {
+                        var orig = copyOutputBtn.textContent;
+                        copyOutputBtn.textContent = '✓ Copied!';
+                        setTimeout(function() { copyOutputBtn.textContent = orig; }, 2000);
+                    });
+                }
+            });
+
+            downloadTxtBtn.addEventListener('click', function() {
+                var content = cleanOutput.value;
+                if (!content) return;
+                var blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+                var url = URL.createObjectURL(blob);
+                var link = document.createElement('a');
+                link.href = url;
+                link.download = 'cleaned-subtitle-transcript.txt';
+                link.click();
+                URL.revokeObjectURL(url);
+            });
+
+            // Initial demo load
+            loadDemoBtn.click();
+        });
+    </script>
+
+    <!-- Global CoreMetricSuite Cross-Linking Index Hub -->
+    <div style="margin-top: 40px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #f8fafc; font-family: system-ui, -apple-system, sans-serif;">
+        <h3 style="margin: 0 0 15px 0; font-size: 18px; color: #0f172a; font-weight: 600;">🛠️ CoreMetricSuite Utility Directory</h3>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇦🇺 Australia Tax &amp; Labor</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a href="../au-cents-per-km-estimator/" style="color: #2563eb; text-decoration: underline;">Cents-Per-Km Tax Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a href="../au-schads-vehicle-allowance/" style="color: #2563eb; text-decoration: underline;">SCHADS Vehicle Allowance</a></li>
+                    <li style="margin-bottom: 4px;"><a href="../au-superannuation-charge-tracker/" style="color: #2563eb; text-decoration: underline;">Superannuation Tracker</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇺🇸 US Corporate Tax</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a href="../us-llc-late-penalty-estimator/" style="color: #2563eb; text-decoration: underline;">LLC Late Tax Penalty</a></li>
+                    <li style="margin-bottom: 4px;"><a href="../us-section-179-truck-calculator/" style="color: #2563eb; text-decoration: underline;">Section 179 Vehicle Deduction</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇬🇧 UK Property Management</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a href="../uk-form-4a-rent-tracker/" style="color: #2563eb; text-decoration: underline;">Form 4A Rent Tracker</a></li>
+                    <li style="margin-bottom: 4px;"><a href="../uk-sdlt-bracket-estimator/" style="color: #2563eb; text-decoration: underline;">Stamp Duty Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a href="../uk-section-8-calculator/" style="color: #2563eb; text-decoration: underline;">Section 8 Calculator</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🎬 Digital Media Layouts</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a href="../instagram-reels-preview/" style="color: #2563eb; text-decoration: underline;">Instagram Reels Grid</a></li>
+                    <li style="margin-bottom: 4px;"><a href="../facebook-ad-safe-zone/" style="color: #2563eb; text-decoration: underline;">Facebook 9:16 Ad Mask</a></li>
+                    <li style="margin-bottom: 4px;"><a href="../shorts-ui-safe-zone/" style="color: #2563eb; text-decoration: underline;">YouTube Shorts Safe Zone</a></li>
+                    <li style="margin-bottom: 4px;"><a href="../tiktok-ad-safe-zone/" style="color: #2563eb; text-decoration: underline;">TikTok Ad Checker</a></li>
+                    <li style="margin-bottom: 4px;"><span style="font-weight: 600; color: #0f172a;">SRT Subtitle Cleaner (Current)</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
