@@ -15,16 +15,33 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Run Bug-Proof Cache Buster
+        run: |
+          if [ -f "config.js" ]; then
+            # 1. Calculate a unique 8-character fingerprint from config.js content
+            HASH=$(md5sum config.js | cut -c1-8)
+            echo "🔄 Generated cache-busting fingerprint for config.js: $HASH"
+            
+            # 2. Automatically find and patch every single vanilla HTML page safely
+            find . -name "*.html" -type f | while read -r file; do
+              perl -pi -e "s|src=\"\/?config\.js\?v=[^\"]*\"|src=\"/config.js?v=$HASH\"|g" "$file"
+              echo "Successfully cache-busted template layer: $file"
+            done
+          else
+            echo "⚠️ Warning: config.js not found in root. Skipping cache busting loop."
+          fi
+
       - name: Auto Generate Sitemap From HTML Files
         uses: cicirello/generate-sitemap@v1
         with:
           base-url-path: https://coremetricsuite.com/
           drop-html-extension: true
 
-      - name: Commit and Push Sitemap to Branch
+      - name: Commit and Push Updates to Branch
         run: |
           git config --global user.name 'Sitemap Bot'
           git config --global user.email 'bot@github.com'
-          git add sitemap.xml
-          git commit -am "Deploy updated sitemap.xml" || echo "No changes to commit"
+          # Stage both the sitemap changes and any updated HTML files
+          git add sitemap.xml *.html
+          git commit -am "Deploy updated sitemap.xml and automated cache bust" || echo "No changes to commit"
           git push
