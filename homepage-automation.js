@@ -24,13 +24,18 @@ document.addEventListener('DOMContentLoaded', () => {
      * template rendering, and pagination UI adjustments.
      */
     function renderView() {
-        // Step A: Filter tools array matching active region mapping matrix dynamically
-        const filteredData = toolsData.filter(tool => {
+        // Step A: Use your correct 'toolsCatalog' array safely [image_nm56u9.png]
+        if (typeof toolsCatalog === 'undefined' || !Array.isArray(toolsCatalog)) {
+            console.error("⚠️ Core Metric Suite Error: 'toolsCatalog' array not found.");
+            return;
+        }
+
+        const filteredData = toolsCatalog.filter(tool => {
             if (currentFilter === 'all') return true;
             
             // Normalize inputs to lowercase to prevent case-matching errors
             const filterLower = currentFilter.toLowerCase();
-            const badgeLower = (tool.badgeText || '').toLowerCase().trim();
+            const badgeLower = (tool.tag || '').toLowerCase().trim(); // Matches your '.tag' property [image_nm56u9.png]
             
             // 1. Handle regional filters dynamically by matching prefixes (au, us, uk)
             if (['au', 'us', 'uk'].includes(filterLower)) {
@@ -53,35 +58,37 @@ document.addEventListener('DOMContentLoaded', () => {
         const currentSlice = filteredData.slice(startIndex, startIndex + itemsPerPage);
 
         // Step C: Clean out existing placeholders/cards safely
-        gridContainer.innerHTML = '';
+        if (gridContainer) gridContainer.innerHTML = '';
 
         // Step D: Manage empty fallback bounds states
         if (filteredData.length === 0) {
             if (noResultsBlock) noResultsBlock.style.display = 'block';
-            paginationContainer.innerHTML = '';
+            if (paginationContainer) paginationContainer.innerHTML = '';
             return;
         } else {
             if (noResultsBlock) noResultsBlock.style.display = 'none';
         }
 
-        // Step E: Loop and mount clean card components (Inherits styles from global.css)
+        // Step E: Loop and mount clean card components
         currentSlice.forEach(tool => {
             const article = document.createElement('article');
             article.className = 'cms-tool-card';
-            article.setAttribute('data-region', tool.region || '');
-            article.setAttribute('data-keywords', tool.keywords || '');
             
+            // Fallback badge color if not specified in your config array
+            const badgeColor = tool.badgeColor || 'var(--cms-text-muted, #71717a)';
+            
+            // Using your exact properties: .tag, .name, .url, and .description [image_nm56u9.png]
             article.innerHTML = `
                 <div class="cms-card-content">
-                    <span class="cms-badge-hdr" style="color: ${tool.badgeColor || '#000'};">${tool.badgeText || ''}</span>
-                    <h2 class="cms-toast-title">${tool.title || ''}</h2>
-                    <p>${tool.description || ''}</p>
+                    <span class="cms-badge-hdr" style="color: ${badgeColor};">${tool.tag || ''}</span>
+                    <h2 class="cms-toast-title">${tool.name || ''}</h2>
+                    <p>${tool.description || 'Browser-side compliance utility calculation tool.'}</p>
                 </div>
                 <div class="cms-card-footer">
                     <a href="${tool.url || '#'}" class="cms-btn-launch-utility">Launch Utility</a>
                 </div>
             `;
-            gridContainer.appendChild(article);
+            if (gridContainer) gridContainer.appendChild(article);
         });
 
         // Step F: Refresh Pagination Number Controls dynamically
@@ -92,6 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
      * Pagination Controls Builder: Dynamically generates number selectors.
      */
     function renderPaginationControls(totalPages) {
+        if (!paginationContainer) return;
         paginationContainer.innerHTML = '';
         if (totalPages <= 1) return;
 
@@ -105,7 +113,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 currentPage = i;
                 renderView();
                 
-                // Adjust viewport scroll offset smoothly back up to view tools list area
                 const yOffset = -20; 
                 const y = scrollTarget.getBoundingClientRect().top + window.scrollY + yOffset;
                 window.scrollTo({top: y, behavior: 'smooth'});
@@ -122,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
             e.currentTarget.classList.add('active');
             
             currentFilter = e.currentTarget.getAttribute('data-filter');
-            currentPage = 1; // Reset to page 1 on layout category shift
+            currentPage = 1; 
             renderView();
         });
     });
