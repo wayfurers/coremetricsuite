@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UGC Freelance Rate &amp; Usage Rights Worksheet (2026 Calculator)</title>
+    <meta name="description" content="Calculate fair UGC creator rates, paid ad usage rights, whitelisting fees, raw footage licensing, and exclusivity surcharges. Free 2026 rate card generator for creators and brands.">
+    <meta name="keywords" content="ugc freelance rate calculator, ugc usage rights calculator, ugc creator rate card, paid ad usage rights ugc, spark ads whitelisting fee, ugc raw footage pricing, ugc retainer pricing 2026">
+    <link rel="canonical" href="https://coremetricsuite.com/ugc-freelance-rate-usage-rights-worksheet/">
+
+    <!-- Open Graph / Social Metadata -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="UGC Freelance Rate &amp; Usage Rights Worksheet (2026)">
+    <meta property="og:description" content="Itemize user-generated content creation fees, organic vs. paid ad licensing, whitelisting, raw footage, and usage rights duration with precision.">
+    <meta property="og:url" content="https://coremetricsuite.com/ugc-freelance-rate-usage-rights-worksheet/">
+    
+    <!-- Global Framework Dependencies -->
+    <link rel="stylesheet" href="/css/global.css">
+    <script src="/config.js" defer></script>
+    <script src="/global.min.js" defer></script>
+
+    <!-- FAQ JSON-LD Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How do you calculate usage rights fees for UGC videos in 2026?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "UGC usage rights are calculated as a percentage markup on top of your base creation fee. Standard 2026 industry benchmarks add +30% for 30 days of paid ad usage, +50% for 90 days, +80% for 180 days, +120% for 1 year, and +175% to +200% for a full perpetual buyout."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between organic UGC usage and paid ad licensing?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Organic usage permits a brand to post the UGC video strictly on their own social channels (TikTok feed, IG Reels grid) for standard brand awareness. Paid ad usage grants the brand rights to run your content as a paid advertisement (TikTok Spark Ads, Meta Dark Posts) across digital ad managers, exposing your face to millions of targeted users."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How much extra should creators charge for raw footage and whitelisting?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Raw footage gives brands all unedited B-roll clips and video files to create endless ad variations; creators typically charge an additional 50% of the base creation fee for raw footage. Whitelisting (Spark Ads / Creator Handle Ads) grants access to run ads directly through your handle, which commands a $150 to $250 flat fee per video or a +25% fee uplift."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is category exclusivity and how should UGC creators price it?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Category exclusivity restricts a creator from creating content for competing brands within the same industry (e.g., skincare or beverage brands) for a specified timeframe. Because this prevents creators from taking on other paid opportunities, exclusivity should be priced at +30% for 30 days and +60% to +100% for 90 days or longer."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why do B2B SaaS and Fintech UGC videos command higher rates than beauty or lifestyle?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "B2B SaaS, tech, and financial UGC requires specialized domain knowledge, script comprehension, compliance adhering, and targets higher customer lifetime value (LTV) audiences. Advertisers in high-commercial niches pay CPM premiums, enabling creators to charge a 30% to 60% niche multiplier."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-main: #0f1117;
+            --bg-card: #181b24;
+            --bg-input: #222634;
+            --border-color: #2e3446;
+            --accent-blue: #1877f2;
+            --accent-cyan: #00f2fe;
+            --accent-pink: #ff0050;
+            --accent-green: #10b981;
+            --accent-amber: #f59e0b;
+            --accent-purple: #a855f7;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: var(--bg-main); color: var(--text-primary); font-family: var(--font-sans); line-height: 1.6; }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            grid-template-areas: 
+                "upload preview"
+                "panel preview";
+            gap: 2rem;
+        }
+
+        .upload-card-wrapper {
+            grid-area: upload;
+        }
+
+        .panel {
+            grid-area: panel;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            height: fit-content;
+        }
+
+        .panel-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+            color: #fff;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        .drop-zone {
+            border: 2px dashed var(--border-color);
+            padding: 1.25rem;
+            text-align: center;
+            border-radius: 8px;
+            background-color: var(--bg-input);
+            cursor: pointer;
+            transition: border-color 0.2s, background-color 0.2s;
+            margin-bottom: 0.75rem;
+        }
+
+        .drop-zone:hover { border-color: var(--accent-cyan); background-color: rgba(0, 242, 254, 0.05); }
+        .drop-title { font-weight: 600; color: #fff; font-size: 0.95rem; }
+        .drop-sub { font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px; }
+
+        .preset-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .btn-demo {
+            width: 100%;
+            padding: 0.6rem 0.5rem;
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            color: var(--accent-cyan);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.78rem;
+            transition: background-color 0.2s, border-color 0.2s;
+            text-align: center;
+        }
+
+        .btn-demo:hover { background-color: #2a2f42; border-color: var(--accent-cyan); }
+
+        .toggle-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: var(--bg-input);
+            padding: 0.75rem 0.85rem;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 0.75rem;
+        }
+
+        .toggle-label { font-size: 0.85rem; font-weight: 500; color: var(--text-primary); }
+
+        .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #374151; transition: .3s; border-radius: 24px;
+        }
+        .slider:before {
+            position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px;
+            background-color: white; transition: .3s; border-radius: 50%;
+        }
+        input:checked + .slider { background-color: var(--accent-purple); }
+        input:checked + .slider:before { transform: translateX(20px); }
+
+        .form-group { margin-bottom: 1.25rem; }
+        .range-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem; }
+        .range-value { font-size: 0.85rem; font-weight: 700; color: var(--accent-cyan); }
+        label { display: block; font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 0.4rem; }
+        input[type="text"], input[type="number"], textarea, select {
+            width: 100%; padding: 0.65rem 0.85rem; background-color: var(--bg-input);
+            border: 1px solid var(--border-color); border-radius: 6px; color: #fff;
+            font-size: 0.9rem; outline: none; font-family: inherit;
+        }
+        input[type="range"] {
+            width: 100%; height: 6px; background: var(--bg-input); border-radius: 3px;
+            outline: none; -webkit-appearance: none; accent-color: var(--accent-purple);
+        }
+        input[type="text"]:focus, input[type="number"]:focus, textarea:focus, select:focus { border-color: var(--accent-purple); }
+
+        .btn-action {
+            width: 100%; padding: 0.85rem; background: linear-gradient(135deg, var(--accent-purple), #7e22ce);
+            color: #fff; font-weight: 600; border: none; border-radius: 6px; cursor: pointer; font-size: 0.95rem;
+            box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3);
+            transition: transform 0.1s, opacity 0.2s;
+            margin-bottom: 1rem;
+        }
+        .btn-action:hover { opacity: 0.95; }
+        .btn-action:active { transform: scale(0.99); }
+
+        /* Social Share Button Module */
+        .social-share-container {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        .share-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
+            display: block;
+            text-align: center;
+        }
+        .share-buttons-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+        }
+        .btn-share {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            padding: 0.5rem 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: opacity 0.2s, transform 0.1s;
+        }
+        .btn-share:hover { opacity: 0.88; }
+        .btn-share:active { transform: scale(0.97); }
+        .btn-share-x { background-color: #000000; border: 1px solid #333; }
+        .btn-share-fb { background-color: #1877f2; }
+        .btn-share-li { background-color: #0a66c2; }
+        .btn-share-wa { background-color: #25d366; color: #000; }
+        .btn-share-pin { background-color: #e60023; }
+        .btn-share-copy { background-color: #374151; color: #fff; grid-column: span 3; margin-top: 0.25rem; }
+
+        .preview-stage { 
+            grid-area: preview;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+        }
+        .canvas-wrapper {
+            position: relative; width: 320px; height: 568px; border-radius: 16px;
+            overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.6); background-color: #000;
+            border: 2px solid var(--border-color);
+        }
+        canvas { width: 100%; height: 100%; display: block; }
+        .canvas-caption { margin-top: 1rem; font-size: 0.85rem; color: var(--text-secondary); text-align: center; }
+
+        /* Metric Highlights Grid below Canvas */
+        .metric-summary-grid {
+            width: 100%;
+            max-width: 320px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+        .metric-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.85rem;
+            text-align: center;
+        }
+        .metric-card-title { font-size: 0.725rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; }
+        .metric-card-value { font-size: 1.05rem; font-weight: 700; color: #fff; }
+        .metric-card-value.highlight { color: var(--accent-green); }
+
+        .content-area { max-width: 1200px; margin: 3rem auto; padding: 0 1.5rem; }
+        .content-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 2.5rem; }
+        .content-card h1 { font-size: 2rem; margin-bottom: 1rem; color: #fff; }
+        .content-card h2 { font-size: 1.4rem; margin: 1.8rem 0 1rem; color: #fff; }
+        .content-card p { color: var(--text-secondary); margin-bottom: 1.2rem; }
+        .content-card ul, .content-card ol { color: var(--text-secondary); margin: 0 0 1.2rem 1.5rem; }
+        .content-card li { margin-bottom: 0.5rem; }
+
+        .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 1.5rem 0; }
+        .spec-table { width: 100%; border-collapse: collapse; text-align: left; min-width: 600px; }
+        .spec-table th, .spec-table td { padding: 0.85rem 1rem; border: 1px solid var(--border-color); }
+        .spec-table th { background-color: var(--bg-input); color: #fff; font-size: 0.9rem; }
+        .spec-table td { color: var(--text-secondary); font-size: 0.875rem; }
+
+        /* Accordion FAQ Styling */
+        .faq-block { margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem; }
+        .faq-accordion {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 0.85rem;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .faq-accordion[open] { border-color: var(--accent-purple); }
+        .faq-summary {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            padding: 1rem 1.2rem;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+        .faq-summary::-webkit-details-marker { display: none; }
+        .faq-summary::after {
+            content: "+";
+            font-size: 1.2rem;
+            color: var(--accent-purple);
+            transition: transform 0.2s;
+        }
+        .faq-accordion[open] .faq-summary::after {
+            content: "−";
+            color: var(--accent-purple);
+        }
+        .faq-answer {
+            padding: 0 1.2rem 1.2rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 0.4rem;
+            padding-top: 0.8rem;
+        }
+
+        .cms-ad-slot-1, .cms-ad-slot-2 {
+            width: 100%; max-width: 970px; min-height: 90px; margin: 1.5rem auto;
+            background: rgba(255,255,255,0.02); border-radius: 8px; display: block;
+        }
+
+        .alert-banner {
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            font-size: 0.825rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            display: none;
+        }
+        .alert-banner.info {
+            background-color: rgba(168, 85, 247, 0.15);
+            border: 1px solid var(--accent-purple);
+            color: #c084fc;
+        }
+
+        /* Mobile Responsive Overrides */
+        @media screen and (max-width: 900px) {
+            html, body { width: 100%!important; max-width: 100vw!important; overflow-x: hidden!important; margin: 0!important; padding: 0!important; }
+            main.container { display: flex!important; flex-direction: column!important; width: 100%!important; max-width: 100%!important; padding: 0 12px!important; margin: 8px auto!important; gap: 16px!important; box-sizing: border-box!important; }
+            .upload-card-wrapper { order: 1!important; width: 100%!important; }
+            main.container > section.preview-stage { order: 2!important; width: 100%!important; display: flex!important; flex-direction: column!important; align-items: center!important; margin: 0 auto!important; box-sizing: border-box!important; }
+            main.container > section.panel { order: 3!important; width: 100%!important; max-width: 100%!important; box-sizing: border-box!important; }
+            .canvas-wrapper { width: 75vw!important; height: 133.33vw!important; max-width: 290px!important; max-height: 515px!important; margin: 0 auto!important; box-sizing: border-box!important; }
+            input, textarea, select { font-size: 16px!important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Container -->
+    <div id="global-header"></div>
+
+    <!-- Ad Slot 1 Container -->
+    <div class="cms-ad-slot-1" id="cms-ad-slot-top"></div>
+
+    <!-- Main Tool Container -->
+    <main class="container">
+        <!-- Module 1: Creator Experience, Deliverables & Base Scope (Rendered 1st on mobile) -->
+        <div class="upload-card-wrapper">
+            <div class="panel">
+                <div class="panel-title">
+                    <span>Base Deliverables &amp; Scope</span>
+                    <span class="badge">STEP 1</span>
+                </div>
+                
+                <div class="drop-zone" id="dropZone">
+                    <p class="drop-title">⚡ Quick Deal Scope Presets</p>
+                    <p class="drop-sub">Select a 2026 industry campaign scenario</p>
+                </div>
+
+                <div class="preset-grid">
+                    <button class="btn-demo" id="presetBeauty" type="button">✨ Beauty Organic</button>
+                    <button class="btn-demo" id="presetSaas" type="button">🚀 B2B SaaS Paid</button>
+                    <button class="btn-demo" id="presetFintech" type="button">💰 Fintech Full</button>
+                    <button class="btn-demo" id="presetGaming" type="button">🎮 Gaming App</button>
+                </div>
+
+                <div class="form-group">
+                    <label for="experienceTier">Creator Experience Level</label>
+                    <select id="experienceTier">
+                        <option value="beginner">Beginner (0 – 10 Delivered Briefs) [$100 - $180 Base]</option>
+                        <option value="intermediate" selected>Intermediate (10 – 50 Briefs / Solid Portfolio) [$200 - $350 Base]</option>
+                        <option value="experienced">Experienced / Niche Specialist (50+ Briefs / High Conversion) [$400 - $750 Base]</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <div class="range-header">
+                        <label for="numVideos">Number of Deliverable Videos</label>
+                        <span class="range-value" id="numVideosDisplay">1 Video</span>
+                    </div>
+                    <input type="range" id="numVideosRange" min="1" max="10" step="1" value="1">
+                    <input type="number" id="numVideos" value="1" min="1" max="20" style="margin-top: 6px;">
+                </div>
+
+                <div class="form-group">
+                    <label for="videoLength">Video Length &amp; Format</label>
+                    <select id="videoLength">
+                        <option value="15s">15 Seconds (Quick Hook / Short Clip) [0.85x Multiplier]</option>
+                        <option value="30s" selected>30 Seconds (Standard UGC Ad) [1.00x Base]</option>
+                        <option value="60s">60 Seconds (In-Depth Review / Talking Head) [1.45x Multiplier]</option>
+                        <option value="photos">Photo Set (3 – 5 High-Res Product Shots) [0.75x Multiplier]</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="contentFormat">Creative Format Type</label>
+                    <select id="contentFormat">
+                        <option value="standard" selected>Standard Review / Testimonial Clip</option>
+                        <option value="unboxing">Unboxing &amp; Visual Product Demo (+15%)</option>
+                        <option value="pas">Problem-Agitate-Solution Direct Response (+25%)</option>
+                        <option value="aesthetic">Aesthetic Product Showcase / B-Roll (+0%)</option>
+                    </select>
+                </div>
+
+                <div class="alert-banner info" id="bundleAlert" style="display: block;">
+                    💡 Bulk Discount Applied: Ordering multiple videos automatically bundles production savings!
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 2: Live Canvas Stage & Metrics Display (Rendered 2nd on mobile) -->
+        <section class="preview-stage">
+            <div class="canvas-wrapper">
+                <canvas id="previewCanvas" width="1080" height="1920"></canvas>
+            </div>
+            <p class="canvas-caption">
+                Interactive UGC Rate Card &amp; Licensing Sheet Visualizer. Updates live with 2026 rates.
+            </p>
+
+            <div class="metric-summary-grid">
+                <div class="metric-card">
+                    <div class="metric-card-title">Est. Total Project Quote</div>
+                    <div class="metric-card-value highlight" id="cardTotalQuote">$350 - $610</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-card-title">Base Creation Fee</div>
+                    <div class="metric-card-value" id="cardBaseFee">$275</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-card-title">Licensing &amp; Usage Rights</div>
+                    <div class="metric-card-value" id="cardUsageFee">$138</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-card-title">Effective Per-Video Rate</div>
+                    <div class="metric-card-value highlight" id="cardEffectivePerVideo">$480</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Module 3: Licensing Rights, Niche & Add-Ons Panel (Rendered 3rd on mobile) -->
+        <section class="panel">
+            <div class="panel-title">
+                <span>Licensing &amp; Usage Add-Ons</span>
+                <span class="badge">2026 TERMS SPECS</span>
+            </div>
+
+            <div class="form-group">
+                <label for="nicheSelect">Industry Category / Niche</label>
+                <select id="nicheSelect">
+                    <option value="saas">B2B SaaS &amp; Digital Tools (1.45x Premium)</option>
+                    <option value="fintech">Fintech, Crypto &amp; Finance (1.55x Premium)</option>
+                    <option value="health">Health, Fitness &amp; Supplements (1.20x Premium)</option>
+                    <option value="beauty" selected>Beauty, Skincare &amp; Fashion (1.10x Premium)</option>
+                    <option value="home">Home Goods, Kitchen &amp; Pets (1.00x Base)</option>
+                    <option value="food">Food, Beverage &amp; Snacks (0.95x Standard)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="usageRights">Paid Ad Usage Rights Duration</label>
+                <select id="usageRights">
+                    <option value="organic" selected>Organic Social Posting Only (3 Months Included - $0)</option>
+                    <option value="paid30">Paid Ad Rights — 30 Days (+30% of Creation Fee)</option>
+                    <option value="paid90">Paid Ad Rights — 90 Days / 3 Months (+50% of Creation Fee)</option>
+                    <option value="paid180">Paid Ad Rights — 180 Days / 6 Months (+80% of Creation Fee)</option>
+                    <option value="paid1yr">Paid Ad Rights — 1 Year (+120% of Creation Fee)</option>
+                    <option value="perpetual">Perpetual Buyout / Lifetime Rights (+175% Fee Uplift)</option>
+                </select>
+            </div>
+
+            <div class="toggle-group">
+                <span class="toggle-label">Whitelisting / Spark Ads Access (+$150/vid)</span>
+                <label class="switch">
+                    <input type="checkbox" id="whitelistingToggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="toggle-group">
+                <span class="toggle-label">Raw Footage Handover (+50% Creation Fee)</span>
+                <label class="switch">
+                    <input type="checkbox" id="rawFootageToggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="toggle-group">
+                <span class="toggle-label">3 Extra Hook Variations Pack (+$100/vid)</span>
+                <label class="switch">
+                    <input type="checkbox" id="extraHooksToggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="exclusivityScope">Category Exclusivity Scope</label>
+                <select id="exclusivityScope">
+                    <option value="none" selected>No Exclusivity (Free to work with competitors)</option>
+                    <option value="30days">30 Days Industry Exclusivity (+30% Fee Surcharge)</option>
+                    <option value="90days">90 Days Industry Exclusivity (+60% Fee Surcharge)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="turnaroundSpeed">Turnaround Speed / Delivery</label>
+                <select id="turnaroundSpeed">
+                    <option value="standard" selected>Standard Delivery (5 – 7 Business Days)</option>
+                    <option value="rush72">Rush Delivery (&lt; 72 Hours) [+25% Speed Fee]</option>
+                    <option value="rush24">Super Rush Delivery (&lt; 24 Hours) [+50% Speed Fee]</option>
+                </select>
+            </div>
+
+            <button class="btn-action" id="downloadBtn" type="button">Export Detailed Rate Card Sheet (PNG)</button>
+
+            <!-- Social Media Share Section -->
+            <div class="social-share-container">
+                <span class="share-label">Share This Rate Calculator</span>
+                <div class="share-buttons-grid">
+                    <a id="shareX" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-x">𝕏 Post</a>
+                    <a id="shareFB" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-fb">Facebook</a>
+                    <a id="shareWA" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-wa">WhatsApp</a>
+                    <a id="shareLI" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-li">LinkedIn</a>
+                    <a id="sharePIN" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-pin">Pinterest</a>
+                    <button id="copyShareLink" type="button" class="btn-share btn-share-copy">🔗 Copy Tool Link</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- SEO & Educational Guide Section -->
+    <article class="content-area">
+        <div class="content-card">
+            <h1>UGC Freelance Rate &amp; Usage Rights Worksheet (2026 Creator Pricing Guide)</h1>
+            <p>
+                As direct-to-consumer (DTC) brands, digital agencies, and B2B SaaS companies shift ad budgets toward organic-feeling performance creative, <strong>User-Generated Content (UGC)</strong> has evolved into a multi-billion dollar creator economy discipline. However, pricing UGC remains one of the greatest hurdles for freelance creators and brand marketers alike. Creators regularly undercharge by giving away perpetual ad usage rights for free, while brands struggle to itemize licensing, raw footage, and whitelisting surcharges.
+            </p>
+            <p>
+                This interactive <strong>ugc-freelance-rate-usage-rights-worksheet</strong> provides a standardized, industry-tested financial model for 2026. Built on real deal benchmarks across top verticals, this utility itemizes base content creation fees, paid ad usage duration, Spark Ads whitelisting, raw footage handovers, category exclusivity, and rush delivery fees into a defensible project quote.
+            </p>
+
+            <h2>The Core UGC Pricing Formula: Creation Fee vs. Usage Licensing</h2>
+            <p>
+                The fundamental principle of professional UGC pricing is the strict separation between <strong>Content Creation (Labor &amp; Asset Creation)</strong> and <strong>Usage Rights (Commercial Licensing)</strong>. A creator's follower count is irrelevant when creating UGC, because the content is produced for the brand's channels or paid ad accounts rather than being posted to the creator's personal feed.
+            </p>
+            <p>
+                The overarching mathematical formula governing a total UGC project quote is expressed as:
+            </p>
+            <blockquote style="background-color: var(--bg-input); padding: 1rem 1.25rem; border-left: 4px solid var(--accent-purple); border-radius: 4px; margin: 1rem 0; font-weight: 600; color: #fff;">
+                Total Quote ($) = [ (Base Creation Fee × Video Quantity × Length Multiplier × Format Multiplier × Niche Multiplier) × Bulk Bundle Discount ] + Paid Usage Rights Fee + Add-Ons (Whitelisting + Raw Footage + Extra Hooks) + Exclusivity Surcharge + Rush Speed Fee
+            </blockquote>
+
+            <h2>Understanding UGC Usage Rights: Organic vs. Paid Ads vs. Perpetuity</h2>
+            <p>
+                Usage rights dictate where, how, and for how long a brand can utilize your image, voice, and video performance. Standard baseline rates include <strong>Organic Usage</strong> (posting the finished video to the brand's owned TikTok, Instagram Reels, or YouTube Shorts feeds for up to 3 months).
+            </p>
+            <p>
+                When a brand intends to push your video into paid advertising managers (Meta Ads Manager, TikTok Ads Manager, Google Video Ads), they are scaling your likeness to millions of potential buyers. This requires paid ad licensing:
+            </p>
+
+            <div class="table-responsive">
+                <table class="spec-table">
+                    <thead>
+                        <tr>
+                            <th>Usage Rights Tier</th>
+                            <th>Scope &amp; Channel Distribution</th>
+                            <th>Standard Fee Uplift</th>
+                            <th>Best Practice Application</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Organic Social Only</strong></td>
+                            <td>Brand's owned social media profiles (TikTok, IG Reels, YT Shorts)</td>
+                            <td>Included (Base Rate)</td>
+                            <td>Standard baseline for initial testing or organic feed updates (usually 3 months).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>30-Day Paid Ad Rights</strong></td>
+                            <td>Paid ad campaigns across Meta, TikTok, YouTube Shorts, &amp; Pinterest Ads</td>
+                            <td>+30% of Creation Fee</td>
+                            <td>Ideal for short-term testing campaigns, seasonal promos, or holiday product drops.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>90-Day Paid Ad Rights</strong></td>
+                            <td>Quarterly paid ad campaigns with full digital ad manager distribution</td>
+                            <td>+50% of Creation Fee</td>
+                            <td>The 2026 standard benchmark for DTC ad testing and scaling top-performing hooks.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>180-Day (6 Mo) Paid Ad Rights</strong></td>
+                            <td>Semi-annual performance ad campaign usage</td>
+                            <td>+80% of Creation Fee</td>
+                            <td>Recommended for evergreen ad creative that runs across multiple channels.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>1-Year Paid Ad Rights</strong></td>
+                            <td>12 months of paid ad usage across digital, website landing pages, &amp; OTT</td>
+                            <td>+120% of Creation Fee</td>
+                            <td>High-value brand campaigns requiring long-term media buying stability.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Perpetual Buyout</strong></td>
+                            <td>Unlimited, permanent commercial ownership &amp; distribution rights</td>
+                            <td>+175% to +200%+</td>
+                            <td>Should be heavily priced or avoided; grants the brand infinite rights with zero future residual pay.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Ad Slot 2 Container -->
+            <div class="cms-ad-slot-2"></div>
+
+            <h2>2026 UGC Rate Benchmarks by Experience &amp; Niche</h2>
+            <p>
+                Base creation fees vary depending on the creator's experience, technical filming equipment, scripting proficiency, and industry niche CPMs. High-margin niches like B2B SaaS, Finance, and Crypto command higher rates than saturated consumer verticals.
+            </p>
+
+            <div class="table-responsive">
+                <table class="spec-table">
+                    <thead>
+                        <tr>
+                            <th>Industry Vertical / Niche</th>
+                            <th>Niche Multiplier</th>
+                            <th>Beginner Rate (Per Video)</th>
+                            <th>Intermediate Rate</th>
+                            <th>Experienced / Specialist Rate</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Fintech, Crypto &amp; Finance</strong></td>
+                            <td><strong style="color: var(--accent-green);">1.55x (Highest)</strong></td>
+                            <td>$155 – $280</td>
+                            <td>$310 – $540</td>
+                            <td>$620 – $1,160+</td>
+                        </tr>
+                        <tr>
+                            <td><strong>B2B SaaS, Software &amp; Apps</strong></td>
+                            <td><strong style="color: var(--accent-green);">1.45x (High)</strong></td>
+                            <td>$145 – $260</td>
+                            <td>$290 – $500</td>
+                            <td>$580 – $1,080+</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Health, Wellness &amp; Supplements</strong></td>
+                            <td><strong style="color: var(--accent-cyan);">1.20x (Moderate)</strong></td>
+                            <td>$120 – $215</td>
+                            <td>$240 – $420</td>
+                            <td>$480 – $900+</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Beauty, Skincare &amp; Fashion</strong></td>
+                            <td><strong style="color: var(--accent-cyan);">1.10x (Standard)</strong></td>
+                            <td>$110 – $200</td>
+                            <td>$220 – $385</td>
+                            <td>$440 – $825+</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Home Goods, Kitchen &amp; Pets</strong></td>
+                            <td><strong style="color: var(--text-secondary);">1.00x (Baseline)</strong></td>
+                            <td>$100 – $180</td>
+                            <td>$200 – $350</td>
+                            <td>$400 – $750+</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Food, Beverage &amp; Quick Snacks</strong></td>
+                            <td><strong style="color: var(--accent-amber);">0.95x (Saturated)</strong></td>
+                            <td>$95 – $170</td>
+                            <td>$190 – $330</td>
+                            <td>$380 – $710+</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2>Essential UGC Add-Ons: Whitelisting, Raw Footage &amp; Extra Hooks</h2>
+            <p>
+                Maximize contract revenue by itemizing specific technical add-ons that deliver immense media buyer utility:
+            </p>
+            <ul>
+                <li><strong>Whitelisting / Spark Ads Access (+$150/video or +25% uplift):</strong> Allows the brand to run paid ads through your personal social handle (e.g., @creatorhandle) rather than the brand's page. Spark Ads increase click-through rates (CTR) by looking authentic, but tie your personal handle directly to an ad campaign.</li>
+                <li><strong>Raw Footage Handover (+50% of Creation Fee):</strong> Handing over all unedited, raw video clips (B-roll, alternate takes, voiceover stems) enables the brand's in-house video editor to slice 10+ ad variations. Because raw footage cuts into future re-booking potential, it commands a 50% premium.</li>
+                <li><strong>3 Extra Hook Variations Pack (+$100/video):</strong> The first 3 seconds of a video ad dictate 80% of its performance. Delivering 3 alternate opening hooks (e.g., negative call-out, visually shocking action, curiosity question) allows media buyers to A/B test hooks without re-shooting the core body of the video.</li>
+                <li><strong>Category Exclusivity (+30% to +60% Surcharge):</strong> Preventing a creator from accepting brand deals from direct industry competitors for 30 to 90 days creates real lost opportunity costs that must be compensated.</li>
+            </ul>
+
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-block">
+                <details class="faq-accordion" open>
+                    <summary class="faq-summary">How do you calculate usage rights fees for UGC videos in 2026?</summary>
+                    <div class="faq-answer">
+                        UGC usage rights are calculated as a percentage markup on top of your base creation fee. Standard 2026 industry benchmarks add +30% for 30 days of paid ad usage, +50% for 90 days, +80% for 180 days, +120% for 1 year, and +175% to +200% for a full perpetual buyout.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">What is the difference between organic UGC usage and paid ad licensing?</summary>
+                    <div class="faq-answer">
+                        Organic usage permits a brand to post the UGC video strictly on their own social channels (TikTok feed, IG Reels grid) for standard brand awareness. Paid ad usage grants the brand rights to run your content as a paid advertisement (TikTok Spark Ads, Meta Dark Posts) across digital ad managers, exposing your face to millions of targeted users.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">How much extra should creators charge for raw footage and whitelisting?</summary>
+                    <div class="faq-answer">
+                        Raw footage gives brands all unedited B-roll clips and video files to create endless ad variations; creators typically charge an additional 50% of the base creation fee for raw footage. Whitelisting (Spark Ads / Creator Handle Ads) grants access to run ads directly through your handle, which commands a $150 to $250 flat fee per video or a +25% fee uplift.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">What is category exclusivity and how should UGC creators price it?</summary>
+                    <div class="faq-answer">
+                        Category exclusivity restricts a creator from creating content for competing brands within the same industry (e.g., skincare or beverage brands) for a specified timeframe. Because this prevents creators from taking on other paid opportunities, exclusivity should be priced at +30% for 30 days and +60% to +100% for 90 days or longer.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">Why do B2B SaaS and Fintech UGC videos command higher rates than beauty or lifestyle?</summary>
+                    <div class="faq-answer">
+                        B2B SaaS, tech, and financial UGC requires specialized domain knowledge, script comprehension, compliance adhering, and targets higher customer lifetime value (LTV) audiences. Advertisers in high-commercial niches pay CPM premiums, enabling creators to charge a 30% to 60% niche multiplier.
+                    </div>
+                </details>
+            </div>
+        </div>
+    </article>
+
+    <!-- Footer Container -->
+    <div id="global-footer"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var canvas = document.getElementById('previewCanvas');
+            if (!canvas) return;
+            var ctx = canvas.getContext('2d');
+
+            // Controls & Inputs
+            var experienceTier = document.getElementById('experienceTier');
+            var numVideosRange = document.getElementById('numVideosRange');
+            var numVideosInput = document.getElementById('numVideos');
+            var numVideosDisplay = document.getElementById('numVideosDisplay');
+            var videoLength = document.getElementById('videoLength');
+            var contentFormat = document.getElementById('contentFormat');
+            var nicheSelect = document.getElementById('nicheSelect');
+            var usageRights = document.getElementById('usageRights');
+            var whitelistingToggle = document.getElementById('whitelistingToggle');
+            var rawFootageToggle = document.getElementById('rawFootageToggle');
+            var extraHooksToggle = document.getElementById('extraHooksToggle');
+            var exclusivityScope = document.getElementById('exclusivityScope');
+            var turnaroundSpeed = document.getElementById('turnaroundSpeed');
+            var downloadBtn = document.getElementById('downloadBtn');
+
+            // Card DOM Displays
+            var cardTotalQuote = document.getElementById('cardTotalQuote');
+            var cardBaseFee = document.getElementById('cardBaseFee');
+            var cardUsageFee = document.getElementById('cardUsageFee');
+            var cardEffectivePerVideo = document.getElementById('cardEffectivePerVideo');
+
+            // Presets
+            var presetBeauty = document.getElementById('presetBeauty');
+            var presetSaas = document.getElementById('presetSaas');
+            var presetFintech = document.getElementById('presetFintech');
+            var presetGaming = document.getElementById('presetGaming');
+
+            /* Setup Social Share Links */
+            var currentUrl = encodeURIComponent(window.location.href);
+            var shareTitle = encodeURIComponent("Check out this free UGC Freelance Rate & Usage Rights Worksheet!");
+            
+            document.getElementById('shareX').href = 'https://twitter.com/intent/tweet?url=' + currentUrl + '&text=' + shareTitle;
+            document.getElementById('shareFB').href = 'https://www.facebook.com/sharer/sharer.php?u=' + currentUrl;
+            document.getElementById('shareWA').href = 'https://api.whatsapp.com/send?text=' + shareTitle + '%20' + currentUrl;
+            document.getElementById('shareLI').href = 'https://www.linkedin.com/sharing/share-offsite/?url=' + currentUrl;
+            document.getElementById('sharePIN').href = 'https://pinterest.com/pin/create/button/?url=' + currentUrl + '&description=' + shareTitle;
+
+            var copyBtn = document.getElementById('copyShareLink');
+            copyBtn.addEventListener('click', function() {
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'UGC Rate & Usage Rights Calculator',
+                        text: 'Calculate UGC creator rates, paid ad usage rights, and add-on surcharges.',
+                        url: window.location.href
+                    }).catch(function() {});
+                } else if (navigator.clipboard) {
+                    navigator.clipboard.writeText(window.location.href).then(function() {
+                        var origText = copyBtn.textContent;
+                        copyBtn.textContent = '✓ Link Copied!';
+                        setTimeout(function() { copyBtn.textContent = origText; }, 2000);
+                    });
+                }
+            });
+
+            // Preset Handlers
+            presetBeauty.addEventListener('click', function() {
+                experienceTier.value = 'beginner';
+                numVideosRange.value = 1;
+                numVideosInput.value = 1;
+                videoLength.value = '30s';
+                contentFormat.value = 'standard';
+                nicheSelect.value = 'beauty';
+                usageRights.value = 'organic';
+                whitelistingToggle.checked = false;
+                rawFootageToggle.checked = false;
+                extraHooksToggle.checked = false;
+                exclusivityScope.value = 'none';
+                turnaroundSpeed.value = 'standard';
+                calculateAndDraw();
+            });
+
+            presetSaas.addEventListener('click', function() {
+                experienceTier.value = 'intermediate';
+                numVideosRange.value = 3;
+                numVideosInput.value = 3;
+                videoLength.value = '60s';
+                contentFormat.value = 'pas';
+                nicheSelect.value = 'saas';
+                usageRights.value = 'paid90';
+                whitelistingToggle.checked = true;
+                rawFootageToggle.checked = true;
+                extraHooksToggle.checked = true;
+                exclusivityScope.value = '30days';
+                turnaroundSpeed.value = 'standard';
+                calculateAndDraw();
+            });
+
+            presetFintech.addEventListener('click', function() {
+                experienceTier.value = 'experienced';
+                numVideosRange.value = 5;
+                numVideosInput.value = 5;
+                videoLength.value = '60s';
+                contentFormat.value = 'pas';
+                nicheSelect.value = 'fintech';
+                usageRights.value = 'paid1yr';
+                whitelistingToggle.checked = true;
+                rawFootageToggle.checked = true;
+                extraHooksToggle.checked = true;
+                exclusivityScope.value = '90days';
+                turnaroundSpeed.value = 'rush72';
+                calculateAndDraw();
+            });
+
+            presetGaming.addEventListener('click', function() {
+                experienceTier.value = 'intermediate';
+                numVideosRange.value = 2;
+                numVideosInput.value = 2;
+                videoLength.value = '30s';
+                contentFormat.value = 'unboxing';
+                nicheSelect.value = 'saas';
+                usageRights.value = 'paid30';
+                whitelistingToggle.checked = true;
+                rawFootageToggle.checked = false;
+                extraHooksToggle.checked = true;
+                exclusivityScope.value = 'none';
+                turnaroundSpeed.value = 'standard';
+                calculateAndDraw();
+            });
+
+            // Event Listeners
+            numVideosRange.addEventListener('input', function() {
+                numVideosInput.value = numVideosRange.value;
+                calculateAndDraw();
+            });
+
+            numVideosInput.addEventListener('input', function() {
+                numVideosRange.value = numVideosInput.value;
+                calculateAndDraw();
+            });
+
+            experienceTier.addEventListener('change', calculateAndDraw);
+            videoLength.addEventListener('change', calculateAndDraw);
+            contentFormat.addEventListener('change', calculateAndDraw);
+            nicheSelect.addEventListener('change', calculateAndDraw);
+            usageRights.addEventListener('change', calculateAndDraw);
+            whitelistingToggle.addEventListener('change', calculateAndDraw);
+            rawFootageToggle.addEventListener('change', calculateAndDraw);
+            extraHooksToggle.addEventListener('change', calculateAndDraw);
+            exclusivityScope.addEventListener('change', calculateAndDraw);
+            turnaroundSpeed.addEventListener('change', calculateAndDraw);
+
+            function formatCurrency(num) {
+                return '$' + new Intl.NumberFormat('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(Math.round(num));
+            }
+
+            function calculateAndDraw() {
+                var numVids = parseInt(numVideosInput.value) || 1;
+                numVideosDisplay.textContent = numVids + (numVids === 1 ? ' Video' : ' Videos');
+
+                // Base rates per video by experience
+                var baseLow = 100, baseHigh = 180, baseMid = 140;
+                if (experienceTier.value === 'intermediate') {
+                    baseLow = 200; baseHigh = 350; baseMid = 275;
+                } else if (experienceTier.value === 'experienced') {
+                    baseLow = 400; baseHigh = 750; baseMid = 575;
+                }
+
+                // Video Length Multipliers
+                var lengthMult = 1.0;
+                if (videoLength.value === '15s') lengthMult = 0.85;
+                else if (videoLength.value === '30s') lengthMult = 1.00;
+                else if (videoLength.value === '60s') lengthMult = 1.45;
+                else if (videoLength.value === 'photos') lengthMult = 0.75;
+
+                // Format Multipliers
+                var formatMult = 1.0;
+                if (contentFormat.value === 'unboxing') formatMult = 1.15;
+                else if (contentFormat.value === 'pas') formatMult = 1.25;
+
+                // Niche Multipliers
+                var nicheMult = 1.0;
+                if (nicheSelect.value === 'saas') nicheMult = 1.45;
+                else if (nicheSelect.value === 'fintech') nicheMult = 1.55;
+                else if (nicheSelect.value === 'health') nicheMult = 1.20;
+                else if (nicheSelect.value === 'beauty') nicheMult = 1.10;
+                else if (nicheSelect.value === 'home') nicheMult = 1.00;
+                else if (nicheSelect.value === 'food') nicheMult = 0.95;
+
+                // Bulk Bundle Discount Rate
+                var bundleDiscount = 1.0;
+                if (numVids >= 2 && numVids <= 3) bundleDiscount = 0.90; // 10% off
+                else if (numVids >= 4 && numVids <= 5) bundleDiscount = 0.82; // 18% off
+                else if (numVids >= 6) bundleDiscount = 0.75; // 25% off
+
+                // Per-Video Creation Base Calculation
+                var videoBaseMid = baseMid * lengthMult * formatMult * nicheMult;
+                var videoBaseLow = baseLow * lengthMult * formatMult * nicheMult;
+                var videoBaseHigh = baseHigh * lengthMult * formatMult * nicheMult;
+
+                var totalCreationMid = videoBaseMid * numVids * bundleDiscount;
+                var totalCreationLow = videoBaseLow * numVids * bundleDiscount;
+                var totalCreationHigh = videoBaseHigh * numVids * bundleDiscount;
+
+                // Usage Rights Licensing
+                var usagePercent = 0;
+                if (usageRights.value === 'paid30') usagePercent = 0.30;
+                else if (usageRights.value === 'paid90') usagePercent = 0.50;
+                else if (usageRights.value === 'paid180') usagePercent = 0.80;
+                else if (usageRights.value === 'paid1yr') usagePercent = 1.20;
+                else if (usageRights.value === 'perpetual') usagePercent = 1.75;
+
+                var usageFeeMid = totalCreationMid * usagePercent;
+                var usageFeeLow = totalCreationLow * usagePercent;
+                var usageFeeHigh = totalCreationHigh * usagePercent;
+
+                // Add-Ons
+                var addOnsMid = 0, addOnsLow = 0, addOnsHigh = 0;
+                
+                // Whitelisting ($150 per video)
+                if (whitelistingToggle.checked) {
+                    addOnsMid += 150 * numVids;
+                    addOnsLow += 150 * numVids;
+                    addOnsHigh += 150 * numVids;
+                }
+
+                // Raw Footage (50% of creation fee)
+                if (rawFootageToggle.checked) {
+                    addOnsMid += totalCreationMid * 0.50;
+                    addOnsLow += totalCreationLow * 0.50;
+                    addOnsHigh += totalCreationHigh * 0.50;
+                }
+
+                // 3 Extra Hooks ($100 per video)
+                if (extraHooksToggle.checked) {
+                    addOnsMid += 100 * numVids;
+                    addOnsLow += 100 * numVids;
+                    addOnsHigh += 100 * numVids;
+                }
+
+                // Exclusivity Surcharge
+                var exclusivityPercent = 0;
+                if (exclusivityScope.value === '30days') exclusivityPercent = 0.30;
+                else if (exclusivityScope.value === '90days') exclusivityPercent = 0.60;
+
+                var subtotalMid = totalCreationMid + usageFeeMid + addOnsMid;
+                var subtotalLow = totalCreationLow + usageFeeLow + addOnsLow;
+                var subtotalHigh = totalCreationHigh + usageFeeHigh + addOnsHigh;
+
+                var exclusivityFeeMid = subtotalMid * exclusivityPercent;
+                var exclusivityFeeLow = subtotalLow * exclusivityPercent;
+                var exclusivityFeeHigh = subtotalHigh * exclusivityPercent;
+
+                // Turnaround Rush Speed Fee
+                var turnaroundMult = 1.0;
+                if (turnaroundSpeed.value === 'rush72') turnaroundMult = 1.25;
+                else if (turnaroundSpeed.value === 'rush24') turnaroundMult = 1.50;
+
+                var grandTotalMid = (subtotalMid + exclusivityFeeMid) * turnaroundMult;
+                var grandTotalLow = (subtotalLow + exclusivityFeeLow) * turnaroundMult;
+                var grandTotalHigh = (subtotalHigh + exclusivityFeeHigh) * turnaroundMult;
+
+                var effectivePerVideoMid = grandTotalMid / numVids;
+
+                // Update Cards
+                cardTotalQuote.textContent = formatCurrency(grandTotalLow) + ' - ' + formatCurrency(grandTotalHigh);
+                cardBaseFee.textContent = formatCurrency(totalCreationMid);
+                cardUsageFee.textContent = formatCurrency(usageFeeMid);
+                cardEffectivePerVideo.textContent = formatCurrency(effectivePerVideoMid);
+
+                // Draw to Canvas
+                drawCanvas({
+                    numVids: numVids,
+                    experienceName: experienceTier.options[experienceTier.selectedIndex].text.split('(')[0].trim(),
+                    nicheName: nicheSelect.options[nicheSelect.selectedIndex].text.split('(')[0].trim(),
+                    usageName: usageRights.options[usageRights.selectedIndex].text.split('(')[0].trim(),
+                    grandTotalLow: grandTotalLow,
+                    grandTotalHigh: grandTotalHigh,
+                    grandTotalMid: grandTotalMid,
+                    totalCreationMid: totalCreationMid,
+                    usageFeeMid: usageFeeMid,
+                    addOnsMid: addOnsMid,
+                    exclusivityFeeMid: exclusivityFeeMid,
+                    effectivePerVideoMid: effectivePerVideoMid,
+                    hasWhitelisting: whitelistingToggle.checked,
+                    hasRawFootage: rawFootageToggle.checked,
+                    hasExtraHooks: extraHooksToggle.checked,
+                    turnaroundName: turnaroundSpeed.options[turnaroundSpeed.selectedIndex].text.split('(')[0].trim()
+                });
+            }
+
+            function drawCanvas(data) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                // Background Gradient
+                var bgGrad = ctx.createLinearGradient(0, 0, 1080, 1920);
+                bgGrad.addColorStop(0, '#0f1117');
+                bgGrad.addColorStop(0.5, '#181b24');
+                bgGrad.addColorStop(1, '#0b0d12');
+                ctx.fillStyle = bgGrad;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Top Header Graphic Bar
+                var headerGrad = ctx.createLinearGradient(0, 0, 1080, 0);
+                headerGrad.addColorStop(0, '#a855f7');
+                headerGrad.addColorStop(0.5, '#00f2fe');
+                headerGrad.addColorStop(1, '#1877f2');
+                ctx.fillStyle = headerGrad;
+                ctx.fillRect(0, 0, 1080, 16);
+
+                // Title Banner
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 50px -apple-system, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('UGC FREELANCE RATE SHEET', 540, 110);
+
+                ctx.fillStyle = '#00f2fe';
+                ctx.font = '600 30px -apple-system, sans-serif';
+                ctx.fillText('2026 BRAND CREATIVE & LICENSING QUOTE', 540, 160);
+
+                // Divider Line
+                ctx.strokeStyle = '#2e3446';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(80, 200);
+                ctx.lineTo(1000, 200);
+                ctx.stroke();
+
+                // Card 1: Total Estimate Big Badge
+                ctx.fillStyle = '#181b24';
+                ctx.strokeStyle = '#a855f7';
+                ctx.lineWidth = 4;
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(80, 240, 920, 320, 24);
+                    ctx.fill();
+                    ctx.stroke();
+                } else {
+                    ctx.fillRect(80, 240, 920, 320);
+                }
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = 'bold 28px -apple-system, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('PROJECT QUOTE ESTIMATE RANGE', 540, 300);
+
+                ctx.fillStyle = '#10b981';
+                ctx.font = 'bold 80px -apple-system, sans-serif';
+                ctx.fillText(formatCurrency(data.grandTotalLow) + ' - ' + formatCurrency(data.grandTotalHigh), 540, 400);
+
+                ctx.fillStyle = '#f3f4f6';
+                ctx.font = '30px -apple-system, sans-serif';
+                ctx.fillText('Midpoint Quote: ' + formatCurrency(data.grandTotalMid) + ' (' + data.numVids + ' deliverables)', 540, 470);
+
+                // Metric Grid Cards (Card 2 & Card 3)
+                // Left Sub-Card: Base Creation Fee
+                ctx.fillStyle = '#222634';
+                ctx.strokeStyle = '#2e3446';
+                ctx.lineWidth = 2;
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(80, 600, 440, 260, 20);
+                    ctx.fill();
+                    ctx.stroke();
+                } else {
+                    ctx.fillRect(80, 600, 440, 260);
+                }
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = 'bold 24px -apple-system, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('BASE CREATION FEE', 300, 650);
+
+                ctx.fillStyle = '#00f2fe';
+                ctx.font = 'bold 52px -apple-system, sans-serif';
+                ctx.fillText(formatCurrency(data.totalCreationMid), 300, 735);
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = '22px -apple-system, sans-serif';
+                ctx.fillText('Content creation & labor', 300, 795);
+
+                // Right Sub-Card: Licensing & Usage
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(560, 600, 440, 260, 20);
+                    ctx.fill();
+                    ctx.stroke();
+                } else {
+                    ctx.fillRect(560, 600, 440, 260);
+                }
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = 'bold 24px -apple-system, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('USAGE & LICENSING', 780, 650);
+
+                ctx.fillStyle = '#a855f7';
+                ctx.font = 'bold 52px -apple-system, sans-serif';
+                ctx.fillText(formatCurrency(data.usageFeeMid), 780, 735);
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = '22px -apple-system, sans-serif';
+                ctx.fillText(data.usageName, 780, 795);
+
+                // Itemized Breakdown Progress / Visual Card
+                ctx.fillStyle = '#181b24';
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(80, 900, 920, 280, 20);
+                    ctx.fill();
+                    ctx.stroke();
+                } else {
+                    ctx.fillRect(80, 900, 920, 280);
+                }
+
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 28px -apple-system, sans-serif';
+                ctx.textAlign = 'left';
+                ctx.fillText('Fee Allocation Breakdown', 120, 950);
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = '22px -apple-system, sans-serif';
+                ctx.fillText('Creation: ' + formatCurrency(data.totalCreationMid) + ' | Licensing: ' + formatCurrency(data.usageFeeMid), 120, 995);
+                ctx.textAlign = 'right';
+                ctx.fillText('Add-Ons & Exclusivity: ' + formatCurrency(data.addOnsMid + data.exclusivityFeeMid), 960, 995);
+
+                // Progress Track
+                ctx.fillStyle = '#222634';
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(120, 1025, 840, 36, 18);
+                    ctx.fill();
+                } else {
+                    ctx.fillRect(120, 1025, 840, 36);
+                }
+
+                // Progress Fill
+                var creationRatio = data.grandTotalMid > 0 ? (data.totalCreationMid / data.grandTotalMid) : 0.5;
+                var fillWidth = Math.max(36, 840 * creationRatio);
+                var barGrad = ctx.createLinearGradient(120, 0, 960, 0);
+                barGrad.addColorStop(0, '#a855f7');
+                barGrad.addColorStop(1, '#00f2fe');
+                ctx.fillStyle = barGrad;
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(120, 1025, fillWidth, 36, 18);
+                    ctx.fill();
+                } else {
+                    ctx.fillRect(120, 1025, fillWidth, 36);
+                }
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = '22px -apple-system, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('Effective Rate Per Video: ' + formatCurrency(data.effectivePerVideoMid) + ' / deliverable', 540, 1115);
+
+                // Scope Audit Parameters Section
+                ctx.fillStyle = '#181b24';
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(80, 1220, 920, 520, 20);
+                    ctx.fill();
+                    ctx.stroke();
+                } else {
+                    ctx.fillRect(80, 1220, 920, 520);
+                }
+
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 30px -apple-system, sans-serif';
+                ctx.textAlign = 'left';
+                ctx.fillText('Campaign Scope & Technical Specs', 120, 1280);
+
+                ctx.font = '26px -apple-system, sans-serif';
+                ctx.fillStyle = '#9ca3af';
+                
+                ctx.fillText('• Experience Tier:', 120, 1340);
+                ctx.fillStyle = '#ffffff';
+                ctx.fillText(data.experienceName, 440, 1340);
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.fillText('• Industry Vertical:', 120, 1400);
+                ctx.fillStyle = '#ffffff';
+                ctx.fillText(data.nicheName, 440, 1400);
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.fillText('• Included Technical Add-Ons:', 120, 1460);
+                ctx.fillStyle = '#00f2fe';
+                var addOnStr = [];
+                if (data.hasWhitelisting) addOnStr.push('Spark Ads');
+                if (data.hasRawFootage) addOnStr.push('Raw Files');
+                if (data.hasExtraHooks) addOnStr.push('3x Hooks');
+                ctx.fillText(addOnStr.length > 0 ? addOnStr.join(' + ') : 'Standard Final Cut Only', 440, 1460);
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.fillText('• Delivery Turnaround:', 120, 1520);
+                ctx.fillStyle = '#10b981';
+                ctx.font = 'bold 28px -apple-system, sans-serif';
+                ctx.fillText(data.turnaroundName, 440, 1520);
+
+                ctx.fillStyle = '#374151';
+                ctx.fillRect(120, 1570, 840, 2);
+
+                ctx.fillStyle = '#6b7280';
+                ctx.font = '22px -apple-system, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('Standard Terms: Includes 1 round of revisions. Payment 50% deposit / 50% on final delivery.', 540, 1630);
+                ctx.fillText('Estimates based on 2026 published UGC creator benchmarks. Final rates set by contract.', 540, 1670);
+
+                // Branding Footer
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = 'bold 26px -apple-system, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('CoreMetricSuite · UGC Creator Monetization Utilities', 540, 1820);
+            }
+
+            // Initial calculation & render
+            calculateAndDraw();
+
+            // Download PNG Report
+            downloadBtn.addEventListener('click', function() {
+                var link = document.createElement('a');
+                link.download = 'ugc-rate-and-usage-rights-report.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        });
+    </script>
+
+    <!-- Global CoreMetricSuite Cross-Linking Index Hub -->
+    <div style="margin-top: 40px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #f8fafc; font-family: system-ui, -apple-system, sans-serif;">
+        <h3 style="margin: 0 0 15px 0; font-size: 18px; color: #0f172a; font-weight: 600;">🛠️ CoreMetricSuite Utility Directory</h3>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇦🇺 Australia Tax &amp; Labor</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-au-cents" href="../au-cents-per-km-estimator/" style="color: #2563eb; text-decoration: underline;">Cents-Per-Km Tax Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-au-schads" href="../au-schads-vehicle-allowance/" style="color: #2563eb; text-decoration: underline;">SCHADS Vehicle Allowance</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-au-super" href="../au-superannuation-charge-tracker/" style="color: #2563eb; text-decoration: underline;">Superannuation Tracker</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇺🇸 US Corporate Tax</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-us-llc" href="../us-llc-late-penalty-estimator/" style="color: #2563eb; text-decoration: underline;">LLC Late Tax Penalty</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-us-179" href="../us-section-179-truck-calculator/" style="color: #2563eb; text-decoration: underline;">Section 179 Vehicle Deduction</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇬🇧 UK Property Management</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-rent" href="../uk-form-4a-rent-tracker/" style="color: #2563eb; text-decoration: underline;">Form 4A Rent Tracker</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-sdlt" href="../uk-sdlt-bracket-estimator/" style="color: #2563eb; text-decoration: underline;">Stamp Duty Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-sec8" href="../uk-section-8-calculator/" style="color: #2563eb; text-decoration: underline;">Section 8 Calculator</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🎬 Digital Media Layouts &amp; Monetization</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-ugc-rate" href="../ugc-freelance-rate-usage-rights-worksheet/" style="color: #2563eb; text-decoration: underline;">UGC Rate &amp; Usage Rights Worksheet</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-tiktok-rpm" href="../tiktok-creator-rewards-rpm-estimator/" style="color: #2563eb; text-decoration: underline;">TikTok Creator Rewards RPM</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-ig" href="../instagram-reels-preview/" style="color: #2563eb; text-decoration: underline;">Instagram Reels Grid</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-fb" href="../facebook-ad-safe-zone/" style="color: #2563eb; text-decoration: underline;">Facebook 9:16 Ad Mask</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script defer>
+        (function() {
+            const path = window.location.pathname.toLowerCase();
+            const toolsMap = {
+                'au-cents-per-km-estimator': 'hub-au-cents',
+                'au-schads-vehicle-allowance': 'hub-au-schads',
+                'au-superannuation-charge-tracker': 'hub-au-super',
+                'us-llc-late-penalty-estimator': 'hub-us-llc',
+                'us-section-179-truck-calculator': 'hub-us-179',
+                'uk-form-4a-rent-tracker': 'hub-uk-rent',
+                'uk-sdlt-bracket-estimator': 'hub-uk-sdlt',
+                'uk-section-8-calculator': 'hub-uk-sec8',
+                'ugc-freelance-rate-usage-rights-worksheet': 'hub-ugc-rate',
+                'tiktok-creator-rewards-rpm-estimator': 'hub-media-tiktok-rpm',
+                'instagram-reels-preview': 'hub-media-ig',
+                'facebook-ad-safe-zone': 'hub-media-fb',
+                'shorts-ui-safe-zone': 'hub-media-shorts'
+            };
+
+            for (const [folderName, elementId] of Object.entries(toolsMap)) {
+                if (path.includes(folderName)) {
+                    const targetEl = document.getElementById(elementId);
+                    if (targetEl) {
+                        targetEl.outerHTML = `<span style="font-weight: 600; color: #0f172a;">${targetEl.textContent} (Current)</span>`;
+                    }
+                    break;
+                }
+            }
+        })();
+    </script>
+</body>
+</html>
