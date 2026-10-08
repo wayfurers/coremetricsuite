@@ -154,8 +154,12 @@ window.CMS_CONFIG = {
     { name: "HTML Link In Bio Exporter", url: "/html-link-in-bio-exporter", tag: "MEDIA" },
     { name: "Linkedin Text Formatter", url: "/linkedin-text-formatter", tag: "MEDIA" },
     { name: "Srt Subtitle Cleaner", url: "/srt-subtitle-cleaner", tag: "MEDIA" },
+    { name: "TikTok Creator Rewards RPM Estimator", url: "/tiktok-creator-rewards-rpm-estimator", tag: "MEDIA" },
+    { name: "UGC Freelance Rate & Usage Rights Worksheet", url: "/ugc-freelance-rate-usage-rights-worksheet", tag: "MEDIA" },
+    { name: "Patreon Net Tier Payout Dashboard", url: "/patreon-net-tier-payout-dashboard", tag: "MEDIA" },
 
-    // --- E-COMMERCE SUITE ---
-    { name: "Shopify Metafields Parser", url: "/shopify-metafields-parser", tag: "ECOM" }
+    // --- E-COMMERCE SUITE ...
+    { name: "Stan Store vs Shopify Calculator", url: "/stan-store-vs-shopify-calculator", tag: "ECOM" },
+    { name: "Shopify Metafields Parser", url: "/shopify-metafields-parser", tag: "ECOM" },
   ]
 }; 
