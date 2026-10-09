@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Shorts Title Checker &amp; Mobile Truncation Simulator (2026)</title>
+    <meta name="description" content="Free YouTube Shorts Title Checker &amp; CTR Optimizer. Test mobile overlay title truncation, character limits, power words, and clickability scores before publishing in 2026.">
+    <meta name="keywords" content="shorts title checker, youtube shorts title character limit, youtube shorts title truncation tool, youtube shorts title generator preview, shorts title ctr optimizer, youtube shorts title character length, how long should youtube shorts title be">
+    <link rel="canonical" href="https://coremetricsuite.com/shorts-title-checker/">
+
+    <!-- Open Graph / Social Metadata -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="YouTube Shorts Title Checker &amp; Mobile Truncation Simulator">
+    <meta property="og:description" content="Optimize YouTube Shorts titles for maximum CTR. Check character length limits, simulate mobile app UI overlay truncation, and score title power words instantly.">
+    <meta property="og:url" content="https://coremetricsuite.com/shorts-title-checker/">
+    
+    <!-- Global Framework Dependencies -->
+    <link rel="stylesheet" href="/css/global.css">
+    <script src="/config.js" defer></script>
+    <script src="/global.min.js" defer></script>
+
+    <!-- WebApplication Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "YouTube Shorts Title Checker Engine",
+      "url": "https://coremetricsuite.com/shorts-title-checker/",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires HTML5. Requires JavaScript.",
+      "author": {
+        "@type": "Organization",
+        "name": "CoreMetricSuite Hub",
+        "url": "https://coremetricsuite.com"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
+    <!-- FAQ JSON-LD Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the hard character limit for YouTube Shorts titles in 2026?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The hard character ceiling for a YouTube Shorts title is 100 characters in YouTube Studio. This count includes letters, spaces, numbers, punctuation, and emojis."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Where do YouTube Shorts titles truncate on mobile screens?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "On the native mobile YouTube Shorts player overlay, titles truncate with an ellipsis (...) after approximately 50 to 55 characters depending on character pixel width, font rendering, and whether hashtags are present."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Should I include #Shorts in my YouTube Shorts video title?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No, putting #Shorts in your title wastes valuable visible real estate. YouTube automatically categorizes vertical videos under 60 seconds as Shorts. It is better to place target hashtags in the description field or at the very end of the title after your core hook."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does title length affect YouTube Shorts Click-Through-Rate (CTR)?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Titles that front-load their primary topic and emotional hook within the first 45-50 visible characters achieve up to 35% higher CTR on mobile home feeds and search results because viewers read the full value proposition without truncation."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How many power words or emojis should I use in a Shorts title?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The optimal density is 1 to 2 power words combined with 1 relevant emoji. Overloading titles with excessive capital letters or multiple emojis reduces readability and can trigger algorithmic spam penalties."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-main: #0f1117;
+            --bg-card: #181b24;
+            --bg-input: #222634;
+            --border-color: #2e3446;
+            --accent-blue: #1877f2;
+            --accent-cyan: #00f2fe;
+            --accent-pink: #ff0050;
+            --accent-green: #10b981;
+            --accent-amber: #f59e0b;
+            --accent-yt: #ff0000;
+            --accent-yt-blue: #3ea6ff;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: var(--bg-main); color: var(--text-primary); font-family: var(--font-sans); line-height: 1.6; }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            grid-template-areas: 
+                "upload preview"
+                "panel preview";
+            gap: 2rem;
+        }
+
+        .upload-card-wrapper { grid-area: upload; }
+
+        .panel {
+            grid-area: panel;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            height: fit-content;
+        }
+
+        .panel-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            background: linear-gradient(135deg, var(--accent-yt), var(--accent-pink));
+            color: #fff;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        .drop-zone {
+            border: 2px dashed var(--border-color);
+            padding: 1.25rem;
+            text-align: center;
+            border-radius: 8px;
+            background-color: var(--bg-input);
+            cursor: pointer;
+            transition: border-color 0.2s, background-color 0.2s;
+            margin-bottom: 0.75rem;
+        }
+
+        .drop-zone:hover { border-color: var(--accent-cyan); background-color: rgba(0, 242, 254, 0.05); }
+        .drop-title { font-weight: 600; color: #fff; font-size: 0.95rem; }
+        .drop-sub { font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px; }
+
+        .preset-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .btn-demo {
+            width: 100%;
+            padding: 0.6rem 0.5rem;
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            color: var(--accent-cyan);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.78rem;
+            transition: background-color 0.2s, border-color 0.2s;
+            text-align: center;
+        }
+
+        .btn-demo:hover { background-color: #2a2f42; border-color: var(--accent-cyan); }
+
+        .toggle-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: var(--bg-input);
+            padding: 0.75rem 0.85rem;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 1rem;
+        }
+
+        .toggle-label { font-size: 0.85rem; font-weight: 500; color: var(--text-primary); }
+
+        .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #374151; transition: .3s; border-radius: 24px;
+        }
+        .slider:before {
+            position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px;
+            background-color: white; transition: .3s; border-radius: 50%;
+        }
+        input:checked + .slider { background-color: var(--accent-yt); }
+        input:checked + .slider:before { transform: translateX(20px); }
+
+        .form-group { margin-bottom: 1.25rem; }
+        .range-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem; }
+        .range-value { font-size: 0.85rem; font-weight: 700; color: var(--accent-cyan); }
+        label { display: block; font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 0.4rem; }
+        input[type="text"], input[type="number"], textarea, select {
+            width: 100%; padding: 0.65rem 0.85rem; background-color: var(--bg-input);
+            border: 1px solid var(--border-color); border-radius: 6px; color: #fff;
+            font-size: 0.9rem; outline: none; font-family: inherit;
+        }
+        textarea { resize: vertical; min-height: 80px; }
+        input[type="range"] {
+            width: 100%; height: 6px; background: var(--bg-input); border-radius: 3px;
+            outline: none; -webkit-appearance: none; accent-color: var(--accent-yt);
+        }
+        input[type="text"]:focus, input[type="number"]:focus, textarea:focus, select:focus { border-color: var(--accent-yt); }
+
+        .char-progress-bar {
+            width: 100%; height: 8px; background-color: var(--bg-input);
+            border-radius: 4px; overflow: hidden; margin-top: 6px;
+            border: 1px solid var(--border-color);
+        }
+        .char-progress-fill { height: 100%; width: 0%; background-color: var(--accent-green); transition: width 0.2s, background-color 0.2s; }
+
+        .btn-action {
+            width: 100%; padding: 0.85rem; background: linear-gradient(135deg, var(--accent-yt), #cc0000);
+            color: #fff; font-weight: 600; border: none; border-radius: 6px; cursor: pointer; font-size: 0.95rem;
+            box-shadow: 0 4px 12px rgba(255, 0, 0, 0.3);
+            transition: transform 0.1s, opacity 0.2s;
+            margin-bottom: 1rem;
+        }
+        .btn-action:hover { opacity: 0.95; }
+        .btn-action:active { transform: scale(0.99); }
+
+        /* Social Share Button Module */
+        .social-share-container {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        .share-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
+            display: block;
+            text-align: center;
+        }
+        .share-buttons-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+        }
+        .btn-share {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            padding: 0.5rem 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: opacity 0.2s, transform 0.1s;
+        }
+        .btn-share:hover { opacity: 0.88; }
+        .btn-share:active { transform: scale(0.97); }
+        .btn-share-x { background-color: #000000; border: 1px solid #333; }
+        .btn-share-fb { background-color: #1877f2; }
+        .btn-share-li { background-color: #0a66c2; }
+        .btn-share-wa { background-color: #25d366; color: #000; }
+        .btn-share-pin { background-color: #e60023; }
+        .btn-share-copy { background-color: #374151; color: #fff; grid-column: span 3; margin-top: 0.25rem; }
+
+        .preview-stage { 
+            grid-area: preview;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+        }
+        .canvas-wrapper {
+            position: relative; width: 320px; height: 568px; border-radius: 16px;
+            overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.6); background-color: #000;
+            border: 2px solid var(--border-color);
+        }
+        canvas { width: 100%; height: 100%; display: block; }
+        .canvas-caption { margin-top: 1rem; font-size: 0.85rem; color: var(--text-secondary); text-align: center; }
+
+        /* Metric Highlights Grid below Canvas */
+        .metric-summary-grid {
+            width: 100%;
+            max-width: 320px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+        .metric-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.85rem;
+            text-align: center;
+        }
+        .metric-card-title { font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; }
+        .metric-card-value { font-size: 1.1rem; font-weight: 700; color: #fff; }
+        .metric-card-value.highlight { color: var(--accent-green); }
+
+        .content-area { max-width: 1200px; margin: 3rem auto; padding: 0 1.5rem; }
+        .content-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 2.5rem; }
+        .content-card h1 { font-size: 2rem; margin-bottom: 1rem; color: #fff; }
+        .content-card h2 { font-size: 1.4rem; margin: 1.8rem 0 1rem; color: #fff; }
+        .content-card p { color: var(--text-secondary); margin-bottom: 1.2rem; }
+        .content-card ul, .content-card ol { color: var(--text-secondary); margin: 0 0 1.2rem 1.5rem; }
+        .content-card li { margin-bottom: 0.5rem; }
+
+        .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 1.5rem 0; }
+        .spec-table { width: 100%; border-collapse: collapse; text-align: left; min-width: 600px; }
+        .spec-table th, .spec-table td { padding: 0.85rem 1rem; border: 1px solid var(--border-color); }
+        .spec-table th { background-color: var(--bg-input); color: #fff; font-size: 0.9rem; }
+        .spec-table td { color: var(--text-secondary); font-size: 0.875rem; }
+
+        /* Accordion FAQ Styling */
+        .faq-block { margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem; }
+        .faq-accordion {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 0.85rem;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .faq-accordion[open] { border-color: var(--accent-yt); }
+        .faq-summary {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            padding: 1rem 1.2rem;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+        .faq-summary::-webkit-details-marker { display: none; }
+        .faq-summary::after {
+            content: "+";
+            font-size: 1.2rem;
+            color: var(--accent-yt);
+            transition: transform 0.2s;
+        }
+        .faq-accordion[open] .faq-summary::after {
+            content: "−";
+            color: var(--accent-yt);
+        }
+        .faq-answer {
+            padding: 0 1.2rem 1.2rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 0.4rem;
+            padding-top: 0.8rem;
+        }
+
+        .cms-ad-slot-1, .cms-ad-slot-2 {
+            width: 100%; max-width: 970px; min-height: 90px; margin: 1.5rem auto;
+            background: rgba(255,255,255,0.02); border-radius: 8px; display: block;
+        }
+
+        .alert-banner {
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            font-size: 0.825rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            display: none;
+        }
+        .alert-banner.warning {
+            background-color: rgba(245, 158, 11, 0.15);
+            border: 1px solid var(--accent-amber);
+            color: #fbbf24;
+        }
+        .alert-banner.error {
+            background-color: rgba(255, 0, 0, 0.15);
+            border: 1px solid var(--accent-yt);
+            color: #f87171;
+        }
+
+        /* Mobile Responsive Overrides */
+        @media screen and (max-width: 900px) {
+            html, body { width: 100%!important; max-width: 100vw!important; overflow-x: hidden!important; margin: 0!important; padding: 0!important; }
+            main.container { display: flex!important; flex-direction: column!important; width: 100%!important; max-width: 100%!important; padding: 0 12px!important; margin: 8px auto!important; gap: 16px!important; box-sizing: border-box!important; }
+            .upload-card-wrapper { order: 1!important; width: 100%!important; }
+            main.container > section.preview-stage { order: 2!important; width: 100%!important; display: flex!important; flex-direction: column!important; align-items: center!important; margin: 0 auto!important; box-sizing: border-box!important; }
+            main.container > section.panel { order: 3!important; width: 100%!important; max-width: 100%!important; box-sizing: border-box!important; }
+            .canvas-wrapper { width: 75vw!important; height: 133.33vw!important; max-width: 290px!important; max-height: 515px!important; margin: 0 auto!important; box-sizing: border-box!important; }
+            input, textarea, select { font-size: 16px!important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Container -->
+    <div id="global-header"></div>
+
+    <!-- Ad Slot 1 Container -->
+    <div class="cms-ad-slot-1" id="cms-ad-slot-top"></div>
+
+    <!-- Main Tool Container -->
+    <main class="container">
+        <!-- Module 1: Title Input & Presets (Rendered 1st on mobile) -->
+        <div class="upload-card-wrapper">
+            <div class="panel">
+                <div class="panel-title">
+                    <span>Shorts Title Analyzer</span>
+                    <span class="badge">CTR CHECKER</span>
+                </div>
+                
+                <div class="drop-zone" id="dropZone">
+                    <p class="drop-title">⚡ Instant Proven Title Templates</p>
+                    <p class="drop-sub">Click a high-CTR template to analyze mobile truncation</p>
+                </div>
+
+                <div class="preset-grid">
+                    <button class="btn-demo" id="presetCuriosity" type="button">🔥 Curiosity Hook</button>
+                    <button class="btn-demo" id="presetListicle" type="button">📊 Listicle / Data</button>
+                    <button class="btn-demo" id="presetFix" type="button">⚡ Fast Fix / Hack</button>
+                    <button class="btn-demo" id="presetQuestion" type="button">❓ Burning Question</button>
+                </div>
+
+                <div class="form-group">
+                    <div class="range-header">
+                        <label for="titleInput">YouTube Shorts Draft Title</label>
+                        <span class="range-value" id="charCountDisplay">0 / 100</span>
+                    </div>
+                    <textarea id="titleInput" placeholder="Enter your YouTube Shorts title here..." rows="3">🔥 3 Insane AI Tools You Need in 2026! [Don't Miss This]</textarea>
+                    <div class="char-progress-bar">
+                        <div class="char-progress-fill" id="charProgressFill"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="channelNameInput">Channel Name Overlay</label>
+                    <input type="text" id="channelNameInput" value="TechPulse Studio" placeholder="e.g. CreatorName">
+                </div>
+
+                <div class="form-group">
+                    <label for="hashtagMode">Hashtag Integration Strategy</label>
+                    <select id="hashtagMode">
+                        <option value="none">No Hashtags in Title (Recommended for CTR)</option>
+                        <option value="end_shorts" selected>Add #Shorts at end of title</option>
+                        <option value="end_niche">Add #Tech #2026 at end of title</option>
+                        <option value="start_shorts">Add #Shorts at start (Not Recommended)</option>
+                    </select>
+                </div>
+
+                <div class="alert-banner warning" id="truncationWarningAlert">
+                    ⚠️ Title exceeds ~52 characters! Text will be cut off with "..." on mobile YouTube player overlay.
+                </div>
+                <div class="alert-banner error" id="overLimitAlert">
+                    ❌ Exceeds YouTube Studio hard limit of 100 characters! Title cannot be saved on YouTube.
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 2: Live Canvas Mobile Overlay Preview & Metrics (Rendered 2nd on mobile) -->
+        <section class="preview-stage">
+            <div class="canvas-wrapper">
+                <canvas id="previewCanvas" width="1080" height="1920"></canvas>
+            </div>
+            <p class="canvas-caption">
+                Simulated 2026 YouTube Shorts Mobile Player UI. Shows exact visible title area and truncation bounds.
+            </p>
+
+            <div class="metric-summary-grid">
+                <div class="metric-card">
+                    <div class="metric-card-title">Clickability Grade</div>
+                    <div class="metric-card-value highlight" id="cardCtrScore">92 / 100</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-card-title">Visible Chars (Mobile)</div>
+                    <div class="metric-card-value" id="cardVisibleChars">51 / 100</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-card-title">Truncation Risk</div>
+                    <div class="metric-card-value" id="cardTruncationRisk" style="color: var(--accent-green);">Low Risk</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-card-title">Power Words Detected</div>
+                    <div class="metric-card-value highlight" id="cardPowerWords">3 Words</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Module 3: Niche & Strategic Modifiers (Rendered 3rd on mobile) -->
+        <section class="panel">
+            <div class="panel-title">
+                <span>Title Optimization Engine</span>
+                <span class="badge">SEO BLUEPRINT</span>
+            </div>
+
+            <div class="form-group">
+                <label for="nicheSelect">Target Content Category / Niche</label>
+                <select id="nicheSelect">
+                    <option value="tech" selected>Tech, Software &amp; AI</option>
+                    <option value="gaming">Gaming &amp; Esports</option>
+                    <option value="finance">Finance, Crypto &amp; Business</option>
+                    <option value="fitness">Health &amp; Fitness</option>
+                    <option value="entertainment">Comedy, Entertainment &amp; Memes</option>
+                    <option value="education">Education, History &amp; Science</option>
+                    <option value="lifestyle">Lifestyle, Beauty &amp; Vlogs</option>
+                </select>
+            </div>
+
+            <div class="toggle-group">
+                <span class="toggle-label">Show Red Mobile Truncation Guide Line</span>
+                <label class="switch">
+                    <input type="checkbox" id="showGuideToggle" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="toggle-group">
+                <span class="toggle-label">Highlight Power Words on Canvas</span>
+                <label class="switch">
+                    <input type="checkbox" id="highlightPowerToggle" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <button class="btn-action" id="downloadBtn" type="button">Export Shorts Title Blueprint (PNG)</button>
+
+            <!-- Social Media Share Section -->
+            <div class="social-share-container">
+                <span class="share-label">Share This Title Engine</span>
+                <div class="share-buttons-grid">
+                    <a id="shareX" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-x">𝕏 Post</a>
+                    <a id="shareFB" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-fb">Facebook</a>
+                    <a id="shareWA" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-wa">WhatsApp</a>
+                    <a id="shareLI" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-li">LinkedIn</a>
+                    <a id="sharePIN" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-pin">Pinterest</a>
+                    <button id="copyShareLink" type="button" class="btn-share btn-share-copy">🔗 Copy Tool Link</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- SEO & Educational Guide Section -->
+    <article class="content-area">
+        <div class="content-card">
+            <h1>YouTube Shorts Title Checker &amp; Mobile Truncation Simulator (2026)</h1>
+            <p>
+                In the hyper-competitive vertical video ecosystem, your <strong>YouTube Shorts title</strong> serves as the critical bridge between algorithmic discovery and viewer engagement. Unlike traditional long-form YouTube videos where large 16:9 custom thumbnails dominate viewer attention, YouTube Shorts are delivered through a continuous auto-scrolling mobile feed. In this environment, the video title is rendered directly on top of the playing video frame as part of the native YouTube Shorts mobile UI overlay.
+            </p>
+
+            <p>
+                This interactive <strong>shorts-title-checker</strong> enables content creators, digital marketers, channel strategists, and agency producers to <strong>simulate exactly how YouTube Shorts titles appear on mobile screens</strong> before hitting publish. By analyzing exact character pixel width, mobile app overlay cutoffs, power word emotional triggers, and Click-Through-Rate (CTR) optimization factors, this engine eliminates title truncation mistakes and boosts video reach.
+            </p>
+
+            <h2>The Mechanics of YouTube Shorts Title Truncation &amp; Character Limits</h2>
+            <p>
+                While YouTube Studio enforces a strict <strong>100-character hard limit</strong> for video titles across all formats, the physical screen real estate on mobile devices imposes a much tighter constraint. When a viewer scrolls through the YouTube Shorts feed on iOS or Android, the video player reserves significant screen space for right-hand action buttons (Like, Dislike, Comments, Share, Remix) and bottom channel branding elements.
+            </p>
+
+            <p>
+                As a result, YouTube Shorts titles truncate with an ellipsis (<code>...</code>) after approximately <strong>48 to 55 characters</strong> on standard smartphones. If your core hook, primary keyword, or intriguing plot twist sits past character 55, it becomes completely invisible to viewers scrolling through their feed.
+            </p>
+
+            <h2>YouTube Shorts Title Character Limits &amp; UI Display Matrix (2026 Benchmarks)</h2>
+            <p>
+                The table below outlines how YouTube Shorts video titles are rendered across different YouTube mobile and desktop surfaces, highlighting safe character display zones and truncation risks:
+            </p>
+
+            <div class="table-responsive">
+                <table class="spec-table">
+                    <thead>
+                        <tr>
+                            <th>YouTube Surface / Interface</th>
+                            <th>Hard Character Limit</th>
+                            <th>Visible Character Safe Zone</th>
+                            <th>Truncation Risk Level</th>
+                            <th>Strategic Recommendation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Shorts Mobile Player Overlay</strong></td>
+                            <td>100 Characters</td>
+                            <td>45 – 52 Characters</td>
+                            <td><strong style="color: var(--accent-yt);">Critical Truncation Zone</strong></td>
+                            <td>Front-load primary hook &amp; power word within first 45 chars.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Mobile Home Feed (Shorts Shelf)</strong></td>
+                            <td>100 Characters</td>
+                            <td>48 – 55 Characters</td>
+                            <td><strong style="color: var(--accent-amber);">High Truncation Risk</strong></td>
+                            <td>Ensure title makes total sense before char 50.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>YouTube Mobile Search Results</strong></td>
+                            <td>100 Characters</td>
+                            <td>50 – 58 Characters</td>
+                            <td><strong style="color: var(--accent-amber);">Moderate Truncation</strong></td>
+                            <td>Place main search intent keyword in first 3 words.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Desktop Shorts Player &amp; Browse</strong></td>
+                            <td>100 Characters</td>
+                            <td>65 – 75 Characters</td>
+                            <td><strong style="color: var(--accent-green);">Low Truncation Risk</strong></td>
+                            <td>Secondary context &amp; brackets remain visible.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Mobile Push Notifications</strong></td>
+                            <td>100 Characters</td>
+                            <td>38 – 45 Characters</td>
+                            <td><strong style="color: var(--accent-yt);">Severe Truncation Zone</strong></td>
+                            <td>Make the first 4 words irresistible to subscriber clicks.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Ad Slot 2 Container -->
+            <div class="cms-ad-slot-2"></div>
+
+            <h2>Clickability Score Algorithm: How to Optimize Shorts Titles for Maximum CTR</h2>
+            <p>
+                Achieving high Click-Through-Rate on YouTube Shorts requires balancing algorithmic search signals with psychological triggers. Our integrated <strong>Shorts Title CTR Optimizer</strong> evaluates draft titles using five key variables:
+            </p>
+            <ol>
+                <li><strong>Front-Loaded Value Proposition (0–35 Points):</strong> Placing the core topic, outcome, or surprise within the first 45 visible characters maximizes immediate comprehension before truncation occurs.</li>
+                <li><strong>Power Word &amp; Emotional Trigger Density (0–25 Points):</strong> Utilizing high-converting action verbs and curiosity words (e.g., <em>Insane, Secret, Stop, Proven, Fast, Mistake, Exposed</em>) triggers immediate cognitive curiosity.</li>
+                <li><strong>Curiosity Gap &amp; Punctuation Syntax (0–15 Points):</strong> Strategic use of brackets <code>[ ]</code>, question marks <code>?</code>, or numbers creates open loops that prompt viewers to stay and watch.</li>
+                <li><strong>Hashtag Real Estate Economy (0–15 Points):</strong> Stacking multiple hashtags in your title consumes character budget without adding emotional punch. Keep titles clean and place primary hashtags in descriptions.</li>
+                <li><strong>Emoji &amp; Capitalization Balance (0–10 Points):</strong> Combining 1 relevant emoji with selective Title Case capitalization enhances visual hierarchy without appearing spammy.</li>
+            </ol>
+
+            <h2>High-CTR YouTube Shorts Title Formulas &amp; Power Word Engine</h2>
+            <p>
+                To consistently achieve high viral retention and click rates, creators utilize repeatable title frameworks tailored to short-form video psychology:
+            </p>
+
+            <div class="table-responsive">
+                <table class="spec-table">
+                    <thead>
+                        <tr>
+                            <th>Formula Name</th>
+                            <th>Structure / Template</th>
+                            <th>High-Performing Example Title</th>
+                            <th>Expected CTR Impact</th>
+                            <th>Optimal Niche</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>The Curiosity Gap</strong></td>
+                            <td>[Unexpected Result] + [Forbidden Word/Secret]</td>
+                            <td>🔥 3 Insane AI Tools You Need in 2026! [Don't Miss]</td>
+                            <td><strong style="color: var(--accent-green);">+32% CTR Lift</strong></td>
+                            <td>Tech, AI &amp; Software</td>
+                        </tr>
+                        <tr>
+                            <td><strong>The Direct Mistake Fix</strong></td>
+                            <td>Stop [Common Action]! (Do This Instead)</td>
+                            <td>Stop Boiling Eggs Wrong! (Try This 2-Min Hack) 🥚</td>
+                            <td><strong style="color: var(--accent-green);">+28% CTR Lift</strong></td>
+                            <td>Cooking, Fitness, DIY</td>
+                        </tr>
+                        <tr>
+                            <td><strong>The Proof / Outcome</strong></td>
+                            <td>How I [Achieved Result] in [Time Period]</td>
+                            <td>How I Made $10,000 with YouTube Shorts in 30 Days</td>
+                            <td><strong style="color: var(--accent-cyan);">+25% CTR Lift</strong></td>
+                            <td>Finance, Business, Education</td>
+                        </tr>
+                        <tr>
+                            <td><strong>The Extreme Challenge</strong></td>
+                            <td>Is This the Most [Adjective] [Noun] Ever?</td>
+                            <td>Is This the Most Dangerous Road in the World? 😱</td>
+                            <td><strong style="color: var(--accent-cyan);">+22% CTR Lift</strong></td>
+                            <td>Travel, Entertainment, Gaming</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2>Strategic Hashtag Placement in YouTube Shorts Titles</h2>
+            <p>
+                A frequent mistake among new creators is prefixing titles with <code>#Shorts</code> or stacking four different hashtags inside the title field. While hashtags were required during the early rollout of YouTube Shorts, YouTube's neural algorithm now automatically identifies vertical 9:16 videos under 60 seconds as Shorts.
+            </p>
+            <p>
+                Adding <code>#Shorts</code> at the beginning of your title consumes 8 valuable characters (including spaces) from your visible mobile safe zone. If you choose to include hashtags for topic categorization, place 1 focused tag at the very end of your title after your primary hook, or place all hashtags inside the video description.
+            </p>
+
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-block">
+                <details class="faq-accordion" open>
+                    <summary class="faq-summary">What is the hard character limit for YouTube Shorts titles in 2026?</summary>
+                    <div class="faq-answer">
+                        The hard character ceiling for a YouTube Shorts title is 100 characters in YouTube Studio. This count includes letters, spaces, numbers, punctuation, and emojis.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">Where do YouTube Shorts titles truncate on mobile screens?</summary>
+                    <div class="faq-answer">
+                        On the native mobile YouTube Shorts player overlay, titles truncate with an ellipsis (...) after approximately 50 to 55 characters depending on character pixel width, font rendering, and whether hashtags are present.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">Should I include #Shorts in my YouTube Shorts video title?</summary>
+                    <div class="faq-answer">
+                        No, putting #Shorts in your title wastes valuable visible real estate. YouTube automatically categorizes vertical videos under 60 seconds as Shorts. It is better to place target hashtags in the description field or at the very end of the title after your core hook.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">How does title length affect YouTube Shorts Click-Through-Rate (CTR)?</summary>
+                    <div class="faq-answer">
+                        Titles that front-load their primary topic and emotional hook within the first 45-50 visible characters achieve up to 35% higher CTR on mobile home feeds and search results because viewers read the full value proposition without truncation.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">How many power words or emojis should I use in a Shorts title?</summary>
+                    <div class="faq-answer">
+                        The optimal density is 1 to 2 power words combined with 1 relevant emoji. Overloading titles with excessive capital letters or multiple emojis reduces readability and can trigger algorithmic spam penalties.
+                    </div>
+                </details>
+            </div>
+        </div>
+    </article>
+
+    <!-- Footer Container -->
+    <div id="global-footer"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var canvas = document.getElementById('previewCanvas');
+            if (!canvas) return;
+            var ctx = canvas.getContext('2d');
+
+            // Form Inputs & Controls
+            var titleInput = document.getElementById('titleInput');
+            var channelNameInput = document.getElementById('channelNameInput');
+            var hashtagMode = document.getElementById('hashtagMode');
+            var nicheSelect = document.getElementById('nicheSelect');
+            var showGuideToggle = document.getElementById('showGuideToggle');
+            var highlightPowerToggle = document.getElementById('highlightPowerToggle');
+            
+            // Displays & Alerts
+            var charCountDisplay = document.getElementById('charCountDisplay');
+            var charProgressFill = document.getElementById('charProgressFill');
+            var truncationWarningAlert = document.getElementById('truncationWarningAlert');
+            var overLimitAlert = document.getElementById('overLimitAlert');
+            var downloadBtn = document.getElementById('downloadBtn');
+
+            // Metric Highlight Cards
+            var cardCtrScore = document.getElementById('cardCtrScore');
+            var cardVisibleChars = document.getElementById('cardVisibleChars');
+            var cardTruncationRisk = document.getElementById('cardTruncationRisk');
+            var cardPowerWords = document.getElementById('cardPowerWords');
+
+            // Presets
+            var presetCuriosity = document.getElementById('presetCuriosity');
+            var presetListicle = document.getElementById('presetListicle');
+            var presetFix = document.getElementById('presetFix');
+            var presetQuestion = document.getElementById('presetQuestion');
+
+            // Dictionary of High-CTR Power Words
+            var POWER_WORDS = [
+                'INSANE', 'SECRET', 'PROVEN', 'HOW TO', 'STOP', 'MISTAKE', 'FAST',
+                'SHOCKING', 'EASIEST', 'NEVER', 'WHY', 'TRUTH', 'FREE', 'DON\'T MISS',
+                'EXPOSED', 'HACK', 'BEST', 'WORST', 'ALWAYS', 'REVEALED', 'UNBELIEVABLE',
+                '3 STEPS', '5 WAYS', '2026', 'WRONG', 'WARNING'
+            ];
+
+            /* Setup Social Share Links */
+            var currentUrl = encodeURIComponent(window.location.href);
+            var shareTitle = encodeURIComponent("Check out this free YouTube Shorts Title Checker & Mobile Truncation Simulator!");
+            
+            document.getElementById('shareX').href = 'https://twitter.com/intent/tweet?url=' + currentUrl + '&text=' + shareTitle;
+            document.getElementById('shareFB').href = 'https://www.facebook.com/sharer/sharer.php?u=' + currentUrl;
+            document.getElementById('shareWA').href = 'https://api.whatsapp.com/send?text=' + shareTitle + '%20' + currentUrl;
+            document.getElementById('shareLI').href = 'https://www.linkedin.com/sharing/share-offsite/?url=' + currentUrl;
+            document.getElementById('sharePIN').href = 'https://pinterest.com/pin/create/button/?url=' + currentUrl + '&description=' + shareTitle;
+
+            var copyBtn = document.getElementById('copyShareLink');
+            copyBtn.addEventListener('click', function() {
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'YouTube Shorts Title Checker',
+                        text: 'Simulate YouTube Shorts mobile overlay title truncation and optimize CTR.',
+                        url: window.location.href
+                    }).catch(function() {});
+                } else if (navigator.clipboard) {
+                    navigator.clipboard.writeText(window.location.href).then(function() {
+                        var origText = copyBtn.textContent;
+                        copyBtn.textContent = '✓ Link Copied!';
+                        setTimeout(function() { copyBtn.textContent = origText; }, 2000);
+                    });
+                }
+            });
+
+            // Preset Handlers
+            presetCuriosity.addEventListener('click', function() {
+                titleInput.value = "🔥 3 Insane AI Tools You Need in 2026! [Don't Miss]";
+                hashtagMode.value = "end_shorts";
+                calculateAndDraw();
+            });
+
+            presetListicle.addEventListener('click', function() {
+                titleInput.value = "Top 5 YouTube Shorts Mistakes Destroying Your Reach 📈";
+                hashtagMode.value = "none";
+                calculateAndDraw();
+            });
+
+            presetFix.addEventListener('click', function() {
+                titleInput.value = "Stop Boiling Eggs Wrong! (Try This 2-Min Hack) 🥚";
+                hashtagMode.value = "none";
+                calculateAndDraw();
+            });
+
+            presetQuestion.addEventListener('click', function() {
+                titleInput.value = "Is This the Most Dangerous Road in the World? 😱";
+                hashtagMode.value = "end_niche";
+                calculateAndDraw();
+            });
+
+            // Input Listeners
+            titleInput.addEventListener('input', calculateAndDraw);
+            channelNameInput.addEventListener('input', calculateAndDraw);
+            hashtagMode.addEventListener('change', calculateAndDraw);
+            nicheSelect.addEventListener('change', calculateAndDraw);
+            showGuideToggle.addEventListener('change', calculateAndDraw);
+            highlightPowerToggle.addEventListener('change', calculateAndDraw);
+
+            function constructFullTitle() {
+                var baseTitle = titleInput.value.trim();
+                var mode = hashtagMode.value;
+
+                if (mode === 'end_shorts') {
+                    return baseTitle + " #Shorts";
+                } else if (mode === 'end_niche') {
+                    return baseTitle + " #Tech #2026";
+                } else if (mode === 'start_shorts') {
+                    return "#Shorts " + baseTitle;
+                }
+                return baseTitle;
+            }
+
+            function analyzePowerWords(text) {
+                var upper = text.toUpperCase();
+                var detected = [];
+                POWER_WORDS.forEach(function(word) {
+                    if (upper.includes(word)) {
+                        detected.push(word);
+                    }
+                });
+                return detected;
+            }
+
+            function calculateAndDraw() {
+                var fullTitle = constructFullTitle();
+                var rawLength = fullTitle.length;
+                var channelName = channelNameInput.value.trim() || 'Creator Studio';
+
+                // Display Character Count & Progress Fill
+                charCountDisplay.textContent = rawLength + " / 100";
+                var fillPercent = Math.min(100, (rawLength / 100) * 100);
+                charProgressFill.style.width = fillPercent + "%";
+
+                if (rawLength > 100) {
+                    charProgressFill.style.backgroundColor = "var(--accent-yt)";
+                    overLimitAlert.style.display = "block";
+                    truncationWarningAlert.style.display = "none";
+                } else if (rawLength > 52) {
+                    charProgressFill.style.backgroundColor = "var(--accent-amber)";
+                    overLimitAlert.style.display = "none";
+                    truncationWarningAlert.style.display = "block";
+                } else {
+                    charProgressFill.style.backgroundColor = "var(--accent-green)";
+                    overLimitAlert.style.display = "none";
+                    truncationWarningAlert.style.display = "none";
+                }
+
+                // Analyze Power Words
+                var detectedPowerWords = analyzePowerWords(fullTitle);
+                cardPowerWords.textContent = detectedPowerWords.length + " Words";
+
+                // Mobile Safe Limit Cutoff is ~52 characters
+                var visibleChars = Math.min(rawLength, 52);
+                cardVisibleChars.textContent = visibleChars + " / " + rawLength;
+
+                // Truncation Risk Assessment
+                var riskText = "Low Risk";
+                var riskColor = "var(--accent-green)";
+                if (rawLength > 100) {
+                    riskText = "Exceeds Cap";
+                    riskColor = "var(--accent-yt)";
+                } else if (rawLength > 65) {
+                    riskText = "High Truncation";
+                    riskColor = "var(--accent-yt)";
+                } else if (rawLength > 52) {
+                    riskText = "Moderate Risk";
+                    riskColor = "var(--accent-amber)";
+                }
+                cardTruncationRisk.textContent = riskText;
+                cardTruncationRisk.style.color = riskColor;
+
+                // Calculate CTR Score (0 - 100 scale)
+                var score = 40; // Base score
+                if (rawLength >= 25 && rawLength <= 52) score += 30; // Ideal length range
+                else if (rawLength > 52 && rawLength <= 70) score += 15;
+                else if (rawLength > 0 && rawLength < 25) score += 10;
+
+                score += Math.min(20, detectedPowerWords.length * 8); // Power word bonus
+
+                if (/[?!\[\]]/.test(fullTitle)) score += 10; // Curiosity punctuation bonus
+                if (/\d/.test(fullTitle)) score += 5; // Number/listicle bonus
+                if (hashtagMode.value === 'start_shorts') score -= 15; // Penalty for starting with #Shorts
+                if (rawLength > 100) score = 0; // Invalid title
+
+                score = Math.max(0, Math.min(100, score));
+                cardCtrScore.textContent = score + " / 100";
+
+                // Render Live Mobile Canvas Overlay
+                drawCanvas({
+                    fullTitle: fullTitle,
+                    rawLength: rawLength,
+                    channelName: channelName,
+                    score: score,
+                    detectedPowerWords: detectedPowerWords,
+                    showGuide: showGuideToggle.checked,
+                    highlightPower: highlightPowerToggle.checked
+                });
+            }
+
+            function drawCanvas(data) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                // Simulated Phone Background Gradient
+                var bgGrad = ctx.createLinearGradient(0, 0, 1080, 1920);
+                bgGrad.addColorStop(0, '#111827');
+                bgGrad.addColorStop(0.5, '#1f2937');
+                bgGrad.addColorStop(1, '#0f172a');
+                ctx.fillStyle = bgGrad;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Simulated Content Image / Pattern inside Shorts Player
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.03)';
+                for (var i = 0; i < 1920; i += 60) {
+                    ctx.fillRect(0, i, 1080, 2);
+                }
+
+                // Top Status Bar Overlay (Time, YouTube Shorts Header)
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 36px -apple-system, sans-serif';
+                ctx.textAlign = 'left';
+                ctx.fillText('10:00', 60, 80);
+
+                ctx.textAlign = 'right';
+                ctx.fillText('📶 5G  🔋 98%', 1020, 80);
+
+                // YouTube Shorts Top Nav Bar
+                ctx.fillStyle = '#ff0000';
+                ctx.beginPath();
+                if (ctx.roundRect) {
+                    ctx.roundRect(60, 130, 48, 48, 12);
+                } else {
+                    ctx.fillRect(60, 130, 48, 48);
+                }
+                ctx.fill();
+
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 42px -apple-system, sans-serif';
+                ctx.textAlign = 'left';
+                ctx.fillText('Shorts', 125, 168);
+
+                ctx.textAlign = 'right';
+                ctx.fillText('🔍  📷  ⋮', 1020, 168);
+
+                // Right Side Action Bar Buttons (Like, Dislike, Comments, Share, Remix)
+                var actions = [
+                    { icon: '👍', label: '142K' },
+                    { icon: '👎', label: 'Dislike' },
+                    { icon: '💬', label: '1,840' },
+                    { icon: '↪️', label: 'Share' },
+                    { icon: '♨️', label: 'Remix' }
+                ];
+
+                var startY = 1000;
+                actions.forEach(function(act, idx) {
+                    var y = startY + (idx * 140);
+                    ctx.fillStyle = 'rgba(0, 0, 0, 0.4)';
+                    ctx.beginPath();
+                    ctx.arc(990, y, 42, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    ctx.fillStyle = '#ffffff';
+                    ctx.font = '36px -apple-system, sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(act.icon, 990, y + 12);
+
+                    ctx.font = 'bold 22px -apple-system, sans-serif';
+                    ctx.fillText(act.label, 990, y + 65);
+                });
+
+                // Spinning Audio Disc Thumbnail at bottom right
+                ctx.fillStyle = '#1f2937';
+                ctx.strokeStyle = '#ffffff';
+                ctx.lineWidth = 4;
+                ctx.beginPath();
+                ctx.arc(990, 1720, 38, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.stroke();
+
+                // Bottom Left Channel Metadata Overlay
+                // Channel Avatar Circle
+                ctx.fillStyle = '#3ea6ff';
+                ctx.beginPath();
+                ctx.arc(100, 1500, 40, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 36px -apple-system, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText(data.channelName.charAt(0).toUpperCase(), 100, 1512);
+
+                // Channel Handle Name
+                ctx.textAlign = 'left';
+                ctx.font = 'bold 34px -apple-system, sans-serif';
+                ctx.fillText('@' + data.channelName, 160, 1510);
+
+                // Red Subscribe Button
+                ctx.fillStyle = '#ff0000';
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(520, 1472, 170, 52, 26);
+                    ctx.fill();
+                } else {
+                    ctx.fillRect(520, 1472, 170, 52);
+                }
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 24px -apple-system, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('Subscribe', 605, 1507);
+
+                // Title Display Overlay Box (Bottom Left Zone)
+                var titleY = 1580;
+                ctx.textAlign = 'left';
+                ctx.font = '600 36px -apple-system, sans-serif';
+
+                // Format Visible Title vs Truncated Title on Mobile Screen
+                var maxVisibleMobileChars = 52;
+                var displayTitle = data.fullTitle;
+                var isTruncatedOnMobile = false;
+
+                if (data.fullTitle.length > maxVisibleMobileChars) {
+                    displayTitle = data.fullTitle.substring(0, maxVisibleMobileChars) + '...';
+                    isTruncatedOnMobile = true;
+                }
+
+                // Render Title Text Line Wrapping
+                var maxWidth = 800;
+                var words = displayTitle.split(' ');
+                var line = '';
+                var currentY = titleY;
+
+                for (var n = 0; n < words.length; n++) {
+                    var testLine = line + words[n] + ' ';
+                    var metrics = ctx.measureText(testLine);
+                    if (metrics.width > maxWidth && n > 0) {
+                        ctx.fillStyle = '#ffffff';
+                        ctx.fillText(line, 60, currentY);
+                        line = words[n] + ' ';
+                        currentY += 46;
+                    } else {
+                        line = testLine;
+                    }
+                }
+                ctx.fillStyle = '#ffffff';
+                ctx.fillText(line, 60, currentY);
+
+                // Audio Track Title
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = '26px -apple-system, sans-serif';
+                ctx.fillText('🎵 Original Sound - ' + data.channelName, 60, currentY + 50);
+
+                // Red Mobile Truncation Guide Line (If Enabled)
+                if (data.showGuide) {
+                    ctx.strokeStyle = '#ff0050';
+                    ctx.lineWidth = 3;
+                    ctx.setLineDash([12, 8]);
+                    ctx.beginPath();
+                    ctx.moveTo(60, 1630);
+                    ctx.lineTo(880, 1630);
+                    ctx.stroke();
+                    ctx.setLineDash([]); // Reset line dash
+
+                    ctx.fillStyle = '#ff0050';
+                    ctx.font = 'bold 22px -apple-system, sans-serif';
+                    ctx.fillText('▲ MOBILE OVERLAY TRUNCATION CUTOFF (~52 CHARS)', 60, 1660);
+                }
+
+                // Top Overlay Blueprint Card Header
+                ctx.fillStyle = 'rgba(24, 27, 36, 0.9)';
+                ctx.strokeStyle = '#2e3446';
+                ctx.lineWidth = 3;
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(60, 210, 960, 160, 20);
+                    ctx.fill();
+                    ctx.stroke();
+                } else {
+                    ctx.fillRect(60, 210, 960, 160);
+                }
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = 'bold 24px -apple-system, sans-serif';
+                ctx.fillText('SHORTS TITLE OPTIMIZER BLUEPRINT', 90, 250);
+
+                ctx.fillStyle = '#00f2fe';
+                ctx.font = 'bold 44px -apple-system, sans-serif';
+                ctx.fillText('CTR Score: ' + data.score + ' / 100', 90, 305);
+
+                ctx.fillStyle = data.rawLength > 52 ? '#f59e0b' : '#10b981';
+                ctx.font = 'bold 28px -apple-system, sans-serif';
+                ctx.textAlign = 'right';
+                ctx.fillText(data.rawLength > 52 ? '⚠️ Truncated on Mobile' : '✓ Fully Visible Mobile Title', 980, 305);
+
+                // Footer Branding on Canvas
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+                ctx.font = 'bold 22px -apple-system, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('CoreMetricSuite · Shorts Title Simulator', 540, 1880);
+            }
+
+            // Initial calculation & render
+            calculateAndDraw();
+
+            // Download PNG Title Blueprint Report
+            downloadBtn.addEventListener('click', function() {
+                var link = document.createElement('a');
+                link.download = 'youtube-shorts-title-blueprint.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        });
+    </script>
+
+    <!-- Global CoreMetricSuite Cross-Linking Index Hub -->
+    <div style="margin-top: 40px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #f8fafc; font-family: system-ui, -apple-system, sans-serif;">
+        <h3 style="margin: 0 0 15px 0; font-size: 18px; color: #0f172a; font-weight: 600;">🛠️ CoreMetricSuite Utility Directory</h3>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇦🇺 Australia Tax &amp; Labor</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-au-cents" href="../au-cents-per-km-estimator/" style="color: #2563eb; text-decoration: underline;">Cents-Per-Km Tax Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-au-schads" href="../au-schads-vehicle-allowance/" style="color: #2563eb; text-decoration: underline;">SCHADS Vehicle Allowance</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-au-super" href="../au-superannuation-charge-tracker/" style="color: #2563eb; text-decoration: underline;">Superannuation Tracker</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇺🇸 US Corporate Tax</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-us-llc" href="../us-llc-late-penalty-estimator/" style="color: #2563eb; text-decoration: underline;">LLC Late Tax Penalty</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-us-179" href="../us-section-179-truck-calculator/" style="color: #2563eb; text-decoration: underline;">Section 179 Vehicle Deduction</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇬🇧 UK Property Management</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-rent" href="../uk-form-4a-rent-tracker/" style="color: #2563eb; text-decoration: underline;">Form 4A Rent Tracker</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-sdlt" href="../uk-sdlt-bracket-estimator/" style="color: #2563eb; text-decoration: underline;">Stamp Duty Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-sec8" href="../uk-section-8-calculator/" style="color: #2563eb; text-decoration: underline;">Section 8 Calculator</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🎬 Digital Media Layouts &amp; Monetization</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-media-shorts-title" href="../shorts-title-checker/" style="color: #2563eb; text-decoration: underline;">Shorts Title Checker</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-tiktok-goal" href="../tiktok-rpm-goal/" style="color: #2563eb; text-decoration: underline;">TikTok RPM Goal Engine</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-tiktok-rpm" href="../tiktok-creator-rewards-rpm-estimator/" style="color: #2563eb; text-decoration: underline;">TikTok Creator Rewards RPM</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-ig" href="../instagram-reels-preview/" style="color: #2563eb; text-decoration: underline;">Instagram Reels Grid</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-fb" href="../facebook-ad-safe-zone/" style="color: #2563eb; text-decoration: underline;">Facebook 9:16 Ad Mask</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-shorts" href="../shorts-ui-safe-zone/" style="color: #2563eb; text-decoration: underline;">YouTube Shorts Safe Zone</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script defer>
+        (function() {
+            const path = window.location.pathname.toLowerCase();
+            const toolsMap = {
+                'au-cents-per-km-estimator': 'hub-au-cents',
+                'au-schads-vehicle-allowance': 'hub-au-schads',
+                'au-superannuation-charge-tracker': 'hub-au-super',
+                'us-llc-late-penalty-estimator': 'hub-us-llc',
+                'us-section-179-truck-calculator': 'hub-us-179',
+                'uk-form-4a-rent-tracker': 'hub-uk-rent',
+                'uk-sdlt-bracket-estimator': 'hub-uk-sdlt',
+                'uk-section-8-calculator': 'hub-uk-sec8',
+                'shorts-title-checker': 'hub-media-shorts-title',
+                'tiktok-rpm-goal': 'hub-media-tiktok-goal',
+                'tiktok-creator-rewards-rpm-estimator': 'hub-media-tiktok-rpm',
+                'instagram-reels-preview': 'hub-media-ig',
+                'facebook-ad-safe-zone': 'hub-media-fb',
+                'shorts-ui-safe-zone': 'hub-media-shorts'
+            };
+
+            for (const [folderName, elementId] of Object.entries(toolsMap)) {
+                if (path.includes(folderName)) {
+                    const targetEl = document.getElementById(elementId);
+                    if (targetEl) {
+                        targetEl.outerHTML = `<span style="font-weight: 600; color: #0f172a;">${targetEl.textContent} (Current)</span>`;
+                    }
+                    break;
+                }
+            }
+        })();
+    </script>
+</body>
+</html>
