@@ -232,6 +232,68 @@ const toolsData = [
   url: "/patreon-net-tier-payout-dashboard",
   keywords: "patreon net tier payout dashboard creator membership earnings calculator subscription platform fee"
 },
+    [
+  {
+    "id": "email-subject-line-mobile-previewer",
+    "region": "global",
+    "badgeText": "MEDIA & UI",
+    "badgeColor": "#db2777",
+    "title": "Email Subject Line Mobile Previewer",
+    "description": "Preview and optimize email subject lines and preheader text across various mobile device screens.",
+    "url": "/email-subject-line-mobile-previewer",
+    "keywords": "email subject line mobile previewer preheader optimization marketing open rate"
+  },
+  {
+    "id": "podcast-chapter-builder",
+    "region": "global",
+    "badgeText": "MEDIA & UI",
+    "badgeColor": "#db2777",
+    "title": "Podcast Chapter Builder",
+    "description": "Generate, format, and structure standard podcast chapter timestamps and metadata for audio files.",
+    "url": "/podcast-chapter-builder",
+    "keywords": "podcast chapter builder timestamps metadata audio show notes episode structure"
+  },
+  {
+    "id": "bluesky-bio-visualizer",
+    "region": "global",
+    "badgeText": "MEDIA & UI",
+    "badgeColor": "#db2777",
+    "title": "Bluesky Bio Visualizer",
+    "description": "Preview, layout, and optimize your Bluesky profile bio, links, and avatar appearance in real time.",
+    "url": "/bluesky-bio-visualizer",
+    "keywords": "bluesky bio visualizer profile preview social media layout optimizer"
+  },
+  {
+    "id": "carousel-indicator-generator",
+    "region": "global",
+    "badgeText": "MEDIA & UI",
+    "badgeColor": "#db2777",
+    "title": "Carousel Indicator Generator",
+    "description": "Design and generate custom visual indicators, dots, and pagination styles for social media slider carousels.",
+    "url": "/carousel-indicator-generator",
+    "keywords": "carousel indicator generator slider pagination dot design ui asset graphics"
+  },
+  {
+    "id": "tiktok-rpm-goal",
+    "region": "global",
+    "badgeText": "MEDIA & UI",
+    "badgeColor": "#db2777",
+    "title": "TikTok RPM Goal Calculator",
+    "description": "Calculate and estimate required views and engagement metrics to hit specific revenue targets based on your TikTok RPM.",
+    "url": "/tiktok-rpm-goal",
+    "keywords": "tiktok rpm goal calculator creator rewards program earnings estimator views target"
+  },
+  {
+    "id": "shorts-title-checker",
+    "region": "global",
+    "badgeText": "MEDIA & UI",
+    "badgeColor": "#db2777",
+    "title": "YouTube Shorts Title Checker",
+    "description": "Analyze YouTube Shorts titles for optimal length, hook potential, readability, and character limits.",
+    "url": "/shorts-title-checker",
+    "keywords": "shorts title checker youtube video metadata optimization click through rate"
+  },
+
     // --- E-COMMERCE SUITE ---
     {
         id: "shopify-metafields",
@@ -253,4 +315,14 @@ const toolsData = [
   url: "/stan-store-vs-shopify-calculator",
   keywords: "stan store vs shopify calculator comparison e-commerce store platform fees developer conversion"
 },
+        {
+    "id": "lemon-squeezy-vs-gumroad-calculator",
+    "region": "developer",
+    "badgeText": "DEVELOPER",
+    "badgeColor": "#059669",
+    "title": "Lemon Squeezy vs Gumroad Calculator",
+    "description": "Compare platform fees, payouts, and margins between Lemon Squeezy and Gumroad to find the best platform for your products.",
+    "url": "/lemon-squeezy-vs-gumroad-calculator",
+    "keywords": "lemon squeezy vs gumroad calculator platform fee comparison digital products profit margin"
+  },
 ];
