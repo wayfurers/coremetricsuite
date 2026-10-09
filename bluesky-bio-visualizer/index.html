@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bluesky Bio Visualizer &amp; Profile Card Generator (2026)</title>
+    <meta name="description" content="Preview, design, and optimize your Bluesky profile card, handle verification, header banner, and 256-character bio live. Export high-res 1080p profile blueprints.">
+    <meta name="keywords" content="bluesky bio visualizer, bluesky profile generator, bluesky custom domain preview, bluesky header banner size, bluesky character limit calculator, bluesky profile card simulator, bsky bio editor">
+    <link rel="canonical" href="https://coremetricsuite.com/bluesky-bio-visualizer/">
+
+    <!-- Open Graph / Social Metadata -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Bluesky Bio Visualizer &amp; Profile Blueprint Engine">
+    <meta property="og:description" content="Test your Bluesky bio layout, custom domain handles, header banners, and profile formatting live. Generate high-resolution preview cards for AT Protocol profiles.">
+    <meta property="og:url" content="https://coremetricsuite.com/bluesky-bio-visualizer/">
+    
+    <!-- Global Framework Dependencies -->
+    <link rel="stylesheet" href="/css/global.css">
+    <script src="/config.js" defer></script>
+    <script src="/global.min.js" defer></script>
+
+    <!-- WebApplication JSON-LD Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Bluesky Bio Visualizer & Profile Generator",
+      "url": "https://coremetricsuite.com/bluesky-bio-visualizer/",
+      "applicationCategory": "SocialMediaApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires HTML5. Requires JavaScript.",
+      "author": {
+        "@type": "Organization",
+        "name": "CoreMetricSuite Hub",
+        "url": "https://coremetricsuite.com"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
+    <!-- FAQ JSON-LD Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the character limit for a Bluesky bio in 2026?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Bluesky bio character limit is strictly set to 256 characters. Bios exceeding 256 characters will be truncated upon saving in the Bluesky application. URLs included directly within the bio count toward this character threshold."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do custom domain handles work as verification on Bluesky?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Unlike traditional social platforms with subscription checkmarks, Bluesky utilizes decentralized domain verification via the AT Protocol. Users set their domain (e.g., @name.com) as their handle by configuring a DNS TXT record (_atproto) or an HTTP .well-known/atproto-did file, proving ownership instantly."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What are the exact dimensions for a Bluesky header banner?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The recommended Bluesky header banner dimensions are 1500 x 500 pixels, yielding a 3:1 aspect ratio. Keep vital graphic elements centered to prevent accidental cropping across mobile displays and desktop viewports."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why does my profile picture or avatar look cropped on Bluesky?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Bluesky displays user avatars as circular cutouts throughout feeds and profile headers. While image uploads should be square (400 x 400 pixels, 1:1 aspect ratio), all four corners are clipped automatically. Keep facial features or logos strictly centered."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does the Bluesky Bio Visualizer help optimize profile engagement?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Bluesky Bio Visualizer lets you preview your avatar overlay, banner safe zones, custom domain handle formatting, dark/light theme rendering, and 256-character line breaks before publishing changes to the AT Protocol network."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-main: #0f1117;
+            --bg-card: #181b24;
+            --bg-input: #222634;
+            --border-color: #2e3446;
+            --accent-blue: #1185fe;
+            --accent-cyan: #00f2fe;
+            --accent-pink: #ff0050;
+            --accent-green: #10b981;
+            --accent-amber: #f59e0b;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: var(--bg-main); color: var(--text-primary); font-family: var(--font-sans); line-height: 1.6; }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            grid-template-areas: 
+                "upload preview"
+                "panel preview";
+            gap: 2rem;
+        }
+
+        .upload-card-wrapper {
+            grid-area: upload;
+        }
+
+        .panel {
+            grid-area: panel;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            height: fit-content;
+        }
+
+        .panel-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+            color: #fff;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        .drop-zone {
+            border: 2px dashed var(--border-color);
+            padding: 1rem;
+            text-align: center;
+            border-radius: 8px;
+            background-color: var(--bg-input);
+            cursor: pointer;
+            transition: border-color 0.2s, background-color 0.2s;
+            margin-bottom: 0.75rem;
+        }
+
+        .drop-zone:hover { border-color: var(--accent-blue); background-color: rgba(17, 133, 254, 0.05); }
+        .drop-title { font-weight: 600; color: #fff; font-size: 0.9rem; }
+        .drop-sub { font-size: 0.78rem; color: var(--text-secondary); margin-top: 2px; }
+
+        .preset-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .btn-demo {
+            width: 100%;
+            padding: 0.6rem 0.5rem;
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            color: var(--accent-cyan);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.78rem;
+            transition: background-color 0.2s, border-color 0.2s;
+            text-align: center;
+        }
+
+        .btn-demo:hover { background-color: #2a2f42; border-color: var(--accent-cyan); }
+
+        .toggle-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: var(--bg-input);
+            padding: 0.75rem 0.85rem;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 1rem;
+        }
+
+        .toggle-label { font-size: 0.85rem; font-weight: 500; color: var(--text-primary); }
+
+        .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #374151; transition: .3s; border-radius: 24px;
+        }
+        .slider:before {
+            position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px;
+            background-color: white; transition: .3s; border-radius: 50%;
+        }
+        input:checked + .slider { background-color: var(--accent-blue); }
+        input:checked + .slider:before { transform: translateX(20px); }
+
+        .form-group { margin-bottom: 1.1rem; }
+        .range-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem; }
+        .range-value { font-size: 0.825rem; font-weight: 700; color: var(--accent-cyan); }
+        label { display: block; font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 0.35rem; }
+        
+        input[type="text"], input[type="number"], textarea, select {
+            width: 100%; padding: 0.65rem 0.85rem; background-color: var(--bg-input);
+            border: 1px solid var(--border-color); border-radius: 6px; color: #fff;
+            font-size: 0.9rem; outline: none; font-family: inherit;
+        }
+        textarea { resize: vertical; min-height: 80px; }
+        
+        input[type="text"]:focus, input[type="number"]:focus, textarea:focus, select:focus { border-color: var(--accent-blue); }
+
+        .btn-action {
+            width: 100%; padding: 0.85rem; background: linear-gradient(135deg, var(--accent-blue), #0056b3);
+            color: #fff; font-weight: 600; border: none; border-radius: 6px; cursor: pointer; font-size: 0.95rem;
+            box-shadow: 0 4px 12px rgba(17, 133, 254, 0.3);
+            transition: transform 0.1s, opacity 0.2s;
+            margin-bottom: 1rem;
+        }
+        .btn-action:hover { opacity: 0.95; }
+        .btn-action:active { transform: scale(0.99); }
+
+        /* Social Share Button Module */
+        .social-share-container {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        .share-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
+            display: block;
+            text-align: center;
+        }
+        .share-buttons-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+        }
+        .btn-share {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            padding: 0.5rem 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: opacity 0.2s, transform 0.1s;
+        }
+        .btn-share:hover { opacity: 0.88; }
+        .btn-share:active { transform: scale(0.97); }
+        .btn-share-x { background-color: #000000; border: 1px solid #333; }
+        .btn-share-fb { background-color: #1877f2; }
+        .btn-share-li { background-color: #0a66c2; }
+        .btn-share-wa { background-color: #25d366; color: #000; }
+        .btn-share-pin { background-color: #e60023; }
+        .btn-share-copy { background-color: #374151; color: #fff; grid-column: span 3; margin-top: 0.25rem; }
+
+        .preview-stage { 
+            grid-area: preview;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+        }
+        .canvas-wrapper {
+            position: relative; width: 340px; height: 425px; border-radius: 16px;
+            overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.6); background-color: #000;
+            border: 2px solid var(--border-color);
+        }
+        canvas { width: 100%; height: 100%; display: block; }
+        .canvas-caption { margin-top: 1rem; font-size: 0.85rem; color: var(--text-secondary); text-align: center; }
+
+        /* Metric Highlights Grid below Canvas */
+        .metric-summary-grid {
+            width: 100%;
+            max-width: 340px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+        .metric-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.85rem;
+            text-align: center;
+        }
+        .metric-card-title { font-size: 0.725rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; }
+        .metric-card-value { font-size: 1.05rem; font-weight: 700; color: #fff; }
+        .metric-card-value.highlight { color: var(--accent-cyan); }
+        .metric-card-value.green { color: var(--accent-green); }
+
+        .content-area { max-width: 1200px; margin: 3rem auto; padding: 0 1.5rem; }
+        .content-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 2.5rem; }
+        .content-card h1 { font-size: 2rem; margin-bottom: 1rem; color: #fff; }
+        .content-card h2 { font-size: 1.4rem; margin: 1.8rem 0 1rem; color: #fff; }
+        .content-card p { color: var(--text-secondary); margin-bottom: 1.2rem; }
+        .content-card ul, .content-card ol { color: var(--text-secondary); margin: 0 0 1.2rem 1.5rem; }
+        .content-card li { margin-bottom: 0.5rem; }
+
+        .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 1.5rem 0; }
+        .spec-table { width: 100%; border-collapse: collapse; text-align: left; min-width: 600px; }
+        .spec-table th, .spec-table td { padding: 0.85rem 1rem; border: 1px solid var(--border-color); }
+        .spec-table th { background-color: var(--bg-input); color: #fff; font-size: 0.9rem; }
+        .spec-table td { color: var(--text-secondary); font-size: 0.875rem; }
+
+        /* Accordion FAQ Styling */
+        .faq-block { margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem; }
+        .faq-accordion {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 0.85rem;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .faq-accordion[open] { border-color: var(--accent-blue); }
+        .faq-summary {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            padding: 1rem 1.2rem;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+        .faq-summary::-webkit-details-marker { display: none; }
+        .faq-summary::after {
+            content: "+";
+            font-size: 1.2rem;
+            color: var(--accent-blue);
+            transition: transform 0.2s;
+        }
+        .faq-accordion[open] .faq-summary::after {
+            content: "−";
+            color: var(--accent-blue);
+        }
+        .faq-answer {
+            padding: 0 1.2rem 1.2rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 0.4rem;
+            padding-top: 0.8rem;
+        }
+
+        .cms-ad-slot-1, .cms-ad-slot-2 {
+            width: 100%; max-width: 970px; min-height: 90px; margin: 1.5rem auto;
+            background: rgba(255,255,255,0.02); border-radius: 8px; display: block;
+        }
+
+        .alert-banner {
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            font-size: 0.825rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            display: none;
+        }
+        .alert-banner.warning {
+            background-color: rgba(245, 158, 11, 0.15);
+            border: 1px solid var(--accent-amber);
+            color: #fbbf24;
+        }
+
+        .file-input-hidden { display: none; }
+
+        /* Mobile Responsive Overrides */
+        @media screen and (max-width: 900px) {
+            html, body { width: 100%!important; max-width: 100vw!important; overflow-x: hidden!important; margin: 0!important; padding: 0!important; }
+            main.container { display: flex!important; flex-direction: column!important; width: 100%!important; max-width: 100%!important; padding: 0 12px!important; margin: 8px auto!important; gap: 16px!important; box-sizing: border-box!important; }
+            .upload-card-wrapper { order: 1!important; width: 100%!important; }
+            main.container > section.preview-stage { order: 2!important; width: 100%!important; display: flex!important; flex-direction: column!important; align-items: center!important; margin: 0 auto!important; box-sizing: border-box!important; }
+            main.container > section.panel { order: 3!important; width: 100%!important; max-width: 100%!important; box-sizing: border-box!important; }
+            .canvas-wrapper { width: 80vw!important; height: 100vw!important; max-width: 320px!important; max-height: 400px!important; margin: 0 auto!important; box-sizing: border-box!important; }
+            input, textarea, select { font-size: 16px!important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Container -->
+    <div id="global-header"></div>
+
+    <!-- Ad Slot 1 Container -->
+    <div class="cms-ad-slot-1" id="cms-ad-slot-top"></div>
+
+    <!-- Main Tool Container -->
+    <main class="container">
+        <!-- Module 1: Profile Controls & Inputs (Rendered 1st on mobile) -->
+        <div class="upload-card-wrapper">
+            <div class="panel">
+                <div class="panel-title">
+                    <span>Bluesky Identity Settings</span>
+                    <span class="badge">BSKY AT-PROTO</span>
+                </div>
+                
+                <div class="drop-zone" id="avatarDropZone">
+                    <p class="drop-title">📸 Upload Avatar Picture</p>
+                    <p class="drop-sub">Click to select 1:1 image (400x400 px recommended)</p>
+                    <input type="file" id="avatarUpload" class="file-input-hidden" accept="image/*">
+                </div>
+
+                <div class="drop-zone" id="bannerDropZone">
+                    <p class="drop-title">🖼️ Upload Header Banner</p>
+                    <p class="drop-sub">Click to select 3:1 banner (1500x500 px recommended)</p>
+                    <input type="file" id="bannerUpload" class="file-input-hidden" accept="image/*">
+                </div>
+
+                <div class="preset-grid">
+                    <button class="btn-demo" id="presetBrand" type="button">🌐 Verified Brand</button>
+                    <button class="btn-demo" id="presetCreator" type="button">🚀 Tech Creator</button>
+                    <button class="btn-demo" id="presetArtist" type="button">🎨 Digital Artist</button>
+                    <button class="btn-demo" id="presetNews" type="button">📈 News Outlet</button>
+                </div>
+
+                <div class="form-group">
+                    <label for="displayName">Display Name</label>
+                    <input type="text" id="displayName" value="Sarah Jenkins" maxlength="64" placeholder="e.g. Sarah Jenkins">
+                </div>
+
+                <div class="form-group">
+                    <label for="handleInput">Bluesky Handle</label>
+                    <input type="text" id="handleInput" value="sjenkins.bsky.social" placeholder="e.g. sjenkins.bsky.social or domain.com">
+                </div>
+
+                <div class="toggle-group">
+                    <span class="toggle-label">Custom Domain Verification Indicator</span>
+                    <label class="switch">
+                        <input type="checkbox" id="customDomainToggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <div class="range-header">
+                        <label for="bioInput">Bluesky Bio Text</label>
+                        <span class="range-value" id="bioCharCount">162 / 256</span>
+                    </div>
+                    <textarea id="bioInput" maxlength="300" placeholder="Write your Bluesky profile bio here...">Building open social web protocols at @atproto. Tech journalist, decentralization advocate, and digital privacy researcher. 🌿 https://sarahjenkins.dev</textarea>
+                </div>
+
+                <div class="alert-banner warning" id="bioAlert">
+                    ⚠️ Bluesky strictly caps profile bios at 256 characters. Text beyond 256 characters will be cut off on live profiles!
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 2: Live Canvas Stage & Metric Display (Rendered 2nd on mobile) -->
+        <section class="preview-stage">
+            <div class="canvas-wrapper">
+                <canvas id="previewCanvas" width="1080" height="1350"></canvas>
+            </div>
+            <p class="canvas-caption">
+                Interactive Bluesky Profile Card Simulator. Rendered live for AT Protocol branding.
+            </p>
+
+            <div class="metric-summary-grid">
+                <div class="metric-card">
+                    <div class="metric-card-title">Bio Character Count</div>
+                    <div class="metric-card-value highlight" id="cardBioLength">162 / 256</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-card-title">Handle Status</div>
+                    <div class="metric-card-value green" id="cardDomainStatus">Standard</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-card-title">Followers Count</div>
+                    <div class="metric-card-value" id="cardFollowers">14.2K</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-card-title">Banner Ratio</div>
+                    <div class="metric-card-value highlight" id="cardBannerRatio">3:1 Safe</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Module 3: Profile Styling & Metrics Modifiers Panel (Rendered 3rd on mobile) -->
+        <section class="panel">
+            <div class="panel-title">
+                <span>Metrics &amp; Visual Modifiers</span>
+                <span class="badge">PREVIEW THEMES</span>
+            </div>
+
+            <div class="form-group">
+                <label for="themeSelect">Bluesky Appearance Theme</label>
+                <select id="themeSelect">
+                    <option value="dark" selected>Dark Mode (#0b0f14 - Default)</option>
+                    <option value="dim">Dim Midnight (#161e27)</option>
+                    <option value="light">Light Mode (#ffffff)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="bannerPresetSelect">Header Banner Background Preset</label>
+                <select id="bannerPresetSelect">
+                    <option value="skyGrad" selected>Bluesky Signature Gradient</option>
+                    <option value="sunset">Sunset Orange &amp; Cyan</option>
+                    <option value="cyber">Cyber Obsidian &amp; Purple</option>
+                    <option value="emerald">Emerald Forest &amp; Gold</option>
+                    <option value="custom">Uploaded Custom Image</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="followersInput">Followers Count</label>
+                <input type="number" id="followersInput" value="14200" min="0" step="10">
+            </div>
+
+            <div class="form-group">
+                <label for="followingInput">Following Count</label>
+                <input type="number" id="followingInput" value="685" min="0" step="1">
+            </div>
+
+            <div class="form-group">
+                <label for="postsInput">Posts Count</label>
+                <input type="number" id="postsInput" value="1240" min="0" step="1">
+            </div>
+
+            <button class="btn-action" id="downloadBtn" type="button">Export Bluesky Profile Card (PNG)</button>
+
+            <!-- Social Media Share Section -->
+            <div class="social-share-container">
+                <span class="share-label">Share This Profile Tool</span>
+                <div class="share-buttons-grid">
+                    <a id="shareX" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-x">𝕏 Post</a>
+                    <a id="shareFB" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-fb">Facebook</a>
+                    <a id="shareWA" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-wa">WhatsApp</a>
+                    <a id="shareLI" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-li">LinkedIn</a>
+                    <a id="sharePIN" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-pin">Pinterest</a>
+                    <button id="copyShareLink" type="button" class="btn-share btn-share-copy">🔗 Copy Tool Link</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- SEO & Educational Guide Section -->
+    <article class="content-area">
+        <div class="content-card">
+            <h1>Bluesky Bio Visualizer &amp; Profile Card Generator (2026)</h1>
+            <p>
+                With the rapid growth of the open, decentralized social web powered by the <strong>AT Protocol (Authenticated Transfer Protocol)</strong>, establishing a strong personal or corporate identity on <strong>Bluesky</strong> has become essential for digital creators, journalists, developers, and brands. Unlike legacy closed-garden platforms, Bluesky merges cryptographic identity management with flexible custom domain handles, giving users full ownership over their social graph.
+            </p>
+            <p>
+                This interactive <strong>Bluesky Bio Visualizer</strong> is a specialized utility designed to help creators model, test, and perfect their profile layout before publishing changes live to the network. Whether you are fine-tuning your <strong>256-character bio limit</strong>, cropping your 1:1 circular avatar, testing a 1500x500 pixel header banner safe zone, or previewing a verified custom domain handle (such as <code>@yourname.com</code>), this tool reverse-engineers the official Bluesky client interface in real time.
+            </p>
+
+            <h2>Anatomy of an High-Converting Bluesky Profile</h2>
+            <p>
+                Optimizing your profile for the AT Protocol feed ecosystem requires understanding how Bluesky renders user identity across mobile feeds, desktop sidebars, and discovery lists. Every visual component serves a distinct purpose in converting feed impressions into permanent followers:
+            </p>
+            <ul>
+                <li><strong>Circular Avatar (400 x 400 px):</strong> Bluesky displays user avatars as circular cutouts throughout reply threads, custom feeds, and profile headers. Essential design details and logos must remain strictly centered within the inner 80% diameter safe circle to avoid corner cropping.</li>
+                <li><strong>Header Banner (1500 x 500 px / 3:1 Ratio):</strong> The banner strip frames your profile card. On mobile devices, side margins are slightly trimmed, whereas on desktop displays, top and bottom edges undergo subtle scaling. Placing primary typography or branding elements in the center-right section guarantees visibility regardless of screen size.</li>
+                <li><strong>Custom Domain Handle Verification:</strong> Instead of relying on centralized, paid subscription badges (like X Premium blue checkmarks), Bluesky enables cryptographic domain verification. Setting a handle like <code>@organization.org</code> instantly verifies identity by matching DNS TXT records or HTTPS host proofs against the user's Decentralized Identifier (DID).</li>
+                <li><strong>256-Character Bio Space:</strong> Bluesky enforces a hard limit of 256 characters for user bios. Because URLs are hyperlinked natively, every character must be crafted strategically to convey value, highlight key topics, and include clear calls to action.</li>
+            </ul>
+
+            <h2>Bluesky Specification &amp; Dimension Matrix (2026 Standards)</h2>
+            <p>
+                The table below outlines the exact technical standards, recommended aspect ratios, and character boundaries governing Bluesky user profile customization:
+            </p>
+
+            <div class="table-responsive">
+                <table class="spec-table">
+                    <thead>
+                        <tr>
+                            <th>Profile Element</th>
+                            <th>Recommended Dimensions</th>
+                            <th>Aspect Ratio</th>
+                            <th>File Limit / Boundary</th>
+                            <th>Optimization Best Practice</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Profile Avatar</strong></td>
+                            <td>400 x 400 pixels</td>
+                            <td>1:1 (Circle Crop)</td>
+                            <td>Max 1 MB (PNG / JPG)</td>
+                            <td>Center face or logo horizontally and vertically; outer 20% is cropped.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Header Banner</strong></td>
+                            <td>1500 x 500 pixels</td>
+                            <td>3:1 Landscape</td>
+                            <td>Max 1 MB (PNG / JPG)</td>
+                            <td>Keep main text in center-right zone; avatar overlaps lower-left corner.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>User Bio</strong></td>
+                            <td>N/A (Text String)</td>
+                            <td>N/A</td>
+                            <td>Strict 256 Characters</td>
+                            <td>Lead with clear niche value statement; include active <code>@mentions</code> or site links.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Display Name</strong></td>
+                            <td>N/A (Text String)</td>
+                            <td>N/A</td>
+                            <td>Max 64 Characters</td>
+                            <td>Use full real name or recognizable brand name; supports unicode emojis.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Custom Handle</strong></td>
+                            <td>Domain Standard</td>
+                            <td>N/A</td>
+                            <td>Valid FQDN</td>
+                            <td>Point DNS TXT <code>_atproto</code> record to your AT Protocol DID for instant verification.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Pinned Post Media</strong></td>
+                            <td>1200 x 627 pixels</td>
+                            <td>1.91:1 Landscape</td>
+                            <td>Max 2 MB / Image</td>
+                            <td>Use high-contrast call-to-action cards at the top of your profile feed.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Ad Slot 2 Container -->
+            <div class="cms-ad-slot-2"></div>
+
+            <h2>How Custom Domain Handles Replace Traditional Blue Checks</h2>
+            <p>
+                One of Bluesky's most revolutionary architectural features is its approach to social verification. Rather than paying a monthly subscription fee to receive a platform-issued badge, Bluesky users leverage existing domain infrastructure as their digital handle.
+            </p>
+            <p>
+                When a user configures a custom handle like <code>@nytimes.com</code> or <code>@dev.sarah.io</code>, Bluesky verifies ownership using one of two cryptographic methods:
+            </p>
+            <ol>
+                <li><strong>DNS TXT Record Method:</strong> Add a TXT DNS record to host <code>_atproto.yourdomain.com</code> containing <code>did=did:plc:your-unique-did-string</code>.</li>
+                <li><strong>HTTP .well-known Method:</strong> Serve a plain text file at <code>https://yourdomain.com/.well-known/atproto-did</code> containing your DID key.</li>
+            </ol>
+            <p>
+                When viewers visit a profile with a domain handle, they receive immediate, unforgeable proof that the account is authentic. This completely eliminates impersonation risk for companies, public figures, news organizations, and open-source software developers.
+            </p>
+
+            <h2>Social Platform Profile Benchmark Matrix</h2>
+            <p>
+                Understanding how Bluesky compares against rival microblogging and decentralized platforms highlights key structural differences in bio limitations and verification models:
+            </p>
+
+            <div class="table-responsive">
+                <table class="spec-table">
+                    <thead>
+                        <tr>
+                            <th>Platform</th>
+                            <th>Bio Character Limit</th>
+                            <th>Header Banner Size</th>
+                            <th>Verification Model</th>
+                            <th>Protocol / Architecture</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Bluesky (BSKY)</strong></td>
+                            <td><strong>256 Characters</strong></td>
+                            <td>1500 x 500 px (3:1)</td>
+                            <td>Self-Hosted Custom Domain (Free DNS)</td>
+                            <td>AT Protocol (Decentralized)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>X / Twitter</strong></td>
+                            <td><strong>160 Characters</strong></td>
+                            <td>1500 x 500 px (3:1)</td>
+                            <td>Paid Subscription ($8/mo ID Check)</td>
+                            <td>Proprietary Centralized</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Mastodon</strong></td>
+                            <td><strong>500 Characters</strong></td>
+                            <td>1500 x 500 px (3:1)</td>
+                            <td>HTML rel="me" Link Verification</td>
+                            <td>ActivityPub (Fediverse)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Threads (Meta)</strong></td>
+                            <td><strong>150 Characters</strong></td>
+                            <td>No Banner Support</td>
+                            <td>Meta Verified Subscription</td>
+                            <td>ActivityPub Interop / Centralized</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2>5 Rules for Copywriting a High-Performing Bluesky Bio</h2>
+            <p>
+                Because Bluesky provides exactly 256 characters for your bio, concise, punchy writing is crucial. Here is a proven copywriting framework to maximize profile conversions:
+            </p>
+            <ol>
+                <li><strong>State Your Core Value in Sentence 1:</strong> Immediately tell visitors what you build, write about, or share. (e.g., <i>"Reporting on AI ethics, open protocols &amp; web privacy."</i>)</li>
+                <li><strong>Use Active Handles &amp; Mentions:</strong> Link to your organization or secondary accounts using <code>@mentions</code>. Bluesky automatically turns active handles into clickable hyperlinks.</li>
+                <li><strong>Include Strategic Keywords for Feed Search:</strong> Bluesky's search index relies heavily on bio text to classify accounts into interest feeds and recommendation algorithms. Include 2–3 niche keywords (e.g., <i>#python, web3, cybersecurity</i>).</li>
+                <li><strong>Place Your Custom Website URL at the End:</strong> URLs placed in bios are clickable. Position your main website link on its own line or at the very end of the bio string.</li>
+                <li><strong>Test Visual Alignment on Mobile &amp; Dark Modes:</strong> Over 70% of Bluesky traffic occurs on mobile devices using dark themes. Always verify contrast and line wrapping using this visualizer simulator.</li>
+            </ol>
+
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-block">
+                <details class="faq-accordion" open>
+                    <summary class="faq-summary">What is the character limit for a Bluesky bio in 2026?</summary>
+                    <div class="faq-answer">
+                        The Bluesky bio character limit is strictly set to 256 characters. Bios exceeding 256 characters will be truncated upon saving in the Bluesky application. URLs included directly within the bio count toward this character threshold.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">How do custom domain handles work as verification on Bluesky?</summary>
+                    <div class="faq-answer">
+                        Unlike traditional social platforms with subscription checkmarks, Bluesky utilizes decentralized domain verification via the AT Protocol. Users set their domain (e.g., @name.com) as their handle by configuring a DNS TXT record (_atproto) or an HTTP .well-known/atproto-did file, proving ownership instantly.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">What are the exact dimensions for a Bluesky header banner?</summary>
+                    <div class="faq-answer">
+                        The recommended Bluesky header banner dimensions are 1500 x 500 pixels, yielding a 3:1 aspect ratio. Keep vital graphic elements centered to prevent accidental cropping across mobile displays and desktop viewports.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">Why does my profile picture or avatar look cropped on Bluesky?</summary>
+                    <div class="faq-answer">
+                        Bluesky displays user avatars as circular cutouts throughout feeds and profile headers. While image uploads should be square (400 x 400 pixels, 1:1 aspect ratio), all four corners are clipped automatically. Keep facial features or logos strictly centered.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">How does the Bluesky Bio Visualizer help optimize profile engagement?</summary>
+                    <div class="faq-answer">
+                        The Bluesky Bio Visualizer lets you preview your avatar overlay, banner safe zones, custom domain handle formatting, dark/light theme rendering, and 256-character line breaks before publishing changes to the AT Protocol network.
+                    </div>
+                </details>
+            </div>
+        </div>
+    </article>
+
+    <!-- Footer Container -->
+    <div id="global-footer"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var canvas = document.getElementById('previewCanvas');
+            if (!canvas) return;
+            var ctx = canvas.getContext('2d');
+
+            // Form Inputs & Controls
+            var displayNameInput = document.getElementById('displayName');
+            var handleInput = document.getElementById('handleInput');
+            var customDomainToggle = document.getElementById('customDomainToggle');
+            var bioInput = document.getElementById('bioInput');
+            var bioCharCount = document.getElementById('bioCharCount');
+            var bioAlert = document.getElementById('bioAlert');
+
+            var themeSelect = document.getElementById('themeSelect');
+            var bannerPresetSelect = document.getElementById('bannerPresetSelect');
+            var followersInput = document.getElementById('followersInput');
+            var followingInput = document.getElementById('followingInput');
+            var postsInput = document.getElementById('postsInput');
+
+            var avatarUpload = document.getElementById('avatarUpload');
+            var bannerUpload = document.getElementById('bannerUpload');
+            var avatarDropZone = document.getElementById('avatarDropZone');
+            var bannerDropZone = document.getElementById('bannerDropZone');
+
+            var downloadBtn = document.getElementById('downloadBtn');
+
+            // Metric Summary Elements
+            var cardBioLength = document.getElementById('cardBioLength');
+            var cardDomainStatus = document.getElementById('cardDomainStatus');
+            var cardFollowers = document.getElementById('cardFollowers');
+
+            // Presets
+            var presetBrand = document.getElementById('presetBrand');
+            var presetCreator = document.getElementById('presetCreator');
+            var presetArtist = document.getElementById('presetArtist');
+            var presetNews = document.getElementById('presetNews');
+
+            // State for custom uploaded images
+            var userAvatarImg = null;
+            var userBannerImg = null;
+
+            /* Setup Social Share Links */
+            var currentUrl = encodeURIComponent(window.location.href);
+            var shareTitle = encodeURIComponent("Check out this free Bluesky Bio Visualizer & Profile Card Generator!");
+            
+            document.getElementById('shareX').href = 'https://twitter.com/intent/tweet?url=' + currentUrl + '&text=' + shareTitle;
+            document.getElementById('shareFB').href = 'https://www.facebook.com/sharer/sharer.php?u=' + currentUrl;
+            document.getElementById('shareWA').href = 'https://api.whatsapp.com/send?text=' + shareTitle + '%20' + currentUrl;
+            document.getElementById('shareLI').href = 'https://www.linkedin.com/sharing/share-offsite/?url=' + currentUrl;
+            document.getElementById('sharePIN').href = 'https://pinterest.com/pin/create/button/?url=' + currentUrl + '&description=' + shareTitle;
+
+            var copyBtn = document.getElementById('copyShareLink');
+            copyBtn.addEventListener('click', function() {
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'Bluesky Bio Visualizer',
+                        text: 'Design and preview your Bluesky profile card, handle verification, and bio.',
+                        url: window.location.href
+                    }).catch(function() {});
+                } else if (navigator.clipboard) {
+                    navigator.clipboard.writeText(window.location.href).then(function() {
+                        var origText = copyBtn.textContent;
+                        copyBtn.textContent = '✓ Link Copied!';
+                        setTimeout(function() { copyBtn.textContent = origText; }, 2000);
+                    });
+                }
+            });
+
+            // Image Upload Event Handlers
+            avatarDropZone.addEventListener('click', function() { avatarUpload.click(); });
+            bannerDropZone.addEventListener('click', function() { bannerUpload.click(); });
+
+            avatarUpload.addEventListener('change', function(e) {
+                var file = e.target.files[0];
+                if (file) {
+                    var reader = new FileReader();
+                    reader.onload = function(evt) {
+                        var img = new Image();
+                        img.onload = function() {
+                            userAvatarImg = img;
+                            calculateAndDraw();
+                        };
+                        img.src = evt.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            bannerUpload.addEventListener('change', function(e) {
+                var file = e.target.files[0];
+                if (file) {
+                    var reader = new FileReader();
+                    reader.onload = function(evt) {
+                        var img = new Image();
+                        img.onload = function() {
+                            userBannerImg = img;
+                            bannerPresetSelect.value = 'custom';
+                            calculateAndDraw();
+                        };
+                        img.src = evt.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Preset Click Handlers
+            presetBrand.addEventListener('click', function() {
+                displayNameInput.value = "TechCrunch";
+                handleInput.value = "techcrunch.com";
+                customDomainToggle.checked = true;
+                bioInput.value = "Reporting on technology news, startups, venture capital, and open web ecosystems worldwide. 🚀 https://techcrunch.com";
+                followersInput.value = 185000;
+                followingInput.value = 340;
+                postsInput.value = 4200;
+                themeSelect.value = 'dark';
+                bannerPresetSelect.value = 'emerald';
+                userAvatarImg = null;
+                userBannerImg = null;
+                calculateAndDraw();
+            });
+
+            presetCreator.addEventListener('click', function() {
+                displayNameInput.value = "Sarah Jenkins";
+                handleInput.value = "sjenkins.bsky.social";
+                customDomainToggle.checked = false;
+                bioInput.value = "Building open social web protocols at @atproto. Tech journalist, decentralization advocate, and digital privacy researcher. 🌿 https://sarahjenkins.dev";
+                followersInput.value = 14200;
+                followingInput.value = 685;
+                postsInput.value = 1240;
+                themeSelect.value = 'dark';
+                bannerPresetSelect.value = 'skyGrad';
+                userAvatarImg = null;
+                userBannerImg = null;
+                calculateAndDraw();
+            });
+
+            presetArtist.addEventListener('click', function() {
+                displayNameInput.value = "Elena Rostova 🎨";
+                handleInput.value = "elena-art.bsky.social";
+                customDomainToggle.checked = false;
+                bioInput.value = "Digital Illustrator & 3D Environment Designer. Creating dark fantasy concept art for indie games. Open for commissions! ✨ portfolio: elenarostova.com";
+                followersInput.value = 28900;
+                followingInput.value = 412;
+                postsInput.value = 890;
+                themeSelect.value = 'dim';
+                bannerPresetSelect.value = 'cyber';
+                userAvatarImg = null;
+                userBannerImg = null;
+                calculateAndDraw();
+            });
+
+            presetNews.addEventListener('click', function() {
+                displayNameInput.value = "The Daily Protocol";
+                handleInput.value = "dailyprotocol.org";
+                customDomainToggle.checked = true;
+                bioInput.value = "Independent newsroom covering open social algorithms, decentralized media, and internet governance. Subscriptions & feeds at dailyprotocol.org 📰";
+                followersInput.value = 64200;
+                followingInput.value = 120;
+                postsInput.value = 3100;
+                themeSelect.value = 'light';
+                bannerPresetSelect.value = 'sunset';
+                userAvatarImg = null;
+                userBannerImg = null;
+                calculateAndDraw();
+            });
+
+            // Input Event Listeners
+            displayNameInput.addEventListener('input', calculateAndDraw);
+            handleInput.addEventListener('input', calculateAndDraw);
+            customDomainToggle.addEventListener('change', calculateAndDraw);
+            bioInput.addEventListener('input', calculateAndDraw);
+            themeSelect.addEventListener('change', calculateAndDraw);
+            bannerPresetSelect.addEventListener('change', calculateAndDraw);
+            followersInput.addEventListener('input', calculateAndDraw);
+            followingInput.addEventListener('input', calculateAndDraw);
+            postsInput.addEventListener('input', calculateAndDraw);
+
+            function formatNumber(num) {
+                num = parseFloat(num) || 0;
+                if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
+                if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
+                return new Intl.NumberFormat('en-US').format(Math.round(num));
+            }
+
+            function wrapText(context, text, x, y, maxWidth, lineHeight) {
+                var words = text.split(' ');
+                var line = '';
+                var currentY = y;
+
+                for (var n = 0; n < words.length; n++) {
+                    var testLine = line + words[n] + ' ';
+                    var metrics = context.measureText(testLine);
+                    var testWidth = metrics.width;
+                    if (testWidth > maxWidth && n > 0) {
+                        context.fillText(line, x, currentY);
+                        line = words[n] + ' ';
+                        currentY += lineHeight;
+                    } else {
+                        line = testLine;
+                    }
+                }
+                context.fillText(line, x, currentY);
+                return currentY;
+            }
+
+            function calculateAndDraw() {
+                var bioText = bioInput.value || '';
+                var bioLen = bioText.length;
+                
+                bioCharCount.textContent = bioLen + ' / 256';
+
+                if (bioLen > 256) {
+                    bioAlert.style.display = 'block';
+                    bioCharCount.style.color = '#ff0050';
+                } else {
+                    bioAlert.style.display = 'none';
+                    bioCharCount.style.color = 'var(--accent-cyan)';
+                }
+
+                var isCustomDomain = customDomainToggle.checked;
+                var handleVal = handleInput.value.trim() || 'user.bsky.social';
+                if (!handleVal.startsWith('@')) handleVal = '@' + handleVal;
+
+                // Update Metric Cards
+                cardBioLength.textContent = bioLen + ' / 256';
+                cardDomainStatus.textContent = isCustomDomain ? 'Verified Domain' : 'Standard BSKY';
+                cardDomainStatus.className = isCustomDomain ? 'metric-card-value green' : 'metric-card-value highlight';
+                cardFollowers.textContent = formatNumber(followersInput.value);
+
+                // Draw High-Res Canvas Card (1080 x 1350)
+                drawCanvas({
+                    displayName: displayNameInput.value || 'Display Name',
+                    handle: handleVal,
+                    isCustomDomain: isCustomDomain,
+                    bio: bioText,
+                    theme: themeSelect.value,
+                    bannerPreset: bannerPresetSelect.value,
+                    followers: followersInput.value,
+                    following: followingInput.value,
+                    posts: postsInput.value
+                });
+            }
+
+            function drawCanvas(data) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                // Color Themes
+                var bgColor = '#0b0f14'; // Dark
+                var cardBg = '#161e27';
+                var textPrimary = '#f3f4f6';
+                var textSecondary = '#8b98a5';
+                var accentBlue = '#1185fe';
+                var borderLine = '#2e3446';
+
+                if (data.theme === 'dim') {
+                    bgColor = '#161e27';
+                    cardBg = '#1e2936';
+                    textPrimary = '#ffffff';
+                    textSecondary = '#9ca3af';
+                } else if (data.theme === 'light') {
+                    bgColor = '#f4f6f8';
+                    cardBg = '#ffffff';
+                    textPrimary = '#0f1419';
+                    textSecondary = '#536471';
+                    borderLine = '#e1e8ed';
+                }
+
+                // Outer Background Fill
+                ctx.fillStyle = bgColor;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Main Profile Card Container (Rounded Rect)
+                var cardX = 60, cardY = 60, cardW = 960, cardH = 1230, cardRadius = 28;
+                ctx.save();
+                ctx.fillStyle = cardBg;
+                ctx.strokeStyle = borderLine;
+                ctx.lineWidth = 3;
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(cardX, cardY, cardW, cardH, cardRadius);
+                    ctx.fill();
+                    ctx.stroke();
+                } else {
+                    ctx.fillRect(cardX, cardY, cardW, cardH);
+                }
+
+                // Clip Card Area for Header Banner
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(cardX, cardY, cardW, cardH, cardRadius);
+                    ctx.clip();
+                }
+
+                // Render Header Banner (1500x500 aspect ratio -> 960x320)
+                var bannerH = 320;
+                if (userBannerImg && data.bannerPreset === 'custom') {
+                    ctx.drawImage(userBannerImg, cardX, cardY, cardW, bannerH);
+                } else {
+                    var bannerGrad = ctx.createLinearGradient(cardX, cardY, cardX + cardW, cardY + bannerH);
+                    if (data.bannerPreset === 'sunset') {
+                        bannerGrad.addColorStop(0, '#ff7e5f');
+                        bannerGrad.addColorStop(1, '#feb47b');
+                    } else if (data.bannerPreset === 'cyber') {
+                        bannerGrad.addColorStop(0, '#0f0c29');
+                        bannerGrad.addColorStop(0.5, '#302b63');
+                        bannerGrad.addColorStop(1, '#24243e');
+                    } else if (data.bannerPreset === 'emerald') {
+                        bannerGrad.addColorStop(0, '#11998e');
+                        bannerGrad.addColorStop(1, '#38ef7d');
+                    } else { // skyGrad default
+                        bannerGrad.addColorStop(0, '#0085ff');
+                        bannerGrad.addColorStop(0.5, '#00c6ff');
+                        bannerGrad.addColorStop(1, '#0072ff');
+                    }
+                    ctx.fillStyle = bannerGrad;
+                    ctx.fillRect(cardX, cardY, cardW, bannerH);
+                }
+
+                // Unclip for Avatar Overlay
+                ctx.restore();
+
+                // Render Avatar (180px diameter circle)
+                var avatarX = 160;
+                var avatarY = cardY + bannerH - 40;
+                var avatarRadius = 90;
+
+                // Outer Ring Border
+                ctx.beginPath();
+                ctx.arc(avatarX, avatarY, avatarRadius + 6, 0, Math.PI * 2);
+                ctx.fillStyle = cardBg;
+                ctx.fill();
+
+                // Avatar Clip & Fill
+                ctx.save();
+                ctx.beginPath();
+                ctx.arc(avatarX, avatarY, avatarRadius, 0, Math.PI * 2);
+                ctx.clip();
+
+                if (userAvatarImg) {
+                    ctx.drawImage(userAvatarImg, avatarX - avatarRadius, avatarY - avatarRadius, avatarRadius * 2, avatarRadius * 2);
+                } else {
+                    // Default Fallback Avatar Gradient
+                    var avatarGrad = ctx.createLinearGradient(avatarX - avatarRadius, avatarY - avatarRadius, avatarX + avatarRadius, avatarY + avatarRadius);
+                    avatarGrad.addColorStop(0, '#1185fe');
+                    avatarGrad.addColorStop(1, '#00f2fe');
+                    ctx.fillStyle = avatarGrad;
+                    ctx.fillRect(avatarX - avatarRadius, avatarY - avatarRadius, avatarRadius * 2, avatarRadius * 2);
+
+                    // User Initials
+                    ctx.fillStyle = '#ffffff';
+                    ctx.font = 'bold 72px -apple-system, sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    var initials = (data.displayName.charAt(0) || 'B').toUpperCase();
+                    ctx.fillText(initials, avatarX, avatarY + 4);
+                }
+                ctx.restore();
+
+                // Edit/Follow Pill Button (Top Right of Card)
+                var btnX = cardX + cardW - 220;
+                var btnY = cardY + bannerH + 24;
+                ctx.fillStyle = accentBlue;
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(btnX, btnY, 180, 52, 26);
+                    ctx.fill();
+                } else {
+                    ctx.fillRect(btnX, btnY, 180, 52);
+                }
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 24px -apple-system, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'alphabetic';
+                ctx.fillText('Follow', btnX + 90, btnY + 34);
+
+                // Profile Display Name
+                var textStartY = avatarY + avatarRadius + 40;
+                ctx.textAlign = 'left';
+                ctx.fillStyle = textPrimary;
+                ctx.font = 'bold 44px -apple-system, sans-serif';
+                ctx.fillText(data.displayName, cardX + 50, textStartY);
+
+                // Profile Handle & Verification Indicator
+                ctx.font = '28px -apple-system, sans-serif';
+                ctx.fillStyle = textSecondary;
+                var handleTextY = textStartY + 42;
+                ctx.fillText(data.handle, cardX + 50, handleTextY);
+
+                if (data.isCustomDomain) {
+                    var handleMetrics = ctx.measureText(data.handle);
+                    var badgeX = cardX + 55 + handleMetrics.width;
+                    
+                    // Domain Verification Badge Pill
+                    ctx.fillStyle = 'rgba(16, 185, 129, 0.15)';
+                    ctx.strokeStyle = '#10b981';
+                    ctx.lineWidth = 1.5;
+                    if (ctx.roundRect) {
+                        ctx.beginPath();
+                        ctx.roundRect(badgeX, handleTextY - 26, 210, 34, 6);
+                        ctx.fill();
+                        ctx.stroke();
+                    } else {
+                        ctx.fillRect(badgeX, handleTextY - 26, 210, 34);
+                    }
+                    ctx.fillStyle = '#10b981';
+                    ctx.font = 'bold 18px -apple-system, sans-serif';
+                    ctx.fillText('✓ VERIFIED DOMAIN', badgeX + 12, handleTextY - 4);
+                }
+
+                // Stats Metrics Row (Posts, Following, Followers)
+                var statsY = handleTextY + 54;
+                ctx.font = 'bold 28px -apple-system, sans-serif';
+                ctx.fillStyle = textPrimary;
+                
+                var postsStr = formatNumber(data.posts);
+                ctx.fillText(postsStr, cardX + 50, statsY);
+                var postsWidth = ctx.measureText(postsStr).width;
+                ctx.fillStyle = textSecondary;
+                ctx.font = '26px -apple-system, sans-serif';
+                ctx.fillText(' posts', cardX + 50 + postsWidth, statsY);
+
+                var gap1 = cardX + 50 + postsWidth + 100;
+                ctx.font = 'bold 28px -apple-system, sans-serif';
+                ctx.fillStyle = textPrimary;
+                var followingStr = formatNumber(data.following);
+                ctx.fillText(followingStr, gap1, statsY);
+                var followingWidth = ctx.measureText(followingStr).width;
+                ctx.fillStyle = textSecondary;
+                ctx.font = '26px -apple-system, sans-serif';
+                ctx.fillText(' following', gap1 + followingWidth, statsY);
+
+                var gap2 = gap1 + followingWidth + 120;
+                ctx.font = 'bold 28px -apple-system, sans-serif';
+                ctx.fillStyle = textPrimary;
+                var followersStr = formatNumber(data.followers);
+                ctx.fillText(followersStr, gap2, statsY);
+                var followersWidth = ctx.measureText(followersStr).width;
+                ctx.fillStyle = textSecondary;
+                ctx.font = '26px -apple-system, sans-serif';
+                ctx.fillText(' followers', gap2 + followersWidth, statsY);
+
+                // Divider Line
+                ctx.strokeStyle = borderLine;
+                ctx.lineWidth = 1.5;
+                ctx.beginPath();
+                ctx.moveTo(cardX + 50, statsY + 30);
+                ctx.lineTo(cardX + cardW - 50, statsY + 30);
+                ctx.stroke();
+
+                // Bio Text Section
+                var bioY = statsY + 75;
+                ctx.font = '28px -apple-system, sans-serif';
+                ctx.fillStyle = textPrimary;
+                wrapText(ctx, data.bio, cardX + 50, bioY, cardW - 100, 42);
+
+                // AT Protocol Verification Box (Bottom Section of Card)
+                var auditBoxY = cardY + cardH - 210;
+                ctx.fillStyle = (data.theme === 'light') ? '#f8fafc' : '#111620';
+                ctx.strokeStyle = borderLine;
+                ctx.lineWidth = 2;
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(cardX + 40, auditBoxY, cardW - 80, 160, 16);
+                    ctx.fill();
+                    ctx.stroke();
+                } else {
+                    ctx.fillRect(cardX + 40, auditBoxY, cardW - 80, 160);
+                }
+
+                ctx.fillStyle = textPrimary;
+                ctx.font = 'bold 24px -apple-system, sans-serif';
+                ctx.fillText('AT Protocol Identity Verification', cardX + 70, auditBoxY + 45);
+
+                ctx.fillStyle = textSecondary;
+                ctx.font = '22px -apple-system, sans-serif';
+                ctx.fillText('• Character Limit Audit: ' + data.bio.length + ' / 256 ' + (data.bio.length <= 256 ? '(Compliant)' : '(Truncated)'), cardX + 70, auditBoxY + 85);
+                ctx.fillText('• Handle Verification: ' + (data.isCustomDomain ? 'DNS TXT (_atproto) Valid' : 'Standard bsky.social sub-domain'), cardX + 70, auditBoxY + 120);
+
+                // Watermark Branding Footer
+                ctx.fillStyle = textSecondary;
+                ctx.font = 'bold 22px -apple-system, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('CoreMetricSuite · Bluesky Profile & Bio Generator', cardX + (cardW / 2), cardY + cardH - 18);
+            }
+
+            // Initial calculation & render
+            calculateAndDraw();
+
+            // Export PNG Goal Report
+            downloadBtn.addEventListener('click', function() {
+                var link = document.createElement('a');
+                link.download = 'bluesky-profile-card-blueprint.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        });
+    </script>
+
+    <!-- Global CoreMetricSuite Cross-Linking Index Hub -->
+    <div style="margin-top: 40px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #f8fafc; font-family: system-ui, -apple-system, sans-serif;">
+        <h3 style="margin: 0 0 15px 0; font-size: 18px; color: #0f172a; font-weight: 600;">🛠️ CoreMetricSuite Utility Directory</h3>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇦🇺 Australia Tax &amp; Labor</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-au-cents" href="../au-cents-per-km-estimator/" style="color: #2563eb; text-decoration: underline;">Cents-Per-Km Tax Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-au-schads" href="../au-schads-vehicle-allowance/" style="color: #2563eb; text-decoration: underline;">SCHADS Vehicle Allowance</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-au-super" href="../au-superannuation-charge-tracker/" style="color: #2563eb; text-decoration: underline;">Superannuation Tracker</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇺🇸 US Corporate Tax</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-us-llc" href="../us-llc-late-penalty-estimator/" style="color: #2563eb; text-decoration: underline;">LLC Late Tax Penalty</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-us-179" href="../us-section-179-truck-calculator/" style="color: #2563eb; text-decoration: underline;">Section 179 Vehicle Deduction</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇬🇧 UK Property Management</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-rent" href="../uk-form-4a-rent-tracker/" style="color: #2563eb; text-decoration: underline;">Form 4A Rent Tracker</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-sdlt" href="../uk-sdlt-bracket-estimator/" style="color: #2563eb; text-decoration: underline;">Stamp Duty Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-sec8" href="../uk-section-8-calculator/" style="color: #2563eb; text-decoration: underline;">Section 8 Calculator</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🎬 Digital Media Layouts &amp; Monetization</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-media-bluesky" href="../bluesky-bio-visualizer/" style="color: #2563eb; text-decoration: underline;">Bluesky Bio Visualizer</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-tiktok-goal" href="../tiktok-rpm-goal/" style="color: #2563eb; text-decoration: underline;">TikTok RPM Goal Engine</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-tiktok-rpm" href="../tiktok-creator-rewards-rpm-estimator/" style="color: #2563eb; text-decoration: underline;">TikTok Creator Rewards RPM</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-ig" href="../instagram-reels-preview/" style="color: #2563eb; text-decoration: underline;">Instagram Reels Grid</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-fb" href="../facebook-ad-safe-zone/" style="color: #2563eb; text-decoration: underline;">Facebook 9:16 Ad Mask</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-shorts" href="../shorts-ui-safe-zone/" style="color: #2563eb; text-decoration: underline;">YouTube Shorts Safe Zone</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script defer>
+        (function() {
+            const path = window.location.pathname.toLowerCase();
+            const toolsMap = {
+                'au-cents-per-km-estimator': 'hub-au-cents',
+                'au-schads-vehicle-allowance': 'hub-au-schads',
+                'au-superannuation-charge-tracker': 'hub-au-super',
+                'us-llc-late-penalty-estimator': 'hub-us-llc',
+                'us-section-179-truck-calculator': 'hub-us-179',
+                'uk-form-4a-rent-tracker': 'hub-uk-rent',
+                'uk-sdlt-bracket-estimator': 'hub-uk-sdlt',
+                'uk-section-8-calculator': 'hub-uk-sec8',
+                'bluesky-bio-visualizer': 'hub-media-bluesky',
+                'tiktok-rpm-goal': 'hub-media-tiktok-goal',
+                'tiktok-creator-rewards-rpm-estimator': 'hub-media-tiktok-rpm',
+                'instagram-reels-preview': 'hub-media-ig',
+                'facebook-ad-safe-zone': 'hub-media-fb',
+                'shorts-ui-safe-zone': 'hub-media-shorts'
+            };
+
+            for (const [folderName, elementId] of Object.entries(toolsMap)) {
+                if (path.includes(folderName)) {
+                    const targetEl = document.getElementById(elementId);
+                    if (targetEl) {
+                        targetEl.outerHTML = `<span style="font-weight: 600; color: #0f172a;">${targetEl.textContent} (Current)</span>`;
+                    }
+                    break;
+                }
+            }
+        })();
+    </script>
+</body>
+</html>
