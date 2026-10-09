@@ -1,0 +1,1391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carousel Indicator Generator & CSS/SVG Pagination Dots Builder (2026)</title>
+    <meta name="description" content="Generate custom CSS, SVG, and HTML carousel indicator dots, slider pagination bars, and progress steps. Design responsive, WCAG-compliant carousel controls with live visual preview and code exporter.">
+    <meta name="keywords" content="carousel indicator generator, css slider dots generator, custom carousel pagination, svg carousel indicators, slick slider dots css, swiper custom bullet pagination, css scroll snap indicators, accessible carousel dots">
+    <link rel="canonical" href="https://coremetricsuite.com/carousel-indicator-generator/">
+
+    <!-- Open Graph / Social Metadata -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Carousel Indicator Generator & CSS/SVG Pagination Engine">
+    <meta property="og:description" content="Design, preview, and generate production-ready CSS, HTML, and SVG carousel indicator styles. Build custom dots, pill sliders, progress bars, and accessible pagination.">
+    <meta property="og:url" content="https://coremetricsuite.com/carousel-indicator-generator/">
+    
+    <!-- Global Framework Dependencies -->
+    <link rel="stylesheet" href="/css/global.css">
+    <script src="/config.js" defer></script>
+    <script src="/global.min.js" defer></script>
+
+    <!-- WebApplication JSON-LD Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "CoreMetricSuite Carousel Indicator Generator Engine",
+      "url": "https://coremetricsuite.com/carousel-indicator-generator/",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires HTML5. Requires JavaScript.",
+      "author": {
+        "@type": "Organization",
+        "name": "CoreMetricSuite Hub",
+        "url": "https://coremetricsuite.com"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
+    <!-- FAQ JSON-LD Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is a Carousel Indicator Generator?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "A Carousel Indicator Generator is a specialized design and code utility that allows web developers and UI/UX designers to visually customize slider pagination controls—such as dots, expanding pills, numbered badges, and progress lines—and generate clean HTML, CSS, or SVG code."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I make custom carousel indicators WCAG accessibility compliant?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "To satisfy WCAG 2.1 AA accessibility guidelines, carousel indicators must have a minimum touch target size of 24x24 pixels (or sufficient padding), maintain a minimum color contrast ratio of 3:1 against the background for active/inactive states, include proper ARIA roles (role='tablist' and role='tab'), and support full keyboard navigation (Tab, Arrow keys, Enter/Space)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I integrate generated indicator CSS with Swiper.js or Slick Slider?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "You can target the slider library's default pagination class names in CSS. For Swiper.js, override '.swiper-pagination-bullet' and '.swiper-pagination-bullet-active'. For Slick Slider, target '.slick-dots li button' and '.slick-dots li.slick-active button'. The generated CSS styles can be directly pasted into your stylesheet."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Are SVG carousel indicators better than pure CSS indicators?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Pure CSS indicators using standard HTML elements (button or span) are lighter, faster to render, and easier to style dynamically using CSS transitions or CSS variables. SVG indicators are preferred when using complex morphing shapes, custom paths, or stroke dashoffset progress animations."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How can I build CSS-only carousel indicators for CSS Scroll Snap?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "When using native CSS Scroll Snap without JavaScript libraries, indicator dots can be implemented using internal anchor links pointing to slide IDs (href='#slide-1'), radio button input hacks, or CSS scroll-driven animations using container queries and scroll timeline APIs."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-main: #0f1117;
+            --bg-card: #181b24;
+            --bg-input: #222634;
+            --border-color: #2e3446;
+            --accent-blue: #1877f2;
+            --accent-cyan: #00f2fe;
+            --accent-pink: #ff0050;
+            --accent-green: #10b981;
+            --accent-amber: #f59e0b;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: var(--bg-main); color: var(--text-primary); font-family: var(--font-sans); line-height: 1.6; }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            grid-template-areas: 
+                "upload preview"
+                "panel preview";
+            gap: 2rem;
+        }
+
+        .upload-card-wrapper {
+            grid-area: upload;
+        }
+
+        .panel {
+            grid-area: panel;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            height: fit-content;
+        }
+
+        .panel-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            background: linear-gradient(135deg, var(--accent-pink), var(--accent-blue));
+            color: #fff;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        .drop-zone {
+            border: 2px dashed var(--border-color);
+            padding: 1.25rem;
+            text-align: center;
+            border-radius: 8px;
+            background-color: var(--bg-input);
+            cursor: pointer;
+            transition: border-color 0.2s, background-color 0.2s;
+            margin-bottom: 0.75rem;
+        }
+
+        .drop-zone:hover { border-color: var(--accent-cyan); background-color: rgba(0, 242, 254, 0.05); }
+        .drop-title { font-weight: 600; color: #fff; font-size: 0.95rem; }
+        .drop-sub { font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px; }
+
+        .preset-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .btn-demo {
+            width: 100%;
+            padding: 0.6rem 0.5rem;
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            color: var(--accent-cyan);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.78rem;
+            transition: background-color 0.2s, border-color 0.2s;
+            text-align: center;
+        }
+
+        .btn-demo:hover { background-color: #2a2f42; border-color: var(--accent-cyan); }
+
+        .toggle-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: var(--bg-input);
+            padding: 0.75rem 0.85rem;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 1rem;
+        }
+
+        .toggle-label { font-size: 0.85rem; font-weight: 500; color: var(--text-primary); }
+
+        .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #374151; transition: .3s; border-radius: 24px;
+        }
+        .slider:before {
+            position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px;
+            background-color: white; transition: .3s; border-radius: 50%;
+        }
+        input:checked + .slider { background-color: var(--accent-pink); }
+        input:checked + .slider:before { transform: translateX(20px); }
+
+        .form-group { margin-bottom: 1.25rem; }
+        .range-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem; }
+        .range-value { font-size: 0.85rem; font-weight: 700; color: var(--accent-cyan); }
+        label { display: block; font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 0.4rem; }
+        input[type="text"], input[type="number"], input[type="color"], textarea, select {
+            width: 100%; padding: 0.65rem 0.85rem; background-color: var(--bg-input);
+            border: 1px solid var(--border-color); border-radius: 6px; color: #fff;
+            font-size: 0.9rem; outline: none; font-family: inherit;
+        }
+        input[type="color"] {
+            height: 42px;
+            padding: 4px;
+            cursor: pointer;
+        }
+        input[type="range"] {
+            width: 100%; height: 6px; background: var(--bg-input); border-radius: 3px;
+            outline: none; -webkit-appearance: none; accent-color: var(--accent-pink);
+        }
+        input[type="text"]:focus, input[type="number"]:focus, textarea:focus, select:focus { border-color: var(--accent-pink); }
+
+        .color-pickers-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .btn-action {
+            width: 100%; padding: 0.85rem; background: linear-gradient(135deg, var(--accent-pink), #c0003c);
+            color: #fff; font-weight: 600; border: none; border-radius: 6px; cursor: pointer; font-size: 0.95rem;
+            box-shadow: 0 4px 12px rgba(255, 0, 80, 0.3);
+            transition: transform 0.1s, opacity 0.2s;
+            margin-bottom: 0.75rem;
+        }
+        .btn-action:hover { opacity: 0.95; }
+        .btn-action:active { transform: scale(0.99); }
+
+        .btn-secondary {
+            width: 100%; padding: 0.75rem; background-color: var(--bg-input);
+            color: var(--accent-cyan); font-weight: 600; border: 1px solid var(--border-color); border-radius: 6px; cursor: pointer; font-size: 0.88rem;
+            transition: background-color 0.2s, border-color 0.2s;
+            margin-bottom: 1rem;
+        }
+        .btn-secondary:hover { background-color: #2a2f42; border-color: var(--accent-cyan); }
+
+        /* Social Share Button Module */
+        .social-share-container {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        .share-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
+            display: block;
+            text-align: center;
+        }
+        .share-buttons-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+        }
+        .btn-share {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            padding: 0.5rem 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: opacity 0.2s, transform 0.1s;
+        }
+        .btn-share:hover { opacity: 0.88; }
+        .btn-share:active { transform: scale(0.97); }
+        .btn-share-x { background-color: #000000; border: 1px solid #333; }
+        .btn-share-fb { background-color: #1877f2; }
+        .btn-share-li { background-color: #0a66c2; }
+        .btn-share-wa { background-color: #25d366; color: #000; }
+        .btn-share-pin { background-color: #e60023; }
+        .btn-share-copy { background-color: #374151; color: #fff; grid-column: span 3; margin-top: 0.25rem; }
+
+        .preview-stage { 
+            grid-area: preview;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+        }
+        .canvas-wrapper {
+            position: relative; width: 100%; max-width: 680px; height: 420px; border-radius: 16px;
+            overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.6); background-color: #000;
+            border: 2px solid var(--border-color);
+        }
+        canvas { width: 100%; height: 100%; display: block; }
+        .canvas-caption { margin-top: 1rem; font-size: 0.85rem; color: var(--text-secondary); text-align: center; }
+
+        /* Metric Highlights Grid below Canvas */
+        .metric-summary-grid {
+            width: 100%;
+            max-width: 680px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+        .metric-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.85rem;
+            text-align: center;
+        }
+        .metric-card-title { font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; }
+        .metric-card-value { font-size: 1.1rem; font-weight: 700; color: #fff; }
+        .metric-card-value.highlight { color: var(--accent-green); }
+
+        /* Code Snippet Display Box */
+        .code-output-container {
+            width: 100%;
+            max-width: 680px;
+            margin-top: 1.25rem;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem;
+        }
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .code-title { font-size: 0.9rem; font-weight: 600; color: #fff; }
+        .code-box {
+            background-color: var(--bg-input);
+            color: var(--accent-cyan);
+            font-family: "Courier New", Courier, monospace;
+            font-size: 0.82rem;
+            padding: 1rem;
+            border-radius: 6px;
+            overflow-x: auto;
+            max-height: 220px;
+            white-space: pre-wrap;
+            word-break: break-all;
+            border: 1px solid var(--border-color);
+        }
+
+        .content-area { max-width: 1200px; margin: 3rem auto; padding: 0 1.5rem; }
+        .content-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 2.5rem; }
+        .content-card h1 { font-size: 2rem; margin-bottom: 1rem; color: #fff; }
+        .content-card h2 { font-size: 1.4rem; margin: 1.8rem 0 1rem; color: #fff; }
+        .content-card p { color: var(--text-secondary); margin-bottom: 1.2rem; }
+        .content-card ul, .content-card ol { color: var(--text-secondary); margin: 0 0 1.2rem 1.5rem; }
+        .content-card li { margin-bottom: 0.5rem; }
+
+        .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 1.5rem 0; }
+        .spec-table { width: 100%; border-collapse: collapse; text-align: left; min-width: 600px; }
+        .spec-table th, .spec-table td { padding: 0.85rem 1rem; border: 1px solid var(--border-color); }
+        .spec-table th { background-color: var(--bg-input); color: #fff; font-size: 0.9rem; }
+        .spec-table td { color: var(--text-secondary); font-size: 0.875rem; }
+
+        /* Accordion FAQ Styling */
+        .faq-block { margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem; }
+        .faq-accordion {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 0.85rem;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .faq-accordion[open] { border-color: var(--accent-pink); }
+        .faq-summary {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            padding: 1rem 1.2rem;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+        .faq-summary::-webkit-details-marker { display: none; }
+        .faq-summary::after {
+            content: "+";
+            font-size: 1.2rem;
+            color: var(--accent-pink);
+            transition: transform 0.2s;
+        }
+        .faq-accordion[open] .faq-summary::after {
+            content: "−";
+            color: var(--accent-pink);
+        }
+        .faq-answer {
+            padding: 0 1.2rem 1.2rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 0.4rem;
+            padding-top: 0.8rem;
+        }
+
+        .cms-ad-slot-1, .cms-ad-slot-2 {
+            width: 100%; max-width: 970px; min-height: 90px; margin: 1.5rem auto;
+            background: rgba(255,255,255,0.02); border-radius: 8px; display: block;
+        }
+
+        .alert-banner {
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            font-size: 0.825rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            display: none;
+        }
+        .alert-banner.warning {
+            background-color: rgba(245, 158, 11, 0.15);
+            border: 1px solid var(--accent-amber);
+            color: #fbbf24;
+        }
+
+        /* Mobile Responsive Overrides */
+        @media screen and (max-width: 900px) {
+            html, body { width: 100%!important; max-width: 100vw!important; overflow-x: hidden!important; margin: 0!important; padding: 0!important; }
+            main.container { display: flex!important; flex-direction: column!important; width: 100%!important; max-width: 100%!important; padding: 0 12px!important; margin: 8px auto!important; gap: 16px!important; box-sizing: border-box!important; }
+            .upload-card-wrapper { order: 1!important; width: 100%!important; }
+            main.container > section.preview-stage { order: 2!important; width: 100%!important; display: flex!important; flex-direction: column!important; align-items: center!important; margin: 0 auto!important; box-sizing: border-box!important; }
+            main.container > section.panel { order: 3!important; width: 100%!important; max-width: 100%!important; box-sizing: border-box!important; }
+            .canvas-wrapper { width: 100%!important; height: 260px!important; max-width: 100%!important; margin: 0 auto!important; box-sizing: border-box!important; }
+            .metric-summary-grid { grid-template-columns: repeat(2, 1fr)!important; }
+            input, textarea, select { font-size: 16px!important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Container -->
+    <div id="global-header"></div>
+
+    <!-- Ad Slot 1 Container -->
+    <div class="cms-ad-slot-1" id="cms-ad-slot-top"></div>
+
+    <!-- Main Tool Container -->
+    <main class="container">
+        <!-- Module 1: Slide Inputs & Indicator Configuration (Rendered 1st on mobile) -->
+        <div class="upload-card-wrapper">
+            <div class="panel">
+                <div class="panel-title">
+                    <span>Carousel Indicator Config</span>
+                    <span class="badge">BUILDER ENGINE</span>
+                </div>
+                
+                <div class="drop-zone" id="dropZone">
+                    <p class="drop-title">⚡ Quick Indicator Presets</p>
+                    <p class="drop-sub">Load popular UI pagination patterns with one click</p>
+                </div>
+
+                <div class="preset-grid">
+                    <button class="btn-demo" id="presetClassicDots" type="button">🔴 Classic Dots</button>
+                    <button class="btn-demo" id="presetExpandingPill" type="button">💊 Expanding Pill</button>
+                    <button class="btn-demo" id="presetProgressLine" type="button">➖ Progress Bar</button>
+                    <button class="btn-demo" id="presetNumberedBadge" type="button">🔢 Numbered Steps</button>
+                </div>
+
+                <div class="form-group">
+                    <div class="range-header">
+                        <label for="slideCountRange">Total Carousel Slides</label>
+                        <span class="range-value" id="slideCountDisplay">5 Slides</span>
+                    </div>
+                    <input type="range" id="slideCountRange" min="2" max="10" step="1" value="5">
+                </div>
+
+                <div class="form-group">
+                    <div class="range-header">
+                        <label for="activeSlideRange">Active Slide Index</label>
+                        <span class="range-value" id="activeSlideDisplay">Slide 2</span>
+                    </div>
+                    <input type="range" id="activeSlideRange" min="1" max="5" step="1" value="2">
+                </div>
+
+                <div class="form-group">
+                    <label for="indicatorStyleSelect">Indicator Geometry / Style</label>
+                    <select id="indicatorStyleSelect">
+                        <option value="dots" selected>Circular Dots (Classic)</option>
+                        <option value="pill">Expanding Pill / Capsule</option>
+                        <option value="line">Connected Progress Line</option>
+                        <option value="dash">Modern Segmented Dash</option>
+                        <option value="numbered">Numbered Step Counter</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="positionSelect">Indicator Screen Position</label>
+                    <select id="positionSelect">
+                        <option value="bottom-center" selected>Bottom Center (Overlay)</option>
+                        <option value="bottom-left">Bottom Left (Overlay)</option>
+                        <option value="bottom-right">Bottom Right (Overlay)</option>
+                        <option value="top-center">Top Center (Header Overlay)</option>
+                        <option value="vertical-right">Right Sidebar (Vertical)</option>
+                    </select>
+                </div>
+
+                <div class="alert-banner warning" id="a11yAlert">
+                    ⚠️ Active contrast ratio is low! Ensure sufficient contrast against slide backgrounds for WCAG compliance.
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 2: Live Canvas Stage, Specs & Code Output (Rendered 2nd on mobile) -->
+        <section class="preview-stage">
+            <div class="canvas-wrapper">
+                <canvas id="previewCanvas" width="1360" height="840"></canvas>
+            </div>
+            <p class="canvas-caption">
+                Live Interactive Carousel Indicator Render Stage. Adjust parameters to test real-time animation state.
+            </p>
+
+            <div class="metric-summary-grid">
+                <div class="metric-card">
+                    <div class="metric-card-title">Indicator Width</div>
+                    <div class="metric-card-value highlight" id="cardDotWidth">12px</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-card-title">Active Width</div>
+                    <div class="metric-card-value" id="cardActiveWidth">32px</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-card-title">Dot Gap</div>
+                    <div class="metric-card-value" id="cardDotGap">10px</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-card-title">A11y Touch Target</div>
+                    <div class="metric-card-value highlight" id="cardTouchTarget">Pass (24px)</div>
+                </div>
+            </div>
+
+            <!-- Code Output Display Section -->
+            <div class="code-output-container">
+                <div class="code-header">
+                    <span class="code-title">📄 Production HTML &amp; CSS Code Snippet</span>
+                    <button class="btn-demo" id="copyCodeBtn" type="button" style="width: auto; padding: 0.35rem 0.75rem;">📋 Copy Code</button>
+                </div>
+                <div class="code-box" id="codeBox">/* Generating code snippet... */</div>
+            </div>
+        </section>
+
+        <!-- Module 3: Visual Styling & Exporter Panel (Rendered 3rd on mobile) -->
+        <section class="panel">
+            <div class="panel-title">
+                <span>Styling &amp; Motion Modifiers</span>
+                <span class="badge">DESIGN SYSTEM</span>
+            </div>
+
+            <div class="form-group">
+                <div class="range-header">
+                    <label for="dotSizeRange">Inactive Dot Size / Width (px)</label>
+                    <span class="range-value" id="dotSizeDisplay">12px</span>
+                </div>
+                <input type="range" id="dotSizeRange" min="6" max="30" step="1" value="12">
+            </div>
+
+            <div class="form-group">
+                <div class="range-header">
+                    <label for="activeSizeRange">Active Dot / Pill Length (px)</label>
+                    <span class="range-value" id="activeSizeDisplay">32px</span>
+                </div>
+                <input type="range" id="activeSizeRange" min="6" max="80" step="1" value="32">
+            </div>
+
+            <div class="form-group">
+                <div class="range-header">
+                    <label for="dotGapRange">Indicator Spacing / Gap (px)</label>
+                    <span class="range-value" id="dotGapDisplay">10px</span>
+                </div>
+                <input type="range" id="dotGapRange" min="4" max="30" step="1" value="10">
+            </div>
+
+            <div class="form-group">
+                <div class="range-header">
+                    <label for="borderRadiusRange">Border Radius (px)</label>
+                    <span class="range-value" id="borderRadiusDisplay">16px</span>
+                </div>
+                <input type="range" id="borderRadiusRange" min="0" max="30" step="1" value="16">
+            </div>
+
+            <div class="color-pickers-grid">
+                <div>
+                    <label for="activeColorPicker">Active Color</label>
+                    <input type="color" id="activeColorPicker" value="#00f2fe">
+                </div>
+                <div>
+                    <label for="inactiveColorPicker">Inactive Color</label>
+                    <input type="color" id="inactiveColorPicker" value="#374151">
+                </div>
+            </div>
+
+            <div class="toggle-group">
+                <span class="toggle-label">Glow / Drop Shadow Effect</span>
+                <label class="switch">
+                    <input type="checkbox" id="shadowToggle" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="toggle-group">
+                <span class="toggle-label">Include ARIA Accessibility Attributes</span>
+                <label class="switch">
+                    <input type="checkbox" id="a11yToggle" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <button class="btn-action" id="downloadSvgBtn" type="button">Export Vector SVG Indicators</button>
+            <button class="btn-secondary" id="downloadPngBtn" type="button">Export UI Blueprint Report (PNG)</button>
+
+            <!-- Social Media Share Section -->
+            <div class="social-share-container">
+                <span class="share-label">Share This Indicator Builder</span>
+                <div class="share-buttons-grid">
+                    <a id="shareX" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-x">𝕏 Post</a>
+                    <a id="shareFB" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-fb">Facebook</a>
+                    <a id="shareWA" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-wa">WhatsApp</a>
+                    <a id="shareLI" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-li">LinkedIn</a>
+                    <a id="sharePIN" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-pin">Pinterest</a>
+                    <button id="copyShareLink" type="button" class="btn-share btn-share-copy">🔗 Copy Tool Link</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- SEO & Educational Guide Section -->
+    <article class="content-area">
+        <div class="content-card">
+            <h1>Carousel Indicator Generator &amp; CSS/SVG Pagination Dots Builder (2026)</h1>
+            <p>
+                Carousels, hero sliders, product galleries, and onboarding screens remain fundamental UI components across modern web and mobile applications. However, default carousel indicators—such as plain grey bullet points or unstyled dots—often fail to match brand design systems and lack essential accessibility features. This interactive <strong>carousel indicator generator</strong> empowers frontend developers, UI designers, and design system leads to visually engineer custom carousel pagination, dynamic expanding pills, segmented progress lines, and accessible slide controls.
+            </p>
+            <p>
+                With real-time visual canvas previews, customizable active/inactive state morphing, WCAG 2.1 touch-target validation, and instant code generation (HTML, CSS, and SVG), this utility eliminates tedious manual styling and cross-browser pagination debugging.
+            </p>
+
+            <h2>Architectural Principles of Modern Carousel Indicators</h2>
+            <p>
+                A high-performing carousel indicator must satisfy three core visual and technical criteria: immediate orientation, dynamic state feedback, and WCAG accessibility compliance.
+            </p>
+
+            <blockquote style="background-color: var(--bg-input); padding: 1rem 1.25rem; border-left: 4px solid var(--accent-cyan); border-radius: 4px; margin: 1rem 0; font-weight: 600; color: #fff;">
+                Touch Target Area = Math.max(Visible Dot Width, 24px) × Math.max(Visible Dot Height, 24px)<br><br>
+                Active Ratio Scale = Active Indicator Width ÷ Inactive Indicator Width
+            </blockquote>
+
+            <p>
+                Key architectural requirements for production carousels include:
+            </p>
+            <ul>
+                <li><strong>Clear Spatial Orientation:</strong> Users must instantly discern their current position within a sequence (e.g., Slide 2 of 5) without reading text.</li>
+                <li><strong>Accessible Touch Targets:</strong> While visible dots may be 8px to 12px in diameter for aesthetic elegance, the clickable/touchable bounding box should expand to a minimum of 24x24 pixels (WCAG 2.1 AA) or 44x44 pixels (Apple HCI Guidelines).</li>
+                <li><strong>High Contrast Feedback:</strong> Active indicators require a color contrast ratio of at least 3:1 relative to adjacent inactive indicators and 4.5:1 relative to slide backgrounds.</li>
+                <li><strong>Smooth State Motion:</strong> Transitioning between active and inactive states using GPU-accelerated CSS properties (like <code>transform</code>, <code>width</code>, and <code>opacity</code>) ensures 60 FPS performance without visual layout thrashing.</li>
+            </ul>
+
+            <h2>Comparison of Popular Carousel Indicator Styles</h2>
+            <p>
+                Different user interfaces call for distinct indicator geometries. The matrix below details popular carousel control patterns, recommended use cases, and performance attributes:
+            </p>
+
+            <div class="table-responsive">
+                <table class="spec-table">
+                    <thead>
+                        <tr>
+                            <th>Indicator Pattern</th>
+                            <th>Geometry &amp; Behavior</th>
+                            <th>Best Use Case</th>
+                            <th>A11y &amp; UX Rating</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Classic Circular Dots</strong></td>
+                            <td>Fixed equal-width circles (e.g., 10px x 10px) with color or opacity shifts.</td>
+                            <td>Mobile app onboarding, minimalist hero banners, image cards.</td>
+                            <td><strong style="color: var(--accent-cyan);">High (Universal Recognition)</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Expanding Pill / Capsule</strong></td>
+                            <td>Active dot expands horizontally into a capsule (e.g., 12px to 32px width).</td>
+                            <td>Modern SaaS landings, e-commerce product carousels, mobile feeds.</td>
+                            <td><strong style="color: var(--accent-green);">Excellent (Strong Visual Anchor)</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Connected Progress Line</strong></td>
+                            <td>Continuous bottom border bar filling up proportionally to current slide.</td>
+                            <td>Fullscreen editorial slideshows, story cards, video auto-carousels.</td>
+                            <td><strong style="color: var(--accent-amber);">Moderate (Lacks Individual Touch Target)</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Segmented Dash Bar</strong></td>
+                            <td>Separated rectangular dashes with fill animations per slide step.</td>
+                            <td>Instagram-style video stories, step-by-step feature tours.</td>
+                            <td><strong style="color: var(--accent-green);">Very High (Clear Step Progression)</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Numbered Step Counter</strong></td>
+                            <td>Numerical badges (01 / 05) with active highlighted state or progress ring.</td>
+                            <td>Multi-step wizards, luxury real estate tours, long document carousels.</td>
+                            <td><strong style="color: var(--accent-green);">Excellent (Exact Quantitative Feedback)</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Ad Slot 2 Container -->
+            <div class="cms-ad-slot-2"></div>
+
+            <h2>How to Integrate Custom Indicators with Popular Slider Libraries</h2>
+            <p>
+                The generated CSS can be seamlessly attached to open-source Javascript slider packages or native CSS Scroll Snap containers. Below are target selector examples for major framework setups:
+            </p>
+
+            <h3>1. Swiper.js Integration</h3>
+            <p>
+                In Swiper.js, pagination elements are rendered inside <code>.swiper-pagination</code>. Override default bullet classes using your generated utility rules:
+            </p>
+            <pre style="background-color: var(--bg-input); padding: 1rem; border-radius: 6px; color: var(--accent-cyan); overflow-x: auto; font-family: monospace;">
+/* Target Swiper Pagination Bullets */
+.swiper-pagination-bullet {
+    width: 12px;
+    height: 12px;
+    background-color: #374151;
+    opacity: 1;
+    border-radius: 16px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.swiper-pagination-bullet-active {
+    width: 32px;
+    background-color: #00f2fe;
+}
+            </pre>
+
+            <h3>2. Slick Slider Integration</h3>
+            <p>
+                Slick Slider generates an un-ordered list <code>.slick-dots</code> containing button elements. Target the list items and nested buttons:
+            </p>
+            <pre style="background-color: var(--bg-input); padding: 1rem; border-radius: 6px; color: var(--accent-cyan); overflow-x: auto; font-family: monospace;">
+/* Target Slick Slider Dots */
+.slick-dots li button {
+    width: 12px;
+    height: 12px;
+    background-color: #374151;
+    border-radius: 16px;
+    border: none;
+    font-size: 0; /* Hide default numbers */
+    transition: all 0.3s ease;
+}
+.slick-dots li.slick-active button {
+    width: 32px;
+    background-color: #00f2fe;
+}
+            </pre>
+
+            <h3>3. Native CSS Scroll Snap Integration</h3>
+            <p>
+                When building lightweight, zero-JS carousels using <code>scroll-snap-type: x mandatory</code>, pair anchor links with smooth scroll targets:
+            </p>
+            <pre style="background-color: var(--bg-input); padding: 1rem; border-radius: 6px; color: var(--accent-cyan); overflow-x: auto; font-family: monospace;">
+/* CSS Scroll Snap Container */
+.carousel-container {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+}
+.carousel-slide {
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+}
+            </pre>
+
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-block">
+                <details class="faq-accordion" open>
+                    <summary class="faq-summary">What is a Carousel Indicator Generator?</summary>
+                    <div class="faq-answer">
+                        A Carousel Indicator Generator is a specialized design and code utility that allows web developers and UI/UX designers to visually customize slider pagination controls—such as dots, expanding pills, numbered badges, and progress lines—and generate clean HTML, CSS, or SVG code.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">How do I make custom carousel indicators WCAG accessibility compliant?</summary>
+                    <div class="faq-answer">
+                        To satisfy WCAG 2.1 AA accessibility guidelines, carousel indicators must have a minimum touch target size of 24x24 pixels (or sufficient padding), maintain a minimum color contrast ratio of 3:1 against the background for active/inactive states, include proper ARIA roles (role="tablist" and role="tab"), and support full keyboard navigation (Tab, Arrow keys, Enter/Space).
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">How do I integrate generated indicator CSS with Swiper.js or Slick Slider?</summary>
+                    <div class="faq-answer">
+                        You can target the slider library's default pagination class names in CSS. For Swiper.js, override '.swiper-pagination-bullet' and '.swiper-pagination-bullet-active'. For Slick Slider, target '.slick-dots li button' and '.slick-dots li.slick-active button'. The generated CSS styles can be directly pasted into your stylesheet.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">Are SVG carousel indicators better than pure CSS indicators?</summary>
+                    <div class="faq-answer">
+                        Pure CSS indicators using standard HTML elements (button or span) are lighter, faster to render, and easier to style dynamically using CSS transitions or CSS variables. SVG indicators are preferred when using complex morphing shapes, custom paths, or stroke dashoffset progress animations.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">How can I build CSS-only carousel indicators for CSS Scroll Snap?</summary>
+                    <div class="faq-answer">
+                        When using native CSS Scroll Snap without JavaScript libraries, indicator dots can be implemented using internal anchor links pointing to slide IDs (href="#slide-1"), radio button input hacks, or CSS scroll-driven animations using container queries and scroll timeline APIs.
+                    </div>
+                </details>
+            </div>
+        </div>
+    </article>
+
+    <!-- Footer Container -->
+    <div id="global-footer"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var canvas = document.getElementById('previewCanvas');
+            if (!canvas) return;
+            var ctx = canvas.getContext('2d');
+
+            // Controls
+            var slideCountRange = document.getElementById('slideCountRange');
+            var slideCountDisplay = document.getElementById('slideCountDisplay');
+            var activeSlideRange = document.getElementById('activeSlideRange');
+            var activeSlideDisplay = document.getElementById('activeSlideDisplay');
+            var indicatorStyleSelect = document.getElementById('indicatorStyleSelect');
+            var positionSelect = document.getElementById('positionSelect');
+
+            var dotSizeRange = document.getElementById('dotSizeRange');
+            var dotSizeDisplay = document.getElementById('dotSizeDisplay');
+            var activeSizeRange = document.getElementById('activeSizeRange');
+            var activeSizeDisplay = document.getElementById('activeSizeDisplay');
+            var dotGapRange = document.getElementById('dotGapRange');
+            var dotGapDisplay = document.getElementById('dotGapDisplay');
+            var borderRadiusRange = document.getElementById('borderRadiusRange');
+            var borderRadiusDisplay = document.getElementById('borderRadiusDisplay');
+
+            var activeColorPicker = document.getElementById('activeColorPicker');
+            var inactiveColorPicker = document.getElementById('inactiveColorPicker');
+            var shadowToggle = document.getElementById('shadowToggle');
+            var a11yToggle = document.getElementById('a11yToggle');
+
+            var a11yAlert = document.getElementById('a11yAlert');
+            var downloadSvgBtn = document.getElementById('downloadSvgBtn');
+            var downloadPngBtn = document.getElementById('downloadPngBtn');
+
+            // Metric Summary Cards
+            var cardDotWidth = document.getElementById('cardDotWidth');
+            var cardActiveWidth = document.getElementById('cardActiveWidth');
+            var cardDotGap = document.getElementById('cardDotGap');
+            var cardTouchTarget = document.getElementById('cardTouchTarget');
+            var codeBox = document.getElementById('codeBox');
+            var copyCodeBtn = document.getElementById('copyCodeBtn');
+
+            // Presets
+            var presetClassicDots = document.getElementById('presetClassicDots');
+            var presetExpandingPill = document.getElementById('presetExpandingPill');
+            var presetProgressLine = document.getElementById('presetProgressLine');
+            var presetNumberedBadge = document.getElementById('presetNumberedBadge');
+
+            /* Setup Social Share Links */
+            var currentUrl = encodeURIComponent(window.location.href);
+            var shareTitle = encodeURIComponent("Check out this free CSS/SVG Carousel Indicator Generator & Slider Pagination Engine!");
+            
+            document.getElementById('shareX').href = 'https://twitter.com/intent/tweet?url=' + currentUrl + '&text=' + shareTitle;
+            document.getElementById('shareFB').href = 'https://www.facebook.com/sharer/sharer.php?u=' + currentUrl;
+            document.getElementById('shareWA').href = 'https://api.whatsapp.com/send?text=' + shareTitle + '%20' + currentUrl;
+            document.getElementById('shareLI').href = 'https://www.linkedin.com/sharing/share-offsite/?url=' + currentUrl;
+            document.getElementById('sharePIN').href = 'https://pinterest.com/pin/create/button/?url=' + currentUrl + '&description=' + shareTitle;
+
+            var copyBtn = document.getElementById('copyShareLink');
+            copyBtn.addEventListener('click', function() {
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'Carousel Indicator Generator',
+                        text: 'Build custom CSS and SVG carousel pagination dots.',
+                        url: window.location.href
+                    }).catch(function() {});
+                } else if (navigator.clipboard) {
+                    navigator.clipboard.writeText(window.location.href).then(function() {
+                        var origText = copyBtn.textContent;
+                        copyBtn.textContent = '✓ Link Copied!';
+                        setTimeout(function() { copyBtn.textContent = origText; }, 2000);
+                    });
+                }
+            });
+
+            // Preset Handlers
+            presetClassicDots.addEventListener('click', function() {
+                indicatorStyleSelect.value = 'dots';
+                dotSizeRange.value = 12;
+                activeSizeRange.value = 12;
+                dotGapRange.value = 12;
+                borderRadiusRange.value = 12;
+                activeColorPicker.value = '#00f2fe';
+                inactiveColorPicker.value = '#374151';
+                shadowToggle.checked = true;
+                calculateAndDraw();
+            });
+
+            presetExpandingPill.addEventListener('click', function() {
+                indicatorStyleSelect.value = 'pill';
+                dotSizeRange.value = 10;
+                activeSizeRange.value = 34;
+                dotGapRange.value = 8;
+                borderRadiusRange.value = 16;
+                activeColorPicker.value = '#ff0050';
+                inactiveColorPicker.value = '#222634';
+                shadowToggle.checked = true;
+                calculateAndDraw();
+            });
+
+            presetProgressLine.addEventListener('click', function() {
+                indicatorStyleSelect.value = 'line';
+                dotSizeRange.value = 16;
+                activeSizeRange.value = 40;
+                dotGapRange.value = 4;
+                borderRadiusRange.value = 2;
+                activeColorPicker.value = '#10b981';
+                inactiveColorPicker.value = '#2e3446';
+                shadowToggle.checked = false;
+                calculateAndDraw();
+            });
+
+            presetNumberedBadge.addEventListener('click', function() {
+                indicatorStyleSelect.value = 'numbered';
+                dotSizeRange.value = 28;
+                activeSizeRange.value = 28;
+                dotGapRange.value = 10;
+                borderRadiusRange.value = 8;
+                activeColorPicker.value = '#1877f2';
+                inactiveColorPicker.value = '#222634';
+                shadowToggle.checked = true;
+                calculateAndDraw();
+            });
+
+            // Event Listeners for Controls
+            slideCountRange.addEventListener('input', function() {
+                var maxVal = parseInt(slideCountRange.value);
+                activeSlideRange.max = maxVal;
+                if (parseInt(activeSlideRange.value) > maxVal) {
+                    activeSlideRange.value = maxVal;
+                }
+                calculateAndDraw();
+            });
+
+            activeSlideRange.addEventListener('input', calculateAndDraw);
+            indicatorStyleSelect.addEventListener('change', calculateAndDraw);
+            positionSelect.addEventListener('change', calculateAndDraw);
+
+            dotSizeRange.addEventListener('input', calculateAndDraw);
+            activeSizeRange.addEventListener('input', calculateAndDraw);
+            dotGapRange.addEventListener('input', calculateAndDraw);
+            borderRadiusRange.addEventListener('input', calculateAndDraw);
+
+            activeColorPicker.addEventListener('input', calculateAndDraw);
+            inactiveColorPicker.addEventListener('input', calculateAndDraw);
+            shadowToggle.addEventListener('change', calculateAndDraw);
+            a11yToggle.addEventListener('change', calculateAndDraw);
+
+            copyCodeBtn.addEventListener('click', function() {
+                var textToCopy = codeBox.textContent;
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(textToCopy).then(function() {
+                        var originalText = copyCodeBtn.textContent;
+                        copyCodeBtn.textContent = '✓ Copied!';
+                        setTimeout(function() { copyCodeBtn.textContent = originalText; }, 2000);
+                    });
+                }
+            });
+
+            function calculateAndDraw() {
+                var totalSlides = parseInt(slideCountRange.value) || 5;
+                var activeSlide = parseInt(activeSlideRange.value) || 1;
+                var style = indicatorStyleSelect.value;
+                var position = positionSelect.value;
+
+                var dotSize = parseInt(dotSizeRange.value) || 12;
+                var activeSize = parseInt(activeSizeRange.value) || 32;
+                var dotGap = parseInt(dotGapRange.value) || 10;
+                var radius = parseInt(borderRadiusRange.value) || 16;
+
+                var activeColor = activeColorPicker.value;
+                var inactiveColor = inactiveColorPicker.value;
+                var hasShadow = shadowToggle.checked;
+                var isA11y = a11yToggle.checked;
+
+                // Update text displays
+                slideCountDisplay.textContent = totalSlides + ' Slides';
+                activeSlideDisplay.textContent = 'Slide ' + activeSlide;
+                dotSizeDisplay.textContent = dotSize + 'px';
+                activeSizeDisplay.textContent = activeSize + 'px';
+                dotGapDisplay.textContent = dotGap + 'px';
+                borderRadiusDisplay.textContent = radius + 'px';
+
+                // Update metric summary cards
+                cardDotWidth.textContent = dotSize + 'px';
+                cardActiveWidth.textContent = activeSize + 'px';
+                cardDotGap.textContent = dotGap + 'px';
+
+                var effectiveTouchSize = Math.max(dotSize, 24);
+                if (effectiveTouchSize >= 24) {
+                    cardTouchTarget.textContent = 'Pass (' + effectiveTouchSize + 'px)';
+                    cardTouchTarget.className = 'metric-card-value highlight';
+                    a11yAlert.style.display = 'none';
+                } else {
+                    cardTouchTarget.textContent = 'Low (' + effectiveTouchSize + 'px)';
+                    cardTouchTarget.className = 'metric-card-value';
+                    a11yAlert.style.display = 'block';
+                }
+
+                // Generate production HTML/CSS snippet
+                generateCodeSnippet({
+                    totalSlides: totalSlides,
+                    activeSlide: activeSlide,
+                    style: style,
+                    position: position,
+                    dotSize: dotSize,
+                    activeSize: activeSize,
+                    dotGap: dotGap,
+                    radius: radius,
+                    activeColor: activeColor,
+                    inactiveColor: inactiveColor,
+                    hasShadow: hasShadow,
+                    isA11y: isA11y
+                });
+
+                // Draw live high-res canvas stage
+                drawCanvas({
+                    totalSlides: totalSlides,
+                    activeSlide: activeSlide,
+                    style: style,
+                    position: position,
+                    dotSize: dotSize,
+                    activeSize: activeSize,
+                    dotGap: dotGap,
+                    radius: radius,
+                    activeColor: activeColor,
+                    inactiveColor: inactiveColor,
+                    hasShadow: hasShadow
+                });
+            }
+
+            function generateCodeSnippet(data) {
+                var htmlCode = '';
+                var cssCode = '';
+
+                htmlCode += '<!-- Carousel Indicators HTML -->\n';
+                htmlCode += '<div class="carousel-indicators" ' + (data.isA11y ? 'role="tablist" aria-label="Slideshow Pagination"' : '') + '>\n';
+                for (var i = 1; i <= data.totalSlides; i++) {
+                    var isActive = i === data.activeSlide;
+                    var activeAttr = isActive ? ' class="indicator active" aria-selected="true"' : ' class="indicator" aria-selected="false"';
+                    var tabAttr = data.isA11y ? ' role="tab" aria-label="Go to slide ' + i + '"' : '';
+                    
+                    if (data.style === 'numbered') {
+                        htmlCode += '  <button' + activeAttr + tabAttr + '>' + (i < 10 ? '0' + i : i) + '</button>\n';
+                    } else {
+                        htmlCode += '  <button' + activeAttr + tabAttr + '></button>\n';
+                    }
+                }
+                htmlCode += '</div>\n\n';
+
+                cssCode += '/* Carousel Indicators CSS */\n';
+                cssCode += '.carousel-indicators {\n';
+                cssCode += '  display: flex;\n';
+                cssCode += '  align-items: center;\n';
+                cssCode += '  justify-content: center;\n';
+                cssCode += '  gap: ' + data.dotGap + 'px;\n';
+                cssCode += '  padding: 12px;\n';
+                cssCode += '}\n\n';
+
+                cssCode += '.indicator {\n';
+                cssCode += '  width: ' + data.dotSize + 'px;\n';
+                cssCode += '  height: ' + (data.style === 'numbered' ? data.dotSize : 12) + 'px;\n';
+                cssCode += '  background-color: ' + data.inactiveColor + ';\n';
+                cssCode += '  border-radius: ' + data.radius + 'px;\n';
+                cssCode += '  border: none;\n';
+                cssCode += '  cursor: pointer;\n';
+                cssCode += '  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);\n';
+                if (data.hasShadow) {
+                    cssCode += '  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);\n';
+                }
+                cssCode += '}\n\n';
+
+                cssCode += '.indicator.active {\n';
+                cssCode += '  width: ' + data.activeSize + 'px;\n';
+                cssCode += '  background-color: ' + data.activeColor + ';\n';
+                if (data.hasShadow) {
+                    cssCode += '  box-shadow: 0 0 12px ' + data.activeColor + '80;\n';
+                }
+                cssCode += '}\n';
+
+                codeBox.textContent = htmlCode + cssCode;
+            }
+
+            function drawCanvas(data) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                // Background Gradient (Slide Mockup)
+                var bgGrad = ctx.createLinearGradient(0, 0, 1360, 840);
+                bgGrad.addColorStop(0, '#0f172a');
+                bgGrad.addColorStop(0.5, '#1e293b');
+                bgGrad.addColorStop(1, '#0f172a');
+                ctx.fillStyle = bgGrad;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Mockup Slide Content Card
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.03)';
+                ctx.strokeStyle = '#2e3446';
+                ctx.lineWidth = 3;
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(80, 60, 1200, 720, 24);
+                    ctx.fill();
+                    ctx.stroke();
+                } else {
+                    ctx.fillRect(80, 60, 1200, 720);
+                }
+
+                // Slide Header / Slide Number Display
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 48px -apple-system, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('FEATURE SLIDE ' + data.activeSlide + ' OF ' + data.totalSlides, 680, 360);
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = '24px -apple-system, sans-serif';
+                ctx.fillText('Interactive Carousel Indicator Preview Stage (2026)', 680, 420);
+
+                // Calculate Position of Indicator Bar
+                var startY = 700;
+                var startX = 680;
+
+                if (data.position === 'top-center') {
+                    startY = 120;
+                } else if (data.position === 'bottom-left') {
+                    startX = 240;
+                } else if (data.position === 'bottom-right') {
+                    startX = 1120;
+                }
+
+                // Calculate Total Indicator Width for Centering
+                var totalWidth = 0;
+                for (var i = 1; i <= data.totalSlides; i++) {
+                    var w = (i === data.activeSlide) ? data.activeSize : data.dotSize;
+                    totalWidth += w;
+                }
+                totalWidth += (data.totalSlides - 1) * data.dotGap;
+
+                var currentX = startX - (totalWidth / 2);
+
+                // Draw Overlay Container Box
+                ctx.fillStyle = 'rgba(15, 23, 42, 0.75)';
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+                ctx.lineWidth = 1;
+                var containerHeight = Math.max(data.dotSize, 28) + 24;
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(startX - (totalWidth / 2) - 24, startY - (containerHeight / 2), totalWidth + 48, containerHeight, containerHeight / 2);
+                    ctx.fill();
+                    ctx.stroke();
+                }
+
+                // Draw Indicators
+                for (var j = 1; j <= data.totalSlides; j++) {
+                    var isActive = (j === data.activeSlide);
+                    var itemWidth = isActive ? data.activeSize : data.dotSize;
+                    var itemHeight = (data.style === 'numbered') ? data.dotSize : (data.style === 'line' ? 8 : 12);
+                    var itemY = startY - (itemHeight / 2);
+
+                    ctx.fillStyle = isActive ? data.activeColor : data.inactiveColor;
+
+                    if (data.hasShadow) {
+                        ctx.shadowColor = isActive ? data.activeColor : 'rgba(0,0,0,0.4)';
+                        ctx.shadowBlur = isActive ? 16 : 4;
+                    } else {
+                        ctx.shadowBlur = 0;
+                    }
+
+                    if (data.style === 'dots' || data.style === 'pill' || data.style === 'dash') {
+                        if (ctx.roundRect) {
+                            ctx.beginPath();
+                            ctx.roundRect(currentX, itemY, itemWidth, itemHeight, data.radius);
+                            ctx.fill();
+                        } else {
+                            ctx.fillRect(currentX, itemY, itemWidth, itemHeight);
+                        }
+                    } else if (data.style === 'line') {
+                        ctx.fillRect(currentX, itemY, itemWidth, itemHeight);
+                    } else if (data.style === 'numbered') {
+                        if (ctx.roundRect) {
+                            ctx.beginPath();
+                            ctx.roundRect(currentX, itemY, itemWidth, itemHeight, data.radius);
+                            ctx.fill();
+                        } else {
+                            ctx.fillRect(currentX, itemY, itemWidth, itemHeight);
+                        }
+                        ctx.shadowBlur = 0;
+                        ctx.fillStyle = isActive ? '#0f172a' : '#ffffff';
+                        ctx.font = 'bold 16px -apple-system, sans-serif';
+                        ctx.textAlign = 'center';
+                        ctx.fillText((j < 10 ? '0' + j : j), currentX + (itemWidth / 2), itemY + (itemHeight / 2) + 5);
+                    }
+
+                    currentX += itemWidth + data.dotGap;
+                }
+
+                // Reset Shadow
+                ctx.shadowBlur = 0;
+
+                // Branding Footer on Canvas
+                ctx.fillStyle = '#64748b';
+                ctx.font = 'bold 20px -apple-system, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('CoreMetricSuite · Carousel Indicator Generator Engine', 680, 750);
+            }
+
+            // Initial calculation & render
+            calculateAndDraw();
+
+            // Export PNG Blueprint Report
+            downloadPngBtn.addEventListener('click', function() {
+                var link = document.createElement('a');
+                link.download = 'carousel-indicator-blueprint.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+
+            // Export SVG Vector File
+            downloadSvgBtn.addEventListener('click', function() {
+                var totalSlides = parseInt(slideCountRange.value) || 5;
+                var activeSlide = parseInt(activeSlideRange.value) || 1;
+                var dotSize = parseInt(dotSizeRange.value) || 12;
+                var activeSize = parseInt(activeSizeRange.value) || 32;
+                var dotGap = parseInt(dotGapRange.value) || 10;
+                var radius = parseInt(borderRadiusRange.value) || 16;
+                var activeColor = activeColorPicker.value;
+                var inactiveColor = inactiveColorPicker.value;
+
+                var totalWidth = 0;
+                for (var i = 1; i <= totalSlides; i++) {
+                    totalWidth += (i === activeSlide ? activeSize : dotSize);
+                }
+                totalWidth += (totalSlides - 1) * dotGap;
+
+                var svgHeight = Math.max(dotSize, 24) + 16;
+                var svgWidth = totalWidth + 32;
+
+                var svgString = '<svg xmlns="http://www.w3.org/2000/svg" width="' + svgWidth + '" height="' + svgHeight + '" viewBox="0 0 ' + svgWidth + ' ' + svgHeight + '">\n';
+                var curX = 16;
+                var curY = (svgHeight - 12) / 2;
+
+                for (var j = 1; j <= totalSlides; j++) {
+                    var isActive = (j === activeSlide);
+                    var w = isActive ? activeSize : dotSize;
+                    var col = isActive ? activeColor : inactiveColor;
+                    svgString += '  <rect x="' + curX + '" y="' + curY + '" width="' + w + '" height="12" rx="' + radius + '" fill="' + col + '" />\n';
+                    curX += w + dotGap;
+                }
+                svgString += '</svg>';
+
+                var blob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
+                var link = document.createElement('a');
+                link.download = 'carousel-indicators.svg';
+                link.href = URL.createObjectURL(blob);
+                link.click();
+            });
+        });
+    </script>
+
+    <!-- Global CoreMetricSuite Cross-Linking Index Hub -->
+    <div style="margin-top: 40px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #f8fafc; font-family: system-ui, -apple-system, sans-serif;">
+        <h3 style="margin: 0 0 15px 0; font-size: 18px; color: #0f172a; font-weight: 600;">🛠️ CoreMetricSuite Utility Directory</h3>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇦🇺 Australia Tax &amp; Labor</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-au-cents" href="../au-cents-per-km-estimator/" style="color: #2563eb; text-decoration: underline;">Cents-Per-Km Tax Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-au-schads" href="../au-schads-vehicle-allowance/" style="color: #2563eb; text-decoration: underline;">SCHADS Vehicle Allowance</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-au-super" href="../au-superannuation-charge-tracker/" style="color: #2563eb; text-decoration: underline;">Superannuation Tracker</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇺🇸 US Corporate Tax</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-us-llc" href="../us-llc-late-penalty-estimator/" style="color: #2563eb; text-decoration: underline;">LLC Late Tax Penalty</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-us-179" href="../us-section-179-truck-calculator/" style="color: #2563eb; text-decoration: underline;">Section 179 Vehicle Deduction</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇬🇧 UK Property Management</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-rent" href="../uk-form-4a-rent-tracker/" style="color: #2563eb; text-decoration: underline;">Form 4A Rent Tracker</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-sdlt" href="../uk-sdlt-bracket-estimator/" style="color: #2563eb; text-decoration: underline;">Stamp Duty Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-sec8" href="../uk-section-8-calculator/" style="color: #2563eb; text-decoration: underline;">Section 8 Calculator</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🎬 Digital Media Layouts &amp; Monetization</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-media-carousel" href="../carousel-indicator-generator/" style="color: #2563eb; text-decoration: underline;">Carousel Indicator Generator</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-tiktok-goal" href="../tiktok-rpm-goal/" style="color: #2563eb; text-decoration: underline;">TikTok RPM Goal Engine</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-tiktok-rpm" href="../tiktok-creator-rewards-rpm-estimator/" style="color: #2563eb; text-decoration: underline;">TikTok Creator Rewards RPM</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-ig" href="../instagram-reels-preview/" style="color: #2563eb; text-decoration: underline;">Instagram Reels Grid</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-fb" href="../facebook-ad-safe-zone/" style="color: #2563eb; text-decoration: underline;">Facebook 9:16 Ad Mask</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-shorts" href="../shorts-ui-safe-zone/" style="color: #2563eb; text-decoration: underline;">YouTube Shorts Safe Zone</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script defer>
+        (function() {
+            const path = window.location.pathname.toLowerCase();
+            const toolsMap = {
+                'au-cents-per-km-estimator': 'hub-au-cents',
+                'au-schads-vehicle-allowance': 'hub-au-schads',
+                'au-superannuation-charge-tracker': 'hub-au-super',
+                'us-llc-late-penalty-estimator': 'hub-us-llc',
+                'us-section-179-truck-calculator': 'hub-us-179',
+                'uk-form-4a-rent-tracker': 'hub-uk-rent',
+                'uk-sdlt-bracket-estimator': 'hub-uk-sdlt',
+                'uk-section-8-calculator': 'hub-uk-sec8',
+                'carousel-indicator-generator': 'hub-media-carousel',
+                'tiktok-rpm-goal': 'hub-media-tiktok-goal',
+                'tiktok-creator-rewards-rpm-estimator': 'hub-media-tiktok-rpm',
+                'instagram-reels-preview': 'hub-media-ig',
+                'facebook-ad-safe-zone': 'hub-media-fb',
+                'shorts-ui-safe-zone': 'hub-media-shorts'
+            };
+
+            for (const [folderName, elementId] of Object.entries(toolsMap)) {
+                if (path.includes(folderName)) {
+                    const targetEl = document.getElementById(elementId);
+                    if (targetEl) {
+                        targetEl.outerHTML = `<span style="font-weight: 600; color: #0f172a;">${targetEl.textContent} (Current)</span>`;
+                    }
+                    break;
+                }
+            }
+        })();
+    </script>
+</body>
+</html>
