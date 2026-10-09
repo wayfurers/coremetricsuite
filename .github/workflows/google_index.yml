@@ -3,7 +3,7 @@ name: Google Indexing API Automation
 on:
   push:
     branches:
-      - main  # Triggers whenever you push changes to your main branch
+      - master # Triggers whenever you push changes to your main branch
   workflow_dispatch: # Allows you to run it manually by clicking a button
 
 jobs:
