@@ -329,7 +329,7 @@ const toolsData = [
     description: "Compare platform fees, payouts, and margins between Lemon Squeezy and Gumroad to find the best platform for your products.",
     url: "/lemon-squeezy-vs-gumroad-calculator",
     keywords: "lemon squeezy vs gumroad calculator platform fee comparison digital products profit margin"
-  }
+  },
 
   // ==========================================
   // --- 4. REAL ESTATE (COMING SOON) ---
@@ -339,5 +339,3 @@ const toolsData = [
   // --- 5. HEALTH & WELLNESS (COMING SOON) ---
   // ==========================================
 ];
-
-export default toolsData;
