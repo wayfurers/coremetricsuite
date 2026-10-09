@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lemon Squeezy vs. Gumroad Revenue Calculator &amp; Take-Home Estimator (2026)</title>
+    <meta name="description" content="Calculate and compare net creator earnings between Lemon Squeezy and Gumroad in 2026. Account for Merchant of Record tax handling, platform fees, payment processing, Discover marketplace sales, and payout fees.">
+    <meta name="keywords" content="lemon squeezy vs gumroad calculator, lemon squeezy fee calculator, gumroad fee calculator, lemon squeezy pricing comparison, gumroad net earnings, digital product fee calculator, merchant of record comparison">
+    <link rel="canonical" href="https://coremetricsuite.com/lemon-squeezy-vs-gumroad-calculator/">
+
+    <!-- Open Graph / Social Metadata -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Lemon Squeezy vs. Gumroad Revenue Calculator &amp; Take-Home Engine">
+    <meta property="og:description" content="Compare real net payout differences between Lemon Squeezy and Gumroad. Reverse-engineer platform fees, payment processing, global MoR sales tax, and discover marketplace commissions.">
+    <meta property="og:url" content="https://coremetricsuite.com/lemon-squeezy-vs-gumroad-calculator/">
+    
+    <!-- Global Framework Dependencies -->
+    <link rel="stylesheet" href="/css/global.css">
+    <script src="/config.js" defer></script>
+    <script src="/global.min.js" defer></script>
+
+    <!-- WebApplication Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Lemon Squeezy vs. Gumroad Revenue Calculator",
+      "url": "https://coremetricsuite.com/lemon-squeezy-vs-gumroad-calculator/",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires HTML5. Requires JavaScript.",
+      "author": {
+        "@type": "Organization",
+        "name": "CoreMetricSuite Hub",
+        "url": "https://coremetricsuite.com"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
+    <!-- FAQ JSON-LD Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the key difference in platform fees between Lemon Squeezy and Gumroad in 2026?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Lemon Squeezy charges a base platform fee of 5% + $0.50 per transaction, whereas Gumroad charges a 10% + $0.50 base platform fee on direct sales. On top of that, Gumroad requires separate payment processing fees (~2.9% + $0.30 via Stripe or PayPal), while Lemon Squeezy bundles payment processing into its MoR fee structure."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do both Lemon Squeezy and Gumroad handle global sales tax and VAT as a Merchant of Record?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Both Lemon Squeezy and Gumroad operate as Merchants of Record (MoR). They calculate, collect, and remit global EU/UK VAT, US sales tax, and GST automatically on your behalf, removing legal tax liability from digital creators."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does Gumroad's Discover Marketplace impact total fee calculations?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "If a customer purchases your digital product through Gumroad Discover (Gumroad's internal recommendation engine), Gumroad charges a flat 30% commission instead of the standard 10% direct fee. This includes processing, but significantly lowers net payout margins."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "At what monthly revenue threshold should a digital creator switch from Gumroad to Lemon Squeezy?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The financial tipping point usually occurs between $1,000 and $1,500 in monthly sales. Above $1,000/month, the 5% lower base fee on Lemon Squeezy saves creators enough money (typically $50 to $250+ per month) to justify migrating product links and customer management."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do refunds affect platform fees on Lemon Squeezy vs. Gumroad?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Lemon Squeezy refunds the platform fee when you process a customer refund, meaning you only pay fees on completed sales. Gumroad retains its entire 10% + $0.50 fee even on refunded transactions, resulting in a direct cash loss for sellers on returned orders."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-main: #0f1117;
+            --bg-card: #181b24;
+            --bg-input: #222634;
+            --border-color: #2e3446;
+            --accent-blue: #1877f2;
+            --accent-cyan: #00f2fe;
+            --accent-pink: #ff0050;
+            --accent-green: #10b981;
+            --accent-amber: #f59e0b;
+            --accent-purple: #8b5cf6;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: var(--bg-main); color: var(--text-primary); font-family: var(--font-sans); line-height: 1.6; }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            grid-template-areas: 
+                "upload preview"
+                "panel preview";
+            gap: 2rem;
+        }
+
+        .upload-card-wrapper {
+            grid-area: upload;
+        }
+
+        .panel {
+            grid-area: panel;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            height: fit-content;
+        }
+
+        .panel-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+            color: #fff;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        .drop-zone {
+            border: 2px dashed var(--border-color);
+            padding: 1.25rem;
+            text-align: center;
+            border-radius: 8px;
+            background-color: var(--bg-input);
+            cursor: pointer;
+            transition: border-color 0.2s, background-color 0.2s;
+            margin-bottom: 0.75rem;
+        }
+
+        .drop-zone:hover { border-color: var(--accent-cyan); background-color: rgba(0, 242, 254, 0.05); }
+        .drop-title { font-weight: 600; color: #fff; font-size: 0.95rem; }
+        .drop-sub { font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px; }
+
+        .preset-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .btn-demo {
+            width: 100%;
+            padding: 0.6rem 0.5rem;
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            color: var(--accent-cyan);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.78rem;
+            transition: background-color 0.2s, border-color 0.2s;
+            text-align: center;
+        }
+
+        .btn-demo:hover { background-color: #2a2f42; border-color: var(--accent-cyan); }
+
+        .toggle-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: var(--bg-input);
+            padding: 0.75rem 0.85rem;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 1rem;
+        }
+
+        .toggle-label { font-size: 0.85rem; font-weight: 500; color: var(--text-primary); }
+
+        .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #374151; transition: .3s; border-radius: 24px;
+        }
+        .slider:before {
+            position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px;
+            background-color: white; transition: .3s; border-radius: 50%;
+        }
+        input:checked + .slider { background-color: var(--accent-purple); }
+        input:checked + .slider:before { transform: translateX(20px); }
+
+        .form-group { margin-bottom: 1.25rem; }
+        .range-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem; }
+        .range-value { font-size: 0.85rem; font-weight: 700; color: var(--accent-cyan); }
+        label { display: block; font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 0.4rem; }
+        input[type="text"], input[type="number"], textarea, select {
+            width: 100%; padding: 0.65rem 0.85rem; background-color: var(--bg-input);
+            border: 1px solid var(--border-color); border-radius: 6px; color: #fff;
+            font-size: 0.9rem; outline: none; font-family: inherit;
+        }
+        input[type="range"] {
+            width: 100%; height: 6px; background: var(--bg-input); border-radius: 3px;
+            outline: none; -webkit-appearance: none; accent-color: var(--accent-purple);
+        }
+        input[type="text"]:focus, input[type="number"]:focus, textarea:focus, select:focus { border-color: var(--accent-purple); }
+
+        .btn-action {
+            width: 100%; padding: 0.85rem; background: linear-gradient(135deg, var(--accent-purple), #6d28d9);
+            color: #fff; font-weight: 600; border: none; border-radius: 6px; cursor: pointer; font-size: 0.95rem;
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+            transition: transform 0.1s, opacity 0.2s;
+            margin-bottom: 1rem;
+        }
+        .btn-action:hover { opacity: 0.95; }
+        .btn-action:active { transform: scale(0.99); }
+
+        /* Social Share Button Module */
+        .social-share-container {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        .share-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
+            display: block;
+            text-align: center;
+        }
+        .share-buttons-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+        }
+        .btn-share {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            padding: 0.5rem 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: opacity 0.2s, transform 0.1s;
+        }
+        .btn-share:hover { opacity: 0.88; }
+        .btn-share:active { transform: scale(0.97); }
+        .btn-share-x { background-color: #000000; border: 1px solid #333; }
+        .btn-share-fb { background-color: #1877f2; }
+        .btn-share-li { background-color: #0a66c2; }
+        .btn-share-wa { background-color: #25d366; color: #000; }
+        .btn-share-pin { background-color: #e60023; }
+        .btn-share-copy { background-color: #374151; color: #fff; grid-column: span 3; margin-top: 0.25rem; }
+
+        .preview-stage { 
+            grid-area: preview;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+        }
+        .canvas-wrapper {
+            position: relative; width: 320px; height: 568px; border-radius: 16px;
+            overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.6); background-color: #000;
+            border: 2px solid var(--border-color);
+        }
+        canvas { width: 100%; height: 100%; display: block; }
+        .canvas-caption { margin-top: 1rem; font-size: 0.85rem; color: var(--text-secondary); text-align: center; }
+
+        /* Metric Highlights Grid below Canvas */
+        .metric-summary-grid {
+            width: 100%;
+            max-width: 320px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+        .metric-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.85rem;
+            text-align: center;
+        }
+        .metric-card-title { font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; }
+        .metric-card-value { font-size: 1.1rem; font-weight: 700; color: #fff; }
+        .metric-card-value.highlight-ls { color: var(--accent-cyan); }
+        .metric-card-value.highlight-gum { color: #f87171; }
+        .metric-card-value.highlight-green { color: var(--accent-green); }
+
+        .content-area { max-width: 1200px; margin: 3rem auto; padding: 0 1.5rem; }
+        .content-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 2.5rem; }
+        .content-card h1 { font-size: 2rem; margin-bottom: 1rem; color: #fff; }
+        .content-card h2 { font-size: 1.4rem; margin: 1.8rem 0 1rem; color: #fff; }
+        .content-card p { color: var(--text-secondary); margin-bottom: 1.2rem; }
+        .content-card ul, .content-card ol { color: var(--text-secondary); margin: 0 0 1.2rem 1.5rem; }
+        .content-card li { margin-bottom: 0.5rem; }
+
+        .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 1.5rem 0; }
+        .spec-table { width: 100%; border-collapse: collapse; text-align: left; min-width: 600px; }
+        .spec-table th, .spec-table td { padding: 0.85rem 1rem; border: 1px solid var(--border-color); }
+        .spec-table th { background-color: var(--bg-input); color: #fff; font-size: 0.9rem; }
+        .spec-table td { color: var(--text-secondary); font-size: 0.875rem; }
+
+        /* Accordion FAQ Styling */
+        .faq-block { margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem; }
+        .faq-accordion {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 0.85rem;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .faq-accordion[open] { border-color: var(--accent-purple); }
+        .faq-summary {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            padding: 1rem 1.2rem;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+        .faq-summary::-webkit-details-marker { display: none; }
+        .faq-summary::after {
+            content: "+";
+            font-size: 1.2rem;
+            color: var(--accent-purple);
+            transition: transform 0.2s;
+        }
+        .faq-accordion[open] .faq-summary::after {
+            content: "−";
+            color: var(--accent-purple);
+        }
+        .faq-answer {
+            padding: 0 1.2rem 1.2rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 0.4rem;
+            padding-top: 0.8rem;
+        }
+
+        .cms-ad-slot-1, .cms-ad-slot-2 {
+            width: 100%; max-width: 970px; min-height: 90px; margin: 1.5rem auto;
+            background: rgba(255,255,255,0.02); border-radius: 8px; display: block;
+        }
+
+        /* Mobile Responsive Overrides */
+        @media screen and (max-width: 900px) {
+            html, body { width: 100%!important; max-width: 100vw!important; overflow-x: hidden!important; margin: 0!important; padding: 0!important; }
+            main.container { display: flex!important; flex-direction: column!important; width: 100%!important; max-width: 100%!important; padding: 0 12px!important; margin: 8px auto!important; gap: 16px!important; box-sizing: border-box!important; }
+            .upload-card-wrapper { order: 1!important; width: 100%!important; }
+            main.container > section.preview-stage { order: 2!important; width: 100%!important; display: flex!important; flex-direction: column!important; align-items: center!important; margin: 0 auto!important; box-sizing: border-box!important; }
+            main.container > section.panel { order: 3!important; width: 100%!important; max-width: 100%!important; box-sizing: border-box!important; }
+            .canvas-wrapper { width: 75vw!important; height: 133.33vw!important; max-width: 290px!important; max-height: 515px!important; margin: 0 auto!important; box-sizing: border-box!important; }
+            input, textarea, select { font-size: 16px!important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Container -->
+    <div id="global-header"></div>
+
+    <!-- Ad Slot 1 Container -->
+    <div class="cms-ad-slot-1" id="cms-ad-slot-top"></div>
+
+    <!-- Main Tool Container -->
+    <main class="container">
+        <!-- Module 1: Sales Inputs & Revenue Goals (Rendered 1st on mobile) -->
+        <div class="upload-card-wrapper">
+            <div class="panel">
+                <div class="panel-title">
+                    <span>Revenue &amp; Order Volume</span>
+                    <span class="badge">PROFIT CALCULATOR</span>
+                </div>
+                
+                <div class="drop-zone" id="dropZone">
+                    <p class="drop-title">🍋 vs 🫐 Revenue Benchmarks</p>
+                    <p class="drop-sub">Select a gross sales volume to simulate net payouts in 2026</p>
+                </div>
+
+                <div class="preset-grid">
+                    <button class="btn-demo" id="presetStarter" type="button">💵 $1,000 / mo</button>
+                    <button class="btn-demo" id="presetGrowth" type="button">🚀 $5,000 / mo</button>
+                    <button class="btn-demo" id="presetScale" type="button">💰 $10,000 / mo</button>
+                    <button class="btn-demo" id="presetEmpire" type="button">👑 $50,000 / mo</button>
+                </div>
+
+                <div class="form-group">
+                    <div class="range-header">
+                        <label for="grossRevenue">Gross Monthly Sales ($)</label>
+                        <span class="range-value" id="grossRevenueDisplay">$5,000</span>
+                    </div>
+                    <input type="range" id="grossRevenueRange" min="100" max="100000" step="500" value="5000">
+                    <input type="number" id="grossRevenue" value="5000" min="50" style="margin-top: 6px;">
+                </div>
+
+                <div class="form-group">
+                    <div class="range-header">
+                        <label for="avgOrderValue">Average Order Value ($)</label>
+                        <span class="range-value" id="avgOrderValueDisplay">$49</span>
+                    </div>
+                    <input type="range" id="avgOrderValueRange" min="5" max="500" step="1" value="49">
+                    <input type="number" id="avgOrderValue" value="49" min="1" style="margin-top: 6px;">
+                </div>
+
+                <div class="form-group">
+                    <div class="range-header">
+                        <label for="intlPercent">International Buyers Ratio (%)</label>
+                        <span class="range-value" id="intlPercentDisplay">25%</span>
+                    </div>
+                    <input type="range" id="intlPercentRange" min="0" max="100" step="5" value="25">
+                </div>
+
+                <div class="form-group">
+                    <label for="productCategory">Product Category &amp; Billing Model</label>
+                    <select id="productCategory">
+                        <option value="digital_one_time" selected>Digital Download / E-Book (One-Time)</option>
+                        <option value="saas_sub">SaaS / Membership (Monthly Subscription)</option>
+                        <option value="course_high">High-Ticket Course / Mastermind</option>
+                        <option value="software_license">Software License Key / Plugin</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 2: Live Comparison Canvas Stage & Metrics Display (Rendered 2nd on mobile) -->
+        <section class="preview-stage">
+            <div class="canvas-wrapper">
+                <canvas id="previewCanvas" width="1080" height="1920"></canvas>
+            </div>
+            <p class="canvas-caption">
+                Interactive Lemon Squeezy vs. Gumroad Net Earnings Simulator. Rendered live for 2026 digital product sellers.
+            </p>
+
+            <div class="metric-summary-grid">
+                <div class="metric-card">
+                    <div class="metric-card-title">Lemon Squeezy Take-Home</div>
+                    <div class="metric-card-value highlight-ls" id="cardLsTakeHome">$4,675</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-card-title">Gumroad Take-Home</div>
+                    <div class="metric-card-value highlight-gum" id="cardGumTakeHome">$4,285</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-card-title">Monthly Net Difference</div>
+                    <div class="metric-card-value highlight-green" id="cardMonthlySavings">+$390</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-card-title">Annualized Advantage</div>
+                    <div class="metric-card-value highlight-green" id="cardAnnualSavings">+$4,680</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Module 3: Platform Advanced Modifiers & Payout Settings (Rendered 3rd on mobile) -->
+        <section class="panel">
+            <div class="panel-title">
+                <span>Fee &amp; Payout Modifiers</span>
+                <span class="badge">ADVANCED SETTINGS</span>
+            </div>
+
+            <div class="form-group">
+                <div class="range-header">
+                    <label for="discoverPercent">Gumroad Discover Sales Share (%)</label>
+                    <span class="range-value" id="discoverPercentDisplay">10%</span>
+                </div>
+                <input type="range" id="discoverPercentRange" min="0" max="100" step="5" value="10">
+                <p style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 4px;">Gumroad Discover charges a 30% flat commission on marketplace sales.</p>
+            </div>
+
+            <div class="form-group">
+                <div class="range-header">
+                    <label for="paypalPercent">PayPal Checkout Ratio (%)</label>
+                    <span class="range-value" id="paypalPercentDisplay">20%</span>
+                </div>
+                <input type="range" id="paypalPercentRange" min="0" max="100" step="5" value="20">
+            </div>
+
+            <div class="form-group">
+                <div class="range-header">
+                    <label for="refundRate">Customer Refund Rate (%)</label>
+                    <span class="range-value" id="refundRateDisplay">2%</span>
+                </div>
+                <input type="range" id="refundRateRange" min="0" max="10" step="0.5" value="2">
+            </div>
+
+            <div class="form-group">
+                <label for="payoutMethod">Creator Bank Payout Location</label>
+                <select id="payoutMethod">
+                    <option value="us_bank" selected>United States Bank (ACH - Free Payout)</option>
+                    <option value="non_us_bank">International Bank Account (1% Payout Fee)</option>
+                    <option value="paypal_intl">International PayPal Account (3% Capped Payout Fee)</option>
+                </select>
+            </div>
+
+            <button class="btn-action" id="downloadBtn" type="button">Export Revenue Blueprint Report (PNG)</button>
+
+            <!-- Social Media Share Section -->
+            <div class="social-share-container">
+                <span class="share-label">Share This Comparison Engine</span>
+                <div class="share-buttons-grid">
+                    <a id="shareX" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-x">𝕏 Post</a>
+                    <a id="shareFB" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-fb">Facebook</a>
+                    <a id="shareWA" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-wa">WhatsApp</a>
+                    <a id="shareLI" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-li">LinkedIn</a>
+                    <a id="sharePIN" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-pin">Pinterest</a>
+                    <button id="copyShareLink" type="button" class="btn-share btn-share-copy">🔗 Copy Tool Link</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- SEO & Educational Guide Section -->
+    <article class="content-area">
+        <div class="content-card">
+            <h1>Lemon Squeezy vs. Gumroad Revenue Calculator &amp; Payout Engine (2026)</h1>
+            <p>
+                When selling digital products, SaaS subscriptions, software license keys, or online courses, choosing the right Merchant of Record (MoR) and checkout platform directly dictates your net monthly profit margin. While both <strong>Lemon Squeezy</strong> and <strong>Gumroad</strong> streamline online commerce by taking on legal responsibility for calculating, collecting, and remitting global sales tax, EU/UK VAT, and GST, their underlying fee structures differ significantly as gross volume scales.
+            </p>
+            <p>
+                This interactive <strong>Lemon Squeezy vs. Gumroad fee calculator</strong> empowers software developers, digital creators, ebook authors, and solopreneurs to <strong>reverse-engineer real take-home earnings</strong> in 2026. By factoring in headline platform fees, hidden payment gateway surcharges, international card fees, Gumroad Discover marketplace splits, customer refund retention rules, and bank payout overheads, this tool yields an accurate side-by-side financial blueprint.
+            </p>
+
+            <h2>Mathematical Breakdown: Platform &amp; Processing Fee Models</h2>
+            <p>
+                Understanding the real cost of selling digital goods requires separating published headline rates from total transaction fee stacks. Below is how both platforms calculate total platform deductions on a completed sale:
+            </p>
+
+            <h3>1. Lemon Squeezy Fee Architecture</h3>
+            <p>
+                Lemon Squeezy operates primarily on a bundled MoR structure:
+            </p>
+            <blockquote style="background-color: var(--bg-input); padding: 1rem 1.25rem; border-left: 4px solid var(--accent-cyan); border-radius: 4px; margin: 1rem 0; font-weight: 600; color: #fff;">
+                Lemon Squeezy Transaction Fee = ( Gross Sales Volume × 5% ) + ( Total Orders × $0.50 ) + Surcharges<br><br>
+                Surcharges = ( International Cards × 1.5% ) + ( PayPal Checkouts × 1.5% ) + ( Subscription Billing × 0.5% )
+            </blockquote>
+            <p>
+                Crucially, Lemon Squeezy <strong>refunds its base platform fee</strong> when a customer requests a valid refund, protecting creators from losing fees on unfulfilled or returned orders.
+            </p>
+
+            <h3>2. Gumroad Fee Architecture</h3>
+            <p>
+                Gumroad utilizes a tiered structure depending on whether customer sales originate directly from your audience links or via the internal <strong>Gumroad Discover</strong> marketplace:
+            </p>
+            <blockquote style="background-color: var(--bg-input); padding: 1rem 1.25rem; border-left: 4px solid #f87171; border-radius: 4px; margin: 1rem 0; font-weight: 600; color: #fff;">
+                Direct Sales Fee = ( Direct Sales Volume × 10% ) + ( Direct Orders × $0.50 ) + Payment Processing (~2.9% + $0.30)<br><br>
+                Discover Sales Fee = Discover Sales Volume × 30% (Flat rate, processing included)
+            </blockquote>
+            <p>
+                In addition, Gumroad <strong>retains its full platform commission on refunded orders</strong>, meaning a refunded $100 sale results in a direct out-of-pocket loss of $10.50+ for the seller.
+            </p>
+
+            <h2>2026 Pricing &amp; Net Take-Home Comparison Matrix</h2>
+            <p>
+                The table below highlights real-world net payouts across representative monthly revenue tiers assuming an Average Order Value (AOV) of $49, 25% international sales mix, and 10% Gumroad Discover sales:
+            </p>
+
+            <div class="table-responsive">
+                <table class="spec-table">
+                    <thead>
+                        <tr>
+                            <th>Gross Sales / mo</th>
+                            <th>Order Volume (AOV $49)</th>
+                            <th>Lemon Squeezy Net Payout</th>
+                            <th>Gumroad Net Payout</th>
+                            <th>Monthly Net Savings</th>
+                            <th>Annualized Impact</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>$1,000 / mo</strong></td>
+                            <td>~20 Orders</td>
+                            <td>$932.50 (93.25%)</td>
+                            <td>$854.00 (85.40%)</td>
+                            <td><strong style="color: var(--accent-green);">+$78.50 / mo</strong></td>
+                            <td>+$942 / year</td>
+                        </tr>
+                        <tr>
+                            <td><strong>$2,500 / mo</strong></td>
+                            <td>~51 Orders</td>
+                            <td>$2,331.25 (93.25%)</td>
+                            <td>$2,135.00 (85.40%)</td>
+                            <td><strong style="color: var(--accent-green);">+$196.25 / mo</strong></td>
+                            <td>+$2,355 / year</td>
+                        </tr>
+                        <tr>
+                            <td><strong>$5,000 / mo</strong></td>
+                            <td>~102 Orders</td>
+                            <td>$4,662.50 (93.25%)</td>
+                            <td>$4,270.00 (85.40%)</td>
+                            <td><strong style="color: var(--accent-green);">+$392.50 / mo</strong></td>
+                            <td>+$4,710 / year</td>
+                        </tr>
+                        <tr>
+                            <td><strong>$10,000 / mo</strong></td>
+                            <td>~204 Orders</td>
+                            <td>$9,325.00 (93.25%)</td>
+                            <td>$8,540.00 (85.40%)</td>
+                            <td><strong style="color: var(--accent-green);">+$785.00 / mo</strong></td>
+                            <td>+$9,420 / year</td>
+                        </tr>
+                        <tr>
+                            <td><strong>$50,000 / mo</strong></td>
+                            <td>~1,020 Orders</td>
+                            <td>$46,625.00 (93.25%)</td>
+                            <td>$42,700.00 (85.40%)</td>
+                            <td><strong style="color: var(--accent-green);">+$3,925.00 / mo</strong></td>
+                            <td>+$47,100 / year</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Ad Slot 2 Container -->
+            <div class="cms-ad-slot-2"></div>
+
+            <h2>Feature &amp; Operational Comparison for Digital Creators</h2>
+            <p>
+                Choosing between Lemon Squeezy and Gumroad extends beyond pure percentage points. Key operational factors include:
+            </p>
+
+            <div class="table-responsive">
+                <table class="spec-table">
+                    <thead>
+                        <tr>
+                            <th>Feature Category</th>
+                            <th>Lemon Squeezy (2026)</th>
+                            <th>Gumroad (2026)</th>
+                            <th>Strategic Winner</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Base Platform Fee</strong></td>
+                            <td>5% + $0.50 per transaction</td>
+                            <td>10% + $0.50 (Direct) / 30% (Discover)</td>
+                            <td><strong style="color: var(--accent-cyan);">Lemon Squeezy (50% Lower)</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Merchant of Record Taxing</strong></td>
+                            <td>Handles EU/UK VAT, US Sales Tax, GST</td>
+                            <td>Handles EU/UK VAT, US Sales Tax, GST</td>
+                            <td><strong>Tie (Both full MoR)</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Payment Processing</strong></td>
+                            <td>Included in 5% base (+ intl fees)</td>
+                            <td>Separate ~2.9% + $0.30 added on top</td>
+                            <td><strong style="color: var(--accent-cyan);">Lemon Squeezy</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Fee Refund Policy</strong></td>
+                            <td>Platform fee refunded on returns</td>
+                            <td>Retains 10% + $0.50 fee on refunds</td>
+                            <td><strong style="color: var(--accent-cyan);">Lemon Squeezy</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Marketplace Discovery</strong></td>
+                            <td>No built-in public marketplace</td>
+                            <td>Gumroad Discover (30% commission cut)</td>
+                            <td><strong style="color: var(--accent-purple);">Gumroad (For New Creators)</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>SaaS &amp; License Keys</strong></td>
+                            <td>Native API, license software, webhooks</td>
+                            <td>Basic license key generation</td>
+                            <td><strong style="color: var(--accent-cyan);">Lemon Squeezy (SaaS standard)</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Minimum Payout Limit</strong></td>
+                            <td>$50 minimum balance threshold</td>
+                            <td>$100 minimum balance threshold</td>
+                            <td><strong style="color: var(--accent-cyan);">Lemon Squeezy ($50 vs $100)</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2>Strategic Recommendations: When to Switch Platform</h2>
+            <p>
+                Based on our 2026 financial analysis, here is the recommended roadmap for digital product sellers:
+            </p>
+            <ol>
+                <li><strong>Start on Gumroad if You Have Zero Existing Audience:</strong> If you rely on marketplace recommendations to get your first 10 to 50 sales, Gumroad Discover's 30% fee is worth paying because it generates sales you would not otherwise receive.</li>
+                <li><strong>Migrate to Lemon Squeezy at $1,000 / month MRR:</strong> Once you establish a consistent flow of direct traffic via Twitter/X, YouTube, newsletters, or search SEO, the fee difference creates an instant ~5% to ~8% increase in net revenue. At $1,000/mo, you save nearly $100/mo; at $5,000/mo, you keep over $4,000 extra per year.</li>
+                <li><strong>Choose Lemon Squeezy for SaaS, Subscriptions &amp; Software:</strong> If your product relies on monthly recurring revenue (MRR), license key validation, usage-based billing, or custom developer webhooks, Lemon Squeezy is specifically designed for software businesses, whereas Gumroad is optimized primarily for standalone file downloads.</li>
+            </ol>
+
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-block">
+                <details class="faq-accordion" open>
+                    <summary class="faq-summary">What is the key difference in platform fees between Lemon Squeezy and Gumroad in 2026?</summary>
+                    <div class="faq-answer">
+                        Lemon Squeezy charges a base platform fee of 5% + $0.50 per transaction, whereas Gumroad charges a 10% + $0.50 base platform fee on direct sales. On top of that, Gumroad requires separate payment processing fees (~2.9% + $0.30 via Stripe or PayPal), while Lemon Squeezy bundles payment processing into its MoR fee structure.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">Do both Lemon Squeezy and Gumroad handle global sales tax and VAT as a Merchant of Record?</summary>
+                    <div class="faq-answer">
+                        Yes. Both Lemon Squeezy and Gumroad operate as Merchants of Record (MoR). They calculate, collect, and remit global EU/UK VAT, US sales tax, and GST automatically on your behalf, removing legal tax liability from digital creators.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">How does Gumroad's Discover Marketplace impact total fee calculations?</summary>
+                    <div class="faq-answer">
+                        If a customer purchases your digital product through Gumroad Discover (Gumroad's internal recommendation engine), Gumroad charges a flat 30% commission instead of the standard 10% direct fee. This includes processing, but significantly lowers net payout margins.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">At what monthly revenue threshold should a digital creator switch from Gumroad to Lemon Squeezy?</summary>
+                    <div class="faq-answer">
+                        The financial tipping point usually occurs between $1,000 and $1,500 in monthly sales. Above $1,000/month, the 5% lower base fee on Lemon Squeezy saves creators enough money (typically $50 to $250+ per month) to justify migrating product links and customer management.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">How do refunds affect platform fees on Lemon Squeezy vs. Gumroad?</summary>
+                    <div class="faq-answer">
+                        Lemon Squeezy refunds the platform fee when you process a customer refund, meaning you only pay fees on completed sales. Gumroad retains its entire 10% + $0.50 fee even on refunded transactions, resulting in a direct cash loss for sellers on returned orders.
+                    </div>
+                </details>
+            </div>
+        </div>
+    </article>
+
+    <!-- Footer Container -->
+    <div id="global-footer"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var canvas = document.getElementById('previewCanvas');
+            if (!canvas) return;
+            var ctx = canvas.getContext('2d');
+
+            // Controls & Range Elements
+            var grossRevenueRange = document.getElementById('grossRevenueRange');
+            var grossRevenueInput = document.getElementById('grossRevenue');
+            var grossRevenueDisplay = document.getElementById('grossRevenueDisplay');
+
+            var avgOrderValueRange = document.getElementById('avgOrderValueRange');
+            var avgOrderValueInput = document.getElementById('avgOrderValue');
+            var avgOrderValueDisplay = document.getElementById('avgOrderValueDisplay');
+
+            var intlPercentRange = document.getElementById('intlPercentRange');
+            var intlPercentDisplay = document.getElementById('intlPercentDisplay');
+
+            var discoverPercentRange = document.getElementById('discoverPercentRange');
+            var discoverPercentDisplay = document.getElementById('discoverPercentDisplay');
+
+            var paypalPercentRange = document.getElementById('paypalPercentRange');
+            var paypalPercentDisplay = document.getElementById('paypalPercentDisplay');
+
+            var refundRateRange = document.getElementById('refundRateRange');
+            var refundRateDisplay = document.getElementById('refundRateDisplay');
+
+            var productCategorySelect = document.getElementById('productCategory');
+            var payoutMethodSelect = document.getElementById('payoutMethod');
+            var downloadBtn = document.getElementById('downloadBtn');
+
+            // Cards
+            var cardLsTakeHome = document.getElementById('cardLsTakeHome');
+            var cardGumTakeHome = document.getElementById('cardGumTakeHome');
+            var cardMonthlySavings = document.getElementById('cardMonthlySavings');
+            var cardAnnualSavings = document.getElementById('cardAnnualSavings');
+
+            // Presets
+            var presetStarter = document.getElementById('presetStarter');
+            var presetGrowth = document.getElementById('presetGrowth');
+            var presetScale = document.getElementById('presetScale');
+            var presetEmpire = document.getElementById('presetEmpire');
+
+            /* Setup Social Share Links */
+            var currentUrl = encodeURIComponent(window.location.href);
+            var shareTitle = encodeURIComponent("Check out this free Lemon Squeezy vs. Gumroad Revenue Calculator & Take-Home Engine!");
+            
+            document.getElementById('shareX').href = 'https://twitter.com/intent/tweet?url=' + currentUrl + '&text=' + shareTitle;
+            document.getElementById('shareFB').href = 'https://www.facebook.com/sharer/sharer.php?u=' + currentUrl;
+            document.getElementById('shareWA').href = 'https://api.whatsapp.com/send?text=' + shareTitle + '%20' + currentUrl;
+            document.getElementById('shareLI').href = 'https://www.linkedin.com/sharing/share-offsite/?url=' + currentUrl;
+            document.getElementById('sharePIN').href = 'https://pinterest.com/pin/create/button/?url=' + currentUrl + '&description=' + shareTitle;
+
+            var copyBtn = document.getElementById('copyShareLink');
+            copyBtn.addEventListener('click', function() {
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'Lemon Squeezy vs Gumroad Calculator',
+                        text: 'Compare take-home revenue between Lemon Squeezy and Gumroad.',
+                        url: window.location.href
+                    }).catch(function() {});
+                } else if (navigator.clipboard) {
+                    navigator.clipboard.writeText(window.location.href).then(function() {
+                        var origText = copyBtn.textContent;
+                        copyBtn.textContent = '✓ Link Copied!';
+                        setTimeout(function() { copyBtn.textContent = origText; }, 2000);
+                    });
+                }
+            });
+
+            // Preset Handlers
+            presetStarter.addEventListener('click', function() {
+                grossRevenueRange.value = 1000;
+                grossRevenueInput.value = 1000;
+                avgOrderValueRange.value = 29;
+                avgOrderValueInput.value = 29;
+                intlPercentRange.value = 20;
+                discoverPercentRange.value = 15;
+                paypalPercentRange.value = 20;
+                refundRateRange.value = 2;
+                calculateAndDraw();
+            });
+
+            presetGrowth.addEventListener('click', function() {
+                grossRevenueRange.value = 5000;
+                grossRevenueInput.value = 5000;
+                avgOrderValueRange.value = 49;
+                avgOrderValueInput.value = 49;
+                intlPercentRange.value = 25;
+                discoverPercentRange.value = 10;
+                paypalPercentRange.value = 20;
+                refundRateRange.value = 2;
+                calculateAndDraw();
+            });
+
+            presetScale.addEventListener('click', function() {
+                grossRevenueRange.value = 10000;
+                grossRevenueInput.value = 10000;
+                avgOrderValueRange.value = 99;
+                avgOrderValueInput.value = 99;
+                intlPercentRange.value = 30;
+                discoverPercentRange.value = 5;
+                paypalPercentRange.value = 25;
+                refundRateRange.value = 1.5;
+                calculateAndDraw();
+            });
+
+            presetEmpire.addEventListener('click', function() {
+                grossRevenueRange.value = 50000;
+                grossRevenueInput.value = 50000;
+                avgOrderValueRange.value = 199;
+                avgOrderValueInput.value = 199;
+                intlPercentRange.value = 35;
+                discoverPercentRange.value = 2;
+                paypalPercentRange.value = 30;
+                refundRateRange.value = 1;
+                calculateAndDraw();
+            });
+
+            // Sync Range & Number Inputs
+            grossRevenueRange.addEventListener('input', function() {
+                grossRevenueInput.value = grossRevenueRange.value;
+                calculateAndDraw();
+            });
+
+            grossRevenueInput.addEventListener('input', function() {
+                grossRevenueRange.value = grossRevenueInput.value;
+                calculateAndDraw();
+            });
+
+            avgOrderValueRange.addEventListener('input', function() {
+                avgOrderValueInput.value = avgOrderValueRange.value;
+                calculateAndDraw();
+            });
+
+            avgOrderValueInput.addEventListener('input', function() {
+                avgOrderValueRange.value = avgOrderValueInput.value;
+                calculateAndDraw();
+            });
+
+            intlPercentRange.addEventListener('input', calculateAndDraw);
+            discoverPercentRange.addEventListener('input', calculateAndDraw);
+            paypalPercentRange.addEventListener('input', calculateAndDraw);
+            refundRateRange.addEventListener('input', calculateAndDraw);
+            productCategorySelect.addEventListener('change', calculateAndDraw);
+            payoutMethodSelect.addEventListener('change', calculateAndDraw);
+
+            function formatCurrency(num) {
+                return '$' + new Intl.NumberFormat('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(Math.round(num));
+            }
+
+            function formatSignedCurrency(num) {
+                var prefix = num >= 0 ? '+$' : '-$';
+                return prefix + new Intl.NumberFormat('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(Math.abs(Math.round(num)));
+            }
+
+            function calculateAndDraw() {
+                var gross = parseFloat(grossRevenueInput.value) || 0;
+                var aov = parseFloat(avgOrderValueInput.value) || 1;
+                var intlShare = (parseFloat(intlPercentRange.value) || 0) / 100;
+                var discoverShare = (parseFloat(discoverPercentRange.value) || 0) / 100;
+                var paypalShare = (parseFloat(paypalPercentRange.value) || 0) / 100;
+                var refundRate = (parseFloat(refundRateRange.value) || 0) / 100;
+                var category = productCategorySelect.value;
+                var payout = payoutMethodSelect.value;
+
+                grossRevenueDisplay.textContent = formatCurrency(gross);
+                avgOrderValueDisplay.textContent = formatCurrency(aov);
+                intlPercentDisplay.textContent = Math.round(intlShare * 100) + '%';
+                discoverPercentDisplay.textContent = Math.round(discoverShare * 100) + '%';
+                paypalPercentDisplay.textContent = Math.round(paypalShare * 100) + '%';
+                refundRateDisplay.textContent = (refundRate * 100).toFixed(1) + '%';
+
+                var totalOrders = Math.max(1, Math.round(gross / aov));
+
+                // Payout Fee Logic
+                var payoutFeeMult = 0;
+                if (payout === 'non_us_bank') payoutFeeMult = 0.01;
+                else if (payout === 'paypal_intl') payoutFeeMult = 0.025; // average capped fee
+
+                // -------------------------------------------------------------
+                // 1. LEMON SQUEEZY CALCULATIONS
+                // -------------------------------------------------------------
+                var lsBasePlatformFee = (gross * 0.05) + (totalOrders * 0.50);
+                
+                // Surcharges
+                var lsIntlSurcharge = gross * intlShare * 0.015;
+                var lsPaypalSurcharge = gross * paypalShare * 0.015;
+                var lsSubSurcharge = (category === 'saas_sub') ? (gross * 0.005) : 0;
+                
+                var lsTotalPlatformFee = lsBasePlatformFee + lsIntlSurcharge + lsPaypalSurcharge + lsSubSurcharge;
+
+                // Net Non-Refunded Volume on Lemon Squeezy
+                var lsRefundsGross = gross * refundRate;
+                // Lemon Squeezy refunds platform fee on returned sales
+                var lsEffectiveNetSales = gross - lsRefundsGross;
+                var lsNetBeforePayout = lsEffectiveNetSales - (lsTotalPlatformFee * (1 - refundRate));
+                var lsPayoutFee = lsNetBeforePayout * payoutFeeMult;
+                var lsTakeHome = Math.max(0, lsNetBeforePayout - lsPayoutFee);
+                var lsFeePercent = gross > 0 ? ((gross - lsTakeHome) / gross) * 100 : 0;
+
+                // -------------------------------------------------------------
+                // 2. GUMROAD CALCULATIONS
+                // -------------------------------------------------------------
+                var directSalesVolume = gross * (1 - discoverShare);
+                var directOrders = totalOrders * (1 - discoverShare);
+                var discoverSalesVolume = gross * discoverShare;
+
+                // Gumroad Direct Fees: 10% + $0.50 + Card Processing (2.9% + $0.30)
+                var gumDirectPlatformFee = (directSalesVolume * 0.10) + (directOrders * 0.50);
+                var gumDirectProcessingFee = (directSalesVolume * 0.029) + (directOrders * 0.30) + (directSalesVolume * intlShare * 0.01);
+                
+                // Gumroad Discover Fees: 30% Flat
+                var gumDiscoverFee = discoverSalesVolume * 0.30;
+
+                var gumTotalPlatformFee = gumDirectPlatformFee + gumDirectProcessingFee + gumDiscoverFee;
+
+                // Refunds on Gumroad (Gumroad keeps its entire platform fee on refunds!)
+                var gumRefundsGross = gross * refundRate;
+                var gumKeptRefundFees = (gumRefundsGross * 0.10) + ((totalOrders * refundRate) * 0.50);
+                
+                var gumNetBeforePayout = gross - gumRefundsGross - gumTotalPlatformFee - gumKeptRefundFees;
+                var gumPayoutFee = gumNetBeforePayout * payoutFeeMult;
+                var gumTakeHome = Math.max(0, gumNetBeforePayout - gumPayoutFee);
+                var gumFeePercent = gross > 0 ? ((gross - gumTakeHome) / gross) * 100 : 0;
+
+                // Net Savings Delta
+                var monthlySavings = lsTakeHome - gumTakeHome;
+                var annualSavings = monthlySavings * 12;
+
+                // Update Metric Summary Cards
+                cardLsTakeHome.textContent = formatCurrency(lsTakeHome);
+                cardGumTakeHome.textContent = formatCurrency(gumTakeHome);
+                cardMonthlySavings.textContent = formatSignedCurrency(monthlySavings);
+                cardAnnualSavings.textContent = formatSignedCurrency(annualSavings);
+
+                // Draw Live Canvas Blueprint
+                drawCanvas({
+                    gross: gross,
+                    aov: aov,
+                    totalOrders: totalOrders,
+                    lsTakeHome: lsTakeHome,
+                    lsFeePercent: lsFeePercent,
+                    lsTotalFee: gross - lsTakeHome,
+                    gumTakeHome: gumTakeHome,
+                    gumFeePercent: gumFeePercent,
+                    gumTotalFee: gross - gumTakeHome,
+                    monthlySavings: monthlySavings,
+                    annualSavings: annualSavings,
+                    discoverShare: discoverShare,
+                    intlShare: intlShare
+                });
+            }
+
+            function drawCanvas(data) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                // Background Gradient
+                var bgGrad = ctx.createLinearGradient(0, 0, 1080, 1920);
+                bgGrad.addColorStop(0, '#0f1117');
+                bgGrad.addColorStop(0.5, '#181b24');
+                bgGrad.addColorStop(1, '#0b0d12');
+                ctx.fillStyle = bgGrad;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Top Header Graphic Bar
+                var headerGrad = ctx.createLinearGradient(0, 0, 1080, 0);
+                headerGrad.addColorStop(0, '#00f2fe');
+                headerGrad.addColorStop(0.5, '#8b5cf6');
+                headerGrad.addColorStop(1, '#10b981');
+                ctx.fillStyle = headerGrad;
+                ctx.fillRect(0, 0, 1080, 16);
+
+                // Title Banner
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 48px -apple-system, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('LEMON SQUEEZY VS GUMROAD', 540, 110);
+
+                ctx.fillStyle = '#00f2fe';
+                ctx.font = '600 30px -apple-system, sans-serif';
+                ctx.fillText('2026 NET CREATOR REVENUE BLUEPRINT', 540, 160);
+
+                // Divider Line
+                ctx.strokeStyle = '#2e3446';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(80, 200);
+                ctx.lineTo(1000, 200);
+                ctx.stroke();
+
+                // Card 1: Gross Sales Summary Header
+                ctx.fillStyle = '#181b24';
+                ctx.strokeStyle = '#8b5cf6';
+                ctx.lineWidth = 4;
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(80, 240, 920, 260, 24);
+                    ctx.fill();
+                    ctx.stroke();
+                } else {
+                    ctx.fillRect(80, 240, 920, 260);
+                }
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = 'bold 26px -apple-system, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('GROSS MONTHLY SALES VOLUME', 540, 290);
+
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 76px -apple-system, sans-serif';
+                ctx.fillText(formatCurrency(data.gross) + ' / mo', 540, 380);
+
+                ctx.fillStyle = '#00f2fe';
+                ctx.font = '28px -apple-system, sans-serif';
+                ctx.fillText('Estimated Orders: ' + data.totalOrders + ' sales @ $' + data.aov.toFixed(0) + ' AOV', 540, 440);
+
+                // Sub-Card 1: Lemon Squeezy Take-Home
+                ctx.fillStyle = '#222634';
+                ctx.strokeStyle = '#00f2fe';
+                ctx.lineWidth = 3;
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(80, 540, 440, 300, 20);
+                    ctx.fill();
+                    ctx.stroke();
+                } else {
+                    ctx.fillRect(80, 540, 440, 300);
+                }
+
+                ctx.fillStyle = '#00f2fe';
+                ctx.font = 'bold 30px -apple-system, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('🍋 Lemon Squeezy', 300, 600);
+
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 56px -apple-system, sans-serif';
+                ctx.fillText(formatCurrency(data.lsTakeHome), 300, 690);
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = '24px -apple-system, sans-serif';
+                ctx.fillText('Total Fees: ' + formatCurrency(data.lsTotalFee) + ' (' + data.lsFeePercent.toFixed(1) + '%)', 300, 750);
+                ctx.fillText('Net Margin: ' + (100 - data.lsFeePercent).toFixed(1) + '%', 300, 790);
+
+                // Sub-Card 2: Gumroad Take-Home
+                ctx.fillStyle = '#222634';
+                ctx.strokeStyle = '#f87171';
+                ctx.lineWidth = 3;
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(560, 540, 440, 300, 20);
+                    ctx.fill();
+                    ctx.stroke();
+                } else {
+                    ctx.fillRect(560, 540, 440, 300);
+                }
+
+                ctx.fillStyle = '#f87171';
+                ctx.font = 'bold 30px -apple-system, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('🫐 Gumroad', 780, 600);
+
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 56px -apple-system, sans-serif';
+                ctx.fillText(formatCurrency(data.gumTakeHome), 780, 690);
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = '24px -apple-system, sans-serif';
+                ctx.fillText('Total Fees: ' + formatCurrency(data.gumTotalFee) + ' (' + data.gumFeePercent.toFixed(1) + '%)', 780, 750);
+                ctx.fillText('Net Margin: ' + (100 - data.gumFeePercent).toFixed(1) + '%', 780, 790);
+
+                // Net Savings Advantage Card
+                ctx.fillStyle = '#181b24';
+                ctx.strokeStyle = '#10b981';
+                ctx.lineWidth = 3;
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(80, 880, 920, 280, 20);
+                    ctx.fill();
+                    ctx.stroke();
+                } else {
+                    ctx.fillRect(80, 880, 920, 280);
+                }
+
+                ctx.fillStyle = '#10b981';
+                ctx.font = 'bold 32px -apple-system, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('LEMON SQUEEZY NET PROFIT ADVANTAGE', 540, 935);
+
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 64px -apple-system, sans-serif';
+                ctx.fillText(formatSignedCurrency(data.monthlySavings) + ' / month', 540, 1020);
+
+                ctx.fillStyle = '#10b981';
+                ctx.font = '30px -apple-system, sans-serif';
+                ctx.fillText('Annualized Extra Profit: ' + formatSignedCurrency(data.annualSavings) + ' / year', 540, 1090);
+
+                // Visual Comparison Bar Chart
+                ctx.fillStyle = '#181b24';
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(80, 1200, 920, 480, 20);
+                    ctx.fill();
+                    ctx.stroke();
+                } else {
+                    ctx.fillRect(80, 1200, 920, 480);
+                }
+
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 30px -apple-system, sans-serif';
+                ctx.textAlign = 'left';
+                ctx.fillText('Net Revenue Retention Comparison Bar', 120, 1260);
+
+                // Bar 1: Lemon Squeezy
+                var lsRatio = Math.max(0.05, (data.lsTakeHome / data.gross));
+                var lsBarWidth = 840 * lsRatio;
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = '24px -apple-system, sans-serif';
+                ctx.fillText('Lemon Squeezy Retention (' + (lsRatio * 100).toFixed(1) + '%)', 120, 1315);
+
+                ctx.fillStyle = '#222634';
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(120, 1330, 840, 36, 18);
+                    ctx.fill();
+                } else {
+                    ctx.fillRect(120, 1330, 840, 36);
+                }
+
+                var lsGrad = ctx.createLinearGradient(120, 0, 960, 0);
+                lsGrad.addColorStop(0, '#00f2fe');
+                lsGrad.addColorStop(1, '#10b981');
+                ctx.fillStyle = lsGrad;
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(120, 1330, lsBarWidth, 36, 18);
+                    ctx.fill();
+                } else {
+                    ctx.fillRect(120, 1330, lsBarWidth, 36);
+                }
+
+                // Bar 2: Gumroad
+                var gumRatio = Math.max(0.05, (data.gumTakeHome / data.gross));
+                var gumBarWidth = 840 * gumRatio;
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = '24px -apple-system, sans-serif';
+                ctx.fillText('Gumroad Retention (' + (gumRatio * 100).toFixed(1) + '%)', 120, 1425);
+
+                ctx.fillStyle = '#222634';
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(120, 1440, 840, 36, 18);
+                    ctx.fill();
+                } else {
+                    ctx.fillRect(120, 1440, 840, 36);
+                }
+
+                var gumGrad = ctx.createLinearGradient(120, 0, 960, 0);
+                gumGrad.addColorStop(0, '#f87171');
+                gumGrad.addColorStop(1, '#f59e0b');
+                ctx.fillStyle = gumGrad;
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(120, 1440, gumBarWidth, 36, 18);
+                    ctx.fill();
+                } else {
+                    ctx.fillRect(120, 1440, gumBarWidth, 36);
+                }
+
+                // Parameter Summary Bullet Points
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = '24px -apple-system, sans-serif';
+                ctx.fillText('• Discover Marketplace Share: ' + Math.round(data.discoverShare * 100) + '%', 120, 1530);
+                ctx.fillText('• International Buyer Traffic: ' + Math.round(data.intlShare * 100) + '%', 120, 1580);
+                ctx.fillText('• Merchant of Record (MoR): Global sales tax & VAT handled on both', 120, 1630);
+
+                // Branding Footer
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = 'bold 26px -apple-system, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('CoreMetricSuite · Digital Commerce Utilities', 540, 1820);
+            }
+
+            // Initial Calculation
+            calculateAndDraw();
+
+            // Export Blueprint PNG
+            downloadBtn.addEventListener('click', function() {
+                var link = document.createElement('a');
+                link.download = 'lemon-squeezy-vs-gumroad-revenue-report.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        });
+    </script>
+
+    <!-- Global CoreMetricSuite Cross-Linking Index Hub -->
+    <div style="margin-top: 40px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #f8fafc; font-family: system-ui, -apple-system, sans-serif;">
+        <h3 style="margin: 0 0 15px 0; font-size: 18px; color: #0f172a; font-weight: 600;">🛠️ CoreMetricSuite Utility Directory</h3>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">💳 SaaS &amp; Digital Commerce</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-commerce-lemon-gumroad" href="../lemon-squeezy-vs-gumroad-calculator/" style="color: #2563eb; text-decoration: underline;">Lemon Squeezy vs Gumroad Engine</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-commerce-stripe" href="../stripe-fee-calculator/" style="color: #2563eb; text-decoration: underline;">Stripe Global Fee Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-commerce-paddle" href="../paddle-mor-tax-calculator/" style="color: #2563eb; text-decoration: underline;">Paddle MoR Tax Calculator</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🎬 Digital Media &amp; Monetization</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-media-tiktok-goal" href="../tiktok-rpm-goal/" style="color: #2563eb; text-decoration: underline;">TikTok RPM Goal Engine</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-tiktok-rpm" href="../tiktok-creator-rewards-rpm-estimator/" style="color: #2563eb; text-decoration: underline;">TikTok Creator Rewards RPM</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-ig" href="../instagram-reels-preview/" style="color: #2563eb; text-decoration: underline;">Instagram Reels Grid</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-shorts" href="../shorts-ui-safe-zone/" style="color: #2563eb; text-decoration: underline;">YouTube Shorts Safe Zone</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇺🇸 US Corporate &amp; Tax</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-us-llc" href="../us-llc-late-penalty-estimator/" style="color: #2563eb; text-decoration: underline;">LLC Late Tax Penalty</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-us-179" href="../us-section-179-truck-calculator/" style="color: #2563eb; text-decoration: underline;">Section 179 Vehicle Deduction</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇬🇧 UK &amp; 🇦🇺 AU Tax Tools</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-au-cents" href="../au-cents-per-km-estimator/" style="color: #2563eb; text-decoration: underline;">AU Cents-Per-Km Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-sdlt" href="../uk-sdlt-bracket-estimator/" style="color: #2563eb; text-decoration: underline;">UK Stamp Duty Estimator</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script defer>
+        (function() {
+            const path = window.location.pathname.toLowerCase();
+            const toolsMap = {
+                'lemon-squeezy-vs-gumroad-calculator': 'hub-commerce-lemon-gumroad',
+                'stripe-fee-calculator': 'hub-commerce-stripe',
+                'paddle-mor-tax-calculator': 'hub-commerce-paddle',
+                'tiktok-rpm-goal': 'hub-media-tiktok-goal',
+                'tiktok-creator-rewards-rpm-estimator': 'hub-media-tiktok-rpm',
+                'instagram-reels-preview': 'hub-media-ig',
+                'shorts-ui-safe-zone': 'hub-media-shorts',
+                'us-llc-late-penalty-estimator': 'hub-us-llc',
+                'us-section-179-truck-calculator': 'hub-us-179',
+                'au-cents-per-km-estimator': 'hub-au-cents',
+                'uk-sdlt-bracket-estimator': 'hub-uk-sdlt'
+            };
+
+            for (const [folderName, elementId] of Object.entries(toolsMap)) {
+                if (path.includes(folderName)) {
+                    const targetEl = document.getElementById(elementId);
+                    if (targetEl) {
+                        targetEl.outerHTML = `<span style="font-weight: 600; color: #0f172a;">${targetEl.textContent} (Current)</span>`;
+                    }
+                    break;
+                }
+            }
+        })();
+    </script>
+</body>
+</html>
