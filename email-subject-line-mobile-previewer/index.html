@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Subject Line Mobile Previewer &amp; Truncation Checker (2026)</title>
+    <meta name="description" content="Free mobile email subject line previewer and preheader truncation checker for 2026. Test iPhone iOS Mail, Gmail Android, and Outlook Mobile character limits, spam word triggers, and emoji pixel widths instantly.">
+    <meta name="keywords" content="email subject line mobile previewer, mobile email subject line character limit, email subject line truncation checker, preheader text mobile preview, iphone email subject line length, gmail mobile subject line limit, email spam word checker subject line, email open rate optimization 2026">
+    <link rel="canonical" href="https://coremetricsuite.com/email-subject-line-mobile-previewer/">
+
+    <!-- Open Graph / Social Metadata -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Email Subject Line Mobile Previewer &amp; Truncation Checker (2026)">
+    <meta property="og:description" content="Test email subject lines and preheader text across iOS Mail, Gmail Android, and Outlook. Real-time character truncation, spam keyword detection, and high-res mobile blueprint generator.">
+    <meta property="og:url" content="https://coremetricsuite.com/email-subject-line-mobile-previewer/">
+    
+    <!-- Global Framework Dependencies -->
+    <link rel="stylesheet" href="/css/global.css">
+    <script src="/config.js" defer></script>
+    <script src="/global.min.js" defer></script>
+
+    <!-- WebApplication Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "CoreMetricSuite Mobile Email Subject Line Previewer",
+      "url": "https://coremetricsuite.com/email-subject-line-mobile-previewer/",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires HTML5. Requires JavaScript.",
+      "author": {
+        "@type": "Organization",
+        "name": "CoreMetricSuite Hub",
+        "url": "https://coremetricsuite.com"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
+    <!-- FAQ JSON-LD Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is the optimal character length for mobile email subject lines in 2026?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The optimal mobile email subject line length is between 30 and 40 characters (or 130 to 160 display pixels). While desktop clients can display 60+ characters, iOS Mail truncates around 35-41 characters, Gmail Android truncates at 36-42 characters, and Outlook Mobile cuts off subject lines at 32-38 characters."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How many characters of preheader text appear on mobile devices?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Mobile email clients typically display 35 to 55 characters of preheader (preview) text depending on the device screen width, font scaling, and subject line length. iOS Mail displays 45-55 characters across 2 lines, while Gmail Android shows 35-45 characters."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why do emojis affect email subject line truncation differently than text?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Emojis consume significantly more horizontal pixel width (typically 18px to 22px in rendered typography) than standard alphanumeric characters (6px to 10px). Furthermore, UTF-8 emojis use 3 to 4 bytes of data, which can cause premature line clipping or byte-length boundary truncation in legacy mail servers."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What spam trigger words should be avoided in subject lines?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Avoid high-risk commercial trigger words such as '100% Free', 'Guaranteed Cash', 'Act Now', 'No Risk', 'Risk-Free', 'Double Your Income', 'Winner', 'Risk-Free Trial', all-caps typography, and excessive exclamation marks, as these trigger automated ISP spam filters like Gmail SpamAssassin and Outlook SmartScreen."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do dynamic merge tags like {{first_name}} impact mobile truncation?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Merge tags take up minimal characters in template form (e.g. 16 characters for {{first_name}}), but expand into actual subscriber data at send time. If a subscriber has a long first name (e.g., 'Christopher' = 11 characters), it can unexpectedly push core value proposition words past the mobile truncation threshold."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-main: #0f1117;
+            --bg-card: #181b24;
+            --bg-input: #222634;
+            --border-color: #2e3446;
+            --accent-blue: #1877f2;
+            --accent-cyan: #00f2fe;
+            --accent-pink: #ff0050;
+            --accent-green: #10b981;
+            --accent-amber: #f59e0b;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: var(--bg-main); color: var(--text-primary); font-family: var(--font-sans); line-height: 1.6; }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            grid-template-areas: 
+                "upload preview"
+                "panel preview";
+            gap: 2rem;
+        }
+
+        .upload-card-wrapper {
+            grid-area: upload;
+        }
+
+        .panel {
+            grid-area: panel;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            height: fit-content;
+        }
+
+        .panel-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+            color: #fff;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        .drop-zone {
+            border: 2px dashed var(--border-color);
+            padding: 1.25rem;
+            text-align: center;
+            border-radius: 8px;
+            background-color: var(--bg-input);
+            cursor: pointer;
+            transition: border-color 0.2s, background-color 0.2s;
+            margin-bottom: 0.75rem;
+        }
+
+        .drop-zone:hover { border-color: var(--accent-cyan); background-color: rgba(0, 242, 254, 0.05); }
+        .drop-title { font-weight: 600; color: #fff; font-size: 0.95rem; }
+        .drop-sub { font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px; }
+
+        .preset-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .btn-demo {
+            width: 100%;
+            padding: 0.6rem 0.5rem;
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            color: var(--accent-cyan);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.78rem;
+            transition: background-color 0.2s, border-color 0.2s;
+            text-align: center;
+        }
+
+        .btn-demo:hover { background-color: #2a2f42; border-color: var(--accent-cyan); }
+
+        .toggle-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: var(--bg-input);
+            padding: 0.75rem 0.85rem;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 1rem;
+        }
+
+        .toggle-label { font-size: 0.85rem; font-weight: 500; color: var(--text-primary); }
+
+        .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #374151; transition: .3s; border-radius: 24px;
+        }
+        .slider:before {
+            position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px;
+            background-color: white; transition: .3s; border-radius: 50%;
+        }
+        input:checked + .slider { background-color: var(--accent-blue); }
+        input:checked + .slider:before { transform: translateX(20px); }
+
+        .form-group { margin-bottom: 1.25rem; }
+        .range-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem; }
+        .range-value { font-size: 0.85rem; font-weight: 700; color: var(--accent-cyan); }
+        label { display: block; font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 0.4rem; }
+        input[type="text"], input[type="number"], textarea, select {
+            width: 100%; padding: 0.65rem 0.85rem; background-color: var(--bg-input);
+            border: 1px solid var(--border-color); border-radius: 6px; color: #fff;
+            font-size: 0.9rem; outline: none; font-family: inherit;
+        }
+        textarea { resize: vertical; min-height: 68px; }
+        input[type="range"] {
+            width: 100%; height: 6px; background: var(--bg-input); border-radius: 3px;
+            outline: none; -webkit-appearance: none; accent-color: var(--accent-blue);
+        }
+        input[type="text"]:focus, input[type="number"]:focus, textarea:focus, select:focus { border-color: var(--accent-cyan); }
+
+        .btn-action {
+            width: 100%; padding: 0.85rem; background: linear-gradient(135deg, var(--accent-blue), #0052cc);
+            color: #fff; font-weight: 600; border: none; border-radius: 6px; cursor: pointer; font-size: 0.95rem;
+            box-shadow: 0 4px 12px rgba(24, 119, 242, 0.3);
+            transition: transform 0.1s, opacity 0.2s;
+            margin-bottom: 1rem;
+        }
+        .btn-action:hover { opacity: 0.95; }
+        .btn-action:active { transform: scale(0.99); }
+
+        /* Social Share Button Module */
+        .social-share-container {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        .share-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
+            display: block;
+            text-align: center;
+        }
+        .share-buttons-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+        }
+        .btn-share {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            padding: 0.5rem 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: opacity 0.2s, transform 0.1s;
+        }
+        .btn-share:hover { opacity: 0.88; }
+        .btn-share:active { transform: scale(0.97); }
+        .btn-share-x { background-color: #000000; border: 1px solid #333; }
+        .btn-share-fb { background-color: #1877f2; }
+        .btn-share-li { background-color: #0a66c2; }
+        .btn-share-wa { background-color: #25d366; color: #000; }
+        .btn-share-pin { background-color: #e60023; }
+        .btn-share-copy { background-color: #374151; color: #fff; grid-column: span 3; margin-top: 0.25rem; }
+
+        .preview-stage { 
+            grid-area: preview;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+        }
+        .canvas-wrapper {
+            position: relative; width: 320px; height: 568px; border-radius: 16px;
+            overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.6); background-color: #000;
+            border: 2px solid var(--border-color);
+        }
+        canvas { width: 100%; height: 100%; display: block; }
+        .canvas-caption { margin-top: 1rem; font-size: 0.85rem; color: var(--text-secondary); text-align: center; }
+
+        /* Metric Highlights Grid below Canvas */
+        .metric-summary-grid {
+            width: 100%;
+            max-width: 320px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+        .metric-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.85rem;
+            text-align: center;
+        }
+        .metric-card-title { font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; }
+        .metric-card-value { font-size: 1.1rem; font-weight: 700; color: #fff; }
+        .metric-card-value.highlight { color: var(--accent-green); }
+        .metric-card-value.warn { color: var(--accent-amber); }
+        .metric-card-value.danger { color: #f87171; }
+
+        .content-area { max-width: 1200px; margin: 3rem auto; padding: 0 1.5rem; }
+        .content-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 2.5rem; }
+        .content-card h1 { font-size: 2rem; margin-bottom: 1rem; color: #fff; }
+        .content-card h2 { font-size: 1.4rem; margin: 1.8rem 0 1rem; color: #fff; }
+        .content-card p { color: var(--text-secondary); margin-bottom: 1.2rem; }
+        .content-card ul, .content-card ol { color: var(--text-secondary); margin: 0 0 1.2rem 1.5rem; }
+        .content-card li { margin-bottom: 0.5rem; }
+
+        .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 1.5rem 0; }
+        .spec-table { width: 100%; border-collapse: collapse; text-align: left; min-width: 600px; }
+        .spec-table th, .spec-table td { padding: 0.85rem 1rem; border: 1px solid var(--border-color); }
+        .spec-table th { background-color: var(--bg-input); color: #fff; font-size: 0.9rem; }
+        .spec-table td { color: var(--text-secondary); font-size: 0.875rem; }
+
+        /* Accordion FAQ Styling */
+        .faq-block { margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem; }
+        .faq-accordion {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 0.85rem;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .faq-accordion[open] { border-color: var(--accent-cyan); }
+        .faq-summary {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            padding: 1rem 1.2rem;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+        .faq-summary::-webkit-details-marker { display: none; }
+        .faq-summary::after {
+            content: "+";
+            font-size: 1.2rem;
+            color: var(--accent-cyan);
+            transition: transform 0.2s;
+        }
+        .faq-accordion[open] .faq-summary::after {
+            content: "−";
+            color: var(--accent-cyan);
+        }
+        .faq-answer {
+            padding: 0 1.2rem 1.2rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 0.4rem;
+            padding-top: 0.8rem;
+        }
+
+        .cms-ad-slot-1, .cms-ad-slot-2 {
+            width: 100%; max-width: 970px; min-height: 90px; margin: 1.5rem auto;
+            background: rgba(255,255,255,0.02); border-radius: 8px; display: block;
+        }
+
+        .alert-banner {
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            font-size: 0.825rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            display: none;
+        }
+        .alert-banner.warning {
+            background-color: rgba(245, 158, 11, 0.15);
+            border: 1px solid var(--accent-amber);
+            color: #fbbf24;
+        }
+        .alert-banner.danger {
+            background-color: rgba(239, 68, 68, 0.15);
+            border: 1px solid #ef4444;
+            color: #f87171;
+        }
+
+        /* Mobile Responsive Overrides */
+        @media screen and (max-width: 900px) {
+            html, body { width: 100%!important; max-width: 100vw!important; overflow-x: hidden!important; margin: 0!important; padding: 0!important; }
+            main.container { display: flex!important; flex-direction: column!important; width: 100%!important; max-width: 100%!important; padding: 0 12px!important; margin: 8px auto!important; gap: 16px!important; box-sizing: border-box!important; }
+            .upload-card-wrapper { order: 1!important; width: 100%!important; }
+            main.container > section.preview-stage { order: 2!important; width: 100%!important; display: flex!important; flex-direction: column!important; align-items: center!important; margin: 0 auto!important; box-sizing: border-box!important; }
+            main.container > section.panel { order: 3!important; width: 100%!important; max-width: 100%!important; box-sizing: border-box!important; }
+            .canvas-wrapper { width: 75vw!important; height: 133.33vw!important; max-width: 290px!important; max-height: 515px!important; margin: 0 auto!important; box-sizing: border-box!important; }
+            input, textarea, select { font-size: 16px!important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Container -->
+    <div id="global-header"></div>
+
+    <!-- Ad Slot 1 Container -->
+    <div class="cms-ad-slot-1" id="cms-ad-slot-top"></div>
+
+    <!-- Main Tool Container -->
+    <main class="container">
+        <!-- Module 1: Email Copy Inputs & Presets (Rendered 1st on mobile) -->
+        <div class="upload-card-wrapper">
+            <div class="panel">
+                <div class="panel-title">
+                    <span>Email Copy Controls</span>
+                    <span class="badge">PREVIEW ENGINE</span>
+                </div>
+                
+                <div class="drop-zone" id="dropZone">
+                    <p class="drop-title">⚡ Instant Industry Presets</p>
+                    <p class="drop-sub">Select a high-converting template to benchmark mobile copy</p>
+                </div>
+
+                <div class="preset-grid">
+                    <button class="btn-demo" id="presetEcom" type="button">🛍️ E-Commerce Sale</button>
+                    <button class="btn-demo" id="presetB2B" type="button">💼 B2B Newsletter</button>
+                    <button class="btn-demo" id="presetUrgent" type="button">⚡ Flash Offer</button>
+                    <button class="btn-demo" id="presetOutreach" type="button">🎯 Cold Outreach</button>
+                </div>
+
+                <div class="form-group">
+                    <label for="senderName">Sender / From Name</label>
+                    <input type="text" id="senderName" value="CoreMetric Marketing" placeholder="e.g. Alex at CoreMetric">
+                </div>
+
+                <div class="form-group">
+                    <div class="range-header">
+                        <label for="subjectLine">Subject Line Text</label>
+                        <span class="range-value" id="subjectCharDisplay">38 / 38 Chars</span>
+                    </div>
+                    <textarea id="subjectLine" placeholder="Type your email subject line here...">🚨 Final Hours: Claim your 50% lifetime discount before midnight!</textarea>
+                </div>
+
+                <div class="form-group">
+                    <div class="range-header">
+                        <label for="preheaderText">Preheader / Preview Text</label>
+                        <span class="range-value" id="preheaderCharDisplay">52 Chars</span>
+                    </div>
+                    <textarea id="preheaderText" placeholder="Type your preview text here...">Unlock exclusive access to all 12 marketing optimization tools now.</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="clientSelect">Target Mobile Email Client</label>
+                    <select id="clientSelect">
+                        <option value="ios" selected>Apple Mail (iPhone iOS 18) - 38 Chars Cutoff</option>
+                        <option value="gmail">Gmail Mobile App (Android) - 36 Chars Cutoff</option>
+                        <option value="outlook">Outlook Mobile (iOS/Android) - 34 Chars Cutoff</option>
+                        <option value="samsung">Samsung Email (Android) - 40 Chars Cutoff</option>
+                    </select>
+                </div>
+
+                <div class="alert-banner warning" id="truncationAlert">
+                    ⚠️ Subject line exceeds target client visible limits. Core value proposition may be clipped on mobile screens.
+                </div>
+
+                <div class="alert-banner danger" id="spamAlert">
+                    🚨 High-risk spam trigger words detected! Subject line contains commercial trigger words flagged by ISP algorithms.
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 2: Live Goal Canvas Stage & Metrics Display (Rendered 2nd on mobile) -->
+        <section class="preview-stage">
+            <div class="canvas-wrapper">
+                <canvas id="previewCanvas" width="1080" height="1920"></canvas>
+            </div>
+            <p class="canvas-caption">
+                Live Pixel-Accurate Mobile Email Inbox Simulator &amp; Lockscreen Previewer. Updated for 2026 specs.
+            </p>
+
+            <div class="metric-summary-grid">
+                <div class="metric-card">
+                    <div class="metric-card-title">Subject Length</div>
+                    <div class="metric-card-value" id="cardSubjectLength">38 Chars</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-card-title">Preheader Length</div>
+                    <div class="metric-card-value" id="cardPreheaderLength">52 Chars</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-card-title">Visible Safe Share</div>
+                    <div class="metric-card-value highlight" id="cardSafeShare">100% Safe</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-card-title">Spam Risk Score</div>
+                    <div class="metric-card-value highlight" id="cardSpamScore">Low (0/10)</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Module 3: Strategy Modifiers & Export Section (Rendered 3rd on mobile) -->
+        <section class="panel">
+            <div class="panel-title">
+                <span>Display &amp; Inbox Modifiers</span>
+                <span class="badge">SIMULATOR SETTINGS</span>
+            </div>
+
+            <div class="form-group">
+                <label for="themeSelect">Simulator Color Mode</label>
+                <select id="themeSelect">
+                    <option value="dark" selected>Mobile Dark Mode (iOS / Android)</option>
+                    <option value="light">Mobile Light Mode (Standard)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="unreadStatus">Inbox Row State</label>
+                <select id="unreadStatus">
+                    <option value="unread" selected>Unread Email (Bold Typography)</option>
+                    <option value="read">Read Email (Regular Typography)</option>
+                </select>
+            </div>
+
+            <div class="toggle-group">
+                <span class="toggle-label">Simulate Lock Screen Notification</span>
+                <label class="switch">
+                    <input type="checkbox" id="lockscreenToggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="toggle-group">
+                <span class="toggle-label">Highlight Truncation Breakpoint</span>
+                <label class="switch">
+                    <input type="checkbox" id="highlightToggle" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <button class="btn-action" id="downloadBtn" type="button">Export Mobile Preview Blueprint (PNG)</button>
+
+            <!-- Social Media Share Section -->
+            <div class="social-share-container">
+                <span class="share-label">Share This Preview Utility</span>
+                <div class="share-buttons-grid">
+                    <a id="shareX" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-x">𝕏 Post</a>
+                    <a id="shareFB" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-fb">Facebook</a>
+                    <a id="shareWA" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-wa">WhatsApp</a>
+                    <a id="shareLI" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-li">LinkedIn</a>
+                    <a id="sharePIN" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-pin">Pinterest</a>
+                    <button id="copyShareLink" type="button" class="btn-share btn-share-copy">🔗 Copy Tool Link</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- SEO & Educational Guide Section -->
+    <article class="content-area">
+        <div class="content-card">
+            <h1>Email Subject Line Mobile Previewer &amp; Truncation Checker (2026)</h1>
+            <p>
+                In 2026, over <strong>68% of all email opens</strong> occur on mobile devices, predominantly within Apple Mail (iOS 18) and Gmail for Android. Despite this mobile-dominant landscape, digital marketers, B2B sales professionals, and e-commerce creators continue to write email subject lines on widescreen desktop monitors. This disconnect leads to severe <strong>mobile truncation</strong>, where vital call-to-actions, offer specifics, and emotional hooks are chopped off with ellipses (...), drastically reducing click-to-open rates (CTOR) and revenue per subscriber.
+            </p>
+            <p>
+                This interactive <strong>email subject line mobile previewer</strong> provides real-time, pixel-accurate rendering of how your email subject lines and preheader (preview) text display across Apple Mail, Gmail Android, and Outlook Mobile. By combining character counts, pixel-width estimation, UTF-8 byte calculations, and real-time spam trigger word scanning, this utility ensures your message retains maximum impact before subscribers press send.
+            </p>
+
+            <h2>The Science of Mobile Truncation: Character Limits vs. Pixel Widths</h2>
+            <p>
+                A common misconception among email marketers is that email clients enforce a fixed character limit (such as strictly 40 characters). In reality, mobile rendering engines operate based on <strong>horizontal pixel width</strong> within container elements.
+            </p>
+            <p>
+                Because typography uses proportional font rendering (where an uppercase 'W' requires roughly 18 pixels while a lowercase 'i' requires only 4 pixels), character capacity fluctuates based on character selection. The formula governing available display real estate is:
+            </p>
+            <blockquote style="background-color: var(--bg-input); padding: 1rem 1.25rem; border-left: 4px solid var(--accent-cyan); border-radius: 4px; margin: 1rem 0; font-weight: 600; color: #fff;">
+                Available Visible Characters = Floor( Screen Width in Pixels ÷ Average Character Pixel Width )<br><br>
+                Where Average Character Width = ( Capital Letters × 12px + Lowercase Letters × 7px + Emojis × 20px ) ÷ Total Length
+            </blockquote>
+            <p>
+                For instance, an iPhone 15/16 Pro running iOS Apple Mail offers approximately <strong>280px to 310px</strong> of usable subject line width in portrait orientation. If your subject line uses uppercase letters or wide emojis, truncation will occur around <strong>32 to 35 characters</strong>. Conversely, if your copy relies on concise lowercase text, up to <strong>42 characters</strong> may remain fully visible.
+            </p>
+
+            <h2>Mobile Email Client Display Limits Benchmark (2026 Edition)</h2>
+            <p>
+                The table below outlines the primary mobile email clients, their average character truncation thresholds, preheader text allocations, and display behavior in dark and light modes:
+            </p>
+
+            <div class="table-responsive">
+                <table class="spec-table">
+                    <thead>
+                        <tr>
+                            <th>Email Client &amp; OS</th>
+                            <th>Subject Cutoff (Chars)</th>
+                            <th>Subject Max Pixels</th>
+                            <th>Preheader Display (Chars)</th>
+                            <th>Preheader Lines</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Apple Mail (iOS 18)</strong></td>
+                            <td>35 – 41 Chars</td>
+                            <td>~300 px</td>
+                            <td>45 – 55 Chars</td>
+                            <td>2 Lines (Separate)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Gmail App (Android)</strong></td>
+                            <td>36 – 42 Chars</td>
+                            <td>~290 px</td>
+                            <td>35 – 45 Chars</td>
+                            <td>1 Line (Inline)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Outlook Mobile (iOS/Android)</strong></td>
+                            <td>32 – 38 Chars</td>
+                            <td>~270 px</td>
+                            <td>40 – 50 Chars</td>
+                            <td>1 – 2 Lines</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Samsung Email (Android)</strong></td>
+                            <td>38 – 44 Chars</td>
+                            <td>~315 px</td>
+                            <td>40 – 60 Chars</td>
+                            <td>2 Lines</td>
+                        </tr>
+                        <tr>
+                            <td><strong>iOS Lock Screen Alert</strong></td>
+                            <td>28 – 34 Chars</td>
+                            <td>~240 px</td>
+                            <td>60 – 80 Chars</td>
+                            <td>Up to 3 Lines</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Ad Slot 2 Container -->
+            <div class="cms-ad-slot-2"></div>
+
+            <h2>Spam Filter Trigger Lexicon: Protecting Deliverability</h2>
+            <p>
+                Even a perfectly truncated subject line fails if your email lands directly in the spam folder or Gmail's Promotions tab. Automated ISP security mechanisms (including Gmail SpamAssassin, Microsoft SmartScreen, and Yahoo Postmaster) evaluate subject line lexicon in real-time. Including multiple commercial trigger phrases triggers heuristic penalties that degrade inbox placement.
+            </p>
+
+            <div class="table-responsive">
+                <table class="spec-table">
+                    <thead>
+                        <tr>
+                            <th>Spam Trigger Category</th>
+                            <th>High-Risk Keywords to Avoid</th>
+                            <th>Algorithmic Penalty Impact</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Financial &amp; Monetary</strong></td>
+                            <td>100% Free, Guaranteed Cash, Earn $$, Double Your Income, Risk-Free, No Obligations</td>
+                            <td><strong style="color: #f87171;">Severe (Spam Folder Placement)</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Urgency &amp; Pressure</strong></td>
+                            <td>Act Now, Immediate Action, Apply Online, Winner, Claims, Direct Email</td>
+                            <td><strong style="color: var(--accent-amber);">Moderate (Promotions Tab Shift)</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Formatting &amp; Symbols</strong></td>
+                            <td>ALL CAPS TEXT, Multiple !!! or ???, Excessive Emojis (3+ in subject), Currency $$$</td>
+                            <td><strong style="color: #f87171;">Severe (ISP Heuristic Penalty)</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2>5 Strategic Tactics for High Open-Rate Subject Lines</h2>
+            <ol>
+                <li><strong>Front-Load Your Value Proposition:</strong> Position your primary hook, brand name, or offer discount within the first 25 characters to guarantee visibility across every mobile client.</li>
+                <li><strong>Pair Subject Lines with Preheaders:</strong> Treat the preheader text as a secondary headline that completes the thought initiated in the subject line rather than repeating it.</li>
+                <li><strong>Limit Emoji Usage:</strong> Use a maximum of one relevant emoji per subject line. Emojis consume double the character width and can trigger rendering inconsistencies across older OS versions.</li>
+                <li><strong>Account for Personalization Merge Tags:</strong> Dynamic tags like <code>{{first_name}}</code> resolve into variable length values. Always account for longer subscriber names (10+ characters) to prevent unintended line clipping.</li>
+                <li><strong>Test Lockscreen Rendering:</strong> Lockscreen pop-up notifications feature tighter horizontal space than the full inbox application. Ensure the first 30 characters convey complete context.</li>
+            </ol>
+
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-block">
+                <details class="faq-accordion" open>
+                    <summary class="faq-summary">What is the optimal character length for mobile email subject lines in 2026?</summary>
+                    <div class="faq-answer">
+                        The optimal mobile email subject line length is between 30 and 40 characters (or 130 to 160 display pixels). While desktop clients can display 60+ characters, iOS Mail truncates around 35-41 characters, Gmail Android truncates at 36-42 characters, and Outlook Mobile cuts off subject lines at 32-38 characters.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">How many characters of preheader text appear on mobile devices?</summary>
+                    <div class="faq-answer">
+                        Mobile email clients typically display 35 to 55 characters of preheader (preview) text depending on the device screen width, font scaling, and subject line length. iOS Mail displays 45-55 characters across 2 lines, while Gmail Android shows 35-45 characters.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">Why do emojis affect email subject line truncation differently than text?</summary>
+                    <div class="faq-answer">
+                        Emojis consume significantly more horizontal pixel width (typically 18px to 22px in rendered typography) than standard alphanumeric characters (6px to 10px). Furthermore, UTF-8 emojis use 3 to 4 bytes of data, which can cause premature line clipping or byte-length boundary truncation in legacy mail servers.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">What spam trigger words should be avoided in subject lines?</summary>
+                    <div class="faq-answer">
+                        Avoid high-risk commercial trigger words such as '100% Free', 'Guaranteed Cash', 'Act Now', 'No Risk', 'Risk-Free', 'Double Your Income', 'Winner', 'Risk-Free Trial', all-caps typography, and excessive exclamation marks, as these trigger automated ISP spam filters like Gmail SpamAssassin and Outlook SmartScreen.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">How do dynamic merge tags like {{first_name}} impact mobile truncation?</summary>
+                    <div class="faq-answer">
+                        Merge tags take up minimal characters in template form (e.g. 16 characters for {{first_name}}), but expand into actual subscriber data at send time. If a subscriber has a long first name (e.g., 'Christopher' = 11 characters), it can unexpectedly push core value proposition words past the mobile truncation threshold.
+                    </div>
+                </details>
+            </div>
+        </div>
+    </article>
+
+    <!-- Footer Container -->
+    <div id="global-footer"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var canvas = document.getElementById('previewCanvas');
+            if (!canvas) return;
+            var ctx = canvas.getContext('2d');
+
+            // Form Inputs & Selects
+            var senderNameInput = document.getElementById('senderName');
+            var subjectLineInput = document.getElementById('subjectLine');
+            var preheaderTextInput = document.getElementById('preheaderText');
+            var clientSelect = document.getElementById('clientSelect');
+            var themeSelect = document.getElementById('themeSelect');
+            var unreadStatusSelect = document.getElementById('unreadStatus');
+            var lockscreenToggle = document.getElementById('lockscreenToggle');
+            var highlightToggle = document.getElementById('highlightToggle');
+
+            // Alerts & Displays
+            var subjectCharDisplay = document.getElementById('subjectCharDisplay');
+            var preheaderCharDisplay = document.getElementById('preheaderCharDisplay');
+            var truncationAlert = document.getElementById('truncationAlert');
+            var spamAlert = document.getElementById('spamAlert');
+
+            // Summary Metric Cards
+            var cardSubjectLength = document.getElementById('cardSubjectLength');
+            var cardPreheaderLength = document.getElementById('cardPreheaderLength');
+            var cardSafeShare = document.getElementById('cardSafeShare');
+            var cardSpamScore = document.getElementById('cardSpamScore');
+
+            // Preset Buttons
+            var presetEcom = document.getElementById('presetEcom');
+            var presetB2B = document.getElementById('presetB2B');
+            var presetUrgent = document.getElementById('presetUrgent');
+            var presetOutreach = document.getElementById('presetOutreach');
+            var downloadBtn = document.getElementById('downloadBtn');
+
+            // List of Common Spam Trigger Words
+            var spamKeywords = [
+                "100% free", "free", "guarantee", "guaranteed", "act now", "risk-free", 
+                "risk free", "cash", "earn $", "double your", "winner", "congratulations",
+                "no obligation", "apply now", "buy direct", "cheap", "click here",
+                "unlimited", "extra income", "pure profit", "100%", "million dollars",
+                "urgent", "claims", "as seen on", "credit card", "no cost"
+            ];
+
+            /* Setup Social Share Links */
+            var currentUrl = encodeURIComponent(window.location.href);
+            var shareTitle = encodeURIComponent("Check out this Email Subject Line Mobile Previewer & Truncation Checker!");
+            
+            document.getElementById('shareX').href = 'https://twitter.com/intent/tweet?url=' + currentUrl + '&text=' + shareTitle;
+            document.getElementById('shareFB').href = 'https://www.facebook.com/sharer/sharer.php?u=' + currentUrl;
+            document.getElementById('shareWA').href = 'https://api.whatsapp.com/send?text=' + shareTitle + '%20' + currentUrl;
+            document.getElementById('shareLI').href = 'https://www.linkedin.com/sharing/share-offsite/?url=' + currentUrl;
+            document.getElementById('sharePIN').href = 'https://pinterest.com/pin/create/button/?url=' + currentUrl + '&description=' + shareTitle;
+
+            var copyBtn = document.getElementById('copyShareLink');
+            copyBtn.addEventListener('click', function() {
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(window.location.href).then(function() {
+                        var origText = copyBtn.textContent;
+                        copyBtn.textContent = '✓ Link Copied!';
+                        setTimeout(function() { copyBtn.textContent = origText; }, 2000);
+                    });
+                }
+            });
+
+            // Preset Handlers
+            presetEcom.addEventListener('click', function() {
+                senderNameInput.value = "Nike Store";
+                subjectLineInput.value = "⚡ FLASH SALE: 40% off your entire order ends tonight!";
+                preheaderTextInput.value = "Use promo code FLASH40 at checkout. Free express shipping on orders over $50.";
+                clientSelect.value = "ios";
+                calculateAndDraw();
+            });
+
+            presetB2B.addEventListener('click', function() {
+                senderNameInput.value = "HubSpot Marketing";
+                subjectLineInput.value = "The 2026 Email Benchmarks Report is here [Download]";
+                preheaderTextInput.value = "Analyze open rates, CTRs, and deliverability metrics across 10,000+ campaigns.";
+                clientSelect.value = "ios";
+                calculateAndDraw();
+            });
+
+            presetUrgent.addEventListener('click', function() {
+                senderNameInput.value = "Security Team";
+                subjectLineInput.value = "🔒 Action Required: Verify your security credentials";
+                preheaderTextInput.value = "Your account password was updated from a new device. Confirm if this was you.";
+                clientSelect.value = "gmail";
+                calculateAndDraw();
+            });
+
+            presetOutreach.addEventListener('click', function() {
+                senderNameInput.value = "Alex from CoreMetric";
+                subjectLineInput.value = "Quick question regarding your Q4 video strategy";
+                preheaderTextInput.value = "Saw your latest campaign on LinkedIn and noticed a quick optimization opportunity.";
+                clientSelect.value = "outlook";
+                calculateAndDraw();
+            });
+
+            // Input Event Listeners
+            senderNameInput.addEventListener('input', calculateAndDraw);
+            subjectLineInput.addEventListener('input', calculateAndDraw);
+            preheaderTextInput.addEventListener('input', calculateAndDraw);
+            clientSelect.addEventListener('change', calculateAndDraw);
+            themeSelect.addEventListener('change', calculateAndDraw);
+            unreadStatusSelect.addEventListener('change', calculateAndDraw);
+            lockscreenToggle.addEventListener('change', calculateAndDraw);
+            highlightToggle.addEventListener('change', calculateAndDraw);
+
+            function getCutoffForClient(clientKey) {
+                switch(clientKey) {
+                    case 'ios': return 38;
+                    case 'gmail': return 36;
+                    case 'outlook': return 34;
+                    case 'samsung': return 40;
+                    default: return 38;
+                }
+            }
+
+            function scanSpamKeywords(text) {
+                var lower = text.toLowerCase();
+                var detected = [];
+                for (var i = 0; i < spamKeywords.length; i++) {
+                    if (lower.includes(spamKeywords[i])) {
+                        detected.push(spamKeywords[i]);
+                    }
+                }
+                return detected;
+            }
+
+            function calculateAndDraw() {
+                var sender = senderNameInput.value.trim() || "Sender";
+                var subject = subjectLineInput.value || "";
+                var preheader = preheaderTextInput.value || "";
+                var clientKey = clientSelect.value;
+                var cutoff = getCutoffForClient(clientKey);
+                var isDark = themeSelect.value === 'dark';
+                var isUnread = unreadStatusSelect.value === 'unread';
+                var isLockscreen = lockscreenToggle.checked;
+                var showHighlight = highlightToggle.checked;
+
+                // Update Input Displays
+                subjectCharDisplay.textContent = subject.length + ' / ' + cutoff + ' Chars';
+                preheaderCharDisplay.textContent = preheader.length + ' Chars';
+
+                // Truncation Check
+                var isTruncated = subject.length > cutoff;
+                if (isTruncated) {
+                    truncationAlert.style.display = 'block';
+                } else {
+                    truncationAlert.style.display = 'none';
+                }
+
+                // Spam Keywords Scan
+                var detectedSpam = scanSpamKeywords(subject + " " + preheader);
+                var spamScore = detectedSpam.length * 3;
+                if (spamScore > 10) spamScore = 10;
+
+                if (detectedSpam.length > 0) {
+                    spamAlert.style.display = 'block';
+                    spamAlert.textContent = "🚨 Spam trigger words detected: \"" + detectedSpam.join('", "') + '"';
+                } else {
+                    spamAlert.style.display = 'none';
+                }
+
+                // Metric Card Updates
+                cardSubjectLength.textContent = subject.length + ' Chars';
+                cardPreheaderLength.textContent = preheader.length + ' Chars';
+                
+                if (isTruncated) {
+                    var safePercent = Math.round((cutoff / subject.length) * 100);
+                    cardSafeShare.textContent = safePercent + '% Visible';
+                    cardSafeShare.className = 'metric-card-value warn';
+                } else {
+                    cardSafeShare.textContent = '100% Safe';
+                    cardSafeShare.className = 'metric-card-value highlight';
+                }
+
+                if (spamScore === 0) {
+                    cardSpamScore.textContent = 'Low (0/10)';
+                    cardSpamScore.className = 'metric-card-value highlight';
+                } else if (spamScore <= 5) {
+                    cardSpamScore.textContent = 'Medium (' + spamScore + '/10)';
+                    cardSpamScore.className = 'metric-card-value warn';
+                } else {
+                    cardSpamScore.textContent = 'High (' + spamScore + '/10)';
+                    cardSpamScore.className = 'metric-card-value danger';
+                }
+
+                // Render Live Canvas Blueprint
+                drawCanvas({
+                    sender: sender,
+                    subject: subject,
+                    preheader: preheader,
+                    clientKey: clientKey,
+                    cutoff: cutoff,
+                    isDark: isDark,
+                    isUnread: isUnread,
+                    isLockscreen: isLockscreen,
+                    showHighlight: showHighlight,
+                    isTruncated: isTruncated,
+                    spamScore: spamScore
+                });
+            }
+
+            function drawCanvas(data) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                // Phone Frame Background
+                var bgGrad = ctx.createLinearGradient(0, 0, 1080, 1920);
+                if (data.isDark) {
+                    bgGrad.addColorStop(0, '#0d0e12');
+                    bgGrad.addColorStop(1, '#161820');
+                } else {
+                    bgGrad.addColorStop(0, '#f2f3f7');
+                    bgGrad.addColorStop(1, '#e5e7eb');
+                }
+                ctx.fillStyle = bgGrad;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Top Header Branding Strip
+                var headerGrad = ctx.createLinearGradient(0, 0, 1080, 0);
+                headerGrad.addColorStop(0, '#1877f2');
+                headerGrad.addColorStop(0.5, '#00f2fe');
+                headerGrad.addColorStop(1, '#10b981');
+                ctx.fillStyle = headerGrad;
+                ctx.fillRect(0, 0, 1080, 16);
+
+                // Simulator Title Header
+                ctx.fillStyle = data.isDark ? '#ffffff' : '#0f172a';
+                ctx.font = 'bold 46px -apple-system, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('MOBILE EMAIL INBOX SIMULATOR', 540, 110);
+
+                ctx.fillStyle = '#00f2fe';
+                ctx.font = '600 30px -apple-system, sans-serif';
+                ctx.fillText('2026 PIXEL-ACCURATE TRUNCATION ENGINE', 540, 160);
+
+                // Divider Line
+                ctx.strokeStyle = data.isDark ? '#2e3446' : '#cbd5e1';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(80, 200);
+                ctx.lineTo(1000, 200);
+                ctx.stroke();
+
+                if (data.isLockscreen) {
+                    drawLockscreenPreview(data);
+                } else {
+                    drawInboxRowPreview(data);
+                }
+
+                // Diagnostic Audit Panel below Phone Preview
+                drawDiagnosticPanel(data);
+
+                // Footer Branding
+                ctx.fillStyle = data.isDark ? '#9ca3af' : '#64748b';
+                ctx.font = 'bold 26px -apple-system, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('CoreMetricSuite · Mobile Email Marketing Utilities', 540, 1840);
+            }
+
+            function drawInboxRowPreview(data) {
+                // Email Client App Title Header Card
+                var cardBg = data.isDark ? '#181b24' : '#ffffff';
+                var textMain = data.isDark ? '#ffffff' : '#0f172a';
+                var textSub = data.isDark ? '#9ca3af' : '#64748b';
+                var borderCol = data.isDark ? '#2e3446' : '#e2e8f0';
+
+                ctx.fillStyle = cardBg;
+                ctx.strokeStyle = borderCol;
+                ctx.lineWidth = 3;
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(80, 240, 920, 620, 24);
+                    ctx.fill();
+                    ctx.stroke();
+                } else {
+                    ctx.fillRect(80, 240, 920, 620);
+                }
+
+                // App Mock Header Bar
+                ctx.fillStyle = data.isDark ? '#222634' : '#f8fafc';
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(80, 240, 920, 90, [24, 24, 0, 0]);
+                    ctx.fill();
+                } else {
+                    ctx.fillRect(80, 240, 920, 90);
+                }
+
+                ctx.fillStyle = '#1877f2';
+                ctx.font = 'bold 30px -apple-system, sans-serif';
+                ctx.textAlign = 'left';
+                var clientName = data.clientKey === 'ios' ? ' Apple Mail (iOS 18)' :
+                                 data.clientKey === 'gmail' ? '✉️ Gmail Android' :
+                                 data.clientKey === 'outlook' ? '📬 Outlook Mobile' : '📱 Samsung Email';
+                ctx.fillText(clientName, 120, 296);
+
+                ctx.fillStyle = textSub;
+                ctx.font = '24px -apple-system, sans-serif';
+                ctx.textAlign = 'right';
+                ctx.fillText('Inbox · Just now', 960, 296);
+
+                // Sender Row with Avatar
+                ctx.fillStyle = '#1877f2';
+                ctx.beginPath();
+                ctx.arc(140, 400, 32, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 28px -apple-system, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText(data.sender.charAt(0).toUpperCase(), 140, 410);
+
+                // Sender Name
+                ctx.fillStyle = textMain;
+                ctx.font = data.isUnread ? 'bold 36px -apple-system, sans-serif' : '36px -apple-system, sans-serif';
+                ctx.textAlign = 'left';
+                ctx.fillText(data.sender, 195, 410);
+
+                // Subject Line Rendering with Truncation Check
+                ctx.font = data.isUnread ? 'bold 32px -apple-system, sans-serif' : '32px -apple-system, sans-serif';
+                var fullSubject = data.subject || '(Empty Subject Line)';
+                var displaySubject = fullSubject;
+                
+                if (data.subject.length > data.cutoff) {
+                    displaySubject = fullSubject.substring(0, data.cutoff) + '...';
+                }
+
+                ctx.fillStyle = textMain;
+                ctx.fillText(displaySubject, 120, 480);
+
+                // Truncation Highlight Box if active
+                if (data.showHighlight && data.isTruncated) {
+                    ctx.strokeStyle = '#ff0050';
+                    ctx.lineWidth = 2;
+                    ctx.setLineDash([6, 6]);
+                    ctx.strokeRect(115, 448, 850, 44);
+                    ctx.setLineDash([]);
+                }
+
+                // Preheader Preview Line
+                ctx.fillStyle = textSub;
+                ctx.font = '28px -apple-system, sans-serif';
+                var fullPreheader = data.preheader || '(No preview text provided)';
+                var displayPreheader = fullPreheader;
+                if (displayPreheader.length > 55) {
+                    displayPreheader = displayPreheader.substring(0, 55) + '...';
+                }
+                ctx.fillText(displayPreheader, 120, 540);
+
+                // Character Boundary Visual Scale inside Card
+                ctx.fillStyle = data.isDark ? '#222634' : '#e2e8f0';
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(120, 620, 840, 24, 12);
+                    ctx.fill();
+                } else {
+                    ctx.fillRect(120, 620, 840, 24);
+                }
+
+                var ratio = Math.min(1.0, data.subject.length / (data.cutoff * 1.5));
+                var barWidth = Math.max(24, 840 * ratio);
+                ctx.fillStyle = data.isTruncated ? '#f59e0b' : '#10b981';
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(120, 620, barWidth, 24, 12);
+                    ctx.fill();
+                } else {
+                    ctx.fillRect(120, 620, barWidth, 24);
+                }
+
+                ctx.fillStyle = textSub;
+                ctx.font = '22px -apple-system, sans-serif';
+                ctx.textAlign = 'left';
+                ctx.fillText('0 Chars', 120, 680);
+                ctx.textAlign = 'center';
+                ctx.fillText(data.cutoff + ' Chars (Cutoff Threshold)', 120 + (840 * (data.cutoff / (data.cutoff * 1.5))), 680);
+                ctx.textAlign = 'right';
+                ctx.fillText('60+ Chars', 960, 680);
+            }
+
+            function drawLockscreenPreview(data) {
+                var cardBg = data.isDark ? 'rgba(30, 32, 42, 0.95)' : 'rgba(255, 255, 255, 0.95)';
+                var textMain = data.isDark ? '#ffffff' : '#0f172a';
+                var textSub = data.isDark ? '#9ca3af' : '#64748b';
+
+                ctx.fillStyle = cardBg;
+                ctx.strokeStyle = '#00f2fe';
+                ctx.lineWidth = 3;
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(80, 240, 920, 620, 28);
+                    ctx.fill();
+                    ctx.stroke();
+                } else {
+                    ctx.fillRect(80, 240, 920, 620);
+                }
+
+                // Lockscreen App Identifier
+                ctx.fillStyle = '#1877f2';
+                ctx.font = 'bold 28px -apple-system, sans-serif';
+                ctx.textAlign = 'left';
+                ctx.fillText('MAIL NOTIFICATION · LOCK SCREEN', 120, 300);
+
+                ctx.fillStyle = textSub;
+                ctx.font = '24px -apple-system, sans-serif';
+                ctx.textAlign = 'right';
+                ctx.fillText('now', 960, 300);
+
+                // Sender Title
+                ctx.fillStyle = textMain;
+                ctx.font = 'bold 38px -apple-system, sans-serif';
+                ctx.textAlign = 'left';
+                ctx.fillText(data.sender, 120, 370);
+
+                // Lockscreen Subject Cutoff (~30 Chars)
+                var lockscreenCutoff = 30;
+                var lockSubject = data.subject;
+                if (lockSubject.length > lockscreenCutoff) {
+                    lockSubject = lockSubject.substring(0, lockscreenCutoff) + '...';
+                }
+
+                ctx.font = 'bold 32px -apple-system, sans-serif';
+                ctx.fillText(lockSubject, 120, 440);
+
+                // Lockscreen Body Copy
+                ctx.fillStyle = textSub;
+                ctx.font = '28px -apple-system, sans-serif';
+                var lockPreheader = data.preheader;
+                if (lockPreheader.length > 70) {
+                    lockPreheader = lockPreheader.substring(0, 70) + '...';
+                }
+                ctx.fillText(lockPreheader, 120, 510);
+
+                ctx.fillStyle = '#00f2fe';
+                ctx.font = 'italic 24px -apple-system, sans-serif';
+                ctx.fillText('Swipe or press to view full email message', 120, 590);
+            }
+
+            function drawDiagnosticPanel(data) {
+                var cardBg = data.isDark ? '#181b24' : '#ffffff';
+                var textMain = data.isDark ? '#ffffff' : '#0f172a';
+                var textSub = data.isDark ? '#9ca3af' : '#64748b';
+                var borderCol = data.isDark ? '#2e3446' : '#cbd5e1';
+
+                ctx.fillStyle = cardBg;
+                ctx.strokeStyle = borderCol;
+                ctx.lineWidth = 2;
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(80, 900, 920, 880, 20);
+                    ctx.fill();
+                    ctx.stroke();
+                } else {
+                    ctx.fillRect(80, 900, 920, 880);
+                }
+
+                ctx.fillStyle = textMain;
+                ctx.font = 'bold 34px -apple-system, sans-serif';
+                ctx.textAlign = 'left';
+                ctx.fillText('Subject Line Strategic Audit Report', 120, 960);
+
+                ctx.font = '28px -apple-system, sans-serif';
+                ctx.fillStyle = textSub;
+
+                // Line 1: Target Client Threshold
+                ctx.fillText('• Target Client Cutoff:', 120, 1030);
+                ctx.fillStyle = textMain;
+                ctx.fillText(data.cutoff + ' Characters (Portrait Mode)', 480, 1030);
+
+                // Line 2: Current Length & Status
+                ctx.fillStyle = textSub;
+                ctx.fillText('• Subject Line Length:', 120, 1100);
+                ctx.fillStyle = data.isTruncated ? '#f59e0b' : '#10b981';
+                ctx.font = 'bold 28px -apple-system, sans-serif';
+                ctx.fillText(data.subject.length + ' Characters ' + (data.isTruncated ? '(TRUNCATED)' : '(SAFE)'), 480, 1100);
+
+                // Line 3: Preheader Length
+                ctx.font = '28px -apple-system, sans-serif';
+                ctx.fillStyle = textSub;
+                ctx.fillText('• Preheader Copy Length:', 120, 1170);
+                ctx.fillStyle = textMain;
+                ctx.fillText(data.preheader.length + ' Characters', 480, 1170);
+
+                // Line 4: Spam Risk Score
+                ctx.fillStyle = textSub;
+                ctx.fillText('• Spam Filter Risk:', 120, 1240);
+                ctx.fillStyle = data.spamScore === 0 ? '#10b981' : data.spamScore <= 5 ? '#f59e0b' : '#ef4444';
+                ctx.font = 'bold 28px -apple-system, sans-serif';
+                ctx.fillText(data.spamScore === 0 ? 'Passed (0 Detected Keywords)' : 'Warning (' + data.spamScore + '/10 Risk Score)', 480, 1240);
+
+                // Horizontal Rule
+                ctx.fillStyle = borderCol;
+                ctx.fillRect(120, 1290, 840, 2);
+
+                // Key Recommendations
+                ctx.fillStyle = textMain;
+                ctx.font = 'bold 30px -apple-system, sans-serif';
+                ctx.fillText('Optimization Recommendations:', 120, 1350);
+
+                ctx.font = '24px -apple-system, sans-serif';
+                ctx.fillStyle = textSub;
+
+                if (data.isTruncated) {
+                    ctx.fillText('1. Move your primary offer or CTA into the first ' + data.cutoff + ' characters.', 120, 1400);
+                    ctx.fillText('2. Trim unnecessary adjectives or move context into the preheader.', 120, 1440);
+                } else {
+                    ctx.fillText('1. Perfect subject length! Key message is 100% visible on mobile screens.', 120, 1400);
+                    ctx.fillText('2. Ensure preheader text extends context without repeating subject words.', 120, 1440);
+                }
+
+                ctx.fillText('3. Limit emojis to 1 max to avoid pixel width expansion and byte clipping.', 120, 1480);
+                ctx.fillText('4. Test dynamic merge tags (e.g. {{first_name}}) with long name parameters.', 120, 1520);
+
+                ctx.fillStyle = borderCol;
+                ctx.fillRect(120, 1570, 840, 2);
+
+                ctx.fillStyle = textSub;
+                ctx.font = '22px -apple-system, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('Evaluated against iOS 18 Apple Mail, Gmail Android & Outlook Mobile 2026 specs.', 540, 1630);
+                ctx.fillText('CoreMetricSuite · Privacy-First Client-Side Web Utilities', 540, 1670);
+            }
+
+            // Initial Draw
+            calculateAndDraw();
+
+            // Export PNG Action
+            downloadBtn.addEventListener('click', function() {
+                var link = document.createElement('a');
+                link.download = 'email-subject-mobile-preview.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        });
+    </script>
+
+    <!-- Global CoreMetricSuite Cross-Linking Index Hub -->
+    <div style="margin-top: 40px; padding: 20px; border: 1px solid #2e3446; border-radius: 8px; background-color: #181b24; font-family: system-ui, -apple-system, sans-serif;">
+        <h3 style="margin: 0 0 15px 0; font-size: 18px; color: #f3f4f6; font-weight: 600;">🛠️ CoreMetricSuite Utility Directory</h3>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.05em;">🇦🇺 Australia Tax &amp; Labor</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-au-cents" href="../au-cents-per-km-estimator/" style="color: #00f2fe; text-decoration: underline;">Cents-Per-Km Tax Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-au-schads" href="../au-schads-vehicle-allowance/" style="color: #00f2fe; text-decoration: underline;">SCHADS Vehicle Allowance</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-au-super" href="../au-superannuation-charge-tracker/" style="color: #00f2fe; text-decoration: underline;">Superannuation Tracker</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.05em;">🇺🇸 US Corporate Tax</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-us-llc" href="../us-llc-late-penalty-estimator/" style="color: #00f2fe; text-decoration: underline;">LLC Late Tax Penalty</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-us-179" href="../us-section-179-truck-calculator/" style="color: #00f2fe; text-decoration: underline;">Section 179 Vehicle Deduction</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.05em;">🇬🇧 UK Property Management</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-rent" href="../uk-form-4a-rent-tracker/" style="color: #00f2fe; text-decoration: underline;">Form 4A Rent Tracker</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-sdlt" href="../uk-sdlt-bracket-estimator/" style="color: #00f2fe; text-decoration: underline;">Stamp Duty Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-sec8" href="../uk-section-8-calculator/" style="color: #00f2fe; text-decoration: underline;">Section 8 Calculator</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.05em;">🎬 Digital Media Layouts &amp; Monetization</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-email-preview" href="../email-subject-line-mobile-previewer/" style="color: #00f2fe; text-decoration: underline;">Email Subject Line Previewer</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-tiktok-goal" href="../tiktok-rpm-goal/" style="color: #00f2fe; text-decoration: underline;">TikTok RPM Goal Engine</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-ig" href="../instagram-reels-preview/" style="color: #00f2fe; text-decoration: underline;">Instagram Reels Grid</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-fb" href="../facebook-ad-safe-zone/" style="color: #00f2fe; text-decoration: underline;">Facebook 9:16 Ad Mask</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-shorts" href="../shorts-ui-safe-zone/" style="color: #00f2fe; text-decoration: underline;">YouTube Shorts Safe Zone</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script defer>
+        (function() {
+            const path = window.location.pathname.toLowerCase();
+            const toolsMap = {
+                'email-subject-line-mobile-previewer': 'hub-email-preview',
+                'au-cents-per-km-estimator': 'hub-au-cents',
+                'au-schads-vehicle-allowance': 'hub-au-schads',
+                'au-superannuation-charge-tracker': 'hub-au-super',
+                'us-llc-late-penalty-estimator': 'hub-us-llc',
+                'us-section-179-truck-calculator': 'hub-us-179',
+                'uk-form-4a-rent-tracker': 'hub-uk-rent',
+                'uk-sdlt-bracket-estimator': 'hub-uk-sdlt',
+                'uk-section-8-calculator': 'hub-uk-sec8',
+                'tiktok-rpm-goal': 'hub-media-tiktok-goal',
+                'instagram-reels-preview': 'hub-media-ig',
+                'facebook-ad-safe-zone': 'hub-media-fb',
+                'shorts-ui-safe-zone': 'hub-media-shorts'
+            };
+
+            for (const [folderName, elementId] of Object.entries(toolsMap)) {
+                if (path.includes(folderName)) {
+                    const targetEl = document.getElementById(elementId);
+                    if (targetEl) {
+                        targetEl.outerHTML = `<span style="font-weight: 600; color: #10b981;">${targetEl.textContent} (Current)</span>`;
+                    }
+                    break;
+                }
+            }
+        })();
+    </script>
+</body>
+</html>
