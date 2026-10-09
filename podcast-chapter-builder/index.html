@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Podcast Chapter Builder &amp; Timestamp Generator (2026)</title>
+    <meta name="description" content="Build, format, and validate podcast chapters for YouTube, Spotify, Apple Podcasts, and Podcasting 2.0. Export Podcasting 2.0 JSON, CUE sheets, and high-res chapter blueprints.">
+    <meta name="keywords" content="podcast chapter builder, podcast timestamp generator, youtube podcast chapters tool, podcasting 2.0 json chapter generator, spotify chapter timestamps, apple podcast chapter maker, podcast episode timestamp editor">
+    <link rel="canonical" href="https://coremetricsuite.com/podcast-chapter-builder/">
+
+    <!-- Open Graph / Social Metadata -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Podcast Chapter Builder &amp; Timestamp Generator Engine">
+    <meta property="og:description" content="Generate YouTube, Spotify, and Apple Podcast chapters instantly. Validate timestamp compliance, export Podcasting 2.0 JSON, and build visual episode blueprints.">
+    <meta property="og:url" content="https://coremetricsuite.com/podcast-chapter-builder/">
+    
+    <!-- Global Framework Dependencies -->
+    <link rel="stylesheet" href="/css/global.css">
+    <script src="/config.js" defer></script>
+    <script src="/global.min.js" defer></script>
+
+    <!-- WebApplication JSON-LD Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "CoreMetricSuite Podcast Chapter Builder",
+      "url": "https://coremetricsuite.com/podcast-chapter-builder/",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "All",
+      "browserRequirements": "Requires HTML5. Requires JavaScript.",
+      "author": {
+        "@type": "Organization",
+        "name": "CoreMetricSuite Hub",
+        "url": "https://coremetricsuite.com"
+      },
+      "offers": {
+        "@type": "Offer",
+        "price": "0.00",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
+
+    <!-- FAQ JSON-LD Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What are the essential requirements for YouTube podcast timestamps?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For YouTube to parse chapters automatically, the first chapter timestamp MUST start at 00:00, you must provide a minimum of 3 chapters in sequential ascending order, and each chapter must be at least 10 seconds in duration."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the Podcasting 2.0 JSON Chapter Standard?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The Podcasting 2.0 JSON chapter spec is an open standard that allows podcasters to link external chapter metadata directly inside their RSS feed using a <podcast:chapters> tag pointing to a .json file containing start times, titles, images, and external web links."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does adding chapters improve podcast SEO and listener retention?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Chapters create indexable key moments in search engines (like Google and YouTube), improving discoverability for niche long-tail queries. They also boost retention by allowing listeners to navigate directly to high-value topics."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the difference between MP3 ID3 chapters and RSS chapters?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ID3 chapters are embedded directly into the header bytes of the MP3 audio file using frame tags (CHAP/CTOC), whereas RSS chapters (Podcasting 2.0 JSON) are hosted externally and fetched dynamically by modern podcast directory applications."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I convert YouTube timestamps into a Podcasting 2.0 JSON file?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes! This Podcast Chapter Builder automatically converts raw text timestamps (such as 00:00 Intro, 03:15 Discussion) into fully validated JSON files formatted to the official Podcasting 2.0 specifications."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-main: #0f1117;
+            --bg-card: #181b24;
+            --bg-input: #222634;
+            --border-color: #2e3446;
+            --accent-blue: #1877f2;
+            --accent-cyan: #00f2fe;
+            --accent-pink: #ff0050;
+            --accent-green: #10b981;
+            --accent-amber: #f59e0b;
+            --accent-purple: #a855f7;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: var(--bg-main); color: var(--text-primary); font-family: var(--font-sans); line-height: 1.6; }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 420px 1fr;
+            grid-template-areas: 
+                "upload preview"
+                "panel preview";
+            gap: 2rem;
+        }
+
+        .upload-card-wrapper { grid-area: upload; }
+
+        .panel {
+            grid-area: panel;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            height: fit-content;
+        }
+
+        .panel-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            background: linear-gradient(135deg, var(--accent-purple), var(--accent-cyan));
+            color: #fff;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        .drop-zone {
+            border: 2px dashed var(--border-color);
+            padding: 1rem;
+            text-align: center;
+            border-radius: 8px;
+            background-color: var(--bg-input);
+            cursor: pointer;
+            transition: border-color 0.2s, background-color 0.2s;
+            margin-bottom: 1rem;
+        }
+        .drop-zone:hover { border-color: var(--accent-cyan); background-color: rgba(0, 242, 254, 0.05); }
+        .drop-title { font-weight: 600; color: #fff; font-size: 0.9rem; }
+        .drop-sub { font-size: 0.78rem; color: var(--text-secondary); margin-top: 2px; }
+
+        .preset-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .btn-demo {
+            width: 100%;
+            padding: 0.6rem 0.5rem;
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            color: var(--accent-cyan);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.78rem;
+            transition: background-color 0.2s, border-color 0.2s;
+            text-align: center;
+        }
+        .btn-demo:hover { background-color: #2a2f42; border-color: var(--accent-cyan); }
+
+        .form-group { margin-bottom: 1.25rem; }
+        .range-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem; }
+        .range-value { font-size: 0.85rem; font-weight: 700; color: var(--accent-cyan); }
+        label { display: block; font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 0.4rem; }
+        input[type="text"], input[type="number"], textarea, select {
+            width: 100%; padding: 0.65rem 0.85rem; background-color: var(--bg-input);
+            border: 1px solid var(--border-color); border-radius: 6px; color: #fff;
+            font-size: 0.9rem; outline: none; font-family: inherit;
+        }
+        textarea { resize: vertical; min-height: 160px; font-family: monospace; font-size: 0.85rem; line-height: 1.4; }
+        input[type="text"]:focus, input[type="number"]:focus, textarea:focus, select:focus { border-color: var(--accent-purple); }
+
+        .btn-action {
+            width: 100%; padding: 0.85rem; background: linear-gradient(135deg, var(--accent-purple), #7e22ce);
+            color: #fff; font-weight: 600; border: none; border-radius: 6px; cursor: pointer; font-size: 0.95rem;
+            box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3);
+            transition: transform 0.1s, opacity 0.2s;
+            margin-bottom: 0.75rem;
+        }
+        .btn-action:hover { opacity: 0.95; }
+        .btn-action:active { transform: scale(0.99); }
+
+        .btn-secondary {
+            width: 100%; padding: 0.65rem; background-color: var(--bg-input);
+            color: var(--text-primary); font-weight: 600; border: 1px solid var(--border-color);
+            border-radius: 6px; cursor: pointer; font-size: 0.85rem; transition: background-color 0.2s;
+            margin-bottom: 0.5rem;
+        }
+        .btn-secondary:hover { background-color: #2a2f42; border-color: var(--accent-cyan); }
+
+        /* Social Share Button Module */
+        .social-share-container {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        .share-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
+            display: block;
+            text-align: center;
+        }
+        .share-buttons-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+        }
+        .btn-share {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            padding: 0.5rem 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+        .btn-share:hover { opacity: 0.88; }
+        .btn-share-x { background-color: #000000; border: 1px solid #333; }
+        .btn-share-fb { background-color: #1877f2; }
+        .btn-share-li { background-color: #0a66c2; }
+        .btn-share-wa { background-color: #25d366; color: #000; }
+        .btn-share-pin { background-color: #e60023; }
+        .btn-share-copy { background-color: #374151; color: #fff; grid-column: span 3; margin-top: 0.25rem; }
+
+        .preview-stage { 
+            grid-area: preview;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+        }
+        .canvas-wrapper {
+            position: relative; width: 340px; height: 604px; border-radius: 16px;
+            overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.6); background-color: #000;
+            border: 2px solid var(--border-color);
+        }
+        canvas { width: 100%; height: 100%; display: block; }
+        .canvas-caption { margin-top: 1rem; font-size: 0.85rem; color: var(--text-secondary); text-align: center; }
+
+        /* Metric Highlights Grid below Canvas */
+        .metric-summary-grid {
+            width: 100%;
+            max-width: 340px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+        .metric-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.85rem;
+            text-align: center;
+        }
+        .metric-card-title { font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; }
+        .metric-card-value { font-size: 1.1rem; font-weight: 700; color: #fff; }
+        .metric-card-value.highlight { color: var(--accent-green); }
+        .metric-card-value.warn { color: var(--accent-amber); }
+
+        .content-area { max-width: 1200px; margin: 3rem auto; padding: 0 1.5rem; }
+        .content-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 2.5rem; }
+        .content-card h1 { font-size: 2rem; margin-bottom: 1rem; color: #fff; }
+        .content-card h2 { font-size: 1.4rem; margin: 1.8rem 0 1rem; color: #fff; }
+        .content-card p { color: var(--text-secondary); margin-bottom: 1.2rem; }
+        .content-card ul, .content-card ol { color: var(--text-secondary); margin: 0 0 1.2rem 1.5rem; }
+        .content-card li { margin-bottom: 0.5rem; }
+
+        .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 1.5rem 0; }
+        .spec-table { width: 100%; border-collapse: collapse; text-align: left; min-width: 600px; }
+        .spec-table th, .spec-table td { padding: 0.85rem 1rem; border: 1px solid var(--border-color); }
+        .spec-table th { background-color: var(--bg-input); color: #fff; font-size: 0.9rem; }
+        .spec-table td { color: var(--text-secondary); font-size: 0.875rem; }
+
+        /* Accordion FAQ Styling */
+        .faq-block { margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem; }
+        .faq-accordion {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 0.85rem;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .faq-accordion[open] { border-color: var(--accent-purple); }
+        .faq-summary {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            padding: 1rem 1.2rem;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+        .faq-summary::-webkit-details-marker { display: none; }
+        .faq-summary::after {
+            content: "+";
+            font-size: 1.2rem;
+            color: var(--accent-purple);
+            transition: transform 0.2s;
+        }
+        .faq-accordion[open] .faq-summary::after {
+            content: "−";
+            color: var(--accent-purple);
+        }
+        .faq-answer {
+            padding: 0 1.2rem 1.2rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 0.4rem;
+            padding-top: 0.8rem;
+        }
+
+        .cms-ad-slot-1, .cms-ad-slot-2 {
+            width: 100%; max-width: 970px; min-height: 90px; margin: 1.5rem auto;
+            background: rgba(255,255,255,0.02); border-radius: 8px; display: block;
+        }
+
+        .alert-banner {
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            font-size: 0.825rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            display: none;
+        }
+        .alert-banner.warning {
+            background-color: rgba(245, 158, 11, 0.15);
+            border: 1px solid var(--accent-amber);
+            color: #fbbf24;
+        }
+        .alert-banner.success {
+            background-color: rgba(16, 185, 129, 0.15);
+            border: 1px solid var(--accent-green);
+            color: #34d399;
+        }
+
+        /* Mobile Responsive Overrides */
+        @media screen and (max-width: 900px) {
+            html, body { width: 100%!important; max-width: 100vw!important; overflow-x: hidden!important; margin: 0!important; padding: 0!important; }
+            main.container { display: flex!important; flex-direction: column!important; width: 100%!important; max-width: 100%!important; padding: 0 12px!important; margin: 8px auto!important; gap: 16px!important; box-sizing: border-box!important; }
+            .upload-card-wrapper { order: 1!important; width: 100%!important; }
+            main.container > section.preview-stage { order: 2!important; width: 100%!important; display: flex!important; flex-direction: column!important; align-items: center!important; margin: 0 auto!important; box-sizing: border-box!important; }
+            main.container > section.panel { order: 3!important; width: 100%!important; max-width: 100%!important; box-sizing: border-box!important; }
+            .canvas-wrapper { width: 78vw!important; height: 138vw!important; max-width: 300px!important; max-height: 533px!important; margin: 0 auto!important; box-sizing: border-box!important; }
+            input, textarea, select { font-size: 16px!important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Container -->
+    <div id="global-header"></div>
+
+    <!-- Ad Slot 1 Container -->
+    <div class="cms-ad-slot-1" id="cms-ad-slot-top"></div>
+
+    <!-- Main Tool Container -->
+    <main class="container">
+        <!-- Module 1: Timestamp Input & Episode Configuration -->
+        <div class="upload-card-wrapper">
+            <div class="panel">
+                <div class="panel-title">
+                    <span>Episode Chapters Input</span>
+                    <span class="badge">CHAPTER ENGINE</span>
+                </div>
+                
+                <div class="drop-zone" id="dropZone">
+                    <p class="drop-title">🎙️ Instant Podcast Presets</p>
+                    <p class="drop-sub">Load sample episode chapter structures with 1 click</p>
+                </div>
+
+                <div class="preset-grid">
+                    <button class="btn-demo" id="presetTech" type="button">💻 Tech Interview</button>
+                    <button class="btn-demo" id="presetSolo" type="button">🎙️ Solo Briefing</button>
+                    <button class="btn-demo" id="presetLong" type="button">📚 Deep Dive 1hr</button>
+                    <button class="btn-demo" id="presetVideo" type="button">📺 Video Essay</button>
+                </div>
+
+                <div class="form-group">
+                    <label for="episodeTitle">Episode Title / Header</label>
+                    <input type="text" id="episodeTitle" value="Ep #104: Scaling Web Utilities &amp; Podcast SEO" placeholder="e.g. Ep 42 - The Future of AI">
+                </div>
+
+                <div class="form-group">
+                    <label for="podcastShow">Show Name</label>
+                    <input type="text" id="podcastShow" value="CoreMetric Developer Radio" placeholder="e.g. Tech Talk Daily">
+                </div>
+
+                <div class="form-group">
+                    <label for="timestampInput">Bulk Paste Timestamps &amp; Chapter Titles</label>
+                    <textarea id="timestampInput" placeholder="00:00 Intro &amp; Welcome&#10;02:15 Topic 1: Technical Architecture&#10;08:40 Topic 2: Monetization Models&#10;15:20 Viewer Q&amp;A&#10;22:10 Outro &amp; Resources">00:00 Intro &amp; Episode Overview
+01:45 Technical Stack &amp; Vanilla JS
+05:30 Programmatic SEO &amp; Directory Architecture
+12:15 Monetization with AdSense &amp; Cloudflare
+18:50 Podcasting 2.0 JSON Chapter Specs
+24:10 Q&amp;A: Indexing &amp; Site Speed
+28:35 Final Key Takeaways &amp; Wrap-Up</textarea>
+                </div>
+
+                <div class="alert-banner warning" id="validationWarning">
+                    ⚠️ YouTube Chapter Rule Alert: Timestamps must start at 00:00 and contain at least 3 chapters.
+                </div>
+
+                <div class="alert-banner success" id="validationSuccess">
+                    ✓ Valid Chapter Setup: Pass YouTube, Spotify &amp; Podcasting 2.0 standards.
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 2: Live Canvas Stage & Episode Metrics -->
+        <section class="preview-stage">
+            <div class="canvas-wrapper">
+                <canvas id="previewCanvas" width="1080" height="1920"></canvas>
+            </div>
+            <p class="canvas-caption">
+                Live Episode Chapter Blueprint Card. Generated in 1080x1920 HD.
+            </p>
+
+            <div class="metric-summary-grid">
+                <div class="metric-card">
+                    <div class="metric-card-title">Total Chapters</div>
+                    <div class="metric-card-value highlight" id="cardTotalChapters">7</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-card-title">Est. Episode Length</div>
+                    <div class="metric-card-value" id="cardEstLength">32m 00s</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-card-title">Avg Chapter Length</div>
+                    <div class="metric-card-value" id="cardAvgLength">4m 34s</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-card-title">YouTube Status</div>
+                    <div class="metric-card-value highlight" id="cardYtStatus">VALID</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Module 3: Export Tools & Format Selection -->
+        <section class="panel">
+            <div class="panel-title">
+                <span>Export &amp; Format Tools</span>
+                <span class="badge">OUTPUT ENGINE</span>
+            </div>
+
+            <div class="form-group">
+                <label for="timeFormatSelect">Timestamp Display Syntax</label>
+                <select id="timeFormatSelect">
+                    <option value="standard" selected>Standard (MM:SS or HH:MM:SS)</option>
+                    <option value="bracketed">[MM:SS] Bracketed Format</option>
+                    <option value="parentheses">(MM:SS) Parentheses Format</option>
+                    <option value="dashed">MM:SS - Chapter Title</option>
+                </select>
+            </div>
+
+            <button class="btn-action" id="copyYtBtn" type="button">📋 Copy YouTube / Spotify Timestamps</button>
+            <button class="btn-secondary" id="copyJsonBtn" type="button">⚙️ Export Podcasting 2.0 JSON</button>
+            <button class="btn-secondary" id="copyCueBtn" type="button">🎵 Export CUE Tracklist Sheet</button>
+            <button class="btn-secondary" id="downloadPngBtn" type="button">🖼️ Export Visual Chapter Blueprint (PNG)</button>
+
+            <!-- Social Media Share Section -->
+            <div class="social-share-container">
+                <span class="share-label">Share This Chapter Tool</span>
+                <div class="share-buttons-grid">
+                    <a id="shareX" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-x">𝕏 Post</a>
+                    <a id="shareFB" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-fb">Facebook</a>
+                    <a id="shareWA" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-wa">WhatsApp</a>
+                    <a id="shareLI" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-li">LinkedIn</a>
+                    <a id="sharePIN" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-pin">Pinterest</a>
+                    <button id="copyShareLink" type="button" class="btn-share btn-share-copy">🔗 Copy Tool Link</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- SEO & Educational Content Section -->
+    <article class="content-area">
+        <div class="content-card">
+            <h1>Podcast Chapter Builder &amp; Interactive Timestamp Generator (2026)</h1>
+            <p>
+                As digital audio publishing and podcast video distribution mature across platforms like YouTube, Spotify, Apple Podcasts, and specialized open-spec apps, structuring your podcast episodes with clean chapter timestamps is no longer optional. Chapter markers transform raw linear audio into an indexable, user-friendly multimedia asset.
+            </p>
+            <p>
+                This interactive <strong>podcast-chapter-builder</strong> allows podcast producers, video editors, audio engineers, and content strategists to instantaneously format, parse, validate, and export episode chapter metadata. Whether you need YouTube-compliant video timestamps, Spotify show note markers, or standardized open-spec <strong>Podcasting 2.0 JSON (`chapters.json`)</strong> feeds, this browser-based utility processes everything 100% client-side without registration or server uploads.
+            </p>
+
+            <h2>The Science of Podcast Chapters: Listener Retention &amp; Search SEO</h2>
+            <p>
+                Adding timestamps to your podcast show notes and video descriptions delivers two major advantages: direct search engine indexing and enhanced listener completion rates.
+            </p>
+            <p>
+                Search algorithms (including Google Search and YouTube's recommendations engine) break long-form media into "Key Moments." When a user searches for a specific long-tail query—such as "how to validate JSON schema"—Google can direct the user to the exact minute and second of your episode where that topic begins. Without chapter markers, your 45-minute episode remains a black box to search crawlers.
+            </p>
+            <ul>
+                <li><strong>Reduced Drop-off Rates:</strong> Listeners who can jump directly to topics relevant to their interests are 40% more likely to remain subscribed compared to those forced to seek manually through un-indexed audio.</li>
+                <li><strong>Enhanced SERP Real Estate:</strong> Episodes with structured chapters earn rich timeline snippets in Google search results, taking up significantly more screen space than standard link listings.</li>
+                <li><strong>Cross-Platform Accessibility:</strong> Supporting modern Podcasting 2.0 standards ensures your chapters render seamlessly on modern podcast players like Fountain, Overcast, Pocket Casts, and Podfriend.</li>
+            </ul>
+
+            <h2>Platform Chapter Compatibility Specs Matrix</h2>
+            <p>
+                Different media platforms enforce distinct rules for parsing chapter timestamps. The table below outlines the core specifications required across major distribution hubs:
+            </p>
+
+            <div class="table-responsive">
+                <table class="spec-table">
+                    <thead>
+                        <tr>
+                            <th>Platform / Standard</th>
+                            <th>First Timestamp Standard</th>
+                            <th>Min. Chapters Required</th>
+                            <th>Min. Chapter Duration</th>
+                            <th>Supported File Format / Location</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>YouTube Video Chapters</strong></td>
+                            <td>Must start at 00:00</td>
+                            <td>3 Chapters</td>
+                            <td>10 Seconds</td>
+                            <td>Video Description Text Box</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Podcasting 2.0 JSON</strong></td>
+                            <td>Any start time (0s default)</td>
+                            <td>1 Chapter</td>
+                            <td>1 Second</td>
+                            <td>Hosted `.json` file in RSS Feed</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Spotify Show Notes</strong></td>
+                            <td>Recommended 00:00</td>
+                            <td>2 Chapters</td>
+                            <td>5 Seconds</td>
+                            <td>Episode Description / Show Notes</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Apple Podcasts (ID3)</strong></td>
+                            <td>Embedded frame alignment</td>
+                            <td>1 Chapter</td>
+                            <td>1 Second</td>
+                            <td>Embedded MP3 ID3v2 Tags (CHAP/CTOC)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>CUE Sheet Tracklist</strong></td>
+                            <td>Sequential track indexing</td>
+                            <td>1 Track</td>
+                            <td>1 Second</td>
+                            <td>External `.cue` sidecar file</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Ad Slot 2 Container -->
+            <div class="cms-ad-slot-2"></div>
+
+            <h2>How to Format Podcasting 2.0 `chapters.json` Metadata</h2>
+            <p>
+                The <strong>Podcasting 2.0 JSON specification</strong> (managed by the Podcast Index community) allows creators to link external chapter files inside their RSS feed using the `<podcast:chapters>` tag. This enables rich features such as chapter specific artwork, external hyperlinks, and precise millisecond timing.
+            </p>
+            <p>
+                Below is an example of the official JSON structure generated by our tool:
+            </p>
+            <blockquote style="background-color: var(--bg-input); padding: 1rem 1.25rem; border-left: 4px solid var(--accent-purple); border-radius: 4px; margin: 1rem 0; font-family: monospace; font-size: 0.85rem; color: #fff; overflow-x: auto;">
+                {<br>
+                &nbsp;&nbsp;"version": "1.2.0",<br>
+                &nbsp;&nbsp;"author": "CoreMetric Developer Radio",<br>
+                &nbsp;&nbsp;"title": "Ep #104: Scaling Web Utilities",<br>
+                &nbsp;&nbsp;"chapters": [<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;{ "startTime": 0, "title": "Intro & Episode Overview" },<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;{ "startTime": 105, "title": "Technical Stack & Vanilla JS" },<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;{ "startTime": 330, "title": "Programmatic SEO Architecture" }<br>
+                &nbsp;&nbsp;]<br>
+                }
+            </blockquote>
+
+            <h2>Step-by-Step Workflow to Chapterize Your Podcast Episodes</h2>
+            <ol>
+                <li><strong>Draft Timestamps During Audio Editing:</strong> While editing in your DAW (such as Audacity, Adobe Audition, Logic Pro, or Descript), place markers at topic transition points.</li>
+                <li><strong>Paste Raw Timestamps into Builder:</strong> Copy your timestamps into the text area using standard `MM:SS` or `HH:MM:SS` syntax followed by the chapter title.</li>
+                <li><strong>Verify YouTube Compliance:</strong> Check the live indicator badge. Ensure your first timestamp starts strictly at `00:00` and you have at least 3 chapters.</li>
+                <li><strong>Export &amp; Publish:</strong> Click <em>Copy YouTube Timestamps</em> for your video description, or <em>Export Podcasting 2.0 JSON</em> to upload to your podcast host (e.g., Libsyn, Buzzsprout, RSS.com, Transistor).</li>
+            </ol>
+
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-block">
+                <details class="faq-accordion" open>
+                    <summary class="faq-summary">What are the essential requirements for YouTube podcast timestamps?</summary>
+                    <div class="faq-answer">
+                        For YouTube to parse chapters automatically, the first chapter timestamp MUST start at 00:00, you must provide a minimum of 3 chapters in sequential ascending order, and each chapter must be at least 10 seconds in duration.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">What is the Podcasting 2.0 JSON Chapter Standard?</summary>
+                    <div class="faq-answer">
+                        The Podcasting 2.0 JSON chapter spec is an open standard that allows podcasters to link external chapter metadata directly inside their RSS feed using a &lt;podcast:chapters&gt; tag pointing to a .json file containing start times, titles, images, and external web links.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">How does adding chapters improve podcast SEO and listener retention?</summary>
+                    <div class="faq-answer">
+                        Chapters create indexable key moments in search engines (like Google and YouTube), improving discoverability for niche long-tail queries. They also boost retention by allowing listeners to navigate directly to high-value topics.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">What is the difference between MP3 ID3 chapters and RSS chapters?</summary>
+                    <div class="faq-answer">
+                        ID3 chapters are embedded directly into the header bytes of the MP3 audio file using frame tags (CHAP/CTOC), whereas RSS chapters (Podcasting 2.0 JSON) are hosted externally and fetched dynamically by modern podcast directory applications.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">Can I convert YouTube timestamps into a Podcasting 2.0 JSON file?</summary>
+                    <div class="faq-answer">
+                        Yes! This Podcast Chapter Builder automatically converts raw text timestamps (such as 00:00 Intro, 03:15 Discussion) into fully validated JSON files formatted to the official Podcasting 2.0 specifications.
+                    </div>
+                </details>
+            </div>
+        </div>
+    </article>
+
+    <!-- Footer Container -->
+    <div id="global-footer"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var canvas = document.getElementById('previewCanvas');
+            if (!canvas) return;
+            var ctx = canvas.getContext('2d');
+
+            // DOM Elements
+            var episodeTitleInput = document.getElementById('episodeTitle');
+            var podcastShowInput = document.getElementById('podcastShow');
+            var timestampInput = document.getElementById('timestampInput');
+            var timeFormatSelect = document.getElementById('timeFormatSelect');
+
+            var validationWarning = document.getElementById('validationWarning');
+            var validationSuccess = document.getElementById('validationSuccess');
+
+            var cardTotalChapters = document.getElementById('cardTotalChapters');
+            var cardEstLength = document.getElementById('cardEstLength');
+            var cardAvgLength = document.getElementById('cardAvgLength');
+            var cardYtStatus = document.getElementById('cardYtStatus');
+
+            var presetTech = document.getElementById('presetTech');
+            var presetSolo = document.getElementById('presetSolo');
+            var presetLong = document.getElementById('presetLong');
+            var presetVideo = document.getElementById('presetVideo');
+
+            var copyYtBtn = document.getElementById('copyYtBtn');
+            var copyJsonBtn = document.getElementById('copyJsonBtn');
+            var copyCueBtn = document.getElementById('copyCueBtn');
+            var downloadPngBtn = document.getElementById('downloadPngBtn');
+
+            /* Setup Social Share Links */
+            var currentUrl = encodeURIComponent(window.location.href);
+            var shareTitle = encodeURIComponent("Check out this free Podcast Chapter Builder & Timestamp Generator Tool!");
+            
+            document.getElementById('shareX').href = 'https://twitter.com/intent/tweet?url=' + currentUrl + '&text=' + shareTitle;
+            document.getElementById('shareFB').href = 'https://www.facebook.com/sharer/sharer.php?u=' + currentUrl;
+            document.getElementById('shareWA').href = 'https://api.whatsapp.com/send?text=' + shareTitle + '%20' + currentUrl;
+            document.getElementById('shareLI').href = 'https://www.linkedin.com/sharing/share-offsite/?url=' + currentUrl;
+            document.getElementById('sharePIN').href = 'https://pinterest.com/pin/create/button/?url=' + currentUrl + '&description=' + shareTitle;
+
+            var copyBtn = document.getElementById('copyShareLink');
+            copyBtn.addEventListener('click', function() {
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'Podcast Chapter Builder',
+                        text: 'Format and validate podcast chapters for YouTube, Spotify, and Podcasting 2.0.',
+                        url: window.location.href
+                    }).catch(function() {});
+                } else if (navigator.clipboard) {
+                    navigator.clipboard.writeText(window.location.href).then(function() {
+                        var origText = copyBtn.textContent;
+                        copyBtn.textContent = '✓ Link Copied!';
+                        setTimeout(function() { copyBtn.textContent = origText; }, 2000);
+                    });
+                }
+            });
+
+            // Presets Handlers
+            presetTech.addEventListener('click', function() {
+                episodeTitleInput.value = "Ep #104: Scaling Web Utilities & Podcast SEO";
+                podcastShowInput.value = "CoreMetric Developer Radio";
+                timestampInput.value = "00:00 Intro & Episode Overview\n01:45 Technical Stack & Vanilla JS\n05:30 Programmatic SEO & Directory Architecture\n12:15 Monetization with AdSense & Cloudflare\n18:50 Podcasting 2.0 JSON Chapter Specs\n24:10 Q&A: Indexing & Site Speed\n28:35 Final Key Takeaways & Wrap-Up";
+                parseAndDraw();
+            });
+
+            presetSolo.addEventListener('click', function() {
+                episodeTitleInput.value = "Daily Briefing: 5 Essential SEO Updates for 2026";
+                podcastShowInput.value = "SEO Masterclass Daily";
+                timestampInput.value = "00:00 Welcome & Today's Agenda\n01:10 Update 1: Core Web Vitals 2026\n03:25 Update 2: Search Intent & AI Overviews\n06:40 Update 3: Schema Markup Extensions\n09:15 Actionable Execution Checklist\n11:00 Outro & Subscriber Rewards";
+                parseAndDraw();
+            });
+
+            presetLong.addEventListener('click', function() {
+                episodeTitleInput.value = "Deep Dive #42: The Complete History of Client-Side Web Frameworks";
+                podcastShowInput.value = "Web Architecture History";
+                timestampInput.value = "00:00 Episode Introduction & Context\n04:15 The Early Web: Static HTML & CGI\n14:30 The Rise of AJAX & jQuery Era\n28:10 Single Page Apps & React/Vue Revolution\n42:50 The Modern Renaissance of Vanilla JS\n56:20 Future Predictions & Final Thoughts";
+                parseAndDraw();
+            });
+
+            presetVideo.addEventListener('click', function() {
+                episodeTitleInput.value = "How I Built a $10k/Mo Micro-SaaS Business Single-Handed";
+                podcastShowInput.value = "Indie Hacker Chronicles";
+                timestampInput.value = "00:00 Teaser & Revenue Proof\n00:45 The Micro-SaaS Niche Discovery\n03:10 Building the MVP without Server Code\n07:40 Launch Day Strategy & First 100 Users\n11:25 Scaling Up & Automation Setup\n14:50 Conclusion & Free Source Code Link";
+                parseAndDraw();
+            });
+
+            // Event Listeners
+            episodeTitleInput.addEventListener('input', parseAndDraw);
+            podcastShowInput.addEventListener('input', parseAndDraw);
+            timestampInput.addEventListener('input', parseAndDraw);
+            timeFormatSelect.addEventListener('change', parseAndDraw);
+
+            // Utility Functions
+            function parseTimeToSeconds(timeStr) {
+                var parts = timeStr.trim().split(':').map(Number);
+                if (parts.some(isNaN)) return null;
+                if (parts.length === 2) {
+                    return parts[0] * 60 + parts[1];
+                } else if (parts.length === 3) {
+                    return parts[0] * 3600 + parts[1] * 60 + parts[2];
+                }
+                return null;
+            }
+
+            function formatSecondsToTime(seconds) {
+                var h = Math.floor(seconds / 3600);
+                var m = Math.floor((seconds % 3600) / 60);
+                var s = Math.floor(seconds % 60);
+                
+                var mStr = m < 10 && h > 0 ? '0' + m : m;
+                var sStr = s < 10 ? '0' + s : s;
+
+                if (h > 0) {
+                    return h + ':' + (m < 10 ? '0' + m : m) + ':' + sStr;
+                }
+                return mStr + ':' + sStr;
+            }
+
+            function formatDurationText(seconds) {
+                var m = Math.floor(seconds / 60);
+                var s = Math.floor(seconds % 60);
+                if (m >= 60) {
+                    var h = Math.floor(m / 60);
+                    m = m % 60;
+                    return h + 'h ' + m + 'm';
+                }
+                return m + 'm ' + s + 's';
+            }
+
+            function parseChapters() {
+                var text = timestampInput.value;
+                var lines = text.split('\n');
+                var chapters = [];
+
+                // Regex matches timestamp at start or inside brackets
+                var regex = /(?:\[|\()?\b(\d{1,2}:\d{2}(?::\d{2})?)\b(?:\]\vert{}\))?\s*[-–—]?\s*(.+)/;
+
+                for (var i = 0; i < lines.length; i++) {
+                    var line = lines[i].trim();
+                    if (!line) continue;
+
+                    var match = line.match(regex);
+                    if (match) {
+                        var rawTime = match[1];
+                        var title = match[2].trim();
+                        var secs = parseTimeToSeconds(rawTime);
+
+                        if (secs !== null) {
+                            chapters.push({
+                                rawTime: rawTime,
+                                startTime: secs,
+                                title: title
+                            });
+                        }
+                    }
+                }
+
+                // Sort by start time ascending
+                chapters.sort(function(a, b) { return a.startTime - b.startTime; });
+                return chapters;
+            }
+
+            function validateYouTubeCompliance(chapters) {
+                if (chapters.length < 3) return false;
+                if (chapters[0].startTime !== 0) return false;
+
+                // Check min 10 seconds duration per chapter
+                for (var i = 0; i < chapters.length - 1; i++) {
+                    if (chapters[i + 1].startTime - chapters[i].startTime < 10) {
+                        return false;
+                    }
+                }
+                return true;
+            }
+
+            function parseAndDraw() {
+                var chapters = parseChapters();
+                var isValidYt = validateYouTubeCompliance(chapters);
+
+                if (isValidYt) {
+                    validationWarning.style.display = 'none';
+                    validationSuccess.style.display = 'block';
+                    cardYtStatus.textContent = 'VALID';
+                    cardYtStatus.className = 'metric-card-value highlight';
+                } else {
+                    validationWarning.style.display = 'block';
+                    validationSuccess.style.display = 'none';
+                    cardYtStatus.textContent = 'INVALID';
+                    cardYtStatus.className = 'metric-card-value warn';
+                }
+
+                var totalChapters = chapters.length;
+                var estLengthSecs = 0;
+                var avgLengthSecs = 0;
+
+                if (totalChapters > 0) {
+                    // Estimate episode length as last chapter + estimated avg chapter length or 4 mins
+                    var lastStart = chapters[totalChapters - 1].startTime;
+                    if (totalChapters > 1) {
+                        var avgGap = lastStart / (totalChapters - 1);
+                        estLengthSecs = lastStart + avgGap;
+                    } else {
+                        estLengthSecs = lastStart + 300;
+                    }
+                    avgLengthSecs = estLengthSecs / totalChapters;
+                }
+
+                cardTotalChapters.textContent = totalChapters;
+                cardEstLength.textContent = formatDurationText(estLengthSecs);
+                cardAvgLength.textContent = formatDurationText(avgLengthSecs);
+
+                drawCanvas({
+                    episodeTitle: episodeTitleInput.value || 'Podcast Episode',
+                    podcastShow: podcastShowInput.value || 'Podcast Show',
+                    chapters: chapters,
+                    isValidYt: isValidYt,
+                    estLengthSecs: estLengthSecs,
+                    totalChapters: totalChapters
+                });
+            }
+
+            function drawCanvas(data) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                // Background Gradient
+                var bgGrad = ctx.createLinearGradient(0, 0, 1080, 1920);
+                bgGrad.addColorStop(0, '#0f1117');
+                bgGrad.addColorStop(0.5, '#181b24');
+                bgGrad.addColorStop(1, '#0b0d12');
+                ctx.fillStyle = bgGrad;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Header Top Bar Accent
+                var headerGrad = ctx.createLinearGradient(0, 0, 1080, 0);
+                headerGrad.addColorStop(0, '#a855f7');
+                headerGrad.addColorStop(0.5, '#00f2fe');
+                headerGrad.addColorStop(1, '#10b981');
+                ctx.fillStyle = headerGrad;
+                ctx.fillRect(0, 0, 1080, 16);
+
+                // Title & Show Header
+                ctx.fillStyle = '#a855f7';
+                ctx.font = '600 30px -apple-system, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText(data.podcastShow.toUpperCase(), 540, 90);
+
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 46px -apple-system, sans-serif';
+                ctx.fillText(data.episodeTitle, 540, 150);
+
+                // Divider Line
+                ctx.strokeStyle = '#2e3446';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(80, 190);
+                ctx.lineTo(1000, 190);
+                ctx.stroke();
+
+                // Main Metric Banner Card
+                ctx.fillStyle = '#181b24';
+                ctx.strokeStyle = data.isValidYt ? '#10b981' : '#f59e0b';
+                ctx.lineWidth = 3;
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(80, 220, 920, 180, 20);
+                    ctx.fill();
+                    ctx.stroke();
+                } else {
+                    ctx.fillRect(80, 220, 920, 180);
+                }
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = 'bold 24px -apple-system, sans-serif';
+                ctx.fillText('EPISODE CHAPTER BLUEPRINT', 540, 260);
+
+                ctx.fillStyle = '#00f2fe';
+                ctx.font = 'bold 54px -apple-system, sans-serif';
+                ctx.fillText(data.totalChapters + ' CHAPTERS INDEXED', 540, 330);
+
+                ctx.fillStyle = '#ffffff';
+                ctx.font = '24px -apple-system, sans-serif';
+                ctx.fillText('Est. Duration: ' + formatDurationText(data.estLengthSecs) + '  |  YouTube Valid: ' + (data.isValidYt ? 'YES ✓' : 'NO ⚠️'), 540, 375);
+
+                // Visual Timeline Segment Bar
+                ctx.fillStyle = '#222634';
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(80, 430, 920, 36, 18);
+                    ctx.fill();
+                } else {
+                    ctx.fillRect(80, 430, 920, 36);
+                }
+
+                if (data.chapters.length > 0 && data.estLengthSecs > 0) {
+                    var colors = ['#a855f7', '#00f2fe', '#10b981', '#f59e0b', '#ff0050', '#1877f2', '#e11d48'];
+                    for (var c = 0; c < data.chapters.length; c++) {
+                        var startSec = data.chapters[c].startTime;
+                        var endSec = (c < data.chapters.length - 1) ? data.chapters[c + 1].startTime : data.estLengthSecs;
+                        var segWidth = Math.max(10, ((endSec - startSec) / data.estLengthSecs) * 920);
+                        var startX = 80 + (startSec / data.estLengthSecs) * 920;
+
+                        ctx.fillStyle = colors[c % colors.length];
+                        ctx.fillRect(startX, 430, segWidth - 2, 36);
+                    }
+                }
+
+                // Chapter List Card Window
+                ctx.fillStyle = '#181b24';
+                ctx.strokeStyle = '#2e3446';
+                ctx.lineWidth = 2;
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(80, 500, 920, 1220, 20);
+                    ctx.fill();
+                    ctx.stroke();
+                } else {
+                    ctx.fillRect(80, 500, 920, 1220);
+                }
+
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 30px -apple-system, sans-serif';
+                ctx.textAlign = 'left';
+                ctx.fillText('CHAPTER BREAKDOWN & TIMESTAMPS', 120, 550);
+
+                // Render Chapter Rows (Up to 15 items in visual card)
+                var startY = 610;
+                var rowHeight = 72;
+                var maxDraw = Math.min(data.chapters.length, 15);
+
+                if (data.chapters.length === 0) {
+                    ctx.fillStyle = '#9ca3af';
+                    ctx.font = '28px -apple-system, sans-serif';
+                    ctx.fillText('No chapters detected. Paste timestamps above.', 120, 650);
+                } else {
+                    for (var i = 0; i < maxDraw; i++) {
+                        var ch = data.chapters[i];
+                        var currentY = startY + (i * rowHeight);
+
+                        // Row background accent
+                        ctx.fillStyle = (i % 2 === 0) ? '#1f2330' : '#181b24';
+                        if (ctx.roundRect) {
+                            ctx.beginPath();
+                            ctx.roundRect(110, currentY - 40, 860, 56, 10);
+                            ctx.fill();
+                        } else {
+                            ctx.fillRect(110, currentY - 40, 860, 56);
+                        }
+
+                        // Badge timestamp
+                        ctx.fillStyle = '#00f2fe';
+                        ctx.font = 'bold 28px monospace';
+                        ctx.fillText(formatSecondsToTime(ch.startTime), 130, currentY);
+
+                        // Chapter Title
+                        ctx.fillStyle = '#f3f4f6';
+                        ctx.font = '500 26px -apple-system, sans-serif';
+                        var truncatedTitle = ch.title.length > 42 ? ch.title.substring(0, 40) + '...' : ch.title;
+                        ctx.fillText(truncatedTitle, 280, currentY);
+                    }
+
+                    if (data.chapters.length > 15) {
+                        ctx.fillStyle = '#9ca3af';
+                        ctx.font = '24px -apple-system, sans-serif';
+                        ctx.fillText('+ ' + (data.chapters.length - 15) + ' additional chapters indexed in full output...', 120, startY + (15 * rowHeight) + 10);
+                    }
+                }
+
+                // Footer Branding
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = 'bold 26px -apple-system, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('CoreMetricSuite · Podcast Chapter & Metadata Utilities', 540, 1820);
+            }
+
+            // Export Event Handlers
+            copyYtBtn.addEventListener('click', function() {
+                var chapters = parseChapters();
+                if (chapters.length === 0) return;
+
+                var format = timeFormatSelect.value;
+                var textLines = [];
+
+                chapters.forEach(function(ch) {
+                    var timeStr = formatSecondsToTime(ch.startTime);
+                    if (format === 'bracketed') {
+                        textLines.push('[' + timeStr + '] ' + ch.title);
+                    } else if (format === 'parentheses') {
+                        textLines.push('(' + timeStr + ') ' + ch.title);
+                    } else if (format === 'dashed') {
+                        textLines.push(timeStr + ' - ' + ch.title);
+                    } else {
+                        textLines.push(timeStr + ' ' + ch.title);
+                    }
+                });
+
+                var outputText = textLines.join('\n');
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(outputText).then(function() {
+                        var orig = copyYtBtn.textContent;
+                        copyYtBtn.textContent = '✓ Timestamps Copied to Clipboard!';
+                        setTimeout(function() { copyYtBtn.textContent = orig; }, 2000);
+                    });
+                }
+            });
+
+            copyJsonBtn.addEventListener('click', function() {
+                var chapters = parseChapters();
+                if (chapters.length === 0) return;
+
+                var jsonObj = {
+                    version: "1.2.0",
+                    author: podcastShowInput.value || "Podcast Show",
+                    title: episodeTitleInput.value || "Podcast Episode",
+                    chapters: chapters.map(function(ch) {
+                        return {
+                            startTime: ch.startTime,
+                            title: ch.title
+                        };
+                    })
+                };
+
+                var jsonStr = JSON.stringify(jsonObj, null, 2);
+                var blob = new Blob([jsonStr], { type: 'application/json' });
+                var url = URL.createObjectURL(blob);
+                var a = document.createElement('a');
+                a.href = url;
+                a.download = 'podcast-chapters.json';
+                a.click();
+            });
+
+            copyCueBtn.addEventListener('click', function() {
+                var chapters = parseChapters();
+                if (chapters.length === 0) return;
+
+                var cueLines = [];
+                cueLines.push('TITLE "' + (episodeTitleInput.value || "Podcast Episode") + '"');
+                cueLines.push('PERFORMER "' + (podcastShowInput.value || "Podcast Show") + '"');
+                cueLines.push('FILE "episode.mp3" MP3');
+
+                chapters.forEach(function(ch, idx) {
+                    var trackNum = (idx + 1) < 10 ? '0' + (idx + 1) : (idx + 1);
+                    var m = Math.floor(ch.startTime / 60);
+                    var s = Math.floor(ch.startTime % 60);
+                    var mStr = m < 10 ? '0' + m : m;
+                    var sStr = s < 10 ? '0' + s : s;
+
+                    cueLines.push('  TRACK ' + trackNum + ' AUDIO');
+                    cueLines.push('    TITLE "' + ch.title + '"');
+                    cueLines.push('    INDEX 01 ' + mStr + ':' + sStr + ':00');
+                });
+
+                var cueStr = cueLines.join('\n');
+                var blob = new Blob([cueStr], { type: 'text/plain' });
+                var url = URL.createObjectURL(blob);
+                var a = document.createElement('a');
+                a.href = url;
+                a.download = 'podcast-tracklist.cue';
+                a.click();
+            });
+
+            downloadPngBtn.addEventListener('click', function() {
+                var link = document.createElement('a');
+                link.download = 'podcast-chapter-blueprint.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+
+            // Initial Execution
+            parseAndDraw();
+        });
+    </script>
+
+    <!-- Global CoreMetricSuite Cross-Linking Index Hub -->
+    <div style="margin-top: 40px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #f8fafc; font-family: system-ui, -apple-system, sans-serif;">
+        <h3 style="margin: 0 0 15px 0; font-size: 18px; color: #0f172a; font-weight: 600;">🛠️ CoreMetricSuite Utility Directory</h3>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇦🇺 Australia Tax &amp; Labor</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-au-cents" href="../au-cents-per-km-estimator/" style="color: #2563eb; text-decoration: underline;">Cents-Per-Km Tax Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-au-schads" href="../au-schads-vehicle-allowance/" style="color: #2563eb; text-decoration: underline;">SCHADS Vehicle Allowance</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-au-super" href="../au-superannuation-charge-tracker/" style="color: #2563eb; text-decoration: underline;">Superannuation Tracker</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇺🇸 US Corporate Tax</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-us-llc" href="../us-llc-late-penalty-estimator/" style="color: #2563eb; text-decoration: underline;">LLC Late Tax Penalty</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-us-179" href="../us-section-179-truck-calculator/" style="color: #2563eb; text-decoration: underline;">Section 179 Vehicle Deduction</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇬🇧 UK Property Management</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-rent" href="../uk-form-4a-rent-tracker/" style="color: #2563eb; text-decoration: underline;">Form 4A Rent Tracker</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-sdlt" href="../uk-sdlt-bracket-estimator/" style="color: #2563eb; text-decoration: underline;">Stamp Duty Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-sec8" href="../uk-section-8-calculator/" style="color: #2563eb; text-decoration: underline;">Section 8 Calculator</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🎬 Digital Media Layouts &amp; Monetization</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-media-podcast" href="../podcast-chapter-builder/" style="color: #2563eb; text-decoration: underline;">Podcast Chapter Builder</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-tiktok-goal" href="../tiktok-rpm-goal/" style="color: #2563eb; text-decoration: underline;">TikTok RPM Goal Engine</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-tiktok-rpm" href="../tiktok-creator-rewards-rpm-estimator/" style="color: #2563eb; text-decoration: underline;">TikTok Creator Rewards RPM</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-ig" href="../instagram-reels-preview/" style="color: #2563eb; text-decoration: underline;">Instagram Reels Grid</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-fb" href="../facebook-ad-safe-zone/" style="color: #2563eb; text-decoration: underline;">Facebook 9:16 Ad Mask</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-shorts" href="../shorts-ui-safe-zone/" style="color: #2563eb; text-decoration: underline;">YouTube Shorts Safe Zone</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script defer>
+        (function() {
+            const path = window.location.pathname.toLowerCase();
+            const toolsMap = {
+                'au-cents-per-km-estimator': 'hub-au-cents',
+                'au-schads-vehicle-allowance': 'hub-au-schads',
+                'au-superannuation-charge-tracker': 'hub-au-super',
+                'us-llc-late-penalty-estimator': 'hub-us-llc',
+                'us-section-179-truck-calculator': 'hub-us-179',
+                'uk-form-4a-rent-tracker': 'hub-uk-rent',
+                'uk-sdlt-bracket-estimator': 'hub-uk-sdlt',
+                'uk-section-8-calculator': 'hub-uk-sec8',
+                'podcast-chapter-builder': 'hub-media-podcast',
+                'tiktok-rpm-goal': 'hub-media-tiktok-goal',
+                'tiktok-creator-rewards-rpm-estimator': 'hub-media-tiktok-rpm',
+                'instagram-reels-preview': 'hub-media-ig',
+                'facebook-ad-safe-zone': 'hub-media-fb',
+                'shorts-ui-safe-zone': 'hub-media-shorts'
+            };
+
+            for (const [folderName, elementId] of Object.entries(toolsMap)) {
+                if (path.includes(folderName)) {
+                    const targetEl = document.getElementById(elementId);
+                    if (targetEl) {
+                        targetEl.outerHTML = `<span style="font-weight: 600; color: #0f172a;">${targetEl.textContent} (Current)</span>`;
+                    }
+                    break;
+                }
+            }
+        })();
+    </script>
+</body>
+</html>
