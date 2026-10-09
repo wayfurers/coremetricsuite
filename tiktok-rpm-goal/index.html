@@ -1,0 +1,1358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TikTok Creator Rewards RPM Goal Calculator &amp; View Target Engine (2026)</title>
+    <meta name="description" content="Calculate the views and RPM needed to reach your monthly income goal on TikTok in 2026. Reverse-engineer your target earnings, posting frequency, and qualified view ratios.">
+    <meta name="keywords" content="tiktok rpm goal calculator, tiktok target rpm calculator, tiktok revenue goal calculator, tiktok view target estimator, how many views to make $1000 on tiktok, tiktok monetization target, creator rewards payout goal">
+    <link rel="canonical" href="https://coremetricsuite.com/tiktok-rpm-goal/">
+
+    <!-- Open Graph / Social Metadata -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="TikTok Creator Rewards RPM Goal Calculator &amp; Target Revenue Engine">
+    <meta property="og:description" content="Reverse-engineer your TikTok Creator Rewards income goals. Calculate exact view requirements, target RPMs, and upload frequencies needed for $1k, $2.5k, $5k, or $10k per month.">
+    <meta property="og:url" content="https://coremetricsuite.com/tiktok-rpm-goal/">
+    
+    <!-- Global Framework Dependencies -->
+    <link rel="stylesheet" href="/css/global.css">
+    <script src="/config.js" defer></script>
+    <script src="/global.min.js" defer></script>
+<!-- INSERT THIS NEW SHIELD ON LINE 64 -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "CoreMetricSuite Programmable Utility Engine",
+  "url": "https://coremetricsuite.com",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "All",
+  "browserRequirements": "Requires HTML5. Requires JavaScript.",
+  "author": {
+    "@type": "Organization",
+    "name": "CoreMetricSuite Hub",
+    "url": "https://coremetricsuite.com"
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": "0.00",
+    "priceCurrency": "USD"
+  }
+}
+</script>
+
+    <!-- FAQ JSON-LD Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How many TikTok views are needed to earn $1,000 a month in 2026?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "At an average effective RPM of $0.90 per 1,000 qualified views and a standard 55% qualification filter rate, you need approximately 1,111,111 qualified views—which translates to roughly 2,020,000 total public video views per month (or ~67,300 views daily)."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does setting an RPM goal change your required view count?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Your required view count scales inversely with RPM. For a $2,500 monthly goal at a $0.50 RPM, you need 5.0 million qualified views. However, if you optimize content length, retention, and topic selection to achieve a $1.50 RPM, you only need 1.66 million qualified views to reach the exact same $2,500 income target."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why do non-original or short videos destroy your monthly revenue goals?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Videos under 60 seconds receive a $0 RPM under the TikTok Creator Rewards Program regardless of view volume. Furthermore, reused, duet, stitched, or non-original videos incur up to a 75% penalty on RPM or total disqualification, making income goals mathematically impossible to reach without original content over 1 minute long."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How many videos per day should I upload to hit a $5,000 monthly goal?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Assuming a target RPM of $1.00 and a 50% qualification rate, a $5,000 goal requires 10,000,000 total views monthly. If you upload 30 videos per month (1 daily), each video must average ~333,333 views. If you upload 60 videos per month (2 daily), each video needs ~166,666 views."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What content niches offer the fastest path to a $10,000 Creator Rewards goal?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Personal Finance, AI & Software, Health & Medicine, and Business Case Studies yield RPMs between $1.20 and $2.50+. High RPM niches drastically lower your view threshold, allowing creators to hit $10,000 monthly with 4M to 8M qualified views, compared to lower RPM niches (like gaming or memes) which require 20M to 50M views."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <style>
+        :root {
+            --bg-main: #0f1117;
+            --bg-card: #181b24;
+            --bg-input: #222634;
+            --border-color: #2e3446;
+            --accent-blue: #1877f2;
+            --accent-cyan: #00f2fe;
+            --accent-pink: #ff0050;
+            --accent-green: #10b981;
+            --accent-amber: #f59e0b;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background-color: var(--bg-main); color: var(--text-primary); font-family: var(--font-sans); line-height: 1.6; }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            grid-template-areas: 
+                "upload preview"
+                "panel preview";
+            gap: 2rem;
+        }
+
+        .upload-card-wrapper {
+            grid-area: upload;
+        }
+
+        .panel {
+            grid-area: panel;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            height: fit-content;
+        }
+
+        .panel-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .badge {
+            font-size: 0.75rem;
+            background: linear-gradient(135deg, var(--accent-pink), var(--accent-blue));
+            color: #fff;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        .drop-zone {
+            border: 2px dashed var(--border-color);
+            padding: 1.25rem;
+            text-align: center;
+            border-radius: 8px;
+            background-color: var(--bg-input);
+            cursor: pointer;
+            transition: border-color 0.2s, background-color 0.2s;
+            margin-bottom: 0.75rem;
+        }
+
+        .drop-zone:hover { border-color: var(--accent-cyan); background-color: rgba(0, 242, 254, 0.05); }
+        .drop-title { font-weight: 600; color: #fff; font-size: 0.95rem; }
+        .drop-sub { font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px; }
+
+        .preset-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .btn-demo {
+            width: 100%;
+            padding: 0.6rem 0.5rem;
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            color: var(--accent-cyan);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.78rem;
+            transition: background-color 0.2s, border-color 0.2s;
+            text-align: center;
+        }
+
+        .btn-demo:hover { background-color: #2a2f42; border-color: var(--accent-cyan); }
+
+        .toggle-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: var(--bg-input);
+            padding: 0.75rem 0.85rem;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 1rem;
+        }
+
+        .toggle-label { font-size: 0.85rem; font-weight: 500; color: var(--text-primary); }
+
+        .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #374151; transition: .3s; border-radius: 24px;
+        }
+        .slider:before {
+            position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px;
+            background-color: white; transition: .3s; border-radius: 50%;
+        }
+        input:checked + .slider { background-color: var(--accent-pink); }
+        input:checked + .slider:before { transform: translateX(20px); }
+
+        .form-group { margin-bottom: 1.25rem; }
+        .range-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.4rem; }
+        .range-value { font-size: 0.85rem; font-weight: 700; color: var(--accent-cyan); }
+        label { display: block; font-size: 0.85rem; font-weight: 500; color: var(--text-secondary); margin-bottom: 0.4rem; }
+        input[type="text"], input[type="number"], textarea, select {
+            width: 100%; padding: 0.65rem 0.85rem; background-color: var(--bg-input);
+            border: 1px solid var(--border-color); border-radius: 6px; color: #fff;
+            font-size: 0.9rem; outline: none; font-family: inherit;
+        }
+        input[type="range"] {
+            width: 100%; height: 6px; background: var(--bg-input); border-radius: 3px;
+            outline: none; -webkit-appearance: none; accent-color: var(--accent-pink);
+        }
+        input[type="text"]:focus, input[type="number"]:focus, textarea:focus, select:focus { border-color: var(--accent-pink); }
+
+        .btn-action {
+            width: 100%; padding: 0.85rem; background: linear-gradient(135deg, var(--accent-pink), #c0003c);
+            color: #fff; font-weight: 600; border: none; border-radius: 6px; cursor: pointer; font-size: 0.95rem;
+            box-shadow: 0 4px 12px rgba(255, 0, 80, 0.3);
+            transition: transform 0.1s, opacity 0.2s;
+            margin-bottom: 1rem;
+        }
+        .btn-action:hover { opacity: 0.95; }
+        .btn-action:active { transform: scale(0.99); }
+
+        /* Social Share Button Module */
+        .social-share-container {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        .share-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
+            display: block;
+            text-align: center;
+        }
+        .share-buttons-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+        }
+        .btn-share {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            padding: 0.5rem 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: opacity 0.2s, transform 0.1s;
+        }
+        .btn-share:hover { opacity: 0.88; }
+        .btn-share:active { transform: scale(0.97); }
+        .btn-share-x { background-color: #000000; border: 1px solid #333; }
+        .btn-share-fb { background-color: #1877f2; }
+        .btn-share-li { background-color: #0a66c2; }
+        .btn-share-wa { background-color: #25d366; color: #000; }
+        .btn-share-pin { background-color: #e60023; }
+        .btn-share-copy { background-color: #374151; color: #fff; grid-column: span 3; margin-top: 0.25rem; }
+
+        .preview-stage { 
+            grid-area: preview;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+        }
+        .canvas-wrapper {
+            position: relative; width: 320px; height: 568px; border-radius: 16px;
+            overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.6); background-color: #000;
+            border: 2px solid var(--border-color);
+        }
+        canvas { width: 100%; height: 100%; display: block; }
+        .canvas-caption { margin-top: 1rem; font-size: 0.85rem; color: var(--text-secondary); text-align: center; }
+
+        /* Metric Highlights Grid below Canvas */
+        .metric-summary-grid {
+            width: 100%;
+            max-width: 320px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            margin-top: 1rem;
+        }
+        .metric-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.85rem;
+            text-align: center;
+        }
+        .metric-card-title { font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; }
+        .metric-card-value { font-size: 1.1rem; font-weight: 700; color: #fff; }
+        .metric-card-value.highlight { color: var(--accent-green); }
+
+        .content-area { max-width: 1200px; margin: 3rem auto; padding: 0 1.5rem; }
+        .content-card { background-color: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 2.5rem; }
+        .content-card h1 { font-size: 2rem; margin-bottom: 1rem; color: #fff; }
+        .content-card h2 { font-size: 1.4rem; margin: 1.8rem 0 1rem; color: #fff; }
+        .content-card p { color: var(--text-secondary); margin-bottom: 1.2rem; }
+        .content-card ul, .content-card ol { color: var(--text-secondary); margin: 0 0 1.2rem 1.5rem; }
+        .content-card li { margin-bottom: 0.5rem; }
+
+        .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 1.5rem 0; }
+        .spec-table { width: 100%; border-collapse: collapse; text-align: left; min-width: 600px; }
+        .spec-table th, .spec-table td { padding: 0.85rem 1rem; border: 1px solid var(--border-color); }
+        .spec-table th { background-color: var(--bg-input); color: #fff; font-size: 0.9rem; }
+        .spec-table td { color: var(--text-secondary); font-size: 0.875rem; }
+
+        /* Accordion FAQ Styling */
+        .faq-block { margin-top: 1.5rem; border-top: 1px solid var(--border-color); padding-top: 1rem; }
+        .faq-accordion {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 0.85rem;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+        .faq-accordion[open] { border-color: var(--accent-pink); }
+        .faq-summary {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            padding: 1rem 1.2rem;
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+        .faq-summary::-webkit-details-marker { display: none; }
+        .faq-summary::after {
+            content: "+";
+            font-size: 1.2rem;
+            color: var(--accent-pink);
+            transition: transform 0.2s;
+        }
+        .faq-accordion[open] .faq-summary::after {
+            content: "−";
+            color: var(--accent-pink);
+        }
+        .faq-answer {
+            padding: 0 1.2rem 1.2rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin-top: 0.4rem;
+            padding-top: 0.8rem;
+        }
+
+        .cms-ad-slot-1, .cms-ad-slot-2 {
+            width: 100%; max-width: 970px; min-height: 90px; margin: 1.5rem auto;
+            background: rgba(255,255,255,0.02); border-radius: 8px; display: block;
+        }
+
+        .alert-banner {
+            padding: 0.75rem 1rem;
+            border-radius: 6px;
+            font-size: 0.825rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            display: none;
+        }
+        .alert-banner.warning {
+            background-color: rgba(245, 158, 11, 0.15);
+            border: 1px solid var(--accent-amber);
+            color: #fbbf24;
+        }
+
+        /* Mobile Responsive Overrides */
+        @media screen and (max-width: 900px) {
+            html, body { width: 100%!important; max-width: 100vw!important; overflow-x: hidden!important; margin: 0!important; padding: 0!important; }
+            main.container { display: flex!important; flex-direction: column!important; width: 100%!important; max-width: 100%!important; padding: 0 12px!important; margin: 8px auto!important; gap: 16px!important; box-sizing: border-box!important; }
+            .upload-card-wrapper { order: 1!important; width: 100%!important; }
+            main.container > section.preview-stage { order: 2!important; width: 100%!important; display: flex!important; flex-direction: column!important; align-items: center!important; margin: 0 auto!important; box-sizing: border-box!important; }
+            main.container > section.panel { order: 3!important; width: 100%!important; max-width: 100%!important; box-sizing: border-box!important; }
+            .canvas-wrapper { width: 75vw!important; height: 133.33vw!important; max-width: 290px!important; max-height: 515px!important; margin: 0 auto!important; box-sizing: border-box!important; }
+            input, textarea, select { font-size: 16px!important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Container -->
+    <div id="global-header"></div>
+
+    <!-- Ad Slot 1 Container -->
+    <div class="cms-ad-slot-1" id="cms-ad-slot-top"></div>
+
+    <!-- Main Tool Container -->
+    <main class="container">
+        <!-- Module 1: Goal Inputs & Target Setting (Rendered 1st on mobile) -->
+        <div class="upload-card-wrapper">
+            <div class="panel">
+                <div class="panel-title">
+                    <span>Revenue Target Goals</span>
+                    <span class="badge">GOAL SETTER</span>
+                </div>
+                
+                <div class="drop-zone" id="dropZone">
+                    <p class="drop-title">🎯 Instant Income Goal Benchmarks</p>
+                    <p class="drop-sub">Select a revenue tier to model required 2026 view targets</p>
+                </div>
+
+                <div class="preset-grid">
+                    <button class="btn-demo" id="presetSideHustle" type="button">💵 $1,000 / mo</button>
+                    <button class="btn-demo" id="presetFullTime" type="button">🚀 $2,500 / mo</button>
+                    <button class="btn-demo" id="presetScale" type="button">💰 $5,000 / mo</button>
+                    <button class="btn-demo" id="presetElite" type="button">👑 $10,000 / mo</button>
+                </div>
+
+                <div class="form-group">
+                    <div class="range-header">
+                        <label for="revenueGoal">Target Monthly Earnings ($)</label>
+                        <span class="range-value" id="revenueGoalDisplay">$2,500</span>
+                    </div>
+                    <input type="range" id="revenueGoalRange" min="100" max="20000" step="100" value="2500">
+                    <input type="number" id="revenueGoal" value="2500" min="50" style="margin-top: 6px;">
+                </div>
+
+                <div class="form-group">
+                    <div class="range-header">
+                        <label for="qualifiedPercent">Qualified Views Share (%)</label>
+                        <span class="range-value" id="qualifiedPercentDisplay">55%</span>
+                    </div>
+                    <input type="range" id="qualifiedPercent" min="10" max="100" step="1" value="55">
+                </div>
+
+                <div class="form-group">
+                    <label for="postingFreq">Planned Monthly Post Frequency</label>
+                    <select id="postingFreq">
+                        <option value="10">10 Videos / month (~2 to 3 per week)</option>
+                        <option value="20">20 Videos / month (~5 per week)</option>
+                        <option value="30" selected>30 Videos / month (1 Daily Upload)</option>
+                        <option value="45">45 Videos / month (1.5 Daily Average)</option>
+                        <option value="60">60 Videos / month (2 Daily Uploads)</option>
+                        <option value="90">90 Videos / month (3 Daily Uploads)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="videoDuration">Video Length Category</label>
+                    <select id="videoDuration">
+                        <option value="under1">&lt; 1 Minute (0s - 59s) [Ineligible - $0 RPM Goal]</option>
+                        <option value="1to3" selected>1 – 3 Minutes [Standard Goal Eligible]</option>
+                        <option value="3to5">3 – 5 Minutes [High Watch Time Bonus]</option>
+                        <option value="5to10">5 – 10+ Minutes [Max Retention Multiplier]</option>
+                    </select>
+                </div>
+
+                <div class="alert-banner warning" id="ineligibleAlert">
+                    ⚠️ Videos under 60 seconds earn $0 in Creator Rewards. Goal calculation is impossible without 1+ min videos.
+                </div>
+            </div>
+        </div>
+
+        <!-- Module 2: Live Goal Canvas Stage & Metrics Display (Rendered 2nd on mobile) -->
+        <section class="preview-stage">
+            <div class="canvas-wrapper">
+                <canvas id="previewCanvas" width="1080" height="1920"></canvas>
+            </div>
+            <p class="canvas-caption">
+                Interactive TikTok Monetization Target Blueprint Simulator. Rendered live for 2026 creator strategy.
+            </p>
+
+            <div class="metric-summary-grid">
+                <div class="metric-card">
+                    <div class="metric-card-title">Target Monthly Goal</div>
+                    <div class="metric-card-value highlight" id="cardTargetGoal">$2,500</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-card-title">Required Total Views</div>
+                    <div class="metric-card-value" id="cardTotalViews">3.78M</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-card-title">Pace Per Video (30/mo)</div>
+                    <div class="metric-card-value" id="cardPacePerVideo">126.3K</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-card-title">Effective Target RPM</div>
+                    <div class="metric-card-value highlight" id="cardEffectiveRpm">$1.20</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Module 3: Niche & Target RPM Modifiers Panel (Rendered 3rd on mobile) -->
+        <section class="panel">
+            <div class="panel-title">
+                <span>Account RPM Strategy Modifiers</span>
+                <span class="badge">RPM BLUEPRINT</span>
+            </div>
+
+            <div class="form-group">
+                <label for="nicheSelect">Target Content Category / Niche</label>
+                <select id="nicheSelect">
+                    <option value="finance" data-low="1.20" data-high="2.50">Finance, Wealth &amp; Business ($1.20 - $2.50)</option>
+                    <option value="tech" data-low="0.90" data-high="1.80" selected>Tech, AI &amp; Software ($0.90 - $1.80)</option>
+                    <option value="health" data-low="0.70" data-high="1.40">Health, Fitness &amp; Medicine ($0.70 - $1.40)</option>
+                    <option value="education" data-low="0.60" data-high="1.20">History, Science &amp; Explainers ($0.60 - $1.20)</option>
+                    <option value="crime" data-low="0.50" data-high="1.10">True Crime &amp; Narrative Stories ($0.50 - $1.10)</option>
+                    <option value="psychology" data-low="0.50" data-high="1.00">Psychology &amp; Self-Improvement ($0.50 - $1.00)</option>
+                    <option value="lifestyle" data-low="0.40" data-high="0.85">Beauty, Travel &amp; Vlogs ($0.40 - $0.85)</option>
+                    <option value="gaming" data-low="0.25" data-high="0.60">Gaming, Anime &amp; Pop Culture ($0.25 - $0.60)</option>
+                    <option value="entertainment" data-low="0.15" data-high="0.45">Comedy, Memes &amp; Skits ($0.15 - $0.45)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="regionSelect">Target Audience Country Tier</label>
+                <select id="regionSelect">
+                    <option value="1.15" selected>Tier 1: United States &amp; Canada (1.15x)</option>
+                    <option value="1.00">Tier 2: UK, Germany, France, Australia (1.00x)</option>
+                    <option value="0.85">Tier 3: Japan, South Korea (0.85x)</option>
+                    <option value="0.45">Tier 4: Brazil, Mexico, LATAM (0.45x)</option>
+                    <option value="0.70">Global / Mixed Audience Traffic (0.70x)</option>
+                </select>
+            </div>
+
+            <div class="toggle-group">
+                <span class="toggle-label">100% Original Content (Passes Quality Standard)</span>
+                <label class="switch">
+                    <input type="checkbox" id="originalityToggle" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="toggle-group">
+                <span class="toggle-label">Target High Search Intent Keywords (+15% RPM)</span>
+                <label class="switch">
+                    <input type="checkbox" id="searchToggle" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <button class="btn-action" id="downloadBtn" type="button">Export RPM Goal Blueprint Report (PNG)</button>
+
+            <!-- Social Media Share Section -->
+            <div class="social-share-container">
+                <span class="share-label">Share This Goal Engine</span>
+                <div class="share-buttons-grid">
+                    <a id="shareX" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-x">𝕏 Post</a>
+                    <a id="shareFB" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-fb">Facebook</a>
+                    <a id="shareWA" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-wa">WhatsApp</a>
+                    <a id="shareLI" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-li">LinkedIn</a>
+                    <a id="sharePIN" href="#" target="_blank" rel="noopener noreferrer" class="btn-share btn-share-pin">Pinterest</a>
+                    <button id="copyShareLink" type="button" class="btn-share btn-share-copy">🔗 Copy Tool Link</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- SEO & Educational Guide Section -->
+    <article class="content-area">
+        <div class="content-card">
+            <h1>TikTok Creator Rewards RPM Goal Calculator &amp; View Target Engine (2026)</h1>
+            <p>
+                Building a sustainable, full-time income or lucrative side hustle on TikTok requires moving beyond guesswork and establishing precise mathematical targets. Under the <strong>TikTok Creator Rewards Program</strong>, payout rates are no longer determined by unpredictable daily pool distributions. Instead, creator earnings follow a performance-driven <strong>RPM (Revenue Per Mille)</strong> model, where earnings are calculated directly per 1,000 qualified views on videos longer than one minute.
+            </p>
+            <p>
+                This interactive <strong>tiktok-rpm-goal calculator</strong> acts as a strategic revenue blueprint engine. Rather than simply calculating past payouts, it allows digital creators, agencies, media managers, and video strategists to <strong>reverse-engineer monthly income targets</strong> (such as $1,000, $2,500, $5,000, or $10,000 per month). By adjusting niche advertiser demand, audience country demographics, watch duration, and monthly posting frequency, you can determine the exact view milestones required to hit your monetization goals in 2026.
+            </p>
+
+            <h2>Reverse-Engineering TikTok Earnings: The Mathematical Formula</h2>
+            <p>
+                To calculate the total public views required to achieve a specific monthly income target, we reverse-engineer TikTok’s core monetization formula. The calculation involves three key variables: your <strong>Monthly Revenue Goal ($)</strong>, your account's <strong>Effective Target RPM ($)</strong>, and your account's <strong>Qualified View Ratio (%)</strong>.
+            </p>
+            <p>
+                The primary mathematical equations governing your RPM goal blueprint are expressed as:
+            </p>
+            <blockquote style="background-color: var(--bg-input); padding: 1rem 1.25rem; border-left: 4px solid var(--accent-pink); border-radius: 4px; margin: 1rem 0; font-weight: 600; color: #fff;">
+                Required Qualified Views = ( Monthly Revenue Goal ÷ Effective RPM ) × 1,000<br><br>
+                Required Total Monthly Views = Required Qualified Views ÷ ( Qualified View Share % ÷ 100 )
+            </blockquote>
+            <p>
+                For example, if your monthly goal is <strong>$2,500</strong>, your effective niche RPM is <strong>$1.20</strong>, and your qualified view ratio is <strong>55%</strong>:
+            </p>
+            <ul>
+                <li><strong>Required Qualified Views:</strong> ($2,500 ÷ $1.20) × 1,000 = 2,083,333 qualified views.</li>
+                <li><strong>Required Total Public Views:</strong> 2,083,333 ÷ 0.55 = 3,787,878 total views.</li>
+                <li><strong>Daily View Target (30 days):</strong> ~126,262 views per day.</li>
+                <li><strong>Target Per Video (Uploading 30 videos/mo):</strong> ~126,262 views per uploaded clip.</li>
+            </ul>
+
+            <h2>Revenue Target vs. Required View Count Matrix (2026 Benchmarks)</h2>
+            <p>
+                The table below illustrates how different effective RPM rates dramatically alter the total view volume required to achieve standard monthly creator income milestones (assuming a standard 55% qualification rate):
+            </p>
+
+            <div class="table-responsive">
+                <table class="spec-table">
+                    <thead>
+                        <tr>
+                            <th>Monthly Goal ($)</th>
+                            <th>Effective RPM ($)</th>
+                            <th>Required Qualified Views</th>
+                            <th>Required Total Views (55% Filter)</th>
+                            <th>Daily View Target (30-Day Pace)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>$1,000 / mo</strong></td>
+                            <td>$0.50 (Gaming/Skits)</td>
+                            <td>2,000,000</td>
+                            <td>3,636,363</td>
+                            <td>~121,212 / day</td>
+                        </tr>
+                        <tr>
+                            <td><strong>$1,000 / mo</strong></td>
+                            <td>$1.20 (Tech/Explainers)</td>
+                            <td>833,333</td>
+                            <td>1,515,151</td>
+                            <td>~50,505 / day</td>
+                        </tr>
+                        <tr>
+                            <td><strong>$2,500 / mo</strong></td>
+                            <td>$0.80 (Lifestyle/Vlogs)</td>
+                            <td>3,125,000</td>
+                            <td>5,681,818</td>
+                            <td>~189,393 / day</td>
+                        </tr>
+                        <tr>
+                            <td><strong>$2,500 / mo</strong></td>
+                            <td>$1.80 (Finance/SaaS)</td>
+                            <td>1,388,888</td>
+                            <td>2,525,252</td>
+                            <td>~84,175 / day</td>
+                        </tr>
+                        <tr>
+                            <td><strong>$5,000 / mo</strong></td>
+                            <td>$1.00 (Average Tier 1)</td>
+                            <td>5,000,000</td>
+                            <td>9,090,909</td>
+                            <td>~303,030 / day</td>
+                        </tr>
+                        <tr>
+                            <td><strong>$10,000 / mo</strong></td>
+                            <td>$1.50 (High Commercial)</td>
+                            <td>6,666,666</td>
+                            <td>12,121,212</td>
+                            <td>~404,040 / day</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Ad Slot 2 Container -->
+            <div class="cms-ad-slot-2"></div>
+
+            <h2>How Niche RPM Modifiers Impact Goal Feasibility</h2>
+            <p>
+                Not all views on TikTok carry equal monetary value. Advertisers compete in real-time auctions for viewer demographics. Content categories targeting high commercial intent—such as personal finance, B2B software, investment tools, and health technology—command substantially higher advertiser CPMs, directly boosting creator RPMs.
+            </p>
+
+            <div class="table-responsive">
+                <table class="spec-table">
+                    <thead>
+                        <tr>
+                            <th>Content Category / Niche</th>
+                            <th>RPM Range (USD)</th>
+                            <th>Commercial Intent</th>
+                            <th>Goal Feasibility Multiplier</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Finance, Wealth &amp; Business</strong></td>
+                            <td>$1.20 – $2.50+</td>
+                            <td>Extremely High</td>
+                            <td><strong style="color: var(--accent-green);">3.5x Faster (Low View Threshold)</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tech, AI Tools &amp; Software</strong></td>
+                            <td>$0.90 – $1.80</td>
+                            <td>High</td>
+                            <td><strong style="color: var(--accent-green);">2.5x Faster (Medium-Low Threshold)</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Health, Medicine &amp; Fitness</strong></td>
+                            <td>$0.70 – $1.40</td>
+                            <td>Moderate-High</td>
+                            <td><strong style="color: var(--accent-cyan);">2.0x Standard Pace</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Educational Deep Dives &amp; History</strong></td>
+                            <td>$0.60 – $1.20</td>
+                            <td>Moderate</td>
+                            <td><strong style="color: var(--accent-cyan);">1.5x Standard Pace</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Beauty, Lifestyle &amp; Travel</strong></td>
+                            <td>$0.40 – $0.85</td>
+                            <td>Moderate</td>
+                            <td><strong style="color: var(--accent-amber);">1.0x Baseline Benchmark</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Gaming &amp; Pop Culture</strong></td>
+                            <td>$0.25 – $0.60</td>
+                            <td>Low</td>
+                            <td><strong style="color: #f87171;">0.5x Slower (High View Volume Required)</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Entertainment &amp; Memes</strong></td>
+                            <td>$0.15 – $0.45</td>
+                            <td>Very Low</td>
+                            <td><strong style="color: #f87171;">0.3x Slower (Viral Reliance)</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h2>Actionable Blueprint to Increase Your TikTok Creator RPM</h2>
+            <p>
+                If your calculated view targets seem dauntingly high, the solution is not necessarily posting 10 times a day—it is optimizing your account parameters to push your RPM into higher brackets. Here are four algorithmic levers to increase your RPM:
+            </p>
+            <ol>
+                <li><strong>Extend Video Duration Past 3 Minutes:</strong> While the minimum eligibility duration is 60 seconds, TikTok applies an retention multiplier for mid-length videos (3–5 minutes and 5–10 minutes) that maintain strong retention past the 30-second mark.</li>
+                <li><strong>Optimize for Search-Intent Keywords:</strong> Content that satisfies explicit user queries (e.g., "how to automate video editing," "best tax deductions for freelancers") triggers TikTok's Search Bonus multiplier, adding up to 15%–25% to your base RPM.</li>
+                <li><strong>Filter for Tier 1 Audience Geography:</strong> Viewers located in the United States, United Kingdom, Canada, Australia, and Germany yield 2x to 4x higher CPMs compared to global or emerging market audiences. Focus your storytelling and cultural references on English-speaking Tier 1 regions.</li>
+                <li><strong>Protect Your Originality Score:</strong> Re-uploading watermarked clips, using reaction templates where the underlying clip dominates, or stitching third-party videos tanks your account's Originality Score, resulting in a severe 75% RPM penalty or total exclusion from payouts.</li>
+            </ol>
+
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-block">
+                <details class="faq-accordion" open>
+                    <summary class="faq-summary">How many TikTok views are needed to earn $1,000 a month in 2026?</summary>
+                    <div class="faq-answer">
+                        At an average effective RPM of $0.90 per 1,000 qualified views and a standard 55% qualification filter rate, you need approximately 1,111,111 qualified views—which translates to roughly 2,020,000 total public video views per month (or ~67,300 views daily).
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">How does setting an RPM goal change your required view count?</summary>
+                    <div class="faq-answer">
+                        Your required view count scales inversely with RPM. For a $2,500 monthly goal at a $0.50 RPM, you need 5.0 million qualified views. However, if you optimize content length, retention, and topic selection to achieve a $1.50 RPM, you only need 1.66 million qualified views to reach the exact same $2,500 income target.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">Why do non-original or short videos destroy your monthly revenue goals?</summary>
+                    <div class="faq-answer">
+                        Videos under 60 seconds receive a $0 RPM under the TikTok Creator Rewards Program regardless of view volume. Furthermore, reused, duet, stitched, or non-original videos incur up to a 75% penalty on RPM or total disqualification, making income goals mathematically impossible to reach without original content over 1 minute long.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">How many videos per day should I upload to hit a $5,000 monthly goal?</summary>
+                    <div class="faq-answer">
+                        Assuming a target RPM of $1.00 and a 50% qualification rate, a $5,000 goal requires 10,000,000 total views monthly. If you upload 30 videos per month (1 daily), each video must average ~333,333 views. If you upload 60 videos per month (2 daily), each video needs ~166,666 views.
+                    </div>
+                </details>
+
+                <details class="faq-accordion">
+                    <summary class="faq-summary">What content niches offer the fastest path to a $10,000 Creator Rewards goal?</summary>
+                    <div class="faq-answer">
+                        Personal Finance, AI &amp; Software, Health &amp; Medicine, and Business Case Studies yield RPMs between $1.20 and $2.50+. High RPM niches drastically lower your view threshold, allowing creators to hit $10,000 monthly with 4M to 8M qualified views, compared to lower RPM niches (like gaming or memes) which require 20M to 50M views.
+                    </div>
+                </details>
+            </div>
+        </div>
+    </article>
+
+    <!-- Footer Container -->
+    <div id="global-footer"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var canvas = document.getElementById('previewCanvas');
+            if (!canvas) return;
+            var ctx = canvas.getContext('2d');
+
+            // Goal Inputs & Sliders
+            var revenueGoalRange = document.getElementById('revenueGoalRange');
+            var revenueGoalInput = document.getElementById('revenueGoal');
+            var revenueGoalDisplay = document.getElementById('revenueGoalDisplay');
+            var qualifiedPercentRange = document.getElementById('qualifiedPercent');
+            var qualifiedPercentDisplay = document.getElementById('qualifiedPercentDisplay');
+            var postingFreqSelect = document.getElementById('postingFreq');
+            var videoDurationSelect = document.getElementById('videoDuration');
+            
+            // Strategy Modifiers
+            var nicheSelect = document.getElementById('nicheSelect');
+            var regionSelect = document.getElementById('regionSelect');
+            var originalityToggle = document.getElementById('originalityToggle');
+            var searchToggle = document.getElementById('searchToggle');
+            var ineligibleAlert = document.getElementById('ineligibleAlert');
+            var downloadBtn = document.getElementById('downloadBtn');
+
+            // Metric Highlight Cards
+            var cardTargetGoal = document.getElementById('cardTargetGoal');
+            var cardTotalViews = document.getElementById('cardTotalViews');
+            var cardPacePerVideo = document.getElementById('cardPacePerVideo');
+            var cardEffectiveRpm = document.getElementById('cardEffectiveRpm');
+
+            // Presets
+            var presetSideHustle = document.getElementById('presetSideHustle');
+            var presetFullTime = document.getElementById('presetFullTime');
+            var presetScale = document.getElementById('presetScale');
+            var presetElite = document.getElementById('presetElite');
+
+            /* Setup Social Share Links */
+            var currentUrl = encodeURIComponent(window.location.href);
+            var shareTitle = encodeURIComponent("Check out this free TikTok Creator Rewards RPM Goal Calculator & Revenue Target Engine!");
+            
+            document.getElementById('shareX').href = 'https://twitter.com/intent/tweet?url=' + currentUrl + '&text=' + shareTitle;
+            document.getElementById('shareFB').href = 'https://www.facebook.com/sharer/sharer.php?u=' + currentUrl;
+            document.getElementById('shareWA').href = 'https://api.whatsapp.com/send?text=' + shareTitle + '%20' + currentUrl;
+            document.getElementById('shareLI').href = 'https://www.linkedin.com/sharing/share-offsite/?url=' + currentUrl;
+            document.getElementById('sharePIN').href = 'https://pinterest.com/pin/create/button/?url=' + currentUrl + '&description=' + shareTitle;
+
+            var copyBtn = document.getElementById('copyShareLink');
+            copyBtn.addEventListener('click', function() {
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'TikTok RPM Goal Calculator',
+                        text: 'Calculate required views and RPM goals for your TikTok monetization strategy.',
+                        url: window.location.href
+                    }).catch(function() {});
+                } else if (navigator.clipboard) {
+                    navigator.clipboard.writeText(window.location.href).then(function() {
+                        var origText = copyBtn.textContent;
+                        copyBtn.textContent = '✓ Link Copied!';
+                        setTimeout(function() { copyBtn.textContent = origText; }, 2000);
+                    });
+                }
+            });
+
+            // Preset Handlers
+            presetSideHustle.addEventListener('click', function() {
+                revenueGoalRange.value = 1000;
+                revenueGoalInput.value = 1000;
+                qualifiedPercentRange.value = 55;
+                postingFreqSelect.value = '20';
+                videoDurationSelect.value = '1to3';
+                nicheSelect.value = 'tech';
+                regionSelect.value = '1.15';
+                originalityToggle.checked = true;
+                searchToggle.checked = true;
+                calculateAndDraw();
+            });
+
+            presetFullTime.addEventListener('click', function() {
+                revenueGoalRange.value = 2500;
+                revenueGoalInput.value = 2500;
+                qualifiedPercentRange.value = 55;
+                postingFreqSelect.value = '30';
+                videoDurationSelect.value = '3to5';
+                nicheSelect.value = 'tech';
+                regionSelect.value = '1.15';
+                originalityToggle.checked = true;
+                searchToggle.checked = true;
+                calculateAndDraw();
+            });
+
+            presetScale.addEventListener('click', function() {
+                revenueGoalRange.value = 5000;
+                revenueGoalInput.value = 5000;
+                qualifiedPercentRange.value = 60;
+                postingFreqSelect.value = '45';
+                videoDurationSelect.value = '3to5';
+                nicheSelect.value = 'finance';
+                regionSelect.value = '1.15';
+                originalityToggle.checked = true;
+                searchToggle.checked = true;
+                calculateAndDraw();
+            });
+
+            presetElite.addEventListener('click', function() {
+                revenueGoalRange.value = 10000;
+                revenueGoalInput.value = 10000;
+                qualifiedPercentRange.value = 65;
+                postingFreqSelect.value = '60';
+                videoDurationSelect.value = '5to10';
+                nicheSelect.value = 'finance';
+                regionSelect.value = '1.15';
+                originalityToggle.checked = true;
+                searchToggle.checked = true;
+                calculateAndDraw();
+            });
+
+            // Event Listeners for Controls
+            revenueGoalRange.addEventListener('input', function() {
+                revenueGoalInput.value = revenueGoalRange.value;
+                calculateAndDraw();
+            });
+
+            revenueGoalInput.addEventListener('input', function() {
+                revenueGoalRange.value = revenueGoalInput.value;
+                calculateAndDraw();
+            });
+
+            qualifiedPercentRange.addEventListener('input', calculateAndDraw);
+            postingFreqSelect.addEventListener('change', calculateAndDraw);
+            videoDurationSelect.addEventListener('change', calculateAndDraw);
+            nicheSelect.addEventListener('change', calculateAndDraw);
+            regionSelect.addEventListener('change', calculateAndDraw);
+            originalityToggle.addEventListener('change', calculateAndDraw);
+            searchToggle.addEventListener('change', calculateAndDraw);
+
+            function formatNumber(num) {
+                if (num >= 1000000) {
+                    return (num / 1000000).toFixed(2) + 'M';
+                } else if (num >= 1000) {
+                    return (num / 1000).toFixed(1) + 'K';
+                }
+                return new Intl.NumberFormat('en-US').format(Math.round(num));
+            }
+
+            function formatCurrency(num) {
+                return '$' + new Intl.NumberFormat('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(Math.round(num));
+            }
+
+            function formatDecimalCurrency(num) {
+                return '$' + num.toFixed(2);
+            }
+
+            function calculateAndDraw() {
+                var goal = parseFloat(revenueGoalInput.value) || 0;
+                var qualifiedPercent = parseFloat(qualifiedPercentRange.value) || 0;
+                var postingFreq = parseInt(postingFreqSelect.value) || 30;
+                var videoDuration = videoDurationSelect.value;
+                
+                revenueGoalDisplay.textContent = formatCurrency(goal);
+                qualifiedPercentDisplay.textContent = qualifiedPercent + '%';
+
+                var selectedOption = nicheSelect.options[nicheSelect.selectedIndex];
+                var baseRpmLow = parseFloat(selectedOption.getAttribute('data-low')) || 0.40;
+                var baseRpmHigh = parseFloat(selectedOption.getAttribute('data-high')) || 0.85;
+                var baseRpmMid = (baseRpmLow + baseRpmHigh) / 2;
+
+                var regionMult = parseFloat(regionSelect.value) || 1.0;
+                var isOriginal = originalityToggle.checked;
+                var isSearch = searchToggle.checked;
+
+                var durationMult = 1.0;
+                var isIneligible = false;
+
+                if (videoDuration === 'under1') {
+                    isIneligible = true;
+                    durationMult = 0;
+                } else if (videoDuration === '1to3') {
+                    durationMult = 1.0;
+                } else if (videoDuration === '3to5') {
+                    durationMult = 1.18;
+                } else if (videoDuration === '5to10') {
+                    durationMult = 1.35;
+                }
+
+                if (isIneligible) {
+                    ineligibleAlert.style.display = 'block';
+                } else {
+                    ineligibleAlert.style.display = 'none';
+                }
+
+                var bonusMult = 1.0;
+                if (!isOriginal) bonusMult *= 0.25; // Penalty for non-original content
+                if (isSearch) bonusMult *= 1.15; // Search intent bonus
+
+                var effectiveRpm = baseRpmMid * regionMult * durationMult * bonusMult;
+
+                if (isIneligible || effectiveRpm <= 0) {
+                    effectiveRpm = 0;
+                }
+
+                var requiredQualifiedViews = 0;
+                var requiredTotalViews = 0;
+                var pacePerVideo = 0;
+                var dailyViewsTarget = 0;
+
+                if (effectiveRpm > 0) {
+                    requiredQualifiedViews = (goal / effectiveRpm) * 1000;
+                    requiredTotalViews = requiredQualifiedViews / (qualifiedPercent / 100);
+                    pacePerVideo = requiredTotalViews / postingFreq;
+                    dailyViewsTarget = requiredTotalViews / 30;
+                }
+
+                // Update Metric Summary Cards
+                cardTargetGoal.textContent = formatCurrency(goal);
+                if (isIneligible) {
+                    cardTotalViews.textContent = 'N/A ($0 RPM)';
+                    cardPacePerVideo.textContent = 'N/A';
+                    cardEffectiveRpm.textContent = '$0.00';
+                } else {
+                    cardTotalViews.textContent = formatNumber(requiredTotalViews);
+                    cardPacePerVideo.textContent = formatNumber(pacePerVideo);
+                    cardEffectiveRpm.textContent = formatDecimalCurrency(effectiveRpm);
+                }
+
+                // Draw live high-res canvas blueprint
+                drawCanvas({
+                    goal: goal,
+                    qualifiedPercent: qualifiedPercent,
+                    postingFreq: postingFreq,
+                    effectiveRpm: effectiveRpm,
+                    requiredQualifiedViews: requiredQualifiedViews,
+                    requiredTotalViews: requiredTotalViews,
+                    pacePerVideo: pacePerVideo,
+                    dailyViewsTarget: dailyViewsTarget,
+                    isIneligible: isIneligible,
+                    nicheName: selectedOption.text.split('(')[0].trim(),
+                    isOriginal: isOriginal,
+                    isSearch: isSearch
+                });
+            }
+
+            function drawCanvas(data) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                // Background Gradient
+                var bgGrad = ctx.createLinearGradient(0, 0, 1080, 1920);
+                bgGrad.addColorStop(0, '#0f1117');
+                bgGrad.addColorStop(0.5, '#181b24');
+                bgGrad.addColorStop(1, '#0b0d12');
+                ctx.fillStyle = bgGrad;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Top Header Graphic Bar
+                var headerGrad = ctx.createLinearGradient(0, 0, 1080, 0);
+                headerGrad.addColorStop(0, '#00f2fe');
+                headerGrad.addColorStop(0.5, '#ff0050');
+                headerGrad.addColorStop(1, '#10b981');
+                ctx.fillStyle = headerGrad;
+                ctx.fillRect(0, 0, 1080, 16);
+
+                // Title Banner
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 50px -apple-system, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('TIKTOK MONETIZATION BLUEPRINT', 540, 110);
+
+                ctx.fillStyle = '#00f2fe';
+                ctx.font = '600 32px -apple-system, sans-serif';
+                ctx.fillText('2026 CREATOR REWARDS RPM GOAL ENGINE', 540, 160);
+
+                // Divider Line
+                ctx.strokeStyle = '#2e3446';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(80, 200);
+                ctx.lineTo(1000, 200);
+                ctx.stroke();
+
+                // Card 1: Target Monthly Revenue & Required Total Views Header
+                ctx.fillStyle = '#181b24';
+                ctx.strokeStyle = data.isIneligible ? '#f59e0b' : '#10b981';
+                ctx.lineWidth = 4;
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(80, 240, 920, 320, 24);
+                    ctx.fill();
+                    ctx.stroke();
+                } else {
+                    ctx.fillRect(80, 240, 920, 320);
+                }
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = 'bold 28px -apple-system, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('TARGET MONTHLY GOAL: ' + formatCurrency(data.goal) + ' / MO', 540, 300);
+
+                if (data.isIneligible) {
+                    ctx.fillStyle = '#f59e0b';
+                    ctx.font = 'bold 68px -apple-system, sans-serif';
+                    ctx.fillText('GOAL UNATTAINABLE', 540, 400);
+                    ctx.fillStyle = '#fbbf24';
+                    ctx.font = '28px -apple-system, sans-serif';
+                    ctx.fillText('⚠️ Videos under 60s earn $0 RPM in Creator Rewards', 540, 470);
+                } else {
+                    ctx.fillStyle = '#00f2fe';
+                    ctx.font = 'bold 80px -apple-system, sans-serif';
+                    ctx.fillText(formatNumber(data.requiredTotalViews) + ' Views', 540, 410);
+
+                    ctx.fillStyle = '#f3f4f6';
+                    ctx.font = '30px -apple-system, sans-serif';
+                    ctx.fillText('Required Qualified Views: ' + formatNumber(data.requiredQualifiedViews) + ' (' + data.qualifiedPercent + '% Filter)', 540, 480);
+                }
+
+                // Metric Sub-Cards (Card 2 & Card 3)
+                // Left Sub-Card: Effective RPM
+                ctx.fillStyle = '#222634';
+                ctx.strokeStyle = '#2e3446';
+                ctx.lineWidth = 2;
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(80, 600, 440, 260, 20);
+                    ctx.fill();
+                    ctx.stroke();
+                } else {
+                    ctx.fillRect(80, 600, 440, 260);
+                }
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = 'bold 26px -apple-system, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('EFFECTIVE TARGET RPM', 300, 650);
+
+                ctx.fillStyle = '#10b981';
+                ctx.font = 'bold 56px -apple-system, sans-serif';
+                ctx.fillText(formatDecimalCurrency(data.effectiveRpm), 300, 740);
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = '24px -apple-system, sans-serif';
+                ctx.fillText('per 1,000 qualified views', 300, 800);
+
+                // Right Sub-Card: Upload Frequency & Pace
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(560, 600, 440, 260, 20);
+                    ctx.fill();
+                    ctx.stroke();
+                } else {
+                    ctx.fillRect(560, 600, 440, 260);
+                }
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = 'bold 26px -apple-system, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('REQUIRED PACE / VIDEO', 780, 650);
+
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 56px -apple-system, sans-serif';
+                ctx.fillText(data.isIneligible ? '0' : formatNumber(data.pacePerVideo), 780, 740);
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = '24px -apple-system, sans-serif';
+                ctx.fillText('based on ' + data.postingFreq + ' uploads / month', 780, 800);
+
+                // Execution Plan Card & Daily View Progress Track
+                ctx.fillStyle = '#181b24';
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(80, 900, 920, 280, 20);
+                    ctx.fill();
+                    ctx.stroke();
+                } else {
+                    ctx.fillRect(80, 900, 920, 280);
+                }
+
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 30px -apple-system, sans-serif';
+                ctx.textAlign = 'left';
+                ctx.fillText('Daily Upload Execution Strategy', 120, 950);
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = '24px -apple-system, sans-serif';
+                ctx.fillText('Daily View Pace: ' + formatNumber(data.dailyViewsTarget) + ' views/day', 120, 1000);
+                ctx.textAlign = 'right';
+                ctx.fillText('Upload Frequency: ' + (data.postingFreq / 30).toFixed(1) + ' clips/day', 960, 1000);
+
+                // Execution Visual Progress Bar
+                ctx.fillStyle = '#222634';
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(120, 1030, 840, 36, 18);
+                    ctx.fill();
+                } else {
+                    ctx.fillRect(120, 1030, 840, 36);
+                }
+
+                // Progress Fill representation
+                var goalIntensityRatio = Math.min(1.0, data.goal / 10000);
+                var fillWidth = Math.max(36, 840 * goalIntensityRatio);
+                var barGrad = ctx.createLinearGradient(120, 0, 960, 0);
+                barGrad.addColorStop(0, '#00f2fe');
+                barGrad.addColorStop(0.5, '#ff0050');
+                barGrad.addColorStop(1, '#10b981');
+                ctx.fillStyle = barGrad;
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(120, 1030, fillWidth, 36, 18);
+                    ctx.fill();
+                } else {
+                    ctx.fillRect(120, 1030, fillWidth, 36);
+                }
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = '22px -apple-system, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('Target RPM scales with watch completion past 30 seconds on 1+ min videos', 540, 1120);
+
+                // Strategic Audit & Parameter Check
+                ctx.fillStyle = '#181b24';
+                if (ctx.roundRect) {
+                    ctx.beginPath();
+                    ctx.roundRect(80, 1220, 920, 520, 20);
+                    ctx.fill();
+                    ctx.stroke();
+                } else {
+                    ctx.fillRect(80, 1220, 920, 520);
+                }
+
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 32px -apple-system, sans-serif';
+                ctx.textAlign = 'left';
+                ctx.fillText('Account Parameter Goal Audit', 120, 1280);
+
+                ctx.font = '28px -apple-system, sans-serif';
+                ctx.fillStyle = '#9ca3af';
+                
+                ctx.fillText('• Selected Niche Category:', 120, 1340);
+                ctx.fillStyle = '#ffffff';
+                ctx.fillText(data.nicheName, 460, 1340);
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.fillText('• Originality Standard:', 120, 1400);
+                ctx.fillStyle = data.isOriginal ? '#10b981' : '#f59e0b';
+                ctx.fillText(data.isOriginal ? '100% Original (Goal Active)' : 'Non-Original (-75% Penalty)', 460, 1400);
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.fillText('• Search Intent Bonus:', 120, 1460);
+                ctx.fillStyle = data.isSearch ? '#00f2fe' : '#9ca3af';
+                ctx.fillText(data.isSearch ? 'Active (+15% RPM Multiplier)' : 'Standard Social Feed', 460, 1460);
+
+                ctx.fillStyle = '#9ca3af';
+                ctx.fillText('• Annualized Goal Income:', 120, 1520);
+                ctx.fillStyle = '#10b981';
+                ctx.font = 'bold 36px -apple-system, sans-serif';
+                ctx.fillText(formatCurrency(data.goal * 12) + ' / year', 500, 1520);
+
+                ctx.fillStyle = '#374151';
+                ctx.fillRect(120, 1570, 840, 2);
+
+                ctx.fillStyle = '#6b7280';
+                ctx.font = '22px -apple-system, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('Official TikTok Studio Criteria: 10,000 Followers + 100k 30-Day Views required.', 540, 1630);
+                ctx.fillText('Calculations based on 2026 published creator benchmarks. Payouts set by TikTok.', 540, 1670);
+
+                // Branding Footer
+                ctx.fillStyle = '#9ca3af';
+                ctx.font = 'bold 26px -apple-system, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('CoreMetricSuite · TikTok Monetization Utilities', 540, 1820);
+            }
+
+            // Initial calculation & render
+            calculateAndDraw();
+
+            // Download PNG Goal Report
+            downloadBtn.addEventListener('click', function() {
+                var link = document.createElement('a');
+                link.download = 'tiktok-rpm-goal-blueprint.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        });
+    </script>
+
+    <!-- Global CoreMetricSuite Cross-Linking Index Hub -->
+    <div style="margin-top: 40px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; background-color: #f8fafc; font-family: system-ui, -apple-system, sans-serif;">
+        <h3 style="margin: 0 0 15px 0; font-size: 18px; color: #0f172a; font-weight: 600;">🛠️ CoreMetricSuite Utility Directory</h3>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇦🇺 Australia Tax &amp; Labor</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-au-cents" href="../au-cents-per-km-estimator/" style="color: #2563eb; text-decoration: underline;">Cents-Per-Km Tax Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-au-schads" href="../au-schads-vehicle-allowance/" style="color: #2563eb; text-decoration: underline;">SCHADS Vehicle Allowance</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-au-super" href="../au-superannuation-charge-tracker/" style="color: #2563eb; text-decoration: underline;">Superannuation Tracker</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇺🇸 US Corporate Tax</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-us-llc" href="../us-llc-late-penalty-estimator/" style="color: #2563eb; text-decoration: underline;">LLC Late Tax Penalty</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-us-179" href="../us-section-179-truck-calculator/" style="color: #2563eb; text-decoration: underline;">Section 179 Vehicle Deduction</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🇬🇧 UK Property Management</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-rent" href="../uk-form-4a-rent-tracker/" style="color: #2563eb; text-decoration: underline;">Form 4A Rent Tracker</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-sdlt" href="../uk-sdlt-bracket-estimator/" style="color: #2563eb; text-decoration: underline;">Stamp Duty Estimator</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-uk-sec8" href="../uk-section-8-calculator/" style="color: #2563eb; text-decoration: underline;">Section 8 Calculator</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4 style="margin: 0 0 8px 0; font-size: 14px; color: #475569; text-transform: uppercase; letter-spacing: 0.05em;">🎬 Digital Media Layouts &amp; Monetization</h4>
+                <ul style="margin: 0; padding-left: 20px; font-size: 14px; line-height: 1.6;">
+                    <li style="margin-bottom: 4px;"><a id="hub-media-tiktok-goal" href="../tiktok-rpm-goal/" style="color: #2563eb; text-decoration: underline;">TikTok RPM Goal Engine</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-tiktok-rpm" href="../tiktok-creator-rewards-rpm-estimator/" style="color: #2563eb; text-decoration: underline;">TikTok Creator Rewards RPM</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-ig" href="../instagram-reels-preview/" style="color: #2563eb; text-decoration: underline;">Instagram Reels Grid</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-fb" href="../facebook-ad-safe-zone/" style="color: #2563eb; text-decoration: underline;">Facebook 9:16 Ad Mask</a></li>
+                    <li style="margin-bottom: 4px;"><a id="hub-media-shorts" href="../shorts-ui-safe-zone/" style="color: #2563eb; text-decoration: underline;">YouTube Shorts Safe Zone</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script defer>
+        (function() {
+            const path = window.location.pathname.toLowerCase();
+            const toolsMap = {
+                'au-cents-per-km-estimator': 'hub-au-cents',
+                'au-schads-vehicle-allowance': 'hub-au-schads',
+                'au-superannuation-charge-tracker': 'hub-au-super',
+                'us-llc-late-penalty-estimator': 'hub-us-llc',
+                'us-section-179-truck-calculator': 'hub-us-179',
+                'uk-form-4a-rent-tracker': 'hub-uk-rent',
+                'uk-sdlt-bracket-estimator': 'hub-uk-sdlt',
+                'uk-section-8-calculator': 'hub-uk-sec8',
+                'tiktok-rpm-goal': 'hub-media-tiktok-goal',
+                'tiktok-creator-rewards-rpm-estimator': 'hub-media-tiktok-rpm',
+                'instagram-reels-preview': 'hub-media-ig',
+                'facebook-ad-safe-zone': 'hub-media-fb',
+                'shorts-ui-safe-zone': 'hub-media-shorts'
+            };
+
+            for (const [folderName, elementId] of Object.entries(toolsMap)) {
+                if (path.includes(folderName)) {
+                    const targetEl = document.getElementById(elementId);
+                    if (targetEl) {
+                        targetEl.outerHTML = `<span style="font-weight: 600; color: #0f172a;">${targetEl.textContent} (Current)</span>`;
+                    }
+                    break;
+                }
+            }
+        })();
+    </script>
+</body>
+</html>
