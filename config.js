@@ -157,9 +157,16 @@ window.CMS_CONFIG = {
     { name: "TikTok Creator Rewards RPM Estimator", url: "/tiktok-creator-rewards-rpm-estimator", tag: "MEDIA" },
     { name: "UGC Freelance Rate & Usage Rights Worksheet", url: "/ugc-freelance-rate-usage-rights-worksheet", tag: "MEDIA" },
     { name: "Patreon Net Tier Payout Dashboard", url: "/patreon-net-tier-payout-dashboard", tag: "MEDIA" },
+    { name: "Email Subject Line Mobile Previewer", url: "/email-subject-line-mobile-previewer", tag: "MEDIA" },
+    { name: "Podcast Chapter Builder", url: "/podcast-chapter-builder", tag: "MEDIA" },
+    { name: "Bluesky Bio Visualizer", url: "/bluesky-bio-visualizer", tag: "MEDIA" },
+    { name: "Carousel Indicator Generator", url: "/carousel-indicator-generator", tag: "MEDIA" },
+    { name: "TikTok RPM Goal Calculator", url: "/tiktok-rpm-goal", tag: "MEDIA" },
+    { name: "YouTube Shorts Title Checker", url: "/shorts-title-checker", tag: "MEDIA" },
 
     // --- E-COMMERCE SUITE ...
     { name: "Stan Store vs Shopify Calculator", url: "/stan-store-vs-shopify-calculator", tag: "ECOM" },
     { name: "Shopify Metafields Parser", url: "/shopify-metafields-parser", tag: "ECOM" },
+    { name: "Lemon Squeezy vs Gumroad Calculator", url: "/lemon-squeezy-vs-gumroad-calculator", tag: "ECOM" },
   ]
 }; 
