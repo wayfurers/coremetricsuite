@@ -1,6 +1,6 @@
 # Core Metric Suite 📊
 
-A collection of 30 micro-niche web utilities for tax, legal, and media safe zones.
+A collection of 30+ micro-niche web utilities for tax, legal, and media safe zones.
 
 🌐 **Live Tool Suite:** https://coremetricsuite.com
 
